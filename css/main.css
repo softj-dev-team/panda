@@ -1,0 +1,122 @@
+.banner{
+    position: relative
+
+}
+
+.banner .box{background-size: cover !important; display: flex !important;
+align-items: center;padding-bottom: 50px}
+
+
+.banner .box h2{font-size: 45px; font-weight: 400}
+.banner .box h3{font-size: 35px; font-weight: 400}
+
+.slick-dots{position: absolute; bottom: 100px; left: 22rem; display: flex; gap:5px}
+.slick-dots li{width: 15px; height: 15px; background: #ddd; border-radius: 50px; cursor: pointer}
+
+.slick-dots li.slick-active{background: #333; width: 30px}
+
+.title_main{text-align: center; margin-bottom: 50px}
+.title_main h2{font-size: 40px; color: #222; font-weight: 400}
+.title_main p{font-size: 22px; margin-top: 10px}
+
+.title_main.subp{text-align: center; margin-bottom: 50px}
+.title_main.subp h2{font-size: 25px; color: #222; font-weight: 400}
+.title_main.subp p{font-size: 18px; margin-top: 10px}
+
+
+.go_main{display: flex; width: 1220px; margin: 0 auto; padding: 50px 0; gap:20px}
+
+.go_main .box{border: 1px solid #bababa; text-align: center; padding:30px 20px;flex: 1}
+.go_main .box h2{font-size: 20px; margin: 20px 0}
+.go_main .box p{font-size: 16px;}
+.go_main .box a{margin-top: 30px; display: block}
+
+
+.system{padding: 80px 0; background: #F5F5F5}
+.system .box{border-radius: 20px; background: #fff; border: 1px solid #DDDDDD; padding: 50px; display: flex; align-items: center; justify-content: space-between}
+.system .box + .box{margin-top: 33px;}
+.system .box h2{color: #000; font-size: 40px; font-weight: bold; margin: 10px 0}
+.system .box p{font-size: 18px; color: #000}
+
+.system .box:nth-child(2n) .text{text-align: right}
+
+.main_bg{background: #222; text-align: center; padding: 80px 0}
+.main_bg .title_main h2{ color: #fff;}
+.main_bg .title_main h2 b{color: #fff}
+.main_bg .title_main p{color: #fff }
+
+
+.partner{padding: 80px 0; text-align: center}
+
+
+
+
+@media (max-width: 900px) { 
+    
+    .banner .box h2 {
+    font-size: 30px;
+    font-weight: 400;}
+    .banner .box h3 {
+    font-size: 20px;
+    font-weight: 400;}
+    
+    
+    .slick-dots {
+    position: absolute;
+    bottom: 100px;
+    left: 1rem;
+    display: flex;
+    gap: 5px;}
+    
+    .go_main {
+    display: flex;
+    width: 100%;
+    margin: 0 auto;
+    padding: 50px 1rem;
+    gap: 20px;
+    flex-wrap: wrap;}
+    
+    .title_main h2{font-size: 30px}
+    .title_main p{font-size: 18px}
+    
+    
+    .go_main .box {
+    border: 1px solid #bababa;
+    text-align: center;
+    padding: 30px 20px;
+    flex: auto;
+    width: 100%;}
+    
+    
+    
+    
+    .system .box {
+    border-radius: 20px;
+    background: #fff;
+    border: 1px solid #DDDDDD;
+    padding: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column; gap:20px; text-align: center}
+    
+    .system .box h2 {
+    color: #000;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px 0;}
+    
+    .system .box p {
+    font-size: 16px;
+    color: #000;}
+    
+    
+    .system .box:nth-child(2n) .text {
+    text-align: center;}
+    
+    
+    
+    
+
+}
+

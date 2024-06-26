@@ -1,0 +1,136 @@
+/* 업로드 팝업 */
+.popup{position:fixed; top:50%; left:50%; width:600px; background-color:#FFF; z-index:100;}
+.popup.order_popup{height:584px; margin:-292px 0 0 -300px;}
+.popup .popup_title{position:relative; height:60px; background-color:#d02139; padding-left:28px; font-size:0;}
+.popup .popup_title p{display:inline-block; vertical-align:middle; font-size:18px; color:#fff; line-height:60px;}
+.popup .popup_title .btn_close{position:absolute; top:0; right:0; width:60px; height:60px; cursor:pointer; background-image:url(../images/common/pop_close.png); background-repeat:no-repeat; background-position:center center; background-size:100% 100%;}
+.popup .popup_title .type{display:inline-block; vertical-align:middle; padding:0 15px; height:25px; line-height:23px; border:1px solid #d0d0d0; box-sizing:border-box; border-radius:22.5px; font-size:12px; color:#fff; margin-left:15px;}
+
+.popup .popup_tab{height:50px; border-bottom:1px solid #d8d9da; background-color:#e9eaec; font-size:0; text-align:center;}
+.popup .popup_tab li{display:inline-block; vertical-align:middle; font-size:14px; color:#000; height:50px; line-height:47px; box-sizing:border-box; padding:0 15px; cursor:pointer;}
+.popup .popup_tab li.on{border-bottom:3px solid #000;}
+
+.popup .tab_con{padding:40px 70px 0;}
+.popup .tab_con > div{display:none;}
+.popup .tab_con > div.on{display:block;}
+
+.popup .tab_con > div .file_box{width:398px; margin:0 auto; height:38px; font-size:0; text-align:center;}
+.popup .tab_con > div .file_box label{display:inline-block; vertical-align:middle; height:38px; line-height:38px; width:100px; text-align:center; background-color:#dddddd; font-size:13px; color:#333; border:1px solid #ccc; border-right:0px none; box-sizing:border-box;}
+.popup .tab_con > div .file_box input[type=text]{display:inline-block; vertical-align:middle; width:298px; border:0; height:38px; padding:0; padding-left:10px; box-sizing:border-box; border:1px solid #ccc; border-left:0px none;}
+.popup .tab_con > div .file_box input[type=file]{display:none;}
+.popup .tab_con > div .txt{display:block; font-size:13px; color:#666666; line-height:1.8; word-break:keep-all; text-align:center; margin-top:10px;}
+.popup .tab_con > div#tab2 .txt{margin-top:0;}
+.popup .tab_con > div#tab2 .file_box{margin-top:30px;}
+.popup .tab_con > div#tab2 textarea{margin-top:30px;}
+.popup .tab_con > div textarea{display:block; width:400px; margin:0 auto; border:1px solid #dddddd; box-sizing:border-box; height:100px; padding:10px; margin-top:10px;}
+
+.popup .pop_radio{text-align:center; margin-top:30px;}
+.popup .pop_radio ul{font-size:0;}
+.popup .pop_radio ul li{display:inline-block; vertical-align:middle; font-size:0;}
+.popup .pop_radio ul li:first-child{margin-right:20px;}
+.popup .pop_radio input[type=radio], .popup .pop_radio label{display:inline-block; vertical-align:middle; margin:0;}
+.popup .pop_radio input[type=radio]{margin-right:5px;}
+.popup .pop_radio label{font-size:13px; color:#444444; font-weight:bold; cursor:pointer;}
+
+.popup .pop_btn{text-align:center; font-size:0; margin-top:40px;}
+.popup .pop_btn button{display:inline-block; vertical-align:middle; border:0; padding:0 30px; font-size:15px; color:#fff; height:44px; margin:0;}
+.popup .pop_btn button.btn_red{background-color:#d02139; margin-right:10px;}
+.popup .pop_btn button.btn_gray{background-color:#666666;}
+
+/* 결제정보 */
+.popup.pay_popup{min-height:518px; margin:-259px 0 0 -300px;}
+.popup.pay_popup .popup_con{padding:40px 30px;}
+.popup.pay_popup table{width:100%; border-top:2px solid #000;}
+.popup.pay_popup table th{line-height:46px; border-bottom:1px solid #ccc; background-color:#f3f3f3; text-align:left; padding-left:40px; font-size:13px; color:#393838;}
+.popup.pay_popup table td{line-height:46px; border-bottom:1px solid #ccc; padding-left:10px; font-size:0;}
+.popup.pay_popup table td span{display:inline-block; vertical-align:middle; font-size:13px; color:#555555;}
+.popup.pay_popup table td button{display:inline-block; vertical-align:middle; width:90px; height:30px; text-align:center; border:0; background-color:#272e31; font-size:13px; color:#fff; border-radius:3px; line-height:1; margin-left:10px;}
+.popup.pay_popup table td .num{color:#d02139; font-weight:bold;}
+.popup.pay_popup table td .date{color:#333333; font-weight:bold;}
+
+.popup.pay_popup .pay_btn{font-size:0; text-align:center; margin-top:40px;}
+.popup.pay_popup .pay_btn button{width:110px; height:44px; border:0; font-size:15px;}
+.popup.pay_popup .pay_btn .btn_gray{background-color:#666666; color:#fff; margin-right:10px;}
+.popup.pay_popup .pay_btn .btn_white{background-color:#FFF; color:#555; border:1px solid #dddddd;}
+
+/* 거래명세서 */
+.popup_wrap{width:600px; padding:10px; box-sizing:border-box;}
+.popup_wrap .popup_title{font-size:30px; font-weight:bold; color:#262626; text-align:center; margin-bottom:30px;}
+.popup_wrap > span.txt{position:relative; font-size:12px; color:#555555; top:-18px;}
+
+.popup_wrap .table_wrap{overflow:hidden;}
+.popup_wrap .table_wrap .table_l{float:left; width:200px; border-top:2px solid #d02139;}
+.popup_wrap .table_wrap .table_r{float:right; width:360px; border-top:2px solid #3c3c3c;}
+.popup_wrap .table_wrap table th{font-size:12px; color:#393838; border-bottom:1px solid #ccc;}
+.popup_wrap .table_wrap table.table_l th{background-color:#fdf5f5; height:41px; line-height:41px;}
+.popup_wrap .table_wrap table.table_l td{height:41px; line-height:41px;}
+.popup_wrap .table_wrap table td{position:relative; font-size:12px; color:#555555;border-bottom:1px solid #ccc; background-color:#FFF; padding-left:5px;}
+.popup_wrap .table_wrap table td img{position:absolute; top:50%; margin-top:-20px; right:20px; z-index:1;}
+.popup_wrap .table_wrap table.table_r th{background-color:#f3f3f3;height:30px; line-height:30px;}
+.popup_wrap .table_wrap table.table_r td{height:30px; line-height:30px;}
+.price_box{clear:both;}
+
+.product_table{margin-top:20px; min-height:380px;}
+.product_table table{width:100%; border-top:2px solid #000000;}
+.product_table table th{background-color:#fcfcfc; font-size:12px; font-weight:normal; color:#252525; height:31px; line-height:31px; border-bottom:1px solid #ccc;}
+.product_table table td{font-size:12px; color:#555555; text-align:center; border-bottom:1px solid #ccc; padding:10px 20px; word-break:keep-all;}
+.product_table table td span.num{font-weight:bold;}
+
+.popup_b{margin-top:20px;}
+.popup_b span{display:block; font-size:13px; color:#333333; line-height:2; text-align:center;}
+.popup_b .info{background-color:#f7f7f7; padding:10px; margin-top:30px;}
+.popup_b .info ul li{position:relative; font-size:12px; color:#666666; line-height:18px; word-break:keep-all; padding-left:8px;}
+.popup_b .info ul li:before{content:'-'; position:absolute; top:3px; left:0; font-size:13px; line-height:1;}
+
+/* 시안확인 */
+.popup.popup_draft{width:1000px; min-height:897px; margin:-448.5px 0 0 -500px;}
+.popup.popup_draft .pop_con{padding:40px 30px;}
+.popup.popup_draft .pop_con table{width:100%; border-top:2px solid #3c3c3c; font-size:13px;}
+.popup.popup_draft .pop_con table th{background-color:#f3f3f3; color:#393838; height:46px; line-height:46px; border-bottom:1px solid #ccc; text-align:left; padding-left:40px;}
+.popup.popup_draft .pop_con table td{color:#555555; border-bottom:1px solid #ccc; height:46px; line-height:46px; padding-left:20px;}
+.popup.popup_draft .pop_con table td p button{display:inline-block; vertical-align:middle; font-size:13px; color:#555555; margin-left:20px; border:0; background-color:transparent;}
+.popup.popup_draft .pop_con table td p button:first-child{margin-left:0;}
+.popup.popup_draft .pop_con table td p button:hover{text-decoration:underline;}
+.popup.popup_draft .pop_con table td p a span{color:#999}
+
+.popup.popup_draft .pop_con .warning{float:left; margin-top:14px;}
+.popup.popup_draft .pop_con .warning li{font-size:12px; color:#d02139; line-height:24px; padding-left:22px; background-image:url(../images/common/ico_info.png); background-repeat:no-repeat; background-position:left center;}
+
+.popup.popup_draft .pop_con .draft{position:relative; min-height:440px; background-color:#282828; margin-top:20px; padding:5px 10px; box-sizing:border-box;}
+.popup.popup_draft .pop_con .draft .img_area > div{display:none;}
+.popup.popup_draft .pop_con .draft .img_area > div.on{display:block;}
+
+.popup.popup_draft .pop_con .draft .tab_area{position:absolute; top:0; right:0; bottom:0; width:220px; background-color:#464242; padding:20px; box-sizing:border-box;}
+.popup.popup_draft .pop_con .draft .tab_area ul{font-size:0;}
+.popup.popup_draft .pop_con .draft .tab_area ul li{display:inline-block; vertical-align:middle; text-align:center; cursor:pointer;}
+.popup.popup_draft .pop_con .draft .tab_area ul li:nth-of-type(2n+1){margin-right:20px;}
+.popup.popup_draft .pop_con .draft .tab_area ul li .img{position:relative; display:block; font-size:0;}
+.popup.popup_draft .pop_con .draft .tab_area ul li.on .img:after{content:''; position:absolute; top:-3px; right:-3px; bottom:-3px; left:-3px; border:3px solid #bbbbbb;}
+.popup.popup_draft .pop_con .draft .tab_area ul li .txt{display:block; font-size:12px; color:#dddddd; line-height:1; padding-top:10px;}
+
+.popup.popup_draft .pop_con .info{overflow:hidden;}
+.popup.popup_draft .pop_con .btn_down{float:right; width:155px; height:40px; border:1px solid #e3e3e3; box-sizing:border-box; background-color:#FFF; margin-top:20px; font-size:12px; color:#333333;}
+.popup.popup_draft .pop_con .btn_down span{background-image:url(../images/common/ico_down_b.png); background-repeat:no-repeat; background-position:right center; padding-right:18px;}
+
+/* 견적서 */
+
+.table_wrap1{overflow:hidden;}
+.table_wrap1 table{border-top:2px solid #000; text-align:center; margin-top:20px;}
+.table_wrap1 table th{height:31px; line-height:31px; border-bottom:1px solid #ccc; font-size:12px; color:#252525;}
+.table_wrap1 table td{height:31px; line-height:31px; border-bottom:1px solid #ccc; font-size:12px; color:#252525; border-left:1px solid #ccc;}
+.table_wrap1 table thead th{background-color:#fcfcfc;}
+.table_wrap1 table tbody th{font-weight:normal;}
+.table_wrap1 .table_1{float:left; width:260px;}
+.table_wrap1 .table_2{float:right; width:280px;}
+.table_wrap1 .table_2 td{text-align:right; padding-right:10px;}
+.table_wrap1 .table_2 td input{display:block; width:100%; height:100%; border:0; box-sizing:border-box; text-align:right;}
+.table_wrap1 .table_3{float:left; width:260px;}
+.table_wrap1 .account_num{float:right; margin-top:20px; width:280px;}
+.table_wrap1 .account_num li{font-size:12px; line-height:20px;}
+.table_wrap1 .account_num li strong{font-weight:normal; color:#333;}
+.table_wrap1 .account_num li span{color:#d02139;}
+
+.popup_b .btn_wrap{font-size:0; text-align:center; margin-top:40px;}
+.popup_b .btn_wrap button{min-width:100px; height:44px; border:0; font-size:15px; padding:0 30px;}
+.popup_b .btn_wrap .btn_gray{background-color:#666666; color:#fff; margin-right:10px;}
+.popup_b .btn_wrap .btn_white{background-color:#FFF; color:#555; border:1px solid #dddddd;}
