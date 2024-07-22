@@ -3,7 +3,50 @@
   <component name="PhpDockerContainerSettings">
     <list>
       <map>
+        <entry key="09cb3c9d-efc5-4a6b-bc8c-d463247748de">
+          <value>
+            <DockerContainerSettings>
+              <option name="runCliOptions" value="" />
+              <option name="version" value="1" />
+            </DockerContainerSettings>
+          </value>
+        </entry>
+        <entry key="29ef0e4e-6985-4eeb-b7f5-5cf7dc021032">
+          <value>
+            <DockerContainerSettings>
+              <option name="runCliOptions" value="" />
+              <option name="version" value="1" />
+              <option name="volumeBindings">
+                <list>
+                  <DockerVolumeBindingImpl>
+                    <option name="containerPath" value="/var/www/html" />
+                    <option name="hostPath" value="/var/www/html" />
+                  </DockerVolumeBindingImpl>
+                  <DockerVolumeBindingImpl>
+                    <option name="containerPath" value="/var/www/html/kakao" />
+                    <option name="hostPath" value="/var/www/html/kakao" />
+                  </DockerVolumeBindingImpl>
+                </list>
+              </option>
+            </DockerContainerSettings>
+          </value>
+        </entry>
         <entry key="7a748472-3104-4a46-bfe9-b571b8637bc8">
+          <value>
+            <DockerContainerSettings>
+              <option name="version" value="1" />
+              <option name="volumeBindings">
+                <list>
+                  <DockerVolumeBindingImpl>
+                    <option name="containerPath" value="/opt/project" />
+                    <option name="hostPath" value="$PROJECT_DIR$" />
+                  </DockerVolumeBindingImpl>
+                </list>
+              </option>
+            </DockerContainerSettings>
+          </value>
+        </entry>
+        <entry key="823c6be1-3363-4605-a522-2d91cec3e0e7">
           <value>
             <DockerContainerSettings>
               <option name="version" value="1" />

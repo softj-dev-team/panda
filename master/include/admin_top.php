@@ -27,6 +27,9 @@
 			<li <? if ($bmenu == 3) { ?>class="on" <? } ?>>
 				<a href="../sms/sms_sample_list.php?bmenu=3&smenu=1">문자관리</a>
 			</li>
+            <li <? if ($bmenu == 8) { ?>class="on" <? } ?>>
+                <a href="../kakao/list.php?bmenu=8&smenu=1">알림톡관리</a>
+            </li>
 			<li <? if ($bmenu == 4) { ?>class="on" <? } ?>>
 				<a href="../point/member_point_list.php?bmenu=4&smenu=1&point_sect=smspay">결제 관리</a>
 			</li>
@@ -39,6 +42,7 @@
 			<li <? if ($bmenu == 7) { ?>class="on" <? } ?>>
 				<a href="../adcount/site_configure.php?bmenu=7&smenu=1">환경설정</a>
 			</li>
+
 		</ul>
 	</nav>
 </header>

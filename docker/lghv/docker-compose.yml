@@ -1,0 +1,28 @@
+version: '3.7'
+services:
+  lghv:
+#    image: openjdk:8u212-jdk
+    container_name: ubuntu_lghv
+    build: .
+    image: ubuntu
+#    command: ["sh", "-c", "cd /usr/src/myapp/lghv_agent_kko/bin_linux && ./runner.sh start"]
+    tty: true
+#    ports:
+#      - "8090:8090"
+#    environment:
+#      - "SPRING_PROFILES_ACTIVE=docker"
+    networks:
+      - eh
+    volumes:
+      - app_data:/usr/src/myapp
+      - ./lghv_agent_kko:/usr/src/myapp/lghv_agent_kko
+      - /etc/timezone:/etc/timezone:ro
+      - /usr/share/zoneinfo/Asia/Seoul:/etc/localtime:ro
+#    restart: always # 여기에 재시작 정책 추가
+
+networks:
+  eh:
+    external: true
+volumes:
+  app_data:
+

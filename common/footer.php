@@ -63,21 +63,21 @@
 
     <div class="floating_nav">
         <a id="top_btn" href="javascript:;">
-            <img src="images/up.png">
+            <img src="/images/up.png">
         </a>
         <? if ($inc_confg_sns_kakao) { ?>
             <a href="<?= $inc_confg_sns_kakao ?>" target="_blank">
             <? } else { ?>
                 <a href="javascript:;">
                 <? } ?>
-                <img src="images/kakao.png">
+                <img src="/images/kakao.png">
                 </a>
                 <? if ($inc_confg_sns_teleg) { ?>
                     <a href="<?= $inc_confg_sns_teleg ?>" target="_blank">
                     <? } else { ?>
                         <a href="javascript:;">
                         <? } ?>
-                        <img src="images/twiter.png">
+                        <img src="/images/twiter.png">
                         </a>
                         <div class="bank">
                             <? if ($inc_confg_bank_num) { ?>

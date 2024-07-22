@@ -1,0 +1,97 @@
+@charset "UTF-8";
+
+/********** 통합고객지원센터 - 원격기술지원 **********/
+.t-line { display:block; }
+/* t-msg */
+.diagram-wrap .t-msg { font-size:16px; line-height:26px; color:#000; }
+.diagram-wrap .t-msg strong { text-decoration:underline; }
+
+/* diagram-step */
+.diagram-step { display:flex; width:100%; justify-content:space-between; align-items:center; margin:35px 0 40px; }
+.diagram-step .step { position:relative; flex-shrink:0; width:168px; height:168px; background-color:#fff; border:2px solid #ddd; border-radius:50%; text-align:center; box-sizing:border-box; }
+.diagram-step .step .step-num { display:block; margin-top:44px; }
+.diagram-step .step::after { content:''; display:inline-block; width:0px; height:50px; vertical-align:middle; }
+.diagram-step .step strong { display:inline-block; margin-top:8px; font-size:16px; line-height:22px; color:#000; vertical-align:middle; }
+.diagram-step .step.active { background-color:#c10026; border:none; color:rgba(255, 255, 255, 0.7); }
+.diagram-step .step.active strong{ color:#fff; }
+
+.diagram-step .final { position:relative; width:198px; height:198px; margin-right:-14px; }
+.diagram-step .final .step.active { position:absolute; top:15px; left:15px; }
+.diagram-step .final::before, .diagram-step .final::after, .diagram-step .final .step.active::before { content:''; position:absolute; display:inline-block; border-radius:50%; box-sizing:border-box; }
+.diagram-step .final .step.active::before { width:182px; height:182px; top:-7px; left:-7px; background-color:#f9e5e9; z-index:-1; }
+.diagram-step .final::before { width:198px; height:198px; top:0; left:0; border-radius:0; z-index:1; }
+.diagram-step .final::before {
+  background-repeat:no-repeat;
+  background-image:url("/resource/images/sub/bg-step-dot.gif"),url("/resource/images/sub/bg-step-dot.gif"),url("/resource/images/sub/bg-step-dot.gif"),url("/resource/images/sub/bg-step-dot.gif"),url("/resource/images/sub/bg-step-dot.gif"),url("/resource/images/sub/bg-step-dot.gif"),url("/resource/images/sub/bg-step-dot.gif"),url("/resource/images/sub/bg-step-dot.gif");
+  background-position:50% 0, 85% 14.5%, 100% 50%, 86% 85%, 50% 100%, 14.5% 85%, 0 50%, 14.5% 15%;
+}
+.diagram-step .final::after { width:196px; height:196px; top:1px; left:1px; border:1px solid #f9e5e9; }
+
+.diagram-step .step-next { position:relative; display:inline-block; width:2px; height:2px; padding:0 6px; border-left:2px solid #e5e5e5; box-sizing:border-box; z-index:-2; }
+.diagram-step .step-next::before, .diagram-step .step-next::after { content:''; position:absolute; top:0; right:0; display:inline-block; width:2px; height:2px; background-color:#e5e5e5; }
+.diagram-step .step-next::after { left:4px; }
+.diagram-step .step-next.last { padding:0; }
+.diagram-step .step-next.last::before, .diagram-step .step-next.last::after { display:none; }
+
+/* diagram-detail */
+.diagram-detail { display:flex; flex-wrap:wrap; margin-bottom:48px; }
+.diagram-detail .detail-info { /* flex-basis:50%; */ width:50%; align-self:center; padding:79px 50px 0 57px; height:290px; border:1px solid #f6f6f6; border-width:1px 0 0 1px; box-sizing: border-box; }
+.diagram-detail .detail-info:nth-of-type(1), .diagram-detail .detail-info:nth-of-type(2) { border-top:none; padding-top:62px; }
+.diagram-detail .detail-info:nth-of-type(odd) { border-left:none; }
+.detail-info .detail-title { font-size:20px; color:#000; }
+.detail-info .detail-title strong { display:block; margin:20px 0 6px; }
+.detail-info .detail-text { line-height:24px; }
+.detail-info .detail-text em { display:block; margin-top:14px; font-size:12px; line-height:20px; color:#c10026; }
+
+
+/********** @media **********/
+@media all and (max-width:1200px) {
+  .diagram-step { margin:35px 0 31px }
+  .diagram-step .step { width:132px; height:132px; }
+  .diagram-step .step .step-num { margin-top:29px; }
+  .diagram-step .step strong { margin-top:6px; }
+
+  .diagram-step .final { width:156px; height:156px; }
+  .diagram-step .final .step.active { top:12px; left:12px; }
+  .diagram-step .final .step.active::before { width:142px; height:142px; top:-5px; left:-5px; }
+  .diagram-step .final::before { width:156px; height:156px; }
+  .diagram-step .final::after { width:154px; height:154px; }
+}
+
+@media all and (max-width:1024px) {
+  .diagram-step { flex-wrap:wrap; max-width:550px; height:335px; margin:17px auto 18px; }
+  .diagram-step .step-next:nth-last-of-type(3) { display:none; }
+}
+
+@media all and (min-width:768px) and (max-width:1024px) {
+  .diagram-detail .detail-info:nth-of-type(1), .diagram-detail .detail-info:nth-of-type(2) { padding-top:51px; padding-right:30px; }
+}
+
+@media all and (max-width:767px) {
+  .t-line { display:inline; }
+  .diagram-wrap .t-msg { font-size:13px; line-height:18px; }
+
+  .diagram-step { max-width:280px; height:410px; }
+  .diagram-step .step { width:122px; height:122px; border-width:1px; }
+  .diagram-step .step .step-num { margin-top:33px; }
+  .diagram-step .step strong { margin-top:4px; font-size:13px; line-height:16px; }
+
+  .diagram-step .final { width:144px; height:144px; margin-right:-10px; }
+  .diagram-step .final .step.active { top:12px; left:12px; }
+  .diagram-step .final .step.active::before { width:131px; height:131px; }
+  .diagram-step .final::before { width:144px; height:144px; }
+  .diagram-step .final::after { width:142px; height:142px; }
+
+  .diagram-step .step-next:nth-last-of-type(even) { display:none; }
+  .diagram-step .step-next:nth-last-of-type(3) { display:block; }
+
+  .diagram-detail { margin-bottom:29px; }
+  .diagram-detail .detail-info { flex-basis:100%; height:auto; border:none; padding:0; margin-top:27px; }
+  .diagram-detail .detail-info:nth-of-type(1) { margin-top:0; }
+  .diagram-detail .detail-info:nth-of-type(1), .diagram-detail .detail-info:nth-of-type(2) { padding:0; }
+
+  .detail-info .detail-title { font-size:16px; line-height:19px; }
+  .detail-info .detail-title strong { margin:14px 0 3px; }
+  .detail-info .detail-text { font-size:13px; line-height:19px; }
+  .detail-info .detail-text em { margin-top:12px; font-size:11px; line-height:17px; }
+}

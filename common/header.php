@@ -1,6 +1,7 @@
-<?
+<?php
 if ($_SESSION['member_coinc_idx']) {
     $inc_member_row = get_member_data($_SESSION['member_coinc_idx']);
+//    print_r(get_member_data($_SESSION['member_coinc_idx']));
 }
 ?>
 <!--header-->
@@ -66,7 +67,7 @@ if ($_SESSION['member_coinc_idx']) {
                 </form>
                 <!-- SNS 로그인 시 리턴 데이터 수신 및 전달을 위한 폼 종료 -->
             <? } ?>
-            <img src="./images/hamburger.png" id="mob_menu_btn" onclick="mob_menu()">
+            <img src="/images/hamburger.png" id="mob_menu_btn" onclick="mob_menu()">
         </div>
     </div>
 
@@ -147,11 +148,25 @@ if ($_SESSION['member_coinc_idx']) {
                 </a>
             </li>
 
-            <!--<li class="dep5">
-                <a href="/sms.php?send_type=test">
-                    통신사 3사 테스트
+            <li class="dep8">
+                <a href="/kakao">
+                    kakao
                 </a>
-            </li>-->
+                <ul class="subdeps subdeps08">
+                    <li>
+                        <a href="/kakao/index.php?route=send">
+                            <!--단·장문 보내기-->
+                           알림톡
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/kakao/index.php?route=template">
+                           알림톡 템플릿 관리
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
 
             <li class="dep5">
                 <a href="/board_list.php?bbs_code=event">

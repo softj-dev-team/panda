@@ -1,4 +1,5 @@
-<? include $_SERVER["DOCUMENT_ROOT"] . "/pro_inc/include_default.php"; // 공통함수 인클루드 
+<?php
+require_once $_SERVER["DOCUMENT_ROOT"] . "/pro_inc/include_default.php"; // 공통함수 인클루드
 ?>
 <!DOCTYPE html>
 <html lang="ko">

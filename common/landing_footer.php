@@ -27,10 +27,10 @@ Copyrightⓒ Korea 판다문자 All Rights Reserved.</p>
         
         <div class="floating_nav">
             <a href="#none">
-                <img src="images/kakao.png">
+                <img src="/images/kakao.png">
             </a>
             <a href="#none">
-                <img src="images/twiter.png">
+                <img src="/images/twiter.png">
             </a>
         </div>
 
