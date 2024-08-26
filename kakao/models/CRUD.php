@@ -92,5 +92,34 @@ class CRUD {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
+    public function selectWithOrderAndLimit($where = [], $order = '', $limit = '') {
+        $query = "SELECT * FROM {$this->table}";
+
+        if (!empty($where)) {
+            $where_clause = [];
+            foreach ($where as $key => $value) {
+                $where_clause[] = "$key = :$key";
+            }
+            $where_clause = implode(" AND ", $where_clause);
+            $query .= " WHERE $where_clause";
+        }
+
+        if (!empty($order)) {
+            $query .= " ORDER BY $order";
+        }
+
+        if (!empty($limit)) {
+            $query .= " LIMIT $limit";
+        }
+
+        $stmt = $this->db->prepare($query);
+
+        foreach ($where as $key => $value) {
+            $stmt->bindValue(":$key", $value);
+        }
+
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
 }
 ?>

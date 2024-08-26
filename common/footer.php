@@ -8,18 +8,35 @@
                 </a>
             </div>
             <ul>
-                <?
-                $inc_notice_sql = "select * from board_content a where 1 and a.is_del='N' and a.step='0' and a.bbs_code = 'notice' ORDER BY a.ref desc, a.step asc, a.depth asc limit 0 , 3";
-                $inc_notice_query = mysqli_query($gconnet, $inc_notice_sql);
-                for ($inc_notice_i = 0; $inc_notice_i < mysqli_num_rows($inc_notice_query); $inc_notice_i++) {
-                    $inc_notice_row = mysqli_fetch_array($inc_notice_query);
-                    $inc_notice_reg_time3 = to_time(substr($inc_notice_row['write_time'], 0, 10));
+        <?php
+        if (!empty($inc_notice_query)) {
+            foreach ($inc_notice_query as $inc_notice_row) {
+                $inc_notice_reg_time3 = to_time(substr($inc_notice_row->write_time, 0, 10));
                 ?>
-                    <li>
-                        <p><a href="javascript:go_notice_view('<?= $inc_notice_row['idx'] ?>');"><?= string_cut2(stripslashes($inc_notice_row['subject']), 30) ?> <?= now_date($inc_notice_reg_time3) ?></a></p>
-                        <p class="date"><?= substr($inc_notice_row['write_time'], 0, 10) ?></p>
-                    </li>
-                <? } ?>
+                <li>
+                    <p>
+                        <a href="javascript:go_notice_view('<?= $inc_notice_row->idx ?>');"><?= string_cut2(stripslashes($inc_notice_row->subject), 30) ?> <?= now_date($inc_notice_reg_time3) ?></a>
+                    </p>
+                    <p class="date"><?= substr($inc_notice_row->write_time, 0, 10) ?></p>
+                </li>
+        <?php
+            }
+        }else{
+
+            $inc_notice_sql = "select * from board_content a where 1 and a.is_del='N' and a.step='0' and a.bbs_code = 'notice' ORDER BY a.ref desc, a.step asc, a.depth asc limit 0 , 3";
+            $inc_notice_query = mysqli_query($gconnet, $inc_notice_sql);
+            for ($inc_notice_i = 0; $inc_notice_i < mysqli_num_rows($inc_notice_query); $inc_notice_i++) {
+                $inc_notice_row = mysqli_fetch_array($inc_notice_query);
+                $inc_notice_reg_time3 = to_time(substr($inc_notice_row['write_time'], 0, 10));
+        ?>
+                <li>
+                    <p><a href="javascript:go_notice_view('<?= $inc_notice_row['idx'] ?>');"><?= string_cut2(stripslashes($inc_notice_row['subject']), 30) ?> <?= now_date($inc_notice_reg_time3) ?></a></p>
+                    <p class="date"><?= substr($inc_notice_row['write_time'], 0, 10) ?></p>
+                </li>
+                <?php
+            }
+        }
+        ?>
             </ul>
         </div>
     </section>
@@ -124,5 +141,5 @@
                         <script type="text/javascript" src="/js/popup.js"></script>
                         <script type="text/javascript" src="/js/common_js.js"></script>
 
-                        <? include $_SERVER["DOCUMENT_ROOT"] . "/pro_inc/include_bottom.php"; // 공통함수 인클루드 
+                        <?php include $_SERVER["DOCUMENT_ROOT"] . "/pro_inc/include_bottom.php"; // 공통함수 인클루드
                         ?>

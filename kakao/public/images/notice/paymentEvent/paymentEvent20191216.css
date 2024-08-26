@@ -1,0 +1,50 @@
+@charset "utf-8";
+
+*{margin:0px; padding:0px;}
+.paymentEvent20190604 {max-width:980px; width:100%; margin:0 auto; font-size:13px; color:#666; line-height:1.5em; font-family:'맑은 고딕','Malgun Gothic','돋움', dotum, sans-serif; background-color:#fff;}
+.paymentEvent20190604 img {max-width:100%; border:none; vertical-align:middle;}
+.paymentEvent20190604 .eventHeader {position:relative;}
+.paymentEvent20190604 .eventHeader a.review {display:inline-block; width:40%; height:7.4%; top:61.8%; left:30%; position:absolute;}
+.paymentEvent20190604 .eventHeader a.review img {width:100%; height:100%;}
+.paymentEvent20190604 .eventHeader_mobile {display:none;}
+.paymentEvent20190604 .frame {vertical-align:top; box-sizing:border-box; padding-top:30px;}
+.paymentEvent20190604 .frame .list {display:inline-block; width:47.5%; vertical-align:top; text-align:left; border-bottom:2px solid #000;}
+.paymentEvent20190604 .frame .list.left {margin-right:2%;}
+.paymentEvent20190604 .frame .list.right {margin-left:2%;}
+.paymentEvent20190604 .frame .list .title {border-bottom:2px solid #000; text-align:center;}
+.paymentEvent20190604 .frame .list .title span {display:inline-block; padding-left:70px; color:#000; line-height:80px; font-weight:bold; font-size:30px; background-repeat:no-repeat; background-position:left center;}
+.paymentEvent20190604 .frame .list .title.cdi span {background-image:url('logo_cdi.png');}
+.paymentEvent20190604 .frame .list .title.april span {background-image:url('logo_april.png');}
+.paymentEvent20190604 .frame .list p.gift {font-weight:bold; font-size:120%; color:#000; margin-top:15px; padding:0px 7%;}
+.paymentEvent20190604 .frame .list dl {margin-top:5px; padding:0px 7% 10px; border-bottom:1px solid #dadada; text-align:left; font-size:110%;}
+.paymentEvent20190604 .frame .list dl:last-child {border-bottom:0px;}
+.paymentEvent20190604 .frame .list dt {font-weight:normal; display:inline-block; width:28%; padding:5px 0px; vertical-align:top;}
+.paymentEvent20190604 .frame .list dd {font-weight:normal; display:inline-block; width:19%; padding:5px 0px; vertical-align:top;}
+.paymentEvent20190604 .eventNotice {padding:30px 38px; background-color:#f9f9f9; margin-top:50px;}
+.paymentEvent20190604 .eventNotice p.noticeName {color:#000; text-align:left; padding-left:35px; font-size:120%; line-height:30px; font-weight:700; background-image:url('icon_eventNotice.png'); background-size:26px; background-repeat:no-repeat; background-position:left center;}
+.paymentEvent20190604 .eventNotice ul {margin-top:15px;}
+.paymentEvent20190604 .eventNotice li {position:relative; padding-left:20px; margin:8px 0px; text-align:left; font-size:110%;}
+.paymentEvent20190604 .eventNotice li.red {color:#ff0000;}
+.paymentEvent20190604 .eventNotice li i {position:absolute; left:0px; top:0px; width:20px; vertical-align:top;}
+/* For tablets & smart phones */
+@media (max-width: 1024px) {
+.paymentEvent20190604 {width:100%; font-size:15px;}
+.paymentEvent20190604 .eventHeader_mobile {display:block; position:relative; margin-top:30px;}
+.paymentEvent20190604 .eventHeader_mobile img {width:100%; border:none;}
+.paymentEvent20190604 .eventHeader_mobile a {display:inline-block; position:absolute;}
+.paymentEvent20190604 .eventHeader_mobile a img {width:100%; height:100%;}
+.paymentEvent20190604 .eventHeader_mobile a.btn01 {width:50%; height:100%; top:0%; left:0%; font-size:0px;}
+.paymentEvent20190604 .eventHeader_mobile a.btn02 {width:50%; height:100%; top:0%; left:50%; font-size:0px;}
+.paymentEvent20190604 .frame .list {display:block; width:100%; border-bottom:1px solid #000;}
+.paymentEvent20190604 .frame .list.left {margin-right:0%;}
+.paymentEvent20190604 .frame .list.right {margin-left:0%;}
+.paymentEvent20190604 .frame .list .title {border-bottom:1px solid #000;}
+.paymentEvent20190604 .frame .list .title span {padding-left:35px; font-size:20px; line-height:50px; background-size:25px;}
+.paymentEvent20190604 .frame .list .title.april {margin-top:20px;}
+.paymentEvent20190604 .frame .list p.gift {padding:0px 0%; font-size:90%;}
+.paymentEvent20190604 .frame .list dl {padding:0px 0px 10px; font-size:80%; margin-top:10px;}
+.paymentEvent20190604 .eventNotice {padding:10px 15px; font-size:90%; margin-top:20px;}
+.paymentEvent20190604 .eventNotice p.noticeName {padding-left:30px; font-size:100%; line-height:45px; background-size:18px;}
+.paymentEvent20190604 .eventNotice ul {margin-top:0px;}
+.paymentEvent20190604 .eventNotice li {font-size:90%; line-height:1.3em;}
+/*// For tablets & smart phones */

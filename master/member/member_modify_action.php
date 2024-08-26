@@ -123,6 +123,7 @@ $run_code = trim(sqlfilter($_REQUEST['run_code']));
 $mb_short_fee = trim(sqlfilter($_REQUEST['mb_short_fee']));
 $mb_long_fee = trim(sqlfilter($_REQUEST['mb_long_fee']));
 $mb_img_fee = trim(sqlfilter($_REQUEST['mb_img_fee']));
+$mb_kko_fee = trim(sqlfilter($_REQUEST['mb_kko_fee']));
 $mb_short_cnt = trim(sqlfilter($_REQUEST['mb_short_cnt']));
 $mb_long_cnt = trim(sqlfilter($_REQUEST['mb_long_cnt']));
 $mb_img_cnt = trim(sqlfilter($_REQUEST['mb_img_cnt']));
@@ -144,6 +145,7 @@ if ($prev_cnt == 0) {
 	$query_add .= " mb_short_fee = '" . $mb_short_fee . "', ";
 	$query_add .= " mb_long_fee = '" . $mb_long_fee . "', ";
 	$query_add .= " mb_img_fee = '" . $mb_img_fee . "', ";
+    $query_add .= " mb_kko_fee = '" . $mb_kko_fee . "', ";
 	$query_add .= " mb_short_cnt = '" . $mb_short_cnt . "', ";
 	$query_add .= " mb_long_cnt = '" . $mb_long_cnt . "', ";
 	$query_add .= " mb_img_cnt = '" . $mb_img_cnt . "', ";
@@ -166,6 +168,7 @@ if ($prev_cnt == 0) {
 	$query_add .= " mb_short_fee = '" . $mb_short_fee . "', ";
 	$query_add .= " mb_long_fee = '" . $mb_long_fee . "', ";
 	$query_add .= " mb_img_fee = '" . $mb_img_fee . "', ";
+    $query_add .= " mb_kko_fee = '" . $mb_kko_fee . "', ";
 	$query_add .= " mb_short_cnt = '" . $mb_short_cnt . "', ";
 	$query_add .= " mb_long_cnt = '" . $mb_long_cnt . "', ";
 	$query_add .= " mb_img_cnt = '" . $mb_img_cnt . "', ";

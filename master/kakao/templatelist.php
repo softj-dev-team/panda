@@ -3,7 +3,20 @@ include $_SERVER["DOCUMENT_ROOT"]."/pro_inc/include_default.php"; // 공통함�
 include $_SERVER["DOCUMENT_ROOT"]."/pro_inc/include_htmlheader_admin.php"; // 샘플문자페이지 헤더
 include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플문자 로그인여부 확인
 ?>
+<style>
+    .truncated-message {
+        cursor: pointer;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        vertical-align: middle;
+    }
 
+    .truncated-message:hover {
+        z-index: 1000;
+    }
+
+</style>
 <body>
 <div id="wrap" class="skin_type01">
 	<? include $_SERVER["DOCUMENT_ROOT"]."/master/include/admin_top.php"; // 상단메뉴?>
@@ -17,6 +30,9 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
                     </li>
                     <li <? if ($smenu == 2) { ?>class="on" <? } ?>>
                         <a href="../kakao/templatelist.php?bmenu=<?= $bmenu ?>&smenu=2">알림톡템플릿</a>
+                    </li>
+                    <li <? if ($smenu == 2) { ?>class="on" <? } ?>>
+                        <a href="../kakao/sendList.php?bmenu=<?= $bmenu ?>&smenu=3">알림톡 발송내역</a>
                     </li>
                 </ul>
 
@@ -40,32 +56,14 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
 				<div class="list">
 					<!-- 검색창 시작 -->
 					<table class="search">
-					<form name="s_mem" id="s_mem" method="post" action="list.php">
-						<input type="hidden" name="bmenu" value="<?=$bmenu?>"/>
-						<input type="hidden" name="smenu" value="<?=$smenu?>"/>
-						<input type="hidden" name="s_cnt" id="s_cnt" value="<?=$s_cnt?>"/>
-						<input type="hidden" name="s_order" id="s_order" value="<?=$s_order?>"/>
-						<caption>검색</caption>
-						<colgroup>
-							<col style="width:15%;">
-							<col style="width:20%;">
-							<col style="width:15%;">
-							<col style="width:15%;">
-							<col style="width:20%;">
-							<col style="width:15%;">
-						</colgroup>
-						<tr>
-							<th scope="row"></th>
-							<td colspan="2">
+                        <form name="s_mem" id="s_mem" method="post" action="list.php">
+                            <input type="hidden" name="bmenu" value="<?=$bmenu?>"/>
+                            <input type="hidden" name="smenu" value="<?=$smenu?>"/>
+                            <input type="hidden" name="s_cnt" id="s_cnt" value="<?=$s_cnt?>"/>
+                            <input type="hidden" name="s_order" id="s_order" value="<?=$s_order?>"/>
+                        </form>
 
-							</td>
-							<th scope="row"></th>
-							<td colspan="2">
-
-							</td>
-						</tr>
-				</form>
-				</table>
+				    </table>
 				<!-- 검색창 종료 -->
 				<div class="align_r mt20">
 					<!--<button class="btn_down">엑셀다운로드</button>-->
@@ -81,24 +79,28 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
                             <th>NO</th>
                             <th>발신프로필</th>
                             <th>템플릿명</th>
+                            <th>템플릿키</th>
                             <th>카테고리</th>
-                            <th>유형</th>
-                            <td>강조표기문구</td>
-                            <td>강조표기보조문구</td>
-                            <th>내용</th>
+                            <th>메세지</th>
+                            <th>템플릿 유형</th>
+                            <th>강조표기 유형</th>
+                            <th>강조표기문구</th>
+                            <th>강조표기보조문구</th>
+
                             <th>부가정보</th>
                             <th>파일</th>
-                            <th>템플릿키</th>
-                            <th>상태</th>
-                            <th>상태 변경</th>
+                            <th>이용상태</th>
+                            <th>검수상태</th>
+
                         </tr>
                         </thead>
                         <tbody>
 
                         </tbody>
                     </table>
-                    <div id="pagination" class="pagination"></div>
+
 				</div>
+                    <div id="pagination" class="pagination"></div>
 			</div>
 		</div>
 		<!-- content 종료 -->
@@ -108,7 +110,31 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
     loadProfiles();
     const statusMapping = {
         '01': '승인',
-        '02': '승인대기'
+        '02': '승인대기',
+        'R': '승인대기',
+        'A': '정상',
+        'S': '중단'
+    };
+    const inspectionStatusMapping = {
+        // REG : 등록, REQ : 심사요청, APR : 승인,
+        // REJ : 반려
+        'REG': '등록',
+        'REQ': '심사요청',
+        'APR': '승인',
+        'REJ': '반려'
+    };
+    const templateTypeMapping = {
+        'BA': '기본형',
+        'EX': '부가정보형',
+        'AD': '채널추가형',
+        'MI': '복합형',
+        'ITEM_LIST': '아이템리스트형',
+        'TEXT': '강조표기형'
+    };
+    const template_emphasize_type = {
+        'NONE': '선택안함',
+        'ITEM_LIST': '아이템리스트형',
+        'TEXT': '강조표기형'
     };
     function loadProfiles(page = 1) {
         $.ajax({
@@ -118,39 +144,71 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
             dataType: 'json',
             success: function(response) {
                 if (response.success) {
+
                     var profilesTable = $('#profilesTable tbody');
                     profilesTable.empty();
                     response.template.forEach(function(template) {
-                        var row = `<tr>
-                            <td>${template.id}</td>
-                            <td>${template.profile_key}<br>${template.business_name}</td>
-                            <td>${template.template_name}</td>
-                            <td>${template.category_name}</td>
-                            <td>${template.template_type}</td>
-                            <td>${template.strong_title}</td>
-                            <td>${template.strong_sub_title}</td>
-                            <td style="white-space: pre-line; ">${template.template_title}</td>
-                            <td>${template.template_subtitle}</td>
-                            <td>${template.image_path ? `<a href="${template.image_path}" target="_blank">파일 열람</a>` : '없음'}</td>
-                            <td><input type="text" name="template_key" value="${template.template_key}" class="template-key" data-id="${template.id}" style="width: 90%"></td>
-                            <td>${statusMapping[template.status]}</td>
-                            <td>
-                                <select class="status-select" data-id="${template.id}">
-                                    <option value="02" ${template.status === '02' ? 'selected' : ''}>승인대기</option>
-                                    <option value="01" ${template.status === '01' ? 'selected' : ''}>승인</option>
-                                </select>
-                            </td>
-                        </tr>`;
+                        var statusText = statusMapping[template.status];
+                        var templateTypeText = templateTypeMapping[template.template_type];
+                        var inspectionStatusText = inspectionStatusMapping[template.inspection_status];
+                        var templateEmphasizeTypeText = template_emphasize_type[template.template_emphasize_type];
+                        var row = `
+                            <tr">
+                                <td>${template.id}</td>
+                                <td>${template.profile_key}<br>${template.business_name}</td>
+                                <td>${template.template_name}</td>
+                                <td>${template.template_key}</td>
+                                <td class="truncated-message" title="${template.template_title}">
+                                    ${template.template_title}
+                                </td>
+                                <td>${template.category_id}</td>
+                                <td>${templateTypeText}</td>
+                                <td>${templateEmphasizeTypeText}</td>
+                                <td>${template.strong_title}</td>
+                                <td>${template.strong_sub_title}</td>
+                                <td>${template.template_subtitle}</td>
+                                <td>${template.image_path ? `<a href="${template.image_path}" target="_blank">파일 열람</a>` : '없음'}</td>
+                                <td>${statusText}</td>
+                                <td>${inspectionStatusText}</td>
+                            </tr>
+
+                            `;
                         profilesTable.append(row);
                     });
 
                     // 페이징 처리
-                    var totalPages = Math.ceil(response.total / 10);
+                    var pageSize = 10; // 한 페이지에 표시할 항목 수
+                    var totalRow = response.total; // 총 항목 수
+                    var totalPages = Math.ceil(totalRow / pageSize); // 총 페이지 수
+                    var currentPage = page; // 현재 페이지
+                    var pageSizeGroup = 10; // 페이지 그룹 크기
+
+                    var startPage = Math.floor((currentPage - 1) / pageSizeGroup) * pageSizeGroup + 1;
+                    var endPage = startPage + pageSizeGroup - 1;
+
+                    if (endPage > totalPages) {
+                        endPage = totalPages;
+                    }
+
                     var pagination = $('#pagination');
                     pagination.empty();
-                    for (var i = 1; i <= totalPages; i++) {
-                        var pageLink = `<a href="#" class="page-link ${i === page ? 'on' : ''}" data-page="${i}">${i}</a>`;
+
+                    // 이전 페이지 링크
+                    if (currentPage > 1) {
+                        var prevPage = startPage - pageSizeGroup;
+                        pagination.append(`<a href="#" class="page-link" data-page="${prevPage > 0 ? prevPage : 1}"> &lt; </a>`);
+                    }
+
+                    // 페이지 번호 링크
+                    for (var i = startPage; i <= endPage; i++) {
+                        var pageLink = `<a href="#" class="page-link ${i === currentPage ? 'on' : ''}" data-page="${i}">${i}</a>`;
                         pagination.append(pageLink);
+                    }
+
+                    // 다음 페이지 링크
+                    if (endPage < totalPages) {
+                        var nextPage = endPage + 1;
+                        pagination.append(`<a href="#" class="page-link" data-page="${nextPage}"> &gt; </a>`);
                     }
                 }
             },
@@ -162,6 +220,7 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
             }
         });
     }
+
     $(document).on('click', '.page-link', function(event) {
         event.preventDefault();
         var page = $(this).data('page');

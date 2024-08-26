@@ -18,7 +18,6 @@
 <script type="text/javascript" src="/master/js/jquery.bxslider.min.js"></script>
 <script type="text/javascript" src="/master/js/placeholders.js"></script>
 <script type="text/javascript" src="/master/js/layout.js"></script>
-<script type="text/javascript" src="/master/js/wSelect.js" defer></script>
 <script type="text/javascript" src="/master/js/common_js.js"></script>
 <link rel="stylesheet" type="text/css" href="/master/css/general.css"/>
 <!-- <link rel="shortcut icon" href="/favicon.ico"> -->

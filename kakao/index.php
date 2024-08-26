@@ -1,12 +1,12 @@
 <?php
 ob_start(); // 출력 버퍼링 시작
-require_once $_SERVER["DOCUMENT_ROOT"] . "/pro_inc/include_default.php"; // 공통함수 인클루드
-require_once $_SERVER["DOCUMENT_ROOT"] . "/pro_inc/check_login.php"; // 공통함수 인클루드
+
 require_once $_SERVER['DOCUMENT_ROOT'].'/kakao/models/TemplateCategoryModel.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/kakao/models/SendTransaction.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/kakao/controllers/TemplateCategoryController.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/kakao/core/Controller.php';
+//require_once $_SERVER['DOCUMENT_ROOT'].'/kakao/core/Controller.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/kakao/controllers/KakaoBusinessController.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/kakao/controllers/MasterController.php';
 require_once 'controllers/Send.php';
 // 라우팅 설정
 $route = isset($_GET['route']) ? $_GET['route'] : '';
@@ -27,6 +27,10 @@ switch ($route) {
         $controller = new TemplateCategoryController();
         $controller->showForm();
         break;
+    case 'templateList':
+        $controller = new TemplateCategoryController();
+        $controller->templateList();
+        break;
     case 'saveProfile':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $controller = new KakaoBusinessController();
@@ -39,16 +43,40 @@ switch ($route) {
             $controller->getTemplate();
         }
         break;
+    case 'getKakaoSendList':
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $controller = new MasterController();
+            $controller->getKakaoSendList();
+        }
+        break;
     case 'getUserTemplate':
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $controller = new TemplateCategoryController();
             $controller->getUserTemplate();
         }
         break;
+    case 'getTemplateDetails':
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $controller = new TemplateCategoryController();
+            $controller->getTemplateDetails();
+        }
+        break;
     case 'getProfiles':
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $controller = new KakaoBusinessController();
             $controller->getProfiles();
+        }
+        break;
+    case 'getKakaoProfileCategory':
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $controller = new KakaoBusinessController();
+            $controller->getKakaoProfileCategory();
+        }
+        break;
+    case 'requestProfileKey':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $controller = new KakaoBusinessController();
+            $controller->requestProfileKey();
         }
         break;
     case 'getProfilesForMaster':
@@ -80,6 +108,28 @@ switch ($route) {
             $controller = new TemplateCategoryController();
             $controller->saveTemplate();
         }
+        break;
+    case 'authenticationRequest':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $controller = new KakaoBusinessController();
+            $controller->authenticationRequest();
+        }
+        break;
+    case 'downloadSample':
+        $controller = new TemplateCategoryController();
+        $controller->downloadExcelSample($_GET['template_id']);
+        break;
+    case 'uploadTemplate':
+        $controller = new TemplateCategoryController();
+        $controller->uploadTemplate();
+        break;
+    case 'getUploadedList':
+        $controller = new TemplateCategoryController();
+        $controller->getUploadedList();
+        break;
+    case 'sendMessages':
+        $controller = new TemplateCategoryController();
+        $controller->sendMessages();
         break;
     default:
 //        redirectToMainWithAlert();

@@ -32,6 +32,7 @@ $sql = "SELECT *,
 (select mb_short_fee from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as mb_short_fee,
 (select mb_long_fee from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as mb_long_fee,
 (select mb_img_fee from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as mb_img_fee,
+(select mb_kko_fee from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as mb_kko_fee,
 (select call_num from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as call_num,
 (select call_memo from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as call_memo,
 (select use_yn from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as use_yn,
@@ -540,6 +541,7 @@ $bbs_code = "member";
 										SMS : <input type="text" id="mb_short_fee" name="mb_short_fee" required="yes" message="sms 단가" is_num="no" size="5" value="<?= $row['mb_short_fee'] ?>">&nbsp;
 										<br>LMS : <input type="text" id="mb_long_fee" name="mb_long_fee" required="yes" message="lms 단가" is_num="no" size="5" value="<?= $row['mb_long_fee'] ?>">&nbsp;
 										<br>MMS : <input type="text" id="mb_img_fee" name="mb_img_fee" required="yes" message="mms 단가" is_num="no" size="5" value="<?= $row['mb_img_fee'] ?>">&nbsp;
+                                        <br>알림톡 : <input type="text" id="mb_kko_fee" name="mb_kko_fee" required="yes" message="알림톡 단가" is_num="no" size="5" value="<?= $row['mb_kko_fee'] ?>">&nbsp;
 									</td>
 									<th scope="row">통신가입 증명원</th>
 									<td>

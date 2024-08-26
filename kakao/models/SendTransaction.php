@@ -11,14 +11,41 @@ class SendTransaction
         $this->conn = $database->connect();
     }
 
-    public function saveMessage($name, $date, $system, $fdestine,$fcallback)
+    public function saveMessage( $fdestine,$fcallback,$message,$profile_key,$template_key,$sn,$code,$altCode,$altMsg,$altSndDtm,$altRcptDtm)
     {
         try {
-            $message = "[테스트]\n {$name}님은 {$date} 부로 {$system}에 가입하셨습니다.더 좋은 서비스를 위해 노력하겠습니다. 감사합니다.";
+
+            $stmt = $this->conn->prepare("INSERT INTO TBL_SEND_TRAN_KKO
+                (fyellowid, ftemplatekey, fkkoresendtype, fmsgtype, fmessage, fsenddate, fdestine, fcallback,fetc1,fetc2,fetc3,fetc4,fetc5,fetc6)
+                VALUES
+                (:profile_key, :template_key, 'N', 4, :message, now(), :fdestine, :fcallback, :fetc1, :fetc2, :fetc3, :fetc4, :fetc5, :fetc6)");
+            $stmt->bindParam(':profile_key', $profile_key);
+            $stmt->bindParam(':template_key', $template_key);
+            $stmt->bindParam(':message', $message);
+            $stmt->bindParam(':fdestine', $fdestine);
+            $stmt->bindParam(':fcallback', $fcallback);
+            $stmt->bindParam(':fetc1', $sn);
+            $stmt->bindParam(':fetc2', $code);
+            $stmt->bindParam(':fetc3', $altCode);
+            $stmt->bindParam(':fetc4', $altMsg);
+            $stmt->bindParam(':fetc5', $altSndDtm);
+            $stmt->bindParam(':fetc6', $altRcptDtm);
+            $stmt->execute();
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+            throw new Exception('Failed to save message: ' . $e->getMessage());
+        }
+    }
+    public function saveMessageByList( $fdestine,$fcallback,$message,$profile_key,$template_key)
+    {
+        try {
+
             $stmt = $this->conn->prepare("INSERT INTO TBL_SEND_TRAN_KKO
                 (fyellowid, ftemplatekey, fkkoresendtype, fmsgtype, fmessage, fsenddate, fdestine, fcallback)
                 VALUES
-                ('9f89e73de6a9466c80a847d4bf832512', 'LGHV_51585550377247458320', 'N', 4, :message, now(), :fdestine, :fcallback)");
+                (:profile_key, :template_key, 'N', 4, :message, now(), :fdestine, :fcallback)");
+            $stmt->bindParam(':profile_key', $profile_key);
+            $stmt->bindParam(':template_key', $template_key);
             $stmt->bindParam(':message', $message);
             $stmt->bindParam(':fdestine', $fdestine);
             $stmt->bindParam(':fcallback', $fcallback);

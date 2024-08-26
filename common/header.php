@@ -1,7 +1,9 @@
 <?php
 if ($_SESSION['member_coinc_idx']) {
-    $inc_member_row = get_member_data($_SESSION['member_coinc_idx']);
-//    print_r(get_member_data($_SESSION['member_coinc_idx']));
+    if (!isset($inc_member_row) || empty($inc_member_row)) {
+        // 컨트롤러에서 상속되지 않았거나 빈 배열인 경우에만 get_member_data를 호출
+        $inc_member_row = get_member_data($_SESSION['member_coinc_idx']);
+    }
 }
 ?>
 <!--header-->
@@ -160,7 +162,7 @@ if ($_SESSION['member_coinc_idx']) {
                         </a>
                     </li>
                     <li>
-                        <a href="/kakao/index.php?route=template">
+                        <a href="/kakao/index.php?route=templateList">
                            알림톡 템플릿 관리
                         </a>
                     </li>

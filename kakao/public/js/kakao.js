@@ -11,7 +11,7 @@ $(document).ready(function() {
 
             if (response.success && response.data.length > 0) {
                 $.each(response.data, function(index, profile) {
-                    select.append('<option value="' + profile.id + '">' + profile.business_name + '</option>');
+                    select.append('<option value="' + profile.id + '">' + profile.chananel_name + '(' + profile.profile_key + ')</option>');
                 });
             } else {
                 alert('발신프로필이 없습니다.');
@@ -52,7 +52,7 @@ $(document).ready(function() {
         event.preventDefault(); // 기본 동작을 막습니다.
 
         let isValid = true;
-        const requiredFields = ['fcallback', 'fdestine', 'system', 'name', 'date'];
+        const requiredFields = ['fcallback', 'fdestine'];
 
         requiredFields.forEach(function(field) {
             if ($(`input[name="${field}"]`).val().trim() === '') {
@@ -67,7 +67,6 @@ $(document).ready(function() {
         }
     });
     $('#goTamplate').on('click', function() {
-        console.log(11)
         window.location.href = '/kakao/index.php?route=tamplate'; // 원하는 URL로 변경
     });
 });
@@ -96,7 +95,14 @@ $(document).ready(function() {
                     alert("템플릿이 성공적으로 등록되었습니다.");
                     // location.reload();
                 } else {
-                    alert("템플릿 등록에 실패했습니다: " + response.message);
+                    // 서버에서 정의된 오류 코드에 따른 메시지 처리
+                    if (response.code === '505') {
+                        alert("오류: " + response.message);
+                    } else if (response.code === '404') {
+                        alert("오류: 요청한 리소스를 찾을 수 없습니다.");
+                    } else {
+                        alert("템플릿 등록에 실패했습니다: " + response.message);
+                    }
                 }
             },
             error: function(xhr, status, error) {
@@ -116,6 +122,7 @@ $(document).ready(function() {
 
     $('.addChild').on('click', function() {
         modal.show();
+        loadProfileCategory();
         loadProfiles();
     });
 
@@ -130,10 +137,84 @@ $(document).ready(function() {
     });
 
     const statusMapping = {
+        'A': 'activated',
+        'C': 'deactivated',
+        'B': 'block',
+        'E': 'deleting',
+        'D': 'deleted',
         '01': '승인',
         '02': '승인대기'
     };
+    function loadProfileCategory(){
+        $.ajax({
+            url: '/kakao/index.php?route=getKakaoProfileCategory',
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                if (response.code === "200") {
+                    // 3차원 배열로 변환
+                    var categories = {};
 
+                    response.data.forEach(function(item) {
+                        var parts = item.name.split(',');
+                        if (!categories[parts[0]]) {
+                            categories[parts[0]] = {};
+                        }
+                        if (!categories[parts[0]][parts[1]]) {
+                            categories[parts[0]][parts[1]] = [];
+                        }
+                        categories[parts[0]][parts[1]].push({ name: parts[2], code: item.code });
+                    });
+
+                    // 대분류 select 박스 채우기
+                    var category1Select = $('#category1');
+                    $.each(categories, function(key) {
+                        category1Select.append('<option value="' + key + '">' + key + '</option>');
+                    });
+
+                    // 대분류 선택 시 중분류 옵션 채우기
+                    category1Select.on('change', function() {
+                        var category1 = $(this).val();
+                        var category2Select = $('#category2').empty().append('<option value="">중분류 선택</option>').prop('disabled', false);
+                        var category3Select = $('#category3').empty().append('<option value="">소분류 선택</option>').prop('disabled', true);
+
+                        if (category1) {
+                            $.each(categories[category1], function(key) {
+                                category2Select.append('<option value="' + key + '">' + key + '</option>');
+                            });
+                        }
+                    });
+
+                    // 중분류 선택 시 소분류 옵션 채우기
+                    $('#category2').on('change', function() {
+                        var category1 = $('#category1').val();
+                        var category2 = $(this).val();
+                        var category3Select = $('#category3').empty().append('<option value="">소분류 선택</option>').prop('disabled', false);
+
+                        if (category2) {
+                            $.each(categories[category1][category2], function(index, item) {
+                                category3Select.append('<option value="' + item.code + '">' + item.name + '</option>');
+                            });
+                        }
+                    });
+
+                    // 소분류 선택 시 code 값을 hidden input에 주입
+                    $('#category3').on('change', function() {
+                        var selectedCode = $(this).val();
+                        $('#industry').val(selectedCode);
+                    });
+                } else {
+                    alert('카테고리 데이터를 가져오는 데 실패했습니다.');
+                }
+            },
+            error: function(xhr, status, error) {
+                alert('카테고리 데이터를 가져오는 중 오류가 발생했습니다.');
+                console.error('Error: ' + error);
+                console.error('Status: ' + status);
+                console.dir(xhr);
+            }
+        });
+    }
     function loadProfiles(page = 1) {
         $.ajax({
             url: 'index.php?route=getProfiles',
@@ -147,12 +228,10 @@ $(document).ready(function() {
                     response.profiles.forEach(function(profile) {
                         var row = `<tr>
                             <td>${profile.id}</td>
-                            <td>${profile.chananel_name}</td>
-                            <td>${profile.business_name}</td>
-                            <td>${profile.registration_number}</td>
+                            <td>${profile.chananel_name}</td>         
+                            <td>${profile.profile_key}</td>
                             <td>${profile.industry}</td>
-                            <td>${profile.cs_phone_number}</td>
-                            <td>${profile.file_path ? `<a href="${profile.file_path}" target="_blank">파일 열람</a>` : '없음'}</td>
+                            <td>${profile.cs_phone_number}</td>                           
                             <td>${statusMapping[profile.status]}</td>
                             
                         </tr>`;
@@ -177,6 +256,131 @@ $(document).ready(function() {
             }
         });
     }
+    function authenticationRequest(){
+        var formData = new FormData($('#profileForm')[0]); // FormData 객체 생성
+        $.ajax({
+            url: '/kakao/index.php?route=authenticationRequest',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    alert(response.message);
+                } else {
+                    alert("오류: " + response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                alert("실패했습니다. 다시 시도해 주세요.");
+                console.error('Error: ' + error);
+                console.error('Status: ' + status);
+                console.dir(xhr);
+            }
+        });
+    }
+    function requestProfileKey(){
+        var formData = new FormData($('#profileForm')[0]); // FormData 객체 생성
+        $.ajax({
+            url: '/kakao/index.php?route=requestProfileKey',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    alert(response.message);
+                } else {
+                    alert("오류: " + response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                alert("실패했습니다. 다시 시도해 주세요.");
+                console.error('Error: ' + error);
+                console.error('Status: ' + status);
+                console.dir(xhr);
+            }
+        });
+    }
+    $('#authenticationRequest').on('click', function() {
+        // 입력 필드 값 가져오기
+        var chananelName = $('#chananel_name').val().trim();
+        var csPhoneNumber = $('#cs_phone_number').val().trim();
+
+        // 입력값 검증
+        if (chananelName === '') {
+            alert('채널 이름을 입력해 주세요.');
+            $('#chananel_name').focus();
+            return;
+        }
+
+        if (!/^@\w+/.test(chananelName)) {
+            alert('채널 이름은 @로 시작해야 합니다.');
+            $('#chananel_name').focus();
+            return;
+        }
+
+        if (csPhoneNumber === '') {
+            alert('담당자 휴대폰 번호를 입력해 주세요.');
+            $('#cs_phone_number').focus();
+            return;
+        }
+
+        if (!/^\d{10,11}$/.test(csPhoneNumber)) {
+            alert('휴대폰 번호는 10자리 또는 11자리 숫자만 가능합니다.');
+            $('#cs_phone_number').focus();
+            return;
+        }
+        authenticationRequest();
+        loadProfiles();
+    });
+    // 페이지 로딩 시 프로필 목록을 로드
+    $('#requestProfileKey').on('click', function() {
+        // 입력 필드 값 가져오기
+        var chananelName = $('#chananel_name').val().trim();
+        var csPhoneNumber = $('#cs_phone_number').val().trim();
+        var auth_token = $('#auth_token').val().trim();
+        var industry = $('#industry').val().trim();
+        // 입력값 검증
+        if (chananelName === '') {
+            alert('채널 이름을 입력해 주세요.');
+            $('#chananel_name').focus();
+            return;
+        }
+
+        if (!/^@\w+/.test(chananelName)) {
+            alert('채널 이름은 @로 시작해야 합니다.');
+            $('#chananel_name').focus();
+            return;
+        }
+
+        if (csPhoneNumber === '') {
+            alert('담당자 휴대폰 번호를 입력해 주세요.');
+            $('#cs_phone_number').focus();
+            return;
+        }
+
+        if (!/^\d{10,11}$/.test(csPhoneNumber)) {
+            alert('휴대폰 번호는 10자리 또는 11자리 숫자만 가능합니다.');
+            $('#cs_phone_number').focus();
+            return;
+        }
+
+        if (auth_token === '') {
+            alert('인증 토큰 을 입력해 주세요.');
+            $('#auth_token').focus();
+            return;
+        }
+        if (industry === '') {
+            alert('카테고리를 선택 해주세요.');
+            $('#industry').focus();
+            return;
+        }
+        requestProfileKey();
+        loadProfiles();
+    });
     $(document).on('change', '.status-select', function() {
         var id = $(this).data('id');
         var status = $(this).val();
@@ -233,6 +437,146 @@ $(document).ready(function() {
         });
     });
 });
+$(document).on('click', '#templateSelect', function(event) {
+    event.preventDefault();
+    var templateId = $(this).data('id');
+    loadTemplateDetails(templateId);
+});
+function loadTemplateDetails(templateId) {
+    $.ajax({
+        url: '/kakao/index.php?route=getTemplateDetails',
+        type: 'GET',
+        data: { id: templateId },
+        dataType: 'json',
+        success: function(response) {
+            if (response.success) {
+                var template = response.template;
+                var fcallback = template.cs_phone_number;
+                var templateTitle = template.template_title;
+                var templateSubTitle = template.template_subtitle;
+                var strongTitle = template.strong_title;
+                var strongSubTitle = template.strong_sub_title;
+                var profile_key = template.profile_key;
+                var template_key = template.template_key;
+                var template_id = template.id;
+                if (strongTitle) {
+                    $('#previewHighlightTitle').css('border-top', '1px solid #bbb');
+                } else {
+                    $('#previewHighlightTitle').css('border-top', 'none');
+                }
+
+                $('#previewHighlightTitle').html(convertToHtml(templateTitle));
+                $('#previewHighlightSubtitle').text(templateSubTitle);
+                $('#previewStrongTitle').text(strongTitle);
+                $('#previewStrongSubTitle').text(strongSubTitle);
+
+                // template_title의 변수를 추출하여 동적으로 input 생성
+                var regex = /#\{(.*?)\}/g;
+                var matches;
+                var inputFields = '' +
+                    '<input type="hidden" name="template_id" value="' + template_id + '">' +
+                    '<input type="hidden" name="template_key" value="' + template_key + '">' +
+                    '<input type="hidden" name="profile_key" value="' + profile_key + '">' +
+                    '<input type="hidden" name="fcallback" value="' + fcallback + '">' +
+                    '<input type="text" name="fdestine" placeholder="수신자번호">' +
+                    '<input name="message" type="hidden" >';
+                while ((matches = regex.exec(templateTitle)) !== null) {
+                    inputFields += '<input type="text" name="variables[]" placeholder="' + matches[1] + '" data-varname="' + matches[1] + '">';
+                }
+                $('#template-send-form .fm-box.flex-c').html(inputFields);
+
+                // 각 변수 필드에 이벤트 리스너 추가
+                $('input[name="variables[]"]').on('input', function() {
+                    updatePreview(templateTitle);
+                });
+            } else {
+                alert('템플릿 정보를 불러오는 데 실패했습니다.');
+            }
+        },
+        error: function(xhr, status, error) {
+            alert('템플릿 정보를 불러오는 데 실패했습니다.');
+            console.error('Error: ' + error);
+            console.error('Status: ' + status);
+            console.dir(xhr);
+        }
+    });
+}
+function loadTemplate(page = 1, profile_id, template_type,template_emphasize_type) {
+    const statusMapping = {
+        '01': '승인',
+        '02': '승인대기',
+        'R': '승인대기',
+        'A': '정상',
+        'S': '중단'
+    };
+    const inspectionStatusMapping = {
+        // REG : 등록, REQ : 심사요청, APR : 승인,
+        // REJ : 반려
+        'REG': '등록',
+        'REQ': '심사요청',
+        'APR': '승인',
+        'REJ': '반려'
+    };
+    const templateTypeMapping = {
+        'BA': '기본형',
+        'EX': '부가정보형',
+        'AD': '채널추가형',
+        'MI': '복합형',
+        'ITEM_LIST': '아이템리스트형',
+        'TEXT': '강조표기형'
+    };
+    $.ajax({
+        url: '/kakao/index.php?route=getUserTemplate',
+        type: 'GET',
+        data: { page: page, profile_id: profile_id, template_type: template_type,template_emphasize_type:template_emphasize_type },
+        dataType: 'json',
+        success: function(response) {
+
+            if (response.success) {
+                var profilesTable = $('#templatelistTable tbody');
+                profilesTable.empty();
+                response.template.forEach(function(template) {
+                    var statusText = statusMapping[template.status];
+                    var templateText = templateTypeMapping[template.template_type]
+                    var inspectionStatusText = inspectionStatusMapping[template.inspection_status]
+                    var reviewButton = template.status === 'R' ? '<button class="btn btn-t-3 btn-c-3">검수요청</button>' : '';
+                    var row = `<tr>
+                            <td>${template.id}</td>
+                            <td><a href="#" id="templateSelect" data-id="${template.id}">${template.template_name}</a></td>
+                            <td>${templateText}</td>
+                            <td>${template.created_at}</td>
+                            <td>${inspectionStatusText}</td>
+                            <td>${statusText}</td>
+                          
+                        </tr>`;
+                    profilesTable.append(row);
+                });
+
+                // 페이징 처리
+                var totalPages = Math.ceil(response.total / 10);
+                var pagination = $('#pagination');
+                pagination.empty();
+                for (var i = 1; i <= totalPages; i++) {
+                    var pageLink = `<a href="#" class="page-link ${i === page ? 'on' : ''}" data-page="${i}">${i}</a>`;
+                    pagination.append(pageLink);
+                }
+            } else {
+                var profilesTable = $('#templatelistTable tbody');
+                profilesTable.empty();
+                var row = '<tr>'+
+                    '<td colspan="4" class="no-data"><span class="ir-b i-nodata">검색 결과가 없습니다.</span></td>'+
+                    '</tr>';
+                profilesTable.append(row);
+            }
+        },
+        error: function(xhr, status, error) {
+            alert('신청 목록을 불러오는 데 실패했습니다. 다시 시도해 주세요.');
+            console.error('Error: ' + error);
+            console.error('Status: ' + status);
+            console.dir(xhr);
+        }
+    });
+}
 
 function loadCategories() {
     $.getJSON('index.php?route=getCategories', function(categories) {
@@ -244,7 +588,7 @@ function loadCategories() {
 
             const childCategories = categories.filter(category => category.parent_id === parentCategory.id);
             childCategories.forEach(childCategory => {
-                const option = $('<option>').val(childCategory.id).text(childCategory.name);
+                const option = $('<option>').val(childCategory.code).text(childCategory.name);
                 optgroup.append(option);
             });
 
@@ -402,6 +746,14 @@ $(document).ready(function() {
         } else {
             alert('변수명을 입력해 주세요.');
         }
+    });
+});
+function convertToHtml(text) {
+    return text.replace(/\n/g, '<br>');
+}
+$(document).ready(function() {
+    $('#goTemplateReg').on('click', function() {
+        window.location.href = '/kakao/index.php?route=template'; // 이동할 URL을 여기에 입력하세요.
     });
 });
 

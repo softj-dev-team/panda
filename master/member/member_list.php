@@ -66,7 +66,7 @@ if ($s_order == 1) {
 	$order_by = " order by user_name desc ";
 }
 
-$query = "select *,(select com_name from member_info_company where 1 and is_del='N' and idx=a.partner_idx order by idx desc limit 0,1) as com_name,(select mb_short_fee from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as mb_short_fee,(select mb_long_fee from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as mb_long_fee,(select mb_img_fee from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as mb_img_fee,(select cur_mile from member_point where 1 and point_sect='smspay' and mile_sect != 'P' and member_idx=a.idx order by idx desc limit 0,1) as current_point from member_info a where 1 " . $where . $order_by . " limit " . $StarRowNum . " , " . $EndRowNum;
+$query = "select *,(select com_name from member_info_company where 1 and is_del='N' and idx=a.partner_idx order by idx desc limit 0,1) as com_name,(select mb_short_fee from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as mb_short_fee,(select mb_long_fee from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as mb_long_fee,(select mb_img_fee from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as mb_img_fee,(select mb_kko_fee from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as mb_kko_fee,(select cur_mile from member_point where 1 and point_sect='smspay' and mile_sect != 'P' and member_idx=a.idx order by idx desc limit 0,1) as current_point from member_info a where 1 " . $where . $order_by . " limit " . $StarRowNum . " , " . $EndRowNum;
 //echo "<br><br>쿼리 = ".$query."<br><Br>";
 $result = mysqli_query($gconnet, $query);
 
@@ -427,6 +427,7 @@ $num_tdy = mysqli_num_rows($result_cnt_tdy);
 														SMS : <?= number_format($row['mb_short_fee'], 2) ?>
 														<br>LMS : <?= number_format($row['mb_long_fee'], 2) ?>
 														<br>MMS : <?= number_format($row['mb_img_fee'], 2) ?>
+                                                        <br>알림톡 : <?= number_format($row['mb_kko_fee'], 2) ?>
 													</a></td>
 												<td><a href="javascript:go_view('<?= $row['idx'] ?>');"><?= number_format($row['current_point'], 2) ?></a></td>
 												<td><a href="javascript:go_view('<?= $row['idx'] ?>');"><?= $master_ok ?></a></td>

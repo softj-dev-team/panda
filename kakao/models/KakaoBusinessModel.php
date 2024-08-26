@@ -26,10 +26,37 @@ class KakaoBusinessModel
             throw new Exception('Failed to save profile: ' . $e->getMessage());
         }
     }
+    public function authenticationSaveProfileKey($user_idx,$chananel_name,$cs_phone_number,$profileKey,$industry,$status)
+    {
+        try {
+            $stmt = $this->conn->prepare("INSERT INTO kakao_business (user_idx, chananel_name, cs_phone_numberprofile_key,industry,status) VALUES (:user_idx,:chananel_name, :cs_phone_number,:profile_key,:industry,:status)");
+            $stmt->bindParam(':user_idx', $user_idx, PDO::PARAM_INT);
+            $stmt->bindParam(':chananel_name', $chananel_name);
+            $stmt->bindParam(':cs_phone_number', $cs_phone_number);
+            $stmt->bindParam(':profile_key', $profileKey);
+            $stmt->bindParam(':industry', $industry);
+            $stmt->bindParam(':status', $status);
+            $stmt->execute();
+        } catch (Exception $e) {
+            throw new Exception('Failed to request profile: ' . $e->getMessage());
+        }
+    }
+    public function authenticationRequest($user_idx,$chananel_name,$cs_phone_number)
+    {
+        try {
+            $stmt = $this->conn->prepare("INSERT INTO kakao_business (user_idx, chananel_name, cs_phone_number) VALUES (:user_idx,:chananel_name, :cs_phone_number)");
+            $stmt->bindParam(':user_idx', $user_idx, PDO::PARAM_INT);
+            $stmt->bindParam(':chananel_name', $chananel_name);
+            $stmt->bindParam(':cs_phone_number', $cs_phone_number);
+            $stmt->execute();
+        } catch (Exception $e) {
+            throw new Exception('Failed to request profile: ' . $e->getMessage());
+        }
+    }
     public function getProfiles($user_idx,$offset, $limit)
     {
         try {
-            $stmt = $this->conn->prepare("SELECT * FROM kakao_business where user_idx = :user_idx LIMIT :limit OFFSET :offset");
+            $stmt = $this->conn->prepare("SELECT * FROM kakao_business where user_idx = :user_idx order by id desc LIMIT :limit OFFSET :offset");
             $stmt->bindParam(':user_idx', $user_idx, PDO::PARAM_INT);
             $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
             $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
@@ -43,7 +70,7 @@ class KakaoBusinessModel
     public function getUserProfiles($user_idx)
     {
         try {
-            $stmt = $this->conn->prepare("SELECT id, business_name FROM kakao_business WHERE status = '01' AND user_idx = :user_idx");
+            $stmt = $this->conn->prepare("SELECT id, business_name,isp_code,profile_key,chananel_name FROM kakao_business WHERE status = '01' AND user_idx = :user_idx");
             $stmt->bindParam(':user_idx', $user_idx, PDO::PARAM_INT);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -51,10 +78,22 @@ class KakaoBusinessModel
             throw new Exception('Failed to retrieve profiles: ' . $e->getMessage());
         }
     }
+    public function getUserProfileByChananelName($user_idx,$chananel_name)
+    {
+        try {
+            $stmt = $this->conn->prepare("SELECT id, chananel_name FROM kakao_business WHERE user_idx = :user_idx and chananel_name = :chananel_name");
+            $stmt->bindParam(':user_idx', $user_idx, PDO::PARAM_INT);
+            $stmt->bindParam(':chananel_name', $chananel_name);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            throw new Exception('Failed to retrieve profiles: ' . $e->getMessage());
+        }
+    }
     public function getProfilesForMaster($offset, $limit)
     {
         try {
-            $stmt = $this->conn->prepare("SELECT * FROM kakao_business LIMIT :limit OFFSET :offset");
+            $stmt = $this->conn->prepare("SELECT * FROM kakao_business order by id desc LIMIT :limit OFFSET :offset");
             $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
             $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
             $stmt->execute();
@@ -86,6 +125,7 @@ class KakaoBusinessModel
             throw new Exception('Failed to retrieve total profiles: ' . $e->getMessage());
         }
     }
+
     public function updateStatus($id, $status,$profile_key)
     {
         try {
