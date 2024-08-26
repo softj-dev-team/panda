@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <title>CHUNGDAHM</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <link rel="shortcut icon" type="image/x-icon" href="../images/common/favicon.ico" />
+  <link rel="apple-touch-icon-precomposed" href="../images/common/apple-touch-icon.png" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <!-- og Tags // -->
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="../images/common/og-share.jpg" />
+  <!-- // og Tags -->
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/sub.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&amp;display=swap" rel="stylesheet">
+  <script src="../js/ui.vendor.js"></script>
+  <script src="../js/ui.js"></script>
+
+<!--  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
+<!--  <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>-->
+</head>
+
+<body>
+<!--[if lte IE 9]>
+<p class="alert-ie">현재 웹브라우저에서는 사이트가 정상적으로 표시되지 않을 수 있습니다. <strong><a href="http://browsehappy.com/" target="_blank">여기를 클릭</a></strong>하여 웹브라우저를 업그레이드 하세요.</p>
+<!--![endif]-->
+<div class="skip"><a href="#contents"><span>본문바로가기</span></a></div>
+<div class="wrap">
+  <!-- header // -->
+  <header class="header portal ig"><!--class 'portal' 추가 : portal에서만 새 gnb 적용 가능하도록-->
+    <div class="sc-wrap-mo">
+      <div class="sc-wrap">
+        <div class="inner-top">
+          <!-- <button type="button" class="page-back" onclick="history.back(-1)"><span class="irg ig-back">뒤로가기</span></button> 마이페이지일 경우만 -->
+          <h1 class="gnb-logo"><a href="../index.html"><span class="irg ig-logo ig">CREVERSE</span></a></h1>
+
+          <!-- 브랜드 선택 삭제// -->
+
+          <!-- // 브랜드 선택 -->
+
+
+          <!-- 햄버거메뉴[전체메뉴] // -->
+          <button type="button" class="gnb-all-btn"><span class="line"></span></button>
+          <!-- // 햄버거메뉴[전체메뉴] -->
+        </div>
+        <div class="inner">
+          <div class="gnb-right">
+            <!-- 로그인 상태 // -->
+            <div class="user">
+              <a href="#" class="irg ig-home-2 mo-show">Home</a>
+              <!-- <div class="item login"><a href="#none">로그인</a><span class="mo-show">을 해주세요.</span></div>
+              <div class="item mo-hide"><a href="#none">회원가입</a></div> -->
+<!--              <div class="item usermod mo-show"><a href="#none"><span class="irg ig-usermod">정보수정</span></a></div>-->
+              <div class="item tip-balloon" data-dropdown=''>
+                <a href="#none" class="tip-subj" data-act="title">마이페이지</a>
+                <div class="tip-cont my-head-tip" data-act="cont" style="display:;">
+                    <span class="profile">
+                      <strong>김청담</strong>님 안녕하세요.
+                      <button type="button" class="irg ig-logout">로그아웃</button>
+                      <button type="button" class="payment">수강료 납입내역 조회</button>
+                    </span>
+                  <!-- multi-branch -->
+                  <div class="list" data-scrollbar='{"axis":"y"}'>
+                    <ul class="childs">
+                      <li>
+                        <!-- 학부모(자녀1) // -->
+                        <span class="names">
+                            <span class="user-name"><strong>김선아</strong>학생</span>
+                          <!-- chonors 신청완료 -->
+                            <button type="button" class="chonors-member">C-Honors<span class="ir">이동</span></button>
+                            <span class="branch-name cd"><em></em>청담어학원 청담 본원</span>
+                            <span class="btns">
+                              <a href="#none">마이페이지</a>
+                              <a href="#none">학원 홈페이지</a>
+                            </span>
+                            <span class="branch-name ap"><em></em>April어학원 청담 본원</span>
+                            <span class="btns">
+                              <a href="#none">마이페이지</a>
+                              <a href="#none">학원 홈페이지</a>
+                            </span>
+                            <span class="branch-name bouncy"><em></em>Bouncy 센터</span>
+                            <span class="btns">
+                              <a href="#none">마이페이지</a>
+                              <a href="#none">홈페이지</a>
+                            </span>
+                            <span class="branch-name bouncy-eGO"><em></em>Bouncy eGO 센터</span>
+                            <span class="btns">
+                              <a href="#none">마이페이지</a>
+                              <a href="#none">홈페이지</a>
+                            </span>
+                          </span>
+                        <!-- // 학부모(자녀1) -->
+                      </li>
+                      <li>
+                        <!-- 학부모(자녀2) // -->
+                        <span class="names">
+                            <span class="user-name"><strong>김선아2</strong>학생</span>
+                          <!-- chonors 신청이후 -->
+                            <button type="button" class="chonors-member-proceed">C-Honors<span
+                              class="ir">이동</span></button>
+                            <span class="branch-name noisy"><em></em>NOISY 센터</span>
+                            <span class="btns">
+                              <a href="#none">마이페이지</a>
+                              <a href="#none">홈페이지</a>
+                            </span>
+                            <span class="branch-name ig"><em></em>아이가르텐</span>
+                            <span class="btns">
+                              <a href="#none">마이페이지</a>
+                            </span>
+                          </span>
+                        <!-- // 학부모(자녀2) -->
+                      </li>
+                      <li>
+                        <!-- 학부모(자녀3) // -->
+                        <span class="names">
+                            <span class="user-name"><strong>김선아3</strong>학생</span>
+                          <!-- chonors 신청이전 -->
+                            <button type="button" class="chonors">C-Honors 가입<span class="ir">이동</span></button>
+                            <span class="branch-name pbp"><em></em>Page by Page 대치</span>
+                            <span class="btns">
+                              <a href="#none">마이페이지</a>
+                              <a href="#none">학원 홈페이지</a>
+                            </span>
+                          </span>
+                        <!-- // 학부모(자녀3) -->
+                      </li>
+                      <!-- 학부모(자녀 없음)
+                      <li class="single">
+                        <span class="btns">
+                          <a href="#none">마이페이지</a>
+                        </span>
+                      </li>
+                      -->
+                    </ul>
+                  </div>
+                  <!--// multi-branch -->
+                </div>
+              </div>
+              <div class="item mo-hide"><a href="#none">로그아웃</a></div>
+            </div>
+            <!-- // 로그인 상태 -->
+
+            <!-- 바로가기 // -->
+            <div class="util-1 igutil">
+              <div class="item tip-balloon" data-dropdown=''>
+                <a href="#none" class="i-pay tip-subj" data-act="title"><span>수강료납입</span></a>
+                <div class="tip-cont pay-head-tip" data-act="cont">
+                  <ul class="list">
+                    <li><a href="#none">김선아</a></li>
+                    <li><a href="#none">김정아</a></li>
+                    <li><a href="#none">김선아</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="item"><a href="#none" class="i-book"><span>교재구매</span></a></div>
+              <div class="item mo-hide"><a href="#none" class="i-myinfo"><span>내 정보</span></a></div>
+<!--              <div class="item mo-show"><a href="#none" class="i-gps"><span>학원보기</span></a></div>-->
+            </div>
+            <!-- // 바로가기 -->
+          </div>
+
+        </div>
+
+        <!-- 전체메뉴 // -->
+        <div class="gnb-all-nav">
+          <ul class="group" data-accordion='{"reset":true,"media":"(max-width: 767px)"}'>
+            <li data-menu='main' data-act='title'><a href="#none" class="im-1">iGARTEN<button type="button" data-act="btn" class="mo-show">하위메뉴 토글</button></a>
+                <ul class="sub" data-act='cont'>
+                  <li><a href="#none">브랜드소개</a></li>
+                  <li><a href="#none">입학절차</a></li>
+                  <li><a href="#none">커리큘럼</a></li>
+                </ul>
+            </li>
+            <li data-menu='main' data-act='title'><a href="#none" class="im-2">CAMPUS<button type="button" data-act="btn" class="mo-show">하위메뉴 토글</button></a>
+                <ul class="sub" data-act='cont'>
+                  <li><a href="#none">국내학원</a></li>
+                  <li><a href="#none">해외학원</a></li>
+                </ul>
+            </li>
+            <li data-menu='main' data-act='title'><a href="#none" class="im-3">NEWS<button type="button" data-act="btn" class="mo-show">하위메뉴 토글</button></a>
+                <ul class="sub" data-act='cont'>
+                  <li><a href="#none">NEWS</a>
+                  </li>
+                </ul>
+            </li>
+            <li data-menu='util' data-act='title' class="allmenu-my"><a href="#none">마이페이지<button type="button" data-act='btn' class="mo-show">하위메뉴 토글</button></a>
+              <ul class="sub" data-act='cont'>
+                <li><a href="#none">수강료 납입/조회</a>
+                  <ul class="sub-3">
+                    <li><a href="#none">수강료 납입</a></li>
+                    <li><a href="#none">납입내역 조회</a></li>
+                  </ul>
+                </li>
+                <li><a href="#none">문의현황</a>
+                  <ul class="sub-3">
+                    <li><a href="#none">Q&A(본사문의)</a></li>
+                    <li><a href="#none">1:1문의(학원문의)</a></li>
+                    <li><a href="#none">온라인 학습문의</a></li>
+                  </ul>
+                </li>
+                <li><a href="#none">입학시험 결과</a></li>
+              </ul>
+            </li>
+
+          </ul>
+        </div>
+        <!-- // 전체메뉴 -->
+
+        <!-- GNB // -->
+        <div class="gnb-nav mo-hide">
+          <!-- 전체 메뉴 중 [data-menu='main'] 항목 가져옴. -->
+        </div>
+        <!-- // GNB -->
+      </div>
+      <!-- Header내 Footer 영역 // -->
+      <div class="external-link">
+        <div class="link-group familysite" data-dropdown='{"effect":"slide","focusout":false}'>
+          <button type="button" class="subj g-toggle" data-act='title'>Family Site</button>
+          <div class="list" data-act='cont'>
+            <ul class="group">
+              <li><a href="https://creverse.com/" target="_blank" title="새창으로 열립니다." class="irg ig-portal">크레버스</a>
+              </li>
+              <!-- <li><a href="http://company.chungdahm.com" target="_blank" title="새창으로 열립니다.">회사소개</a></li> -->
+            </ul>
+            <dl class="group">
+              <dt class="full">브랜드 채널</dt>
+              <dd><a href="https://www.chungdahm.com/">Learning Center</a></dd>
+              <dd><a href="https://vlc.chungdahm.com/" target="_blank" title="새창으로 열립니다.">VLC</a></dd>
+            </dl>
+            <dl class="group">
+              <dt class="full">제휴 프로그램</dt>
+              <dd><a href="http://ei.chungdahm.com/expression/" target="_blank" title="새창으로 열립니다.">표현어학원</a></dd>
+              <dd><a href="http://cis.chungdahm.com" target="_blank" title="새창으로 열립니다.">CIS</a></dd>
+              <dd><a href="http://clue.chungdahm.com/" target="_blank" title="새창으로 열립니다.">클루빌</a></dd>
+              <dd><a href="http://www.bluesprings.co.kr/" target="_blank" title="새창으로 열립니다.">블루스프링스</a></dd>
+              <!-- <dd><a href="http://www.letmefly.co.kr/" target="_blank" title="새창으로 열립니다.">Let me fly</a></dd> -->
+            </dl>
+            <dl class="group">
+              <dt>러닝 솔루션</dt>
+              <dd><a href="http://www.loudclass.com/" target="_blank" title="새창으로 열립니다.">Loudclass</a></dd>
+            </dl>
+            <dl class="group">
+              <dt>교재 쇼핑몰</dt>
+              <dd><a href="http://www.learn21.co.kr/" target="_blank" title="새창으로 열립니다.">Learn21</a></dd>
+            </dl>
+            <dl class="group">
+              <dt>강사채용</dt>
+              <dd><a href="http://www.teachinkorea.com/" target="_blank" title="새창으로 열립니다.">Faculty Recruiting</a>
+              </dd>
+            </dl>
+          </div>
+        </div>
+        <div class="link-group other" data-dropdown='{"effect":"slide","focusout":false}'>
+          <button type="button" class="subj g-toggle" data-act='title'>크레버스 앱</button>
+          <ul class="list" data-act='cont'>
+            <!-- 20200303 modify -->
+            <li><a class="irg-b ig-app-1 js-allim" href="#none"><span>청담올림</span></a></li>
+            <li><a class="irg-b ig-app-2" href="#none"><span>청담러닝포털</span></a></li>
+            <li><a class="irg-b ig-app-6" href="#none"><span>CREVERSE Learning Portal</span></a></li>
+            <li><a class="irg-b ig-app-3 js-buff" href="#none"><span>청담버프</span></a></li>
+            <li><a class="irg-b ig-app-8" href="#none"><span>April Buff</span></a></li>
+            <li><a class="irg-b ig-app-4" href="#none"><span>BOUNCY Buff</span></a></li>
+            <li><a class="irg-b ig-app-5" href="#none"><span>청담 e-Library</span></a></li>
+            <li><a class="irg-b ig-app-7" href="#none"><span>April VENA Talk</span></a></li>
+            <li><a class="irg-b ig-app-9" href="#none"><span>April MeMe</span></a></li>
+            <li><a class="irg-b ig-app-10" href="#none"><span>BOUNCY MeMe</span></a></li>
+            <li><a class="irg-b ig-app-11" href="#none"><span>Thinking MeMe</span></a></li>
+            <li><a class="irg-b ig-app-12" href="#none"><span>ChunkToon</span></a></li>
+            <!-- <li><a class="irg-b ig-app-4" href="#none">Phonics Concert</a></li> -->
+            <!--// 20200303 modify -->
+          </ul>
+        </div>
+        <div class="sns">
+          <a href="#none"><span class="irg ig-sns-fb">페이스북</span></a>
+          <a href="#none"><span class="irg ig-sns-bg">블로그</span></a>
+          <a href="#none"><span class="irg ig-sns-ig">인스타그램</span></a>
+          <a href="#none"><span class="irg ig-sns-yt">유튜브</span></a>
+        </div>
+
+        <a href="#" class="irg-b ig-logout-2 mo-show">로그아웃</a>
+      </div>
+      <!-- // Header내 Footer 영역 -->
+    </div>
+    <div class="quickNav">
+      <ul class="Qright">
+        <li class="shareLi">
+          <ul class="shareUl">
+            <li><button type="button" class="Qfacebook"><span>페이스북</span></button></li>
+            <li><button type="button" class="Qblog"><span>블로그</span></button></li>
+            <li><button type="button" class="Qband"><span>밴드</span></button></li>
+            <li><button type="button" class="Qkakao"><span>카카오</span></button></li>
+            <li><button type="button" class="Qlink"><span>링크</span><p class="tooltip">링크복사</p></button></li>
+          </ul>
+          <button type="button" class="share-btn"><span>공유하기</span></button>
+        </li>
+        <li class="findBtn edu-case" ><button data-edusrc="f-head-brand-1" class="edu-btn"><span>학원찾기</span></button></li>
+        <li class="topLi"><button type="button" class="top-btn"><span>TOP</span></button></li>
+      </ul>
+      <div class="edu-select">
+        <div class="edu-inner">
+          <button type="button" class="close">닫기</button>
+          <div class="nearest"><a href="#none" class="irg-b ig-point">내 주변 어학원 보기</a></div>
+          <div class="brand-check mo-hide" style="display: none;">
+            <span class="brand fm-trans ty-1">
+              <input type="radio" name="f-head-brand" id="f-head-brand-1">
+              <label for="f-head-brand-1"><span class="irg-b ig-brand-1">청담어학원</span></label>
+            </span>
+            <span class="brand fm-trans ty-2">
+              <input type="radio" name="f-head-brand" id="f-head-brand-2">
+              <label for="f-head-brand-2"><span class="irg-b ig-brand-2">April어학원</span></label>
+            </span>
+            <span class="brand fm-trans ty-3">
+              <input type="radio" name="f-head-brand" id="f-head-brand-3">
+              <label for="f-head-brand-3"><span class="irg-b ig-brand-3">아이가르텐</span></label>
+            </span>
+          </div>
+          <div class="zone">
+            <div class="mo-hide">
+              <h3 class="subj irg-b ig-zone">지역선택 <small>원하는 지역을 선택해주세요.</small></h3>
+              <div class="list" data-scrollbar='{"axis":"y"}'>
+                <ul>
+                  <li><button type="button" data-for="edusearchZone" class="option irg-b ig-option">전체</button></li>
+                  <li><button type="button" data-for="edusearchZone" class="option irg-b ig-option">서울특별시</button></li>
+                  <li><button type="button" data-for="edusearchZone" class="option irg-b ig-option">경기도</button></li>
+                  <li><button type="button" data-for="edusearchZone" class="option irg-b ig-option">부산광역시</button></li>
+                  <li><button type="button" data-for="edusearchZone" class="option irg-b ig-option">세종특별시</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="edu">
+            <div class="">
+              <h3 class="subj irg-b ig-edu">학원선택 <small>원하는 학원을 선택해주세요.</small></h3>
+              <div class="mo-show">
+                <select id="edusearchZone" class="fm-sel-3" data-placeholder='지역을 선택해주세요.'>
+                  <option>지역을 선택해주세요.</option>
+                  <option>전체</option>
+                  <option>서울특별시</option>
+                  <option>경기도</option>
+                  <option>부산광역시</option>
+                  <option>세종특별시</option>
+                </select>
+              </div>
+              <div class="mo-show moHr">
+                <p class="searchP">전체 <span>25</span>건 검색결과가 있습니다</p>
+              </div>
+              <div class="list" data-scrollbar='{"axis":"y"}'>
+                <ul>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">청담본원</a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">문정 브랜치</a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">송파 브랜치</a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">목동 제2 캠퍼스</a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">중계 브랜치 <span class="ico-txt-6"></span></a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">2 청담본원</a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">2 문정 브랜치</a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">2 송파 브랜치</a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">2 목동 제2 캠퍼스</a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">2 중계 브랜치 <span class="ico-txt-6"></span></a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">3 청담본원</a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">3 문정 브랜치</a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">3 송파 브랜치</a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">3 목동 제2 캠퍼스</a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">3 중계 브랜치 <span class="ico-txt-6"></span></a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">4 청담본원</a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">4 문정 브랜치</a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">4 송파 브랜치</a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">4 목동 제2 캠퍼스</a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">4 중계 브랜치 <span class="ico-txt-6"></span></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="all-bg"></div>
+  </header>
+  <!-- // header -->
+
+  <!-- container // -->
+  <div id="container" class="container">
+    <div class="sub-vis-wrap">
+      <h2 class="sub-title">청담소식<span class="sub-txt">청담러닝의 공지사항입니다.</span></h2>
+      <div class="sub-vis">
+        <img src="../images/sub/vis-channel.jpg" alt="" />
+      </div>
+    </div>
+
+    <!-- location // -->
+<!--    <div class="lnb">-->
+<!--      <div class="lnb-in">-->
+<!--        <ul class="nav">-->
+<!--          <li class="home"><a href="#none" class="home-in"><span class="ir i-home">홈</span></a></li>-->
+<!--          &lt;!&ndash; 전체 메뉴 중 .active 항목 가져옴. 전체 메뉴에 없는 페이지일 경우 별도 코드 추가해 주어야 함.-->
+<!--      <li class="dep" data-dropdown='{"effect" : "slide"}'><a href="#none" class="dep-in" data-act='title' data-addtitle="this">1Depth active</a> // 형제메뉴 있을 경우.-->
+<!--        <ul class="nav-sub" data-act='cont'>-->
+<!--          <li class="dep-2"><a href="#none" class="dep-2-in">1Depth 형제 메뉴</a></li>-->
+<!--        </ul>-->
+<!--      </li>-->
+<!--      <li class="dep"><a href="#none" class="dep-in" data-addtitle="this">2Depth active</a></li> // 형제메뉴 없을 경우. &ndash;&gt;-->
+<!--        </ul>-->
+
+<!--        &lt;!&ndash; 공유하기 // &ndash;&gt;-->
+<!--        <div class="share" data-dropdown="">-->
+<!--          <a href="#none" data-act='title' class="share-title"><span class="ir-b i-share-title">공유하기</span></a>-->
+<!--          <div class="share-cont" data-act='cont'>-->
+<!--            <h2 class="share-subj mo-show">공유하기 <button type="button" class="share-close"-->
+<!--                                                        data-act='close'>닫기</button></h2>-->
+<!--            <ul class="share-list">-->
+<!--              <li><a href="#none" class="ir-b i-share">페이스북</a></li>-->
+<!--              <li><a href="#none" class="ir-b i-share-2">블로그</a></li>-->
+<!--              <li><a href="#none" class="ir-b i-share-3">밴드</a></li>-->
+<!--              <li><a href="#none" class="ir-b i-share-4"><span class="iblock">카카오</span><span-->
+<!--                class="iblock">스토리</span></a></li>-->
+<!--              <li><a href="#none" class="ir-b i-share-5"><span class="iblock">URL</span><span-->
+<!--                class="iblock">복사</span></a></li>-->
+<!--            </ul>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; // 공유하기 &ndash;&gt;-->
+<!--      </div>-->
+<!--    </div>-->
+    <!-- // location -->
+
+    <div class="contents">
+      1&nbsp;&nbsp;2&nbsp;&nbsp;3&nbsp;&nbsp;4&nbsp;&nbsp;5&nbsp;&nbsp;6&nbsp;&nbsp;7&nbsp;&nbsp;8&nbsp;&nbsp;9&nbsp;&nbsp;<br />
+      10&nbsp;&nbsp;11&nbsp;&nbsp;12&nbsp;&nbsp;13&nbsp;&nbsp;14&nbsp;&nbsp;15&nbsp;&nbsp;16&nbsp;&nbsp;17&nbsp;&nbsp;18&nbsp;&nbsp;<br />
+      19&nbsp;&nbsp;20&nbsp;&nbsp;21&nbsp;&nbsp;22&nbsp;&nbsp;23&nbsp;&nbsp;24&nbsp;&nbsp;25&nbsp;&nbsp;26&nbsp;&nbsp;27&nbsp;&nbsp;<br />
+      28&nbsp;&nbsp;29&nbsp;&nbsp;30&nbsp;&nbsp;31&nbsp;&nbsp;32&nbsp;&nbsp;33&nbsp;&nbsp;34&nbsp;&nbsp;35&nbsp;&nbsp;36&nbsp;&nbsp;<br />
+      37&nbsp;&nbsp;38&nbsp;&nbsp;39&nbsp;&nbsp;40&nbsp;&nbsp;41&nbsp;&nbsp;42&nbsp;&nbsp;43&nbsp;&nbsp;44&nbsp;&nbsp;45&nbsp;&nbsp;<br />
+      46&nbsp;&nbsp;47&nbsp;&nbsp;48&nbsp;&nbsp;49&nbsp;&nbsp;50&nbsp;&nbsp;51&nbsp;&nbsp;52&nbsp;&nbsp;53&nbsp;&nbsp;54&nbsp;&nbsp;<br />
+      55&nbsp;&nbsp;56&nbsp;&nbsp;57&nbsp;&nbsp;58&nbsp;&nbsp;59&nbsp;&nbsp;60&nbsp;&nbsp;61&nbsp;&nbsp;62&nbsp;&nbsp;63&nbsp;&nbsp;<br />
+      64&nbsp;&nbsp;65&nbsp;&nbsp;66&nbsp;&nbsp;67&nbsp;&nbsp;68&nbsp;&nbsp;69&nbsp;&nbsp;70&nbsp;&nbsp;71&nbsp;&nbsp;72&nbsp;&nbsp;<br />
+      73&nbsp;&nbsp;74&nbsp;&nbsp;75&nbsp;&nbsp;76&nbsp;&nbsp;77&nbsp;&nbsp;78&nbsp;&nbsp;79&nbsp;&nbsp;80&nbsp;&nbsp;81&nbsp;&nbsp;<br />
+      82&nbsp;&nbsp;83&nbsp;&nbsp;84&nbsp;&nbsp;85&nbsp;&nbsp;86&nbsp;&nbsp;87&nbsp;&nbsp;88&nbsp;&nbsp;89&nbsp;&nbsp;90&nbsp;&nbsp;<br />
+      91&nbsp;&nbsp;92&nbsp;&nbsp;93&nbsp;&nbsp;94&nbsp;&nbsp;95&nbsp;&nbsp;96&nbsp;&nbsp;97&nbsp;&nbsp;98&nbsp;&nbsp;99&nbsp;&nbsp;<br />
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      100&nbsp;&nbsp;101&nbsp;&nbsp;102&nbsp;&nbsp;103&nbsp;&nbsp;104&nbsp;&nbsp;105&nbsp;&nbsp;106&nbsp;&nbsp;107&nbsp;&nbsp;108&nbsp;&nbsp;<br />
+      109&nbsp;&nbsp;110&nbsp;&nbsp;111&nbsp;&nbsp;112&nbsp;&nbsp;113&nbsp;&nbsp;114&nbsp;&nbsp;115&nbsp;&nbsp;116&nbsp;&nbsp;117&nbsp;&nbsp;<br />
+      118&nbsp;&nbsp;119&nbsp;&nbsp;120&nbsp;&nbsp;121&nbsp;&nbsp;122&nbsp;&nbsp;123&nbsp;&nbsp;124&nbsp;&nbsp;125&nbsp;&nbsp;126&nbsp;&nbsp;<br />
+      127&nbsp;&nbsp;128&nbsp;&nbsp;129&nbsp;&nbsp;130&nbsp;&nbsp;131&nbsp;&nbsp;132&nbsp;&nbsp;133&nbsp;&nbsp;134&nbsp;&nbsp;135&nbsp;&nbsp;<br />
+      136&nbsp;&nbsp;137&nbsp;&nbsp;138&nbsp;&nbsp;139&nbsp;&nbsp;140&nbsp;&nbsp;141&nbsp;&nbsp;142&nbsp;&nbsp;143&nbsp;&nbsp;144&nbsp;&nbsp;<br />
+      145&nbsp;&nbsp;146&nbsp;&nbsp;147&nbsp;&nbsp;148&nbsp;&nbsp;149&nbsp;&nbsp;150&nbsp;&nbsp;151&nbsp;&nbsp;152&nbsp;&nbsp;153&nbsp;&nbsp;<br />
+      154&nbsp;&nbsp;155&nbsp;&nbsp;156&nbsp;&nbsp;157&nbsp;&nbsp;158&nbsp;&nbsp;159&nbsp;&nbsp;160&nbsp;&nbsp;161&nbsp;&nbsp;162&nbsp;&nbsp;<br />
+      163&nbsp;&nbsp;164&nbsp;&nbsp;165&nbsp;&nbsp;166&nbsp;&nbsp;167&nbsp;&nbsp;168&nbsp;&nbsp;169&nbsp;&nbsp;170&nbsp;&nbsp;171&nbsp;&nbsp;<br />
+      172&nbsp;&nbsp;173&nbsp;&nbsp;174&nbsp;&nbsp;175&nbsp;&nbsp;176&nbsp;&nbsp;177&nbsp;&nbsp;178&nbsp;&nbsp;179&nbsp;&nbsp;180&nbsp;&nbsp;<br />
+      181&nbsp;&nbsp;182&nbsp;&nbsp;183&nbsp;&nbsp;184&nbsp;&nbsp;185&nbsp;&nbsp;186&nbsp;&nbsp;187&nbsp;&nbsp;188&nbsp;&nbsp;189&nbsp;&nbsp;<br />
+      190&nbsp;&nbsp;191&nbsp;&nbsp;192&nbsp;&nbsp;193&nbsp;&nbsp;194&nbsp;&nbsp;195&nbsp;&nbsp;196&nbsp;&nbsp;197&nbsp;&nbsp;198&nbsp;&nbsp;<br />
+      199&nbsp;&nbsp;200&nbsp;&nbsp;201&nbsp;&nbsp;202&nbsp;&nbsp;203&nbsp;&nbsp;204&nbsp;&nbsp;205&nbsp;&nbsp;206&nbsp;&nbsp;207&nbsp;&nbsp;<br />
+      208&nbsp;&nbsp;209&nbsp;&nbsp;210&nbsp;&nbsp;211&nbsp;&nbsp;212&nbsp;&nbsp;213&nbsp;&nbsp;214&nbsp;&nbsp;215&nbsp;&nbsp;216&nbsp;&nbsp;<br />
+      217&nbsp;&nbsp;218&nbsp;&nbsp;219&nbsp;&nbsp;220&nbsp;&nbsp;221&nbsp;&nbsp;222&nbsp;&nbsp;223&nbsp;&nbsp;224&nbsp;&nbsp;225&nbsp;&nbsp;<br />
+      226&nbsp;&nbsp;227&nbsp;&nbsp;228&nbsp;&nbsp;229&nbsp;&nbsp;230&nbsp;&nbsp;231&nbsp;&nbsp;232&nbsp;&nbsp;233&nbsp;&nbsp;234&nbsp;&nbsp;<br />
+      235&nbsp;&nbsp;236&nbsp;&nbsp;237&nbsp;&nbsp;238&nbsp;&nbsp;239&nbsp;&nbsp;240&nbsp;&nbsp;241&nbsp;&nbsp;242&nbsp;&nbsp;243&nbsp;&nbsp;<br />
+      244&nbsp;&nbsp;245&nbsp;&nbsp;246&nbsp;&nbsp;247&nbsp;&nbsp;248&nbsp;&nbsp;249&nbsp;&nbsp;250&nbsp;&nbsp;251&nbsp;&nbsp;252&nbsp;&nbsp;<br />
+      253&nbsp;&nbsp;254&nbsp;&nbsp;255&nbsp;&nbsp;256&nbsp;&nbsp;257&nbsp;&nbsp;258&nbsp;&nbsp;259&nbsp;&nbsp;260&nbsp;&nbsp;261&nbsp;&nbsp;<br />
+      262&nbsp;&nbsp;263&nbsp;&nbsp;264&nbsp;&nbsp;265&nbsp;&nbsp;266&nbsp;&nbsp;267&nbsp;&nbsp;268&nbsp;&nbsp;269&nbsp;&nbsp;270&nbsp;&nbsp;<br />
+    </div>
+  </div>
+  <!-- // container -->
+
+  <!-- footer // -->
+  <footer class="footer">
+    <div class="inner">
+          <span class="fmenu">
+            <span class="mid">
+              <a href="https://creverse.com/" target="_blank" title="새창으로 열립니다.">회사소개</a>
+              <a href="https://chungdahm.recruiter.co.kr" target="_blank" title="새창으로 열립니다.">인재채용</a>
+              <a href="../html/etc/CLPC_Footer_TE01P.html" onclick="termsLayer(); return false;">이용약관</a>
+              <a href="../html/etc/CLPC_Footer_PP01P.html"
+                 onclick="privacyLayer(); return false;"><strong>개인정보처리방침</strong></a>
+              <span class="cms">
+                <a href="#" target="_blank" title="새창으로 열립니다.">고객센터</a>
+              </span>
+            </span>
+          </span>
+      <address class="mo-show">© CREVERSE Inc.</address>
+      <div class="biz-info" data-dropdown='{"effect":"slide","focusout":false, "media":"(max-width: 767px)"}'>
+        <h2 class="biz-name"><button type="button" data-act='title' class="irg-a ig-arr-2">㈜크레버스</button></h2>
+        <div class="biz-cont" data-act='cont'>
+          <div class="info">
+            <span class="item">대표이사 <em>이충국</em></span>
+            <span class="item">주소 <em>서울특별시 강남구 테헤란로 521, 21층(삼성동, 파르나스타워)</em></span>
+            <span class="item">사업자등록번호 <em>211-87-16710</em></span>
+            <span class="item">통신판매업신고 <em>제 강남-8282호</em></span>
+            <span class="item">대표전화 <em>02-3429-9407</em></span>
+          </div>
+          <address class="mo-hide">Copyright © CREVERSE Inc. All rights reserved.</address>
+          <div class="awards" data-scrollbar='{"axis":"x"}'>
+            <div class="group">
+                  <span class="item irg-b ig-awards-1"><span class="mid">프리미엄브랜드지수 14년 <br class="mo-show" />연속
+                      1위</span></span>
+              <span class="item irg-b ig-awards-2"><span class="mid">2022 브랜드스타 9년 <br class="mo-show" />연속 1위</span></span>
+              <span class="item irg-b ig-awards-3"><span class="mid">대한민국 하이스트 <br class="mo-show" />브랜드 10년 연속
+                      1위</span></span>
+              <span class="item irg-b ig-awards-4"><span class="mid">ETS 공인 <br class="mo-show" />토플주니어 시험성적
+                      취득</span></span>
+              <span class="item irg-b ig-awards-5 js-isms"><span class="mid">[인증범위] 크레버스 온라인 교육 서비스 운영<br class="mo-show" />[유효기간] 2023-01-18 ~ 2026-01-17</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="external-link">
+        <div class="link-group familysite" data-dropdown='{"effect":"slide","focusout":false}'>
+          <button type="button" class="subj g-toggle" data-act='title'>Family Site</button>
+          <ul class="list" data-act='cont'>
+            <li class="ttl">브랜드 채널</li>
+            <li><a class="" href="#none"><span>Learning Center VLC</span></a></li>
+            <li><a class="" href="#none"><span class="link">iGARTEN</span></a></li>
+            <li><a class="" href="#none"><span class="link">씨큐브코딩</span></a></li>
+            <li><a class="" href="#none"><span class="link">크레버스 x</span></a></li>
+            <li><a class="" href="#none"><span class="link">EDGE</span></a></li>
+            <li><a class="" href="#none"><span class="link">codeAlive</span></a></li>
+            <li class="ttl">제휴 프로그램</li>
+            <li><a class="" href="#none" style="margin-right:5px;"><span>표현어학원</span></a><a class="" href="#none"><span>클루빌</span></a></li>
+            <li><a class="" href="#none"><span>블루스프링스</span></a></li>
+            <li style="margin-top: 8px;"><strong>러닝 솔루션 </strong><a class="" href="#none"><span>Louldclass</span></a></li>
+            <li><strong>교재 쇼핑몰 </strong><a class="" href="#none"><span>Learn21</span></a></li>
+            <li><strong>강사채용 </strong><a class="" href="#none"><span>Faculty recruiting</span></a></li>
+          </ul>
+        </div>
+        <div class="link-group other" data-dropdown='{"effect":"slide","focusout":false}'>
+          <button type="button" class="subj g-toggle" data-act='title'>크레버스 앱</button>
+          <ul class="list" data-act='cont'>
+            <!-- 20230102 modify -->
+            <li><a class="ig-app-1 js-allim" href="#none"><span>청담올림</span></a></li>
+            <li><a class="ig-app-6" href="#none"><span>CREVERSE Learning Portal</span></a></li>
+            <li><a class="ig-app-8" href="#none"><span>April Buff</span></a></li>
+            <li><a class="ig-app-5" href="#none"><span>청담 e-Library</span></a></li>
+            <li><a class="ig-app-9" href="#none"><span>April MeMe</span></a></li>
+            <li><a class=" ig-app-11" href="#none"><span>Thinking MeMe</span></a></li>
+            <li><a class=" ig-app-2" href="#none"><span>청담러닝포털</span></a></li>
+            <li><a class=" ig-app-3 js-buff" href="#none"><span>청담버프</span></a></li>
+            <li><a class=" ig-app-4" href="#none"><span>BOUNCY Buff</span></a></li>
+            <li><a class=" ig-app-7" href="#none"><span>April VENA Talk</span></a></li>
+            <li><a class=" ig-app-10" href="#none"><span>BOUNCY MeMe</span></a></li>
+            <li><a class=" ig-app-12" href="#none"><span>ChunkToon</span></a></li>
+            <!-- <li><a class="irg-b ig-app-4" href="#none">Phonics Concert</a></li> -->
+            <!--// 20230102 modify -->
+          </ul>
+        </div>
+        <div class="sns">
+          <a href="#none"><span class="irg ig-sns-fb">페이스북</span></a>
+          <a href="#none"><span class="irg ig-sns-bg">블로그</span></a>
+          <a href="#none"><span class="irg ig-sns-ig">인스타그램</span></a>
+          <a href="#none"><span class="irg ig-sns-yt">유튜브</span></a>
+        </div>
+
+        <a href="#" class="irg-b ig-logout-2 mo-show">로그아웃</a>
+      </div>
+    </div>
+  </footer>
+  <!-- // footer -->
+  <div id="js-termsLayer" class="pop-wrap pop-layer pop-w" data-uipopset='{"isDim" : true}'></div>
+  <div id="js-privacyLayer" class="pop-wrap pop-layer pop-w" data-uipopset='{"isDim" : true}'></div>
+  <script>
+    function termsLayer() {
+      var $layer = $jq("#js-termsLayer");
+      $layer
+        .load("../html/etc/CLPC_Footer_TE01P.html #pop-wrap>div", function (response, status, xhr) {
+          if (status == "error") {
+            termsLayer();
+          } else {
+            setTimeout(function () { ui.reInit($layer) }, 100);
+            $layer.data("uipopset", { isDim: true, callbackClose: function () { $layer.empty(); } }).uipop("open");
+          }
+        });
+    }
+    function privacyLayer() {
+      var $layer = $jq("#js-privacyLayer");
+      $layer
+        .load("../html/etc/CLPC_Footer_PP01P.html #pop-wrap>div", function (response, status, xhr) {
+          if (status == "error") {
+            privacyLayer();
+          } else {
+            setTimeout(function () { ui.reInit($layer) }, 100);
+            $layer.data("uipopset", { isDim: true, callbackClose: function () { $layer.empty(); } }).uipop("open");
+          }
+        });
+    }
+
+    $('.gnb-all-nav .group>li>a').click(function(){
+      console.log('1')
+      $(this).parent().toggleClass('active');
+      $(this).next('.sub').slideToggle();
+    });
+    $(".Qlink").on("click",function(){
+      $(".tooltip").html('링크복사됨');
+      $(".tooltip").addClass('on');
+      setTimeout( function(){ $(".tooltip").removeClass('on') ,$(".tooltip").html('링크복사'); } , 2000);
+    });
+    $(document).on('click', '.share-btn', function(){
+      $('.Qright .shareUl').slideToggle();
+    });
+    $('.Qright .edu-btn').click(function(){
+      $('.Qright .shareUl').slideUp();
+    });
+  </script>
+</div>
+
+</body>
+
+</html>

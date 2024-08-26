@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>CHUNGDAHM</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" type="image/x-icon" href="../../images/common/favicon.ico" />
+  <link rel="apple-touch-icon-precomposed" href="../../images/common/apple-touch-icon.png" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <link rel="stylesheet" href="../../css/global.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/sub.css">
+  <link rel="stylesheet" href="../../css/search.css">
+  <script src="../../js/ui.vendor.js"></script>
+  <script src="../../js/ui.js"></script>
+</head>
+
+<body>
+<div class="skip"><a href="#contents"><span>본문바로가기</span></a></div>
+<div class="wrap">
+  <!-- header // -->
+  <header class="header portal pcHeader"><!--class 'portal' 추가 : portal에서만 새 gnb 적용 가능하도록-->
+    <div class="sc-wrap-mo">
+      <div class="sc-wrap">
+        <div class="inner-top">
+          <!-- <button type="button" class="page-back" onclick="history.back(-1)"><span class="irg ig-back">뒤로가기</span></button> 마이페이지일 경우만 -->
+          <h1 class="gnb-logo"><a href="../index.html"><span class="irg ig-logo cr-logo">CREVERSE</span></a></h1>
+
+          <!-- 브랜드 선택 삭제// -->
+
+          <!-- // 브랜드 선택 -->
+          <!-- 햄버거메뉴[전체메뉴] // -->
+          <button type="button" class="gnb-all-btn"><span class="line"></span></button>
+          <!-- // 햄버거메뉴[전체메뉴] -->
+        </div>
+        <div class="inner">
+          <div class="gnb-right">
+            <!-- 로그인 상태 // -->
+            <div class="user">
+              <a href="#" class="irg ig-home-2 mo-show">Home</a>
+              <!-- <div class="item login"><a href="#none">로그인</a><span class="mo-show">을 해주세요.</span></div>
+              <div class="item mo-hide"><a href="#none">회원가입</a></div> -->
+              <!--              <div class="item usermod mo-show"><a href="#none"><span class="irg ig-usermod">정보수정</span></a></div>-->
+              <div class="item tip-balloon" data-dropdown=''>
+                <a href="#none" class="tip-subj" data-act="title">마이페이지</a>
+                <div class="tip-cont my-head-tip" data-act="cont">
+                    <span class="profile">
+                      <strong>김청담</strong>님 안녕하세요.
+                      <button type="button" class="irg ig-logout">로그아웃</button>
+                      <button type="button" class="payment">수강료 납입내역 조회</button>
+                    </span>
+                  <!-- multi-branch -->
+                  <div class="list" data-scrollbar='{"axis":"y"}'>
+                    <ul class="childs">
+                      <li>
+                        <!-- 학부모(자녀1) // -->
+                        <span class="names">
+                            <span class="user-name"><strong>김선아</strong>학생</span>
+                          <!-- chonors 신청완료 -->
+                            <button type="button" class="chonors-member">C-Honors<span class="ir">이동</span></button>
+                            <span class="branch-name cd"><em></em>청담어학원 청담 본원</span>
+                            <span class="btns">
+                              <a href="#none">마이페이지</a>
+                              <a href="#none">학원 홈페이지</a>
+                            </span>
+                            <span class="branch-name ap"><em></em>April어학원 청담 본원</span>
+                            <span class="btns">
+                              <a href="#none">마이페이지</a>
+                              <a href="#none">학원 홈페이지</a>
+                            </span>
+                            <span class="branch-name bouncy"><em></em>Bouncy 센터</span>
+                            <span class="btns">
+                              <a href="#none">마이페이지</a>
+                              <a href="#none">홈페이지</a>
+                            </span>
+                            <span class="branch-name bouncy-eGO"><em></em>Bouncy eGO 센터</span>
+                            <span class="btns">
+                              <a href="#none">마이페이지</a>
+                              <a href="#none">홈페이지</a>
+                            </span>
+                          </span>
+                        <!-- // 학부모(자녀1) -->
+                      </li>
+                      <li>
+                        <!-- 학부모(자녀2) // -->
+                        <span class="names">
+                            <span class="user-name"><strong>김선아2</strong>학생</span>
+                          <!-- chonors 신청이후 -->
+                            <button type="button" class="chonors-member-proceed">C-Honors<span
+                              class="ir">이동</span></button>
+                            <span class="branch-name noisy"><em></em>NOISY 센터</span>
+                            <span class="btns">
+                              <a href="#none">마이페이지</a>
+                              <a href="#none">홈페이지</a>
+                            </span>
+                            <span class="branch-name ig"><em></em>아이가르텐</span>
+                            <span class="btns">
+                              <a href="#none">마이페이지</a>
+                            </span>
+                          </span>
+                        <!-- // 학부모(자녀2) -->
+                      </li>
+                      <li>
+                        <!-- 학부모(자녀3) // -->
+                        <span class="names">
+                            <span class="user-name"><strong>김선아3</strong>학생</span>
+                          <!-- chonors 신청이전 -->
+                            <button type="button" class="chonors">C-Honors 가입<span class="ir">이동</span></button>
+                            <span class="branch-name pbp"><em></em>Page by Page 대치</span>
+                            <span class="btns">
+                              <a href="#none">마이페이지</a>
+                              <a href="#none">학원 홈페이지</a>
+                            </span>
+                          </span>
+                        <!-- // 학부모(자녀3) -->
+                      </li>
+                      <!-- 학부모(자녀 없음)
+                      <li class="single">
+                        <span class="btns">
+                          <a href="#none">마이페이지</a>
+                        </span>
+                      </li>
+                      -->
+                    </ul>
+                  </div>
+                  <!--// multi-branch -->
+                </div>
+              </div>
+              <div class="item mo-hide"><a href="#none">로그아웃</a></div>
+            </div>
+            <!-- // 로그인 상태 -->
+
+            <!-- 바로가기 // -->
+            <div class="util-1">
+              <div class="item tip-balloon" data-dropdown=''>
+                <a href="#none" class="i-pay tip-subj" data-act="title"><span>수강료납입</span></a>
+                <div class="tip-cont pay-head-tip" data-act="cont">
+                  <ul class="list">
+                    <li><a href="#none">김선아</a></li>
+                    <li><a href="#none">김정아</a></li>
+                    <li><a href="#none">김선아</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="item"><a href="#none" class="i-book"><span>교재구매</span></a></div>
+              <div class="item mo-hide"><a href="#none" class="i-myinfo"><span>내 정보</span></a></div>
+              <div class="item mo-show"><a href="#none" class="i-gps"><span>학원보기</span></a></div>
+            </div>
+            <!-- // 바로가기 -->
+          </div>
+
+        </div>
+
+        <!-- 전체메뉴 // -->
+        <div class="gnb-all-nav">
+          <ul class="group" data-accordion='{"reset":true,"media":"(max-width: 767px)"}'>
+            <li data-menu='main'><a href="#none" class="im-1">브랜드</a>
+              <ul class="sub" data-act='cont'>
+                <li><a href="#none" class="cdi">청담어학원</a></li>
+                <li><a href="#none" class="april">April어학원</a></li>
+                <li><a href="#none" class="cms"><span>CMS</span>영재교육센터</a></li>
+                <li><a href="#none" class="cms">CMS영재관</a></li>
+              </ul>
+            </li>
+            <li data-menu='main'><a href="#none" class="im-2">학원찾기</a>
+              <ul class="sub" data-act='cont'>
+                <li><a href="#none">국내학원</a></li>
+                <li><a href="#none">해외학원</a></li>
+              </ul>
+            </li>
+            <li data-menu='main'><a href="#none" class="im-3">채널 크레버스</a>
+              <ul class="sub" data-act='cont'>
+                <li><a href="#none">크레버스 소식</a>
+                </li>
+                <li><a href="#none">크레버스 스토리</a>
+                </li>
+                <li><a href="#none">톡톡에듀<!-- <sup>+</sup> --></a></li>
+                <li><a href="#none">이벤트</a></li>
+              </ul>
+            </li>
+            <li data-menu='util' data-act='title' class="allmenu-my"><a href="#none">마이페이지<button type="button" data-act='btn' class="mo-show">하위메뉴 토글</button></a>
+              <ul class="sub" data-act='cont'>
+                <li><a href="#none">수강료 납입/조회</a>
+                  <ul class="sub-3">
+                    <li><a href="#none">수강료 납입</a></li>
+                    <li><a href="#none">납입내역 조회</a></li>
+                  </ul>
+                </li>
+                <li><a href="#none">문의현황</a>
+                  <ul class="sub-3">
+                    <li><a href="#none">Q&A(본사문의)</a></li>
+                    <li><a href="#none">1:1문의(학원문의)</a></li>
+                    <li><a href="#none">온라인 학습문의</a></li>
+                  </ul>
+                </li>
+                <li><a href="#none">입학시험 결과</a></li>
+              </ul>
+            </li>
+            <li data-menu='util' data-act='title' class="allmenu-cs"><a href="#none"><span
+              class="iblock">고객센터</span><button type="button" data-act='btn' class="mo-show">하위메뉴 토글</button></a>
+              <ul class="sub" data-act='cont'>
+                <li><a href="#none">FAQ</a></li>
+                <li><a href="#none">Q&A (본사문의)</a></li>
+                <li><a href="#none">1:1문의 (학원문의)</a></li>
+                <li><a href="#none">온라인학습 지원</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <!-- // 전체메뉴 -->
+
+        <!-- GNB // -->
+        <div class="gnb-nav mo-hide">
+          <!-- 전체 메뉴 중 [data-menu='main'] 항목 가져옴. -->
+        </div>
+        <!-- // GNB -->
+      </div>
+      <!-- Header내 Footer 영역 // -->
+      <div class="external-link">
+        <div class="link-group familysite" data-dropdown='{"effect":"slide","focusout":false}'>
+          <button type="button" class="subj g-toggle" data-act='title'>Family Site</button>
+          <div class="list" data-act='cont'>
+            <ul class="group">
+              <li><a href="https://creverse.com/" target="_blank" title="새창으로 열립니다." class="irg ig-portal">크레버스</a>
+              </li>
+              <!-- <li><a href="http://company.chungdahm.com" target="_blank" title="새창으로 열립니다.">회사소개</a></li> -->
+            </ul>
+            <dl class="group">
+              <dt class="full">브랜드 채널</dt>
+              <dd><a href="https://www.chungdahm.com/">Learning Center</a></dd>
+              <dd><a href="https://vlc.chungdahm.com/" target="_blank" title="새창으로 열립니다.">VLC</a></dd>
+            </dl>
+            <dl class="group">
+              <dt class="full">제휴 프로그램</dt>
+              <dd><a href="http://ei.chungdahm.com/expression/" target="_blank" title="새창으로 열립니다.">표현어학원</a></dd>
+              <dd><a href="http://cis.chungdahm.com" target="_blank" title="새창으로 열립니다.">CIS</a></dd>
+              <dd><a href="http://clue.chungdahm.com/" target="_blank" title="새창으로 열립니다.">클루빌</a></dd>
+              <dd><a href="http://www.bluesprings.co.kr/" target="_blank" title="새창으로 열립니다.">블루스프링스</a></dd>
+              <!-- <dd><a href="http://www.letmefly.co.kr/" target="_blank" title="새창으로 열립니다.">Let me fly</a></dd> -->
+            </dl>
+            <dl class="group">
+              <dt>러닝 솔루션</dt>
+              <dd><a href="http://www.loudclass.com/" target="_blank" title="새창으로 열립니다.">Loudclass</a></dd>
+            </dl>
+            <dl class="group">
+              <dt>교재 쇼핑몰</dt>
+              <dd><a href="http://www.learn21.co.kr/" target="_blank" title="새창으로 열립니다.">Learn21</a></dd>
+            </dl>
+            <dl class="group">
+              <dt>강사채용</dt>
+              <dd><a href="http://www.teachinkorea.com/" target="_blank" title="새창으로 열립니다.">Faculty Recruiting</a>
+              </dd>
+            </dl>
+          </div>
+        </div>
+        <div class="link-group other" data-dropdown='{"effect":"slide","focusout":false}'>
+          <button type="button" class="subj g-toggle" data-act='title'>크레버스 앱</button>
+          <ul class="list" data-act='cont'>
+            <!-- 20200303 modify -->
+            <li><a class="irg-b ig-app-1 js-allim" href="#none"><span>청담올림</span></a></li>
+            <li><a class="irg-b ig-app-2" href="#none"><span>청담러닝포털</span></a></li>
+            <li><a class="irg-b ig-app-6" href="#none"><span>CREVERSE Learning Portal</span></a></li>
+            <li><a class="irg-b ig-app-3 js-buff" href="#none"><span>청담버프</span></a></li>
+            <li><a class="irg-b ig-app-8" href="#none"><span>April Buff</span></a></li>
+            <li><a class="irg-b ig-app-4" href="#none"><span>Bouncy Buff</span></a></li>
+            <li><a class="irg-b ig-app-5" href="#none"><span>청담e-Library</span></a></li>
+            <li><a class="irg-b ig-app-7" href="#none"><span>April VENA Talk</span></a></li>
+            <li><a class="irg-b ig-app-9" href="#none"><span>April MeMe</span></a></li>
+            <li><a class="irg-b ig-app-10" href="#none"><span>Bouncy MeMe</span></a></li>
+            <li><a class="irg-b ig-app-11" href="#none"><span>Thinking MeMe</span></a></li>
+            <li><a class="irg-b ig-app-12" href="#none"><span>ChunkToon</span></a></li>
+            <!-- <li><a class="irg-b ig-app-4" href="#none">Phonics Concert</a></li> -->
+            <!--// 20200303 modify -->
+          </ul>
+        </div>
+        <div class="sns">
+          <a href="#none"><span class="irg ig-sns-fb">페이스북</span></a>
+          <a href="#none"><span class="irg ig-sns-bg">블로그</span></a>
+          <a href="#none"><span class="irg ig-sns-ig">인스타그램</span></a>
+          <a href="#none"><span class="irg ig-sns-yt">유튜브</span></a>
+        </div>
+
+        <a href="#" class="irg-b ig-logout-2 mo-show">로그아웃</a>
+      </div>
+      <!-- // Header내 Footer 영역 -->
+    </div>
+    <div class="all-bg"></div>
+  </header>
+  <header class="moHeader ty2">
+    <a href="#none" title="홈" class="home_icon"></a>
+    <h2 class="header_tit">입학시험예약</h2>
+    <button type="button" class="rebtn"><i class="reIcon"></i>다시하기</button>
+  </header>
+  <!-- // header -->
+  <!-- container // -->
+  <div class="containerW wrap_pc">
+    <div class="progress">
+      <div class="pStep choiceName on">
+        <p class="step_num">1</p>        
+        <p class="choice chicoeName_tit">자녀선택</p>
+        <p class="choice2 name">김민지<span>초1</span></p>
+      </div>
+      <span class="dashedS"></span>
+      <div class="pStep choiceArea on">        
+        <p class="step_num">2</p>
+        <p class="choice choiceArea_tit">지역선택</p>
+        <p class="choice2">청담어학원 <span>동탄 1 브랜치</span></p>
+      </div>      
+      <span class="dashedS"></span>
+      <div class="pStep choiceDay on">        
+        <p class="step_num">3</p>
+        <p class="choice choiceDay_tit">시험날짜</p>     
+        <p class="choice2">10월 25일<span>화</span><span>16:00</span></p> 
+      </div>
+      <span class="dashedS"></span>
+      <div class="pStep choiceInfo on"> 
+        <p class="step_num">4</p>
+        <p class="choice2">정보확인</p>
+      </div>
+    </div>
+    <div class="examREZ ty2">
+      <div class="rez_tit Fend">
+        <h3 class="hTIt"><i class="reserveI_i"></i>정보확인</h3>
+        <p class="redD redT flex-startG4"><i class="redStar"></i>필수 항목입니다.</p>
+      </div>
+      <div class="rezCon">
+        <div class="half">
+          <div class="halfTit">학생 정보</div>
+          <div class="InfoCon">
+            <div class="infoHalf">
+              <div class="HLeft">                  
+                <p>이름</p>
+                <div class="inputBox">                  
+                  <input type="text" value="김민지" disabled>
+                </div>
+              </div>
+              <div class="HRight">
+                <p class="flex-between">
+                  <span class="flex-startG4"><i class="redStar"></i>닉네임</span>
+                  <span class="input-guide">영어 수업시 사용할 영어 이름을 입력해주세요.</span>
+                </p>
+                <div class="inputBox">
+                  <div class="position_R">
+                    <input type="text" placeholder="영어만 입력" id="text-input" maxlength="20">
+                    <span id="text-count">0/20</span>
+                  </div>
+                  <p class="errorP">번호를 입력해 주세요</p>
+                </div>
+              </div>
+            </div>
+            <div class="infoHalf">
+              <div class="HLeft">
+                <p>학년/연령</p>
+                <div class="inputBox">
+                  <input type="text" value="초등 1학년" disabled>
+                </div>
+              </div>
+              <div class="HRight">
+                <p>휴대폰</p>
+                <div class="inputBox">
+                  <div class="position_R">
+                    <input type="number" placeholder="'-'없이 입력">
+                    <span class="input_close" title="삭제"></span>
+                  </div>
+                  <p class="errorP">번호를 입력해 주세요</p>
+                </div>
+              </div>
+            </div>
+            <p class="flex-startG4"><i class="redStar"></i>학교</p>
+            <div class="inputBox flexIB">              
+              <div class="position_R">
+                <input type="text" placeholder="&nbsp">
+              </div>
+              <button type="button">학교 검색</button>
+              <p class="errorP">학교를 입력해 주세요</p>
+            </div>
+            <p class="flex-startG4"><i class="redStar"></i>휴대폰</p>
+            <div class="inputBox error">
+              <div class="position_R">
+                <input type="number" placeholder="'-'없이 입력">
+                <span class="input_close" title="삭제"></span>
+              </div>
+              <p class="errorP">번호를 입력해 주세요</p>
+            </div>
+            <p class="flex-startG4"><i class="redStar"></i>주소</p>
+            <div class="inputBox flexIB posR">
+              <input type="checkbox" id="addressCh"><label for="addressCh" class="addressChI">학부모와 동일</label>
+
+              <div class="position_R R_radius">
+                <input type="text" placeholder="&nbsp">
+              </div>
+              <button type="button">주소검색</button>
+              <div class="position_R R_radius input-error-d">
+                <input type="text" placeholder="상세주소 입력">
+                <span class="input_close" title="삭제"></span>
+              </div>
+              <p class="errorP">주소를 입력해 주세요</p>        
+            </div>
+          </div>
+        </div>
+        <div class="half-right">
+          <div class="half">
+            <div class="halfTit">학부모 정보</div>
+            <div class="InfoCon">
+              <p class="flex-startG4"><i class="redStar"></i>휴대폰</p>
+              <div class="inputBox">
+                <div class="position_R">
+                  <input type="number" placeholder="'-'없이 입력">
+                  <span class="input_close" title="삭제"></span>
+                </div>
+                <p class="errorP">번호를 입력해 주세요</p>
+              </div>
+              <p class="flex-startG4"><i class="redStar"></i>이메일</p>
+              <div class="inputBox flexIB2 selectO error">
+                <div class="position_R">
+                  <input type="text" placeholder="&nbsp">
+                  <span class="input_close" title="삭제"></span>
+                </div>
+                <div class="select1"  data-dropdown=''>
+                  <div class="selected">
+                    <a href="#">선택해 주세요</a>
+                  </div>
+                  <div class="options">
+                    <ul class="select1-cont">
+                      <li><a href="#none" class="inputSel">직접입력</a></li>
+                      <li><a href="#none">@gmail.com</a></li>
+                      <li><a href="#none">@naver.com</a></li>
+                      <li><a href="#none">@nate.com</a></li>
+                      <li><a href="#none">@daum.com</a></li>
+                      <li><a href="#none">@hanmail.com</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <p class="errorP">입력한 이메일을 확인해 주세요</p>
+              </div>
+            </div>
+          </div>
+          <div class="half-right-bottom">
+            <div class="exam-chBox">
+              <div class="select2">
+                <button type="button" class="selBtn"></button>
+                <div class="selected">
+                  <input type="checkbox" id="termsCh1"><label for="termsCh1" class="chBox">입학시험예약에 관한 정보 동의(선택 포함)</label>
+                </div>
+                <div class="options">
+                  <ul class="select1-cont">
+                    <li>
+                      <input type="checkbox" id="termsCh2">
+                      <label for="termsCh2" class="chBox">[필수]개인정보 수집, 이용에 대한 동의</label>
+                      <a href="#none" class="privacyPop">보기</a>
+                    </li>
+                    <li>
+                      <input type="checkbox" id="termsCh3">
+                      <label for="termsCh3" class="chBox">[필수]가맹점에 정보 제공 동의</label>
+                      <a href="#none" class="privacyPop02">보기</a>
+                    </li>
+                    <li><input type="checkbox" id="termsCh4">
+                      <label for="termsCh4" class="chBox">[선택]가맹점에 정보 제공 동의</label>
+                      <a href="#none" class="privacyPop03">보기</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="ex_list2">
+              <p class="pointB"><i class="exclamationI"></i> 입력하신 이메일 주소는 학생 상담 및 시험 결과가 발송됩니다.</p>
+              <p class="pointB"><i class="exclamationI"></i> 학생, 학부모 정보 수정시 회원정보도 같이 수정됩니다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="rezCon align_center flexEnd">
+        <button type="button" class="btn line2" style="margin-right: 16px;">다시 예약하기</button>
+        <button type="button" class="btn testPop">예약완료</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="containerW wrap_mo">
+    <div class="exam_top borderN">
+      <div class="mo_progress"> 
+        <div class="step_line">
+          <div class="step_dot active off"></div>
+          <span class="dashed_mo"></span>
+          <div class="step_dot active off"></div>
+          <span class="dashed_mo"></span>
+          <div class="step_dot active off"></div>
+          <span class="dashed_mo"></span>
+          <div class="step_dot active off"></div>
+          <span class="dashed_mo"></span>
+          <div class="step_dot active"></div>
+        </div>
+        <ul class="step_ul">
+          <li class="active off">자녀선택</li>
+          <li class="active off">브랜드선택</li>
+          <li class="active off">학원선택</li>
+          <li class="active off">시험날짜</li>
+          <li class="active ">정보입력</li>
+        </ul>
+      </div>
+    </div>
+
+      <div class="borderBox">
+        <div class="flexSp mb8">
+          <div class="examName">김우리<span>초1 학년</span></div>
+          <div class="examDay"><span>11월 25일</span><span>수</span><span>16:00</span></div>
+        </div>
+        <div class="flexCt">
+          <div class="brand">
+            <div class="flex-center"><i class="mt_i"></i>CMS영재교육센터</div>
+            <div class="vector"></div>
+            <div class="flex-center">청담본원 <span class="i-the-open"></span></div>
+          </div>
+        </div>
+      </div>
+      <div class="rezCon_mo">
+        <div class="flexSp paddingTB_16">
+          <p class="titG">정보확인</p>
+          <p class="redS"><i class="redStar"></i>필수 항목입니다.</p>
+        </div>
+        <div class="half">
+          <div class="halfTit">학생정보</div>
+          <div class="InfoCon">
+            <p>이름</p>
+            <div class="inputBox">
+              <div class="position_R">
+                <input type="text" placeholder="한글 또는 영문 이름" value="김민지" disabled>
+                <span class="input_close" title="삭제"></span>
+              </div>
+            </div>
+            <p>학년/연령</p>
+            <div class="inputBox">
+              <div class="position_R">
+                <input type="text" placeholder="&nbsp" value="초1" disabled>
+                <span class="input_close" title="삭제"></span>
+              </div>
+            </div>
+
+            <div class="HRight">
+              <p>
+                <span class="flex-startG4"><i class="redStar"></i>닉네임</span>
+                <span class="input-guide">영어 수업시 사용할 영어 이름을 입력해주세요.</span>
+              </p>
+              <div class="inputBox">
+                <div class="position_R">
+                  <input type="text" placeholder="영어만 입력" id="text-input2" maxlength="20">
+                  <span id="text-count2">0/20</span>
+                </div>
+                <p class="errorP">번호를 입력해 주세요</p>
+              </div>
+            </div>
+            <p class="flex-startG4"><i class="redStar"></i>학교</p>
+            <div class="inputBox flexIB">
+              <div class="position_R">
+                <input type="text" placeholder="&nbsp">
+              </div>
+              <button type="button">학교검색</button>
+              <p class="errorP">학교를 입력해 주세요</p>
+            </div>
+            <p class="flex-startG4"><i class="redStar"></i>휴대폰</p>
+            <div class="inputBox">
+              <div class="position_R">
+                <input type="number" placeholder="'-'없이 입력">
+                <span class="input_close" title="삭제"></span>
+              </div>
+              <p class="errorP">번호를 입력해 주세요</p>
+            </div>
+            <p class="flex-startG4 mt40"><i class="redStar"></i>주소</p>
+            <div class="inputBox flexIB ">
+              <input type="checkbox" id="addressCh2"><label for="addressCh2" class="addressChI">학부모와 동일</label>
+              <div class="position_R R_radius">
+                <input type="text" placeholder="&nbsp">
+              </div>
+              <button type="button">주소검색</button>
+              <div class="position_R R_radius input-error-d">
+                <input type="text" placeholder="상세주소 입력">
+                <span class="input_close" title="삭제"></span>
+              </div>
+              <p class="errorP">주소를 입력해 주세요</p>
+            </div>
+            <!-- <input type="checkbox" id="addressCh2"><label for="addressCh2" class="addressChI">학부모와 주소 동일</label>    -->
+            <p class="flex-startG4"><i class="redStar"></i>현재 학습하고 있는 교육 과정(진도)<i class="i-info"></i></p>
+            <div class="select1 w100p">
+              <div class="selected">
+                <a href="#">전체</a>
+              </div>
+              <div class="options">
+                <ul class="select1-cont">
+                  <li><a href="#none">전체</a></li>
+                  <li><a href="#none">유아 4세</a></li>
+                  <li><a href="#none">유아 5세</a></li>
+                  <li><a href="#none">유아 6세</a></li>
+                  <li><a href="#none">유아 7세</a></li>
+                  <li><a href="#none">초1(Grade 1)</a></li>
+                  <li><a href="#none">초2(Grade 2)</a></li>
+                  <li><a href="#none">초3(Grade 3)</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="borderline"></div>
+        <div class="half">
+          <div class="halfTit">학부모 정보</div>
+          <div class="InfoCon">
+            <p class="flex-startG4"><i class="redStar"></i>휴대폰</p>
+            <div class="inputBox">
+              <div class="position_R">
+                <input type="number" placeholder="'-'없이 입력">
+                <span class="input_close" title="삭제"></span>
+              </div>
+              <p class="errorP">생년월일 8자리를 입력해 주세요</p>
+            </div>
+            <p class="flex-startG4"><i class="redStar"></i>이메일</p>
+            <div class="inputBox flexIB2 selectO">
+              <div class="position_R">
+                <input type="text" placeholder="&nbsp">
+                <span class="input_close" title="삭제"></span>
+              </div>
+              <div class="select1" data-dropdown=''>
+                <div class="selected">
+                  <a href="#none">선택해 주세요</a>
+                </div>
+                <div class="options">
+                  <ul class="select1-cont">
+                    <li><a href="#none" class="inputSel">직접입력</a></li>
+                    <li><a href="#none">@gmail.com</a></li>
+                    <li><a href="#none">@naver.com</a></li>
+                    <li><a href="#none">@nate.com</a></li>
+                    <li><a href="#none">@daum.com</a></li>
+                    <li><a href="#none">@hanmail.com</a></li>
+                  </ul>
+                </div>
+              </div>
+              <p class="errorP">입력한 이메일을 확인해 주세요</p>
+              <p class="grayP">입력하신 이메일 주소로 안내자료가 발송됩니다.</p>
+            </div>
+          </div>
+        </div>
+        <div class="borderline"></div>
+<!--        <div class="survey">-->
+<!--          <p class="surveyTit">사전 설문</p>-->
+<!--          <ul class="surveyUl">-->
+<!--            <li>-->
+<!--              <div class="num">1.</div>-->
+<!--              <div class="svTxt">-->
+<!--                <p>시험이 진행되는 동안 학부모님을 위한 입학 세미나가 진행됩니다. 참석 하시겠습니까?</p>-->
+<!--                <div class="svCH">-->
+<!--                  <input type="radio" name="mo_svCh1" id="mo_svCh1_1"><label for="mo_svCh1_1" class="rdBox">예</label>-->
+<!--                  <input type="radio" name="mo_svCh1" id="mo_svCh1_2"><label for="mo_svCh1_2" class="rdBox">아니요</label>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--              <div class="num">2.</div>-->
+<!--              <div class="svTxt">-->
+<!--                <p>입학을 위한 현장 상담 진행을 희망사히나요?</p>-->
+<!--                <div class="svCH">-->
+<!--                  <input type="radio" name="mo_svCh2" id="mo_svCh2_1"><label for="mo_svCh2_1" class="rdBox">예</label>-->
+<!--                  <input type="radio" name="mo_svCh2" id="mo_svCh2_2"><label for="mo_svCh2_2" class="rdBox">아니요</label>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--        </div>-->
+        <div class="borderline"></div>
+        <div class="half">
+          <div class="exam-chBox">
+            <div class="select2">
+              <button type="button" class="selBtn"></button>
+              <div class="selected">
+                <input type="checkbox" id="termsCh2-1"><label for="termsCh2-1" class="chBox">입학시험예약에 관한 정보 동의(선택
+                포함)</label>
+              </div>
+              <div class="options">
+                <ul class="select1-cont">
+                  <li>
+                    <input type="checkbox" id="termsCh2-2">
+                    <label for="termsCh2-2" class="chBox">[필수]개인정보 수집, 이용에 대한 동의</label>
+                    <a href="#none" class="mo_privacyPop">보기</a>
+                  </li>
+                  <li>
+                    <input type="checkbox" id="termsCh2-3">
+                    <label for="termsCh2-3" class="chBox">[필수]런21에 정보 제공 동의</label>
+                    <a href="#none" class="mo_privacyPop02">보기</a>
+                  </li>
+                  <li><input type="checkbox" id="termsCh2-4">
+                    <label for="termsCh2-4" class="chBox">[선택]런21에 정보 제공 동의</label>
+                    <a href="#none" class="mo_privacyPop03">보기</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="ex_list">
+            <p><i class="exclamationI"></i> 유의사항</p>
+            <p class="pointB">입력하신 이메일 주소는 학생 상담 및 시험 결과 발송에 활용 될 수 있습니다.</p>
+            <p class="pointB">정보 수정 시 회원정보도 동일하게 수정됩니다.</p>
+          </div>
+          <div class="btnBox flex_btn2">
+            <button type="button" class="btn line">이전</button>
+            <button type="button" class="btn">예약완료</button>
+          </div>
+          <!-- <div class="btnBox">                
+            <button type="button" class="btn mo_testPop">Pre-Test 문제풀기</button>
+          </div> -->
+        </div>
+      </div>
+  </div>
+  <!-- // container -->
+  <!-- footer // -->
+  <footer class="footer mo_footer">
+    <div class="inner">
+          <span class="fmenu">
+            <span class="mid">
+              <a href="https://creverse.com/" target="_blank" title="새창으로 열립니다.">회사소개</a>
+              <a href="https://chungdahm.recruiter.co.kr" target="_blank" title="새창으로 열립니다.">인재채용</a>
+              <a href="../html/etc/CLPC_Footer_TE01P.html" onclick="termsLayer(); return false;">이용약관</a>
+              <a href="../html/etc/CLPC_Footer_PP01P.html"
+                 onclick="privacyLayer(); return false;"><strong>개인정보처리방침</strong></a>
+              <span class="cms">
+                <a href="#">고객센터</a>
+              </span>
+            </span>
+          </span>
+      <address class="mo-show">© CREVERSE Learning Inc.</address>
+      <div class="biz-info" data-dropdown='{"effect":"slide","focusout":false, "media":"(max-width: 767px)"}'>
+        <h2 class="biz-name"><button type="button" data-act='title' class="irg-a ig-arr-2">㈜크레버스</button></h2>
+        <div class="biz-cont" data-act='cont'>
+          <div class="info">
+            <span class="item">대표이사 <em>이충국</em></span>
+            <span class="item">주소 <em>서울특별시 강남구 테헤란로 521, 21층(삼성동, 파르나스타워)</em></span>
+            <span class="item">사업자등록번호 <em>211-87-16710</em></span>
+            <span class="item">통신판매업신고 <em>제 강남-8282호</em></span>
+            <span class="item">대표전화 <em>02-3429-9407</em></span>
+          </div>
+          <address class="mo-hide">Copyright © CREVERSE Inc. All rights reserved.</address>
+          <div class="awards" data-scrollbar='{"axis":"x"}'>
+            <div class="group">
+                  <span class="item irg-b ig-awards-1"><span class="mid">프리미엄브랜드지수 14년 <br class="mo-show" />연속
+                      1위</span></span>
+              <span class="item irg-b ig-awards-2"><span class="mid">2022 브랜드스타 9년 <br class="mo-show" />연속 1위</span></span>
+              <span class="item irg-b ig-awards-3"><span class="mid">대한민국 하이스트 <br class="mo-show" />브랜드 10년 연속
+                      1위</span></span>
+              <span class="item irg-b ig-awards-4"><span class="mid">ETS 공인 <br class="mo-show" />토플주니어 시험성적
+                      취득</span></span>
+              <span class="item irg-b ig-awards-5 js-isms"><span class="mid">[인증범위] 크레버스 온라인 교육 서비스 운영<br class="mo-show" />[유효기간] 2023-01-18 ~ 2026-01-17</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="external-link">
+        <div class="link-group familysite" data-dropdown='{"effect":"slide","focusout":false}'>
+          <button type="button" class="subj g-toggle" data-act='title'>Family Site</button>
+          <ul class="list" data-act='cont'>
+            <li class="ttl">브랜드 채널</li>
+            <li><a class="" href="#none"><span>Learning Center VLC</span></a></li>
+            <li><a class="" href="#none"><span class="link">iGARTEN</span></a></li>
+            <li><a class="" href="#none"><span class="link">씨큐브코딩</span></a></li>
+            <li><a class="" href="#none"><span class="link">크레버스 x</span></a></li>
+            <li><a class="" href="#none"><span class="link">EDGE</span></a></li>
+            <li><a class="" href="#none"><span class="link">codeAlive</span></a></li>
+            <li class="ttl">제휴 프로그램</li>
+            <li><a class="" href="#none" style="margin-right:5px;"><span>표현어학원</span></a><a class="" href="#none"><span>클루빌</span></a></li>
+            <li><a class="" href="#none"><span>블루스프링스</span></a></li>
+            <li style="margin-top: 8px;"><strong>러닝 솔루션 </strong><a class="" href="#none"><span>Louldclass</span></a></li>
+            <li><strong>교재 쇼핑몰 </strong><a class="" href="#none"><span>Learn21</span></a></li>
+            <li><strong>강사채용 </strong><a class="" href="#none"><span>Faculty recruiting</span></a></li>
+          </ul>
+        </div>
+        <div class="link-group other" data-dropdown='{"effect":"slide","focusout":false}'>
+          <button type="button" class="subj g-toggle" data-act='title'>크레버스 앱</button>
+          <ul class="list" data-act='cont'>
+            <!-- 20230102 modify -->
+            <li><a class="ig-app-1 js-allim" href="#none"><span>청담올림</span></a></li>
+            <li><a class="ig-app-6" href="#none"><span>CREVERSE Learning Portal</span></a></li>
+            <li><a class="ig-app-8" href="#none"><span>April Buff</span></a></li>
+            <li><a class="ig-app-5" href="#none"><span>청담e-Library</span></a></li>
+            <li><a class="ig-app-9" href="#none"><span>April MeMe</span></a></li>
+            <li><a class=" ig-app-11" href="#none"><span>Thinking MeMe</span></a></li>
+            <li><a class=" ig-app-2" href="#none"><span>청담러닝포털</span></a></li>
+            <li><a class=" ig-app-3 js-buff" href="#none"><span>청담버프</span></a></li>
+            <li><a class=" ig-app-4" href="#none"><span>Bouncy Buff</span></a></li>
+            <li><a class=" ig-app-7" href="#none"><span>April VENA Talk</span></a></li>
+            <li><a class=" ig-app-10" href="#none"><span>Bouncy MeMe</span></a></li>
+            <li><a class=" ig-app-12" href="#none"><span>ChunkToon</span></a></li>
+            <!-- <li><a class="irg-b ig-app-4" href="#none">Phonics Concert</a></li> -->
+            <!--// 20230102 modify -->
+          </ul>
+        </div>
+        <div class="sns">
+          <a href="#none"><span class="irg ig-sns-fb">페이스북</span></a>
+          <a href="#none"><span class="irg ig-sns-bg">블로그</span></a>
+          <a href="#none"><span class="irg ig-sns-ig">인스타그램</span></a>
+          <a href="#none"><span class="irg ig-sns-yt">유튜브</span></a>
+        </div>
+
+        <a href="#" class="irg-b ig-logout-2 mo-show">로그아웃</a>
+      </div>
+    </div>
+  </footer>
+  <!-- // footer -->
+</div>
+  <!-- popup --> 
+  <div class="popwrap" id="privacyPopup">
+    <div class="popBg"></div>
+    <div class="popContain privacy">      
+      <button type="button" class="popClose"></button>
+      <div class="popBody">
+        <h1 class="popTit">개인정보 수집안내, 이용안내</h1>
+        <div class="popCon ">
+          <ul>
+            <li>
+              <h1>(주)크레버스는 서비스 제공을 위하여 아래와 같이 회원의 개인정보를 수집, 이용합니다.</h1>
+            </li>
+            <li>
+              <h1>수집 및 이용 목적 </h1>
+              <ul class="ulList">
+                <li>입학시험 예약 및 응시</li>
+                <li>Live class 또는 Online 수업 서비스 제공</li>
+              </ul> 
+            </li>
+            <li>
+              <h1>수집 항목</h1>          
+              <ul class="ulList">
+                <li>
+                  입학시험 예약 및 응시 시
+                  <ul>
+                    <li>학교, 이메일(학부모)</li>
+                  </ul>
+                </li>
+                <li>
+                  Live class 또는 Online 수업 서비스 제공 시
+                  <ul>
+                    <li>영상(초상 포함), 음성 정보, 사진(학생)</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <h1>보유 및 이용기간</h1>          
+              <ul class="ulList">
+                <li>
+                  이메일(학부모)
+                  <ul>
+                    <li>회원탈퇴 시 까지</li>
+                  </ul>
+                </li>
+                <li>
+                  영상(초상 포함), 음성 정보, 사진(학생)
+                  <ul>
+                    <li>1년</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <p>개인정보 수집 및 이용에 대해 동의를 거부할 권리가 있습니다. 단, 동의 거부 시에는 입학시험 및 입학, 수업 서비스를 이용할 수 없습니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="popwrap" id="privacyPopup02">
+    <div class="popBg"></div>
+    <div class="popContain privacy">      
+      <button type="button" class="popClose"></button>
+      <div class="popBody">
+        <h1 class="popTit">가맹점에 정보 제공 동의 (필수)</h1>
+        <div class="popCon ">
+          <ul>
+            <li>
+              <h1>(주)크레버스는 제3자 서비스와의 연결을 위해서 아래와 같이 이용자의 개인정보를 제공하고 있습니다.</h1>
+            </li>
+            <li>
+              <h1>제공 대상</h1>          
+              <ul>
+                <li>
+                  ㈜크레버스가 운영하는 <u>각 프랜차이즈 가맹점</u>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <h1>제공하는 개인정보 항목</h1>          
+              <ul>
+                <li>
+                  아이디, 이름, 생년월일, 이메일(학생), 휴대폰 번호(학생), 휴대폰 번호(학부모), 닉네임
+                </li>
+              </ul>
+            </li>
+            <li>
+              <h1>제공 정보의 이용 목적</h1>
+              <ul>
+                <li>각 프랜차이즈 가맹점 재원생 학습/운영/첨삭평가, 교재 등 물품의 배송 정보 및 재원여부 확인, 이벤트 진행</li>
+              </ul> 
+            </li>
+            <li>
+              <h1>제공기간</h1>
+              <ul>
+                <li>제3자 제공 동의철회 및 회원 탈퇴 시까지</li>
+              </ul> 
+            </li>
+          </ul>
+          <p>개인정보 제공에 대한 동의를 거부할 권리가 있으며, 동의를 거부할 경우 서비스 이용에 별도의 불이익은 없습니다. 단, 해당 서비스를 이용이 불가능하거나, 서비스 이용목적에 따른 서비스 제공에 제한이 따르게 됩니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="popwrap" id="privacyPopup03">
+    <div class="popBg"></div>
+    <div class="popContain privacy">      
+      <button type="button" class="popClose"></button>
+      <div class="popBody">
+        <h1 class="popTit">가맹점에 정보 제공 동의 (선택)</h1>
+        <div class="popCon ">
+          <ul>
+            <li>
+              <h1>(주)크레버스는 제3자 서비스와의 연결을 위해서 아래와 같이 이용자의 개인정보를 제공하고 있습니다.</h1>
+            </li>
+            <li>
+              <h1>제공 대상</h1>          
+              <ul>
+                <li>
+                  ㈜크레버스가 운영하는 <u>각 프랜차이즈 가맹점</u>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <h1>제공하는 개인정보 항목</h1>          
+              <ul>
+                <li>
+                  이메일(학부모), 주소
+                </li>
+              </ul>
+            </li>
+            <li>
+              <h1>제공 정보의 이용 목적</h1>
+              <ul>
+                <li>각 프랜차이즈 가맹점 재원생 학습/운영/첨삭평가, 교재 등 물품의 배송 정보 및 재원여부 확인, 이벤트 진행</li>
+              </ul> 
+            </li>
+            <li>
+              <h1>제공기간</h1>
+              <ul>
+                <li>제3자 제공 동의철회 및 회원 탈퇴 시까지</li>
+              </ul> 
+            </li>
+          </ul>
+          <p>개인정보 수집 및 이용에 대해 동의를 거부할 권리가 있습니다. 단, 동의 거부 시에는 L포인트 사용 서비스를 이용할 수 없습니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="popwrap " id="testPopup">
+    <div class="popBg"></div>
+    <div class="popContain testCon sm">
+      <button type="button" class="popClose"></button>
+      <div class="popBody">
+        <h1 class="popTit">Pre-Test가 완료되었습니다.</h1>
+        <div class="popCon">
+          <div>
+            <p>자녀</p>
+            <p><span>김민지</span> 학생</p>
+          </div>
+          <span class="hr"></span>
+          <div>
+            <p>Pre-Test 결과</p>
+            <p><span>EPT</span></p>
+          </div>
+        </div>
+      </div>
+      <div class="popFooter">
+        <button type="button" class="popBtn">예약 완료하기</button>
+      </div>
+    </div>
+  </div>
+  <!-- mopop -->
+  <div class="mo_popwrap" id="privacy_mopop">
+    <div class="mo_popBg"></div>
+    <div class="mo_popContain privacy">      
+      <div class="mo_popHeader">
+        <button type="button" class="mo_popClose"></button>
+      </div>
+      <div class="mo_popBody">
+        <h1 class="mo_popTit">개인정보 수집안내, 이용안내</h1>
+        <div class="mo_popCon ">
+          <ul>
+            <li>
+              <h1>(주)크레버스는 서비스 제공을 위하여 아래와 같이 회원의 개인정보를 수집, 이용합니다.</h1>
+            </li>
+            <li>
+              <h1>수집 및 이용 목적 </h1>
+              <ul class="ulList">
+                <li>입학시험 예약 및 응시</li>
+                <li>Live class 또는 Online 수업 서비스 제공</li>
+              </ul> 
+            </li>
+            <li>
+              <h1>수집 항목</h1>          
+              <ul class="ulList">
+                <li>
+                  입학시험 예약 및 응시 시
+                  <ul>
+                    <li>학교, 이메일(학부모)</li>
+                  </ul>
+                </li>
+                <li>
+                  Live class 또는 Online 수업 서비스 제공 시
+                  <ul>
+                    <li>영상(초상 포함), 음성 정보, 사진(학생)</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <h1>보유 및 이용기간</h1>          
+              <ul class="ulList">
+                <li>
+                  이메일(학부모)
+                  <ul>
+                    <li>회원탈퇴 시 까지</li>
+                  </ul>
+                </li>
+                <li>
+                  영상(초상 포함), 음성 정보, 사진(학생)
+                  <ul>
+                    <li>1년</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <p>개인정보 수집 및 이용에 대해 동의를 거부할 권리가 있습니다. 단, 동의 거부 시에는 입학시험 및 입학, 수업 서비스를 이용할 수 없습니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mo_popwrap" id="privacy_mopop02">
+    <div class="mo_popBg"></div>
+    <div class="mo_popContain privacy">      
+      <div class="mo_popHeader">
+        <button type="button" class="mo_popClose"></button>
+      </div>
+      <div class="mo_popBody">
+        <h1 class="mo_popTit">가맹점에 정보 제공 동의 (필수)</h1>
+        <div class="mo_popCon ">
+          <ul>
+            <li>
+              <h1>(주)크레버스는 제3자 서비스와의 연결을 위해서 아래와 같이 이용자의 개인정보를 제공하고 있습니다.</h1>
+            </li>
+            <li>
+              <h1>제공 대상</h1>          
+              <ul>
+                <li>
+                  ㈜크레버스가 운영하는 <u>각 프랜차이즈 가맹점</u>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <h1>제공하는 개인정보 항목</h1>          
+              <ul>
+                <li>
+                  아이디, 이름, 생년월일, 이메일(학생), 휴대폰 번호(학생), 휴대폰 번호(학부모), 닉네임
+                </li>
+              </ul>
+            </li>
+            <li>
+              <h1>제공 정보의 이용 목적</h1>
+              <ul>
+                <li>각 프랜차이즈 가맹점 재원생 학습/운영/첨삭평가, 교재 등 물품의 배송 정보 및 재원여부 확인, 이벤트 진행</li>
+              </ul> 
+            </li>
+            <li>
+              <h1>제공기간</h1>
+              <ul>
+                <li>제3자 제공 동의철회 및 회원 탈퇴 시까지</li>
+              </ul> 
+            </li>
+          </ul>
+          <p>개인정보 제공에 대한 동의를 거부할 권리가 있으며, 동의를 거부할 경우 서비스 이용에 별도의 불이익은 없습니다. 단, 해당 서비스를 이용이 불가능하거나, 서비스 이용목적에 따른 서비스 제공에 제한이 따르게 됩니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mo_popwrap" id="privacy_mopop03">
+    <div class="mo_popBg"></div>
+    <div class="mo_popContain privacy">      
+      <div class="mo_popHeader">
+        <button type="button" class="mo_popClose"></button>
+      </div>
+      <div class="mo_popBody">
+        <h1 class="mo_popTit">가맹점에 정보 제공 동의 (선택)</h1>
+        <div class="mo_popCon ">
+          <ul>
+            <li>
+              <h1>(주)크레버스는 제3자 서비스와의 연결을 위해서 아래와 같이 이용자의 개인정보를 제공하고 있습니다.</h1>
+            </li>
+            <li>
+              <h1>제공 대상</h1>          
+              <ul>
+                <li>
+                  ㈜크레버스가 운영하는 <u>각 프랜차이즈 가맹점</u>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <h1>제공하는 개인정보 항목</h1>          
+              <ul>
+                <li>
+                  이메일(학부모), 주소
+                </li>
+              </ul>
+            </li>
+            <li>
+              <h1>제공 정보의 이용 목적</h1>
+              <ul>
+                <li>각 프랜차이즈 가맹점 재원생 학습/운영/첨삭평가, 교재 등 물품의 배송 정보 및 재원여부 확인, 이벤트 진행</li>
+              </ul> 
+            </li>
+            <li>
+              <h1>제공기간</h1>
+              <ul>
+                <li>제3자 제공 동의철회 및 회원 탈퇴 시까지</li>
+              </ul> 
+            </li>
+          </ul>
+          <p>개인정보 수집 및 이용에 대해 동의를 거부할 권리가 있습니다. 단, 동의 거부 시에는 L포인트 사용 서비스를 이용할 수 없습니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mo_popwrap " id="mo_testPopup">
+    <div class="mo_popBg"></div>
+    <div class="mo_popContain mo_ty2">
+      <div class="mo_popHeader">
+        <button type="button" class="mo_popClose"></button>
+      </div>
+      <div class="mo_popBody">
+        <h1 class="mo_popTit">Pre-Test 문제 풀기</h1>
+        <div class="mo_popCon">
+          <p class="center_txt">Pre-Test문제 풀기는 모바일 환경에서<br> 진행 불가합니다.<br> PC환경에서 진행해 주세요.</p>
+        </div>
+      </div>
+      <div class="mo_popFooter">
+        <button type="button" class="popBtn">확인</button>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="mo_popwrap on" id="mo_FCprivacyPopup">
+    <div class="mo_popBg"></div>
+    <div class="mo_popContain mo_ty1">
+      <div class="mo_popBody">
+        <h1 class="mo_popTit">프랜차이즈에 정보 제공 동의</h1>
+        <div class="mo_popCon">
+          <p class="privacy_txt">개인정보 수집안내 수집목적 : 입학시험예약을 위한 개인정보 
+            <br><br>
+            수집항목 : 학부모 연락처, 학교, 학년 및 연령, 학생 휴대폰, 닉네임, 주소 학부모 연락처, 학교, 학년 및 연령, 학생 휴대폰, 닉네임, 주소를 수정하시면 회원정보도 수정됩니다. 
+            <br><br>
+            입학시험 및 수강 시에는 자동으로 학사관리 SMS/DM이 제공됩니다. (학부모 포함)
+          </p>
+        </div>
+      </div>
+      <div class="mo_popFooter">
+        <button type="button" class="popBtn">확인</button>
+      </div>
+    </div>
+  </div> -->
+  <div class="mo_popwrap" id="branchPrefer_mo">
+    <div class="mo_popBg"></div>
+    <div class="mo_popContain preferCon">
+      <div class="mo_popBody">
+        <div class="branchPrefer">
+          <button type="button" class="close_b2"></button>
+          <div class="preferIn">
+            <div class="bc_student">
+              <div class="st_name"><i class="nameI"></i>김민지</div>
+              <ul class="st_list">
+                <li>
+                  <a href="#none">
+                    <div class="bc_logo"></div>
+                    <div class="bc_info">
+                      <p class="bc_tit">청담어학원</p>
+                      <p class="bc_subTit">청라국제 브랜치</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#none">
+                    <div class="bc_logo"></div>
+                    <div class="bc_info">
+                      <p class="bc_tit">April어학원</p>
+                      <p class="bc_subTit">청라국제 브랜치</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#none">
+                    <div class="bc_logo"></div>
+                    <div class="bc_info">
+                      <p class="bc_tit">CMS영재교육센터</p>
+                      <p class="bc_subTit">목동센트럴영재교육센터</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#none">
+                    <div class="bc_logo"></div>
+                    <div class="bc_info">
+                      <p class="bc_tit">CMS영재관</p>
+                      <p class="bc_subTit">청라국제 브랜치</p>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="bc_student">
+              <div class="st_name"><i class="nameI"></i>김민서</div>
+              <ul class="st_list">
+                <li>
+                  <a href="#none">
+                    <div class="bc_logo"></div>
+                    <div class="bc_info">
+                      <p class="bc_tit">청담어학원</p>
+                      <p class="bc_subTit">청라국제 브랜치</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#none">
+                    <div class="bc_logo"></div>
+                    <div class="bc_info">
+                      <p class="bc_tit">April어학원</p>
+                      <p class="bc_subTit">청라국제 브랜치</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#none">
+                    <div class="bc_logo"></div>
+                    <div class="bc_info">
+                      <p class="bc_tit">청담어학원</p>
+                      <p class="bc_subTit">청라국제 브랜치</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#none">
+                    <div class="bc_logo"></div>
+                    <div class="bc_info">
+                      <p class="bc_tit">April어학원</p>
+                      <p class="bc_subTit">청라국제 브랜치</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#none">
+                    <div class="bc_logo"></div>
+                    <div class="bc_info">
+                      <p class="bc_tit">청담어학원</p>
+                      <p class="bc_subTit">청라국제 브랜치</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#none">
+                    <div class="bc_logo"></div>
+                    <div class="bc_info">
+                      <p class="bc_tit">April어학원</p>
+                      <p class="bc_subTit">청라국제 브랜치</p>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mo_popwrap" id="re_mopop">
+    <div class="mo_popBg"></div>
+    <div class="mo_popContain preferCon">
+      <div class="mo_popBody">        
+        <ul class="exam_btnUl">
+          <li><button type="button">예약 다시하기<i></i></button></li>
+          <li><button type="button" class="preferBtn_mo">선호브랜치로 예약하기<i></i></button></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+<script>
+  $(".select1 .selected a").click(function(e) {
+      var options = $(this).parent().siblings('.options');
+      // $(".select1 .options ul").not(options).hide()
+      options.find('> ul').toggle();
+      if (!options){
+        $(".select1 .options ul").not(options).hide()
+      }
+  });
+  $(".select1 .options ul li a").click(function(e) {
+    e.preventDefault()
+      var text = $(this).html();
+      var selected = $(this).closest('.options').siblings('.selected');
+      selected.find('> a ').html(text);
+      $(this).closest('ul').hide();
+  });
+  $(".select1 .options ul li a.inputSel").click(function(e) {
+    e.preventDefault()
+    var selected = $(this).closest('.options').siblings('.selected');
+    selected.find('> a ').html( '<input type="text" placeholder="@부터 직접입력">'+'<button type="button" class="selInputRe"></button>');
+    $(".select1 .selected input").focus();
+    $(".select1 .selected").addClass("none")
+  });
+  $(document).on("click", ".selInputRe", function () {
+    $(".select1 .selected").removeClass("none")
+    $(".select1 .selected a").html('선택해 주세요')
+  });
+
+
+  $(document).on('click', function(e) {      
+    var clicked = $(e.target);
+      if (!clicked.parents().hasClass("select1")){
+        $(".select1 .options ul").hide();
+      }
+  });
+
+  $('.preference_btn').click(function(){
+    $('.branchPrefer').toggleClass('on');
+  });
+  $('.close_b').click(function(){
+    $('.branchPrefer').removeClass('on');
+  });
+  $('.st_list li a').click(function(){
+    $('.st_list li a').not($(this)).removeClass('active');
+    $(this).toggleClass('active');
+  });
+  
+  // popup
+  $('.privacyPop').click(function(){
+    $('#privacyPopup').addClass('on');
+  });
+  $('.privacyPop02').click(function(){
+    $('#privacyPopup02').addClass('on');
+  });
+  $('.privacyPop03').click(function(){
+    $('#privacyPopup03').addClass('on');
+  });
+  $('.testPop').click(function(){
+    $('#testPopup').addClass('on');
+  });
+
+  $('.mo_privacyPop').click(function(){
+    $('#privacy_mopop').addClass('on');
+  });
+  $('.mo_privacyPop02').click(function(){
+    $('#privacy_mopop02').addClass('on');
+  });  
+  $('.mo_privacyPop03').click(function(){
+    $('#privacy_mopop03').addClass('on');
+  });
+  $('.mo_testPop').click(function(){
+    $('#mo_testPopup').addClass('on');
+  });
+  $('.preferCon .st_list li').click(function(){
+    $('#branchPrefer_mo').removeClass('on');
+    $('body').css('overflow', 'auto');
+  });
+  $(document).on("click", ".popClose, .popBg, .mo_popBg, .mo_popClose, .close_b2", function(){
+    $(this).parents('.popwrap,.mo_popwrap').removeClass('on');
+    $('body').css('overflow', 'auto');
+  });
+  $('body').click(function(){
+    if($('.popwrap, .mo_popwrap').hasClass('on')){
+        $('body').css('overflow', 'hidden');
+    }
+  });
+  $('.popBg').click(function(){
+    $('.branchPrefer').removeClass('on');
+  });
+
+  $('.input_close').click(function(){
+    $(this).parents('.inputBox').find('input').val('');
+  });
+
+  $(".select1 .selected input").focus(function(){
+    $(this).parents().find(".select1").addClass('on');
+  });
+  $(".select1 .selected input").blur(function(){
+    $(this).parents().find(".select1").removeClass('on');
+  });
+  $('.reIcon').click(function(){
+    $('#re_mopop').addClass('on');
+  });
+  $('.exam_btnUl li').click(function(){
+    $('.exam_btnUl').removeClass('on');
+  });
+
+  $('.preferBtn_mo').click(function(){
+    $('#branchPrefer_mo').addClass('on');    
+    $('#re_mopop').removeClass('on');
+  });
+  $('.mo_popCon .st_list li').click(function(){
+    $('#branchPrefer_mo').removeClass('on');
+  });
+  $(document).ready(function() {
+    $(".selectO.inputBox input").is(":disabled").parents().find(".select1").addClass('on');
+});
+$('.selBtn').click(function(){
+    $(this).toggleClass('on');    
+    $('.select2').removeClass('on')
+    $('.select2 .options').hide()
+    if($('.selBtn').hasClass('on')){
+      $('.select2 .options').show()
+      $('.select2').addClass('on')
+    }
+  });
+  //body 스크롤
+  $(window).resize(function() {
+    if($(window).width() >= 767) {
+      if($('.popwrap').hasClass('on')){
+        $('body').css('overflow', 'auto');
+        $('.popwrap').removeClass('on')
+      }
+      else if($('.mo_popwrap').hasClass('on')){
+        $('body').css('overflow', 'auto');
+        $('.popwrap').removeClass('on')
+      }
+    }
+  });
+  $(document).ready(function() {
+    $('#text-input').on('input', function() {
+      var currentTextLength = $(this).val().length;
+      var maxLength = $(this).attr('maxlength');
+      $('#text-count').text(currentTextLength + '/' + maxLength);
+    });
+  });
+  $(document).ready(function() {
+    $('#text-input2').on('input', function() {
+      var currentTextLength = $(this).val().length;
+      var maxLength = $(this).attr('maxlength');
+      $('#text-count2').text(currentTextLength + '/' + maxLength);
+    });
+  });
+</script>
+</body>
+</html>

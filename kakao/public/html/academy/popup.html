@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>CHUNGDAHM</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0.1,maximum-scale=1.0,user-scalable=no">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" type="image/x-icon" href="../../images/common/favicon.ico" />
+  <link rel="apple-touch-icon-precomposed" href="../../images/common/apple-touch-icon.png" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <link rel="stylesheet" href="../../css/global.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/sub.css">
+  <link rel="stylesheet" href="../../css/search.css">
+  <script src="../../js/ui.vendor.js"></script>
+  <script src="../../js/ui.js"></script>
+  <style>
+    .ex_pop{ padding: 20px;}
+    .ex_pop h3{font-size: 30px; font-weight: 700; color: #333;}
+    .ex_pop ul{margin-top: 16px;}
+    .ex_pop ul li{list-style: decimal;margin-left: 20px; padding-left: 10px;font-size: 16px;height: 35px;}
+    .ex_pop ul li a{display: inline-block; font-weight: bold;}
+    .ex_pop ul li a:hover{color: #00BABB;}
+  </style>
+</head>
+
+<body>
+<div class="skip"><a href="#contents"><span>본문바로가기</span></a></div>
+<div class="wrap">
+  <div class="ex_pop">
+    <h3>PC_Popup</h3>
+    <ul>
+      <li><a href="#none" class="map_pop">학원 위치</a></li>
+      <li><a href="#none" class="share_pop">공유하기</a></li>
+      <li><a href="#none" class="privacyPop">개인정보 수집안내</a></li>
+      <li><a href="#none" class="privacyPop02">가맹점에 정보 제공 동의 (필수)</a></li>
+      <li><a href="#none" class="privacyPop03">가맹점에 정보 제공 동의 (선택)</a></li>
+      <li><a href="#none" class="testPop">Pre-Test</a></li>
+      <li><a href="#none" class="popup1">pop_01</a></li>
+      <li><a href="#none" class="popup2">pop_02</a></li>
+      <li><a href="#none" class="popup3">pop_03</a></li>
+      <li><a href="#none" class="popup4">pop_04</a></li>
+      <li><a href="#none" class="popup5">pop_05</a></li>
+      <li><a href="#none" class="popup6">pop_06</a></li>
+      <li><a href="#none" class="popup7">pop_07</a></li>
+      <li><a href="#none" class="popup8">pop_08</a></li>
+      <li><a href="#none" class="popup9">pop_09</a></li>
+      <li><a href="#none" class="popup10">pop_10</a></li>
+      <li><a href="#none" class="popup11">pop_11</a></li>
+<!--     240118  팝업추가 -->
+      <li><a href="#none" class="popup12">OOO브랜치는 Pre-Test_01</a></li>
+      <li><a href="#none" class="popup13">OOO브랜치는 Pre-Test_02</a></li>
+      <li c><a href="#none" class="popup14" style="display: flex">방문 테스트(The Open)<i class="i-popup-info"></i> </a></li>
+    </ul>
+
+    <h3>MO_Popup</h3>
+    <ul>
+      <li><a href="#none" class="preferBtn_mo">선호브랜치</a></li>
+      <li><a href="#none" class="mo_share">공유하기</a></li>
+      <li><a href="#none" class="map_mopop">학원 위치</a></li>
+      <li><a href="#none" class="mo_privacyPop">개인정보 수집안내</a></li>
+      <li><a href="#none" class="mo_privacyPop02">가맹점에 정보 제공 동의 (필수)</a></li>
+      <li><a href="#none" class="mo_privacyPop03">가맹점에 정보 제공 동의 (선택)</a></li>
+      <li><a href="#none" class="mopop01">pop_01</a></li>
+      <li><a href="#none" class="mopop02">pop_02</a></li>
+      <li><a href="#none" class="mopop03">pop_03</a></li>
+      <li><a href="#none" class="mopop04">pop_04</a></li>
+      <li><a href="#none" class="mopop05">pop_05</a></li>
+      <li><a href="#none" class="mopop06">pop_06</a></li>
+      <li><a href="#none" class="mopop07">pop_07</a></li>
+      <li><a href="#none" class="mopop08">pop_08</a></li>
+      <li><a href="#none" class="mopop09">pop_09</a></li>
+      <li><a href="#none" class="mopop10">pop_10</a></li>
+      <li><a href="#none" class="mopop11">pop_11</a></li>
+      <li><a href="#none" class="mopop12">pop_12</a></li>
+      <li><a href="#none" class="mopop13" style="display: flex">방문 테스트(The Open)<i class="i-popup-info"></i></a></li>
+    </ul>
+  </div>
+  <!-- popup  -->
+  <div class="popwrap" id="mapPopup">
+    <div class="popBg"></div>
+    <div class="popContain mapCon">
+      <div class="popHeader">
+        <h2>응시 학원 위치</h2>
+        <button type="button" class="popClose"></button>
+      </div>
+      <div class="popBody">
+        <div class="popmapT">
+          <h2><i class="i-maker-popup"></i>청담어학원 동탄 2 브랜치</h2>
+          <button class="popMap_search"><i class="searchI"></i>다른 학원 찾아보기</button>
+        </div>
+        <div class="popmap">
+
+        </div>
+      </div>
+      <div class="popFooter">
+        <button type="button" class="popBtn">확인</button>
+        <!-- <button type="button" class="popBtn">현재 학원으로 예약</button> -->
+      </div>
+    </div>
+  </div>
+  <div class="popwrap" id="sharePopup">
+    <div class="popBg"></div>
+    <div class="popContain sm">
+      <button type="button" class="popClose"></button>
+      <div class="popBody">
+        <h1 class="popTit">공유하기</h1>
+        <p class="popSubTit">카카오톡이나 URL 복사를 통해 시험 예약 내용을 공유하세요.</p>
+        <div class="popCon shareCon">
+          <div>
+            <a href="#none">
+              <div class="kakaoI"></div>
+              <p>카카오톡</p>
+            </a>
+          </div>
+          <div>
+            <a href="#none" class="urlcp">
+              <div class="URLI"></div>
+              <p>URL 복사</p>   
+            </a>         
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="popwrap" id="urlcpPopup">
+    <div class="popBg"></div>
+    <div class="popContain sm">
+      <button type="button" class="popClose"></button>
+      <div class="popBody">
+        <h1 class="popTit">공유하기 주소가 복사되었습니다.</h1>
+        <p class="popSubTit"></p>
+        <div class="popFooter">
+          <button type="button" class="popBtn popClose_btn">확인</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="popwrap" id="privacyPopup">
+    <div class="popBg"></div>
+    <div class="popContain privacy">      
+      <button type="button" class="popClose"></button>
+      <div class="popBody">
+        <h1 class="popTit">개인정보 수집안내, 이용안내</h1>
+        <div class="popCon ">
+          <ul>
+            <li>
+              <h1>(주)크레버스는 서비스 제공을 위하여 아래와 같이 회원의 개인정보를 수집, 이용합니다.</h1>
+            </li>
+            <li>
+              <h1>수집 및 이용 목적 </h1>
+              <ul class="ulList">
+                <li>입학시험 예약 및 응시</li>
+                <li>Live class 또는 Online 수업 서비스 제공</li>
+              </ul> 
+            </li>
+            <li>
+              <h1>수집 항목</h1>          
+              <ul class="ulList">
+                <li>
+                  입학시험 예약 및 응시 시
+                  <ul>
+                    <li>학교, 이메일(학부모)</li>
+                  </ul>
+                </li>
+                <li>
+                  Live class 또는 Online 수업 서비스 제공 시
+                  <ul>
+                    <li>영상(초상 포함), 음성 정보, 사진(학생)</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <h1>보유 및 이용기간</h1>          
+              <ul class="ulList">
+                <li>
+                  이메일(학부모)
+                  <ul>
+                    <li>회원탈퇴 시 까지</li>
+                  </ul>
+                </li>
+                <li>
+                  영상(초상 포함), 음성 정보, 사진(학생)
+                  <ul>
+                    <li>1년</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <p>개인정보 수집 및 이용에 대해 동의를 거부할 권리가 있습니다. 단, 동의 거부 시에는 입학시험 및 입학, 수업 서비스를 이용할 수 없습니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="popwrap" id="privacyPopup02">
+    <div class="popBg"></div>
+    <div class="popContain privacy">      
+      <button type="button" class="popClose"></button>
+      <div class="popBody">
+        <h1 class="popTit">가맹점에 정보 제공 동의 (필수)</h1>
+        <div class="popCon ">
+          <ul>
+            <li>
+              <h1>(주)크레버스는 제3자 서비스와의 연결을 위해서 아래와 같이 이용자의 개인정보를 제공하고 있습니다.</h1>
+            </li>
+            <li>
+              <h1>제공 대상</h1>          
+              <ul>
+                <li>
+                  ㈜크레버스가 운영하는 <u>각 프랜차이즈 가맹점</u>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <h1>제공하는 개인정보 항목</h1>          
+              <ul>
+                <li>
+                  아이디, 이름, 생년월일, 이메일(학생), 휴대폰 번호(학생), 휴대폰 번호(학부모), 닉네임
+                </li>
+              </ul>
+            </li>
+            <li>
+              <h1>제공 정보의 이용 목적</h1>
+              <ul>
+                <li>각 프랜차이즈 가맹점 재원생 학습/운영/첨삭평가, 교재 등 물품의 배송 정보 및 재원여부 확인, 이벤트 진행</li>
+              </ul> 
+            </li>
+            <li>
+              <h1>제공기간</h1>
+              <ul>
+                <li>제3자 제공 동의철회 및 회원 탈퇴 시까지</li>
+              </ul> 
+            </li>
+          </ul>
+          <p>개인정보 제공에 대한 동의를 거부할 권리가 있으며, 동의를 거부할 경우 서비스 이용에 별도의 불이익은 없습니다. 단, 해당 서비스를 이용이 불가능하거나, 서비스 이용목적에 따른 서비스 제공에 제한이 따르게 됩니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="popwrap" id="privacyPopup03">
+    <div class="popBg"></div>
+    <div class="popContain privacy">      
+      <button type="button" class="popClose"></button>
+      <div class="popBody">
+        <h1 class="popTit">가맹점에 정보 제공 동의 (선택)</h1>
+        <div class="popCon ">
+          <ul>
+            <li>
+              <h1>(주)크레버스는 제3자 서비스와의 연결을 위해서 아래와 같이 이용자의 개인정보를 제공하고 있습니다.</h1>
+            </li>
+            <li>
+              <h1>제공 대상</h1>          
+              <ul>
+                <li>
+                  ㈜크레버스가 운영하는 <u>각 프랜차이즈 가맹점</u>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <h1>제공하는 개인정보 항목</h1>          
+              <ul>
+                <li>
+                  이메일(학부모), 주소
+                </li>
+              </ul>
+            </li>
+            <li>
+              <h1>제공 정보의 이용 목적</h1>
+              <ul>
+                <li>각 프랜차이즈 가맹점 재원생 학습/운영/첨삭평가, 교재 등 물품의 배송 정보 및 재원여부 확인, 이벤트 진행</li>
+              </ul> 
+            </li>
+            <li>
+              <h1>제공기간</h1>
+              <ul>
+                <li>제3자 제공 동의철회 및 회원 탈퇴 시까지</li>
+              </ul> 
+            </li>
+          </ul>
+          <p>개인정보 수집 및 이용에 대해 동의를 거부할 권리가 있습니다. 단, 동의 거부 시에는 L포인트 사용 서비스를 이용할 수 없습니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="popwrap " id="testPopup">
+    <div class="popBg"></div>
+    <div class="popContain testCon sm">
+      <button type="button" class="popClose"></button>
+      <div class="popBody">
+        <h1 class="popTit">Pre-Test가 완료되었습니다.</h1>
+        <div class="popCon">
+          <div>
+            <p>자녀</p>
+            <p><span>김민지</span> 학생</p>
+          </div>
+          <span class="hr"></span>
+          <div>
+            <p>Pre-Test 결과</p>
+            <p><span>EPT</span></p>
+          </div>
+        </div>
+      </div>
+      <div class="popFooter">
+        <button type="button" class="popBtn">예약 완료하기</button>
+      </div>
+    </div>
+  </div>
+  <div class="popwrap" id="pop_ty1">
+    <div class="popBg"></div>
+    <div class="popContain sm">
+      <button type="button" class="popClose"></button>
+      <div class="popBody">
+        <h1 class="popTit">예약된 입학시험이 있습니다.</h1>
+        <p class="popSubTit">기존 예약사항을 확인하시고,<br> 다시 예약해 주시기 바랍니다.</p>
+        <div class="popFooter">
+          <button type="button" class="popBtn line popClose_btn">닫기</button>
+          <button type="button" class="popBtn ">예약 및 응시 현황</button>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <div class="popwrap" id="pop_ty2">
+    <div class="popBg"></div>
+    <div class="popContain sm">
+      <button type="button" class="popClose"></button>
+      <div class="popBody">
+        <h1 class="popTit">입학시험 예약을 위해서는<br> 
+          홈페이지 로그인이 필요합니다.</h1>
+        <p class="popSubTit">회원가입을 하지 않으셨다면, 회원가입 후<br>
+          입학시험예약을 진행해주세요</p>
+        <div class="popFooter">
+          <button type="button" class="popBtn line popClose_btn">닫기</button>
+          <button type="button" class="popBtn ">회원가입</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="popwrap" id="pop_ty3">
+    <div class="popBg"></div>
+    <div class="popContain sm">
+      <button type="button" class="popClose"></button>
+      <div class="popBody">
+        <h1 class="popTit">현재 위치를 제공하여<br>
+          주변 학원을 검색합니다.</h1>
+        <!-- <p class="popSubTit">회원가입을 하지 않으셨다면, 회원가입 후<br>
+          입학시험예약을 진행해주세요</p> -->
+        <div class="popFooter">
+          <button type="button" class="popBtn line popClose_btn">차단</button>
+          <button type="button" class="popBtn ">허용</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="popwrap" id="pop_ty4">
+    <div class="popBg"></div>
+    <div class="popContain sm">
+      <button type="button" class="popClose"></button>
+      <div class="popBody">
+        <h1 class="popTit">로그인 후 선호브랜치로<br>
+          학원보기를 할 수 있습니다.</h1>
+        <p class="popSubTit">로그인 후 진행해주세요.</p>
+        <div class="popFooter">
+          <button type="button" class="popBtn line popClose_btn">취소</button>
+          <button type="button" class="popBtn ">로그인</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="popwrap" id="pop_ty5">
+    <div class="popBg"></div>
+    <div class="popContain sm">
+      <button type="button" class="popClose"></button>
+      <div class="popBody">
+        <h1 class="popTit">선호브랜치 정보가 없습니다.</h1>
+        <p class="popSubTit">내 정보 관리에서 선호브랜치<br>
+          정보입력 후 사용해주세요.</p>
+        <div class="popFooter">
+          <button type="button" class="popBtn line popClose_btn">취소</button>
+          <button type="button" class="popBtn ">등록하기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="popwrap" id="pop_ty6">
+    <div class="popBg"></div>
+    <div class="popContain sm">
+      <button type="button" class="popClose"></button>
+      <div class="popBody">
+        <h1 class="popTit">로그인 후 내 주소로<br>
+          학원보기를 할 수 있습니다.</h1>
+        <p class="popSubTit">로그인 후 진행해주세요.</p>
+        <div class="popFooter">
+          <button type="button" class="popBtn line popClose_btn">취소</button>
+          <button type="button" class="popBtn ">로그인</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="popwrap" id="pop_ty7">
+    <div class="popBg"></div>
+    <div class="popContain sm">
+      <button type="button" class="popClose"></button>
+      <div class="popBody">
+        <h1 class="popTit">입력된 주소가 없습니다.</h1>
+        <p class="popSubTit">내 정보 관리에서<br>
+          주소를 입력후 사용해주세요.</p>
+        <div class="popFooter">
+          <button type="button" class="popBtn line popClose_btn">취소</button>
+          <button type="button" class="popBtn ">등록하기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="popwrap" id="pop_ty8">
+    <div class="popBg"></div>
+    <div class="popContain sm">
+      <button type="button" class="popClose"></button>
+      <div class="popBody">
+        <h1 class="popTit">동일 브랜드에 <br>
+          예약된 입학시험이 있습니다.</h1>
+        <p class="popSubTit">기존 예약사항을 확인하시고,<br>
+          다시 예약해 주시기 바랍니다.</p>
+        <div class="popFooter">
+          <button type="button" class="popBtn w100">예약/응시현황</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="popwrap" id="pop_ty9">
+    <div class="popBg"></div>
+    <div class="popContain sm">
+      <button type="button" class="popClose"></button>
+      <div class="popBody">
+        <h1 class="popTit">학생만 응시 가능합니다.<br>
+          학생으로 로그인 하시겠습니까?</h1>        
+        <div class="popFooter">
+          <button type="button" class="popBtn line popClose_btn">취소</button>
+          <button type="button" class="popBtn ">로그인</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="popwrap" id="pop_ty10">
+    <div class="popBg"></div>
+    <div class="popContain sm">
+      <button type="button" class="popClose"></button>
+      <div class="popBody">
+        <h1 class="popTit">시험 예약이 취소되었습니다.</h1>        
+        <div class="popFooter">
+          <button type="button" class="popBtn line ">다시 예약하기</button>
+          <button type="button" class="popBtn popClose_btn">확인</button>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <div class="popwrap" id="pop_ty11">
+    <div class="popBg"></div>
+    <div class="popContain sm">
+      <button type="button" class="popClose"></button>
+      <div class="popBody">
+        <h1 class="popTit">시험 예약을 정말로 취소 하시겠습니까?</h1>   
+        <div class="popCon popconLine">
+          <ul class="pop_ul">
+            <li>
+              <p class="pop_titP">학생이름</p>
+              <p class="pop_subP">김민지</p>
+            </li>
+            <li>
+              <p class="pop_titP">시험 일시</p>
+              <p class="pop_subP">10월 24일<span>화</span><span>16:00</span></p>
+            </li>
+            <li>
+              <p class="pop_titP">시험 장소</p>
+              <p class="pop_subP">청담어학원<span>동탄 1 브랜치</span></p>
+            </li>
+          </ul>
+        </div>     
+        <div class="popFooter">
+          <button type="button" class="popBtn line">취소</button>
+          <button type="button" class="popBtn popClose_btn">확인</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!--  240118 팝업추가-->
+  <div class="popwrap" id="pop_ty12">
+    <div class="popBg"></div>
+    <div class="popContain sm">
+      <button type="button" class="popClose"></button>
+      <div class="popBody">
+        <h1 class="popTit">OOO브랜치는 Pre-Test가<br> 필요한 브랜치에요</h1>
+        <p class="popSubTit">예약하는 학생만 응시 가능해요.<br> 학생으로 로그인 할까요?</p>
+        <div class="popFooter">
+          <button type="button" class="popBtn line">취소</button>
+          <button type="button" class="popBtn ">로그인</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="popwrap" id="pop_ty13">
+    <div class="popBg"></div>
+    <div class="popContain sm">
+      <button type="button" class="popClose"></button>
+      <div class="popBody">
+        <h1 class="popTit">OOO브랜치는 Pre-Test가<br> 필요한 브랜치에요</h1>
+        <p class="popSubTit">지금 바로 문제를 풀어볼까요?</p>
+        <div class="popFooter">
+          <button type="button" class="popBtn line">취소</button>
+          <button type="button" class="popBtn ">응시하기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="popwrap" id="pop_ty14">
+    <div class="popBg"></div>
+    <div class="popContain privacy w600">
+      <button type="button" class="popClose"></button>
+      <div class="popBody hieightauto">
+        <h1 class="popTit border-none">The Open 브랜드 안내</h1>
+        <div class="popCon ">
+          <h1>The Open은 특목고 진학을 위한 수준별 학습 관리 솔루션을 제공하는 브랜드 입니다. </h1>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- mopop -->
+  <div class="mo_popwrap" id="branchPrefer_mo">
+    <div class="mo_popBg"></div>
+    <div class="mo_popContain preferCon">
+      <div class="mo_popBody">
+        <div class="branchPrefer">
+          <button type="button" class="close_b2"></button>
+          <div class="preferIn">
+            <div class="bc_student">
+              <div class="st_name"><i class="nameI"></i>김민지</div>
+              <ul class="st_list">
+                <li>
+                  <a href="#none">
+                    <div class="bc_logo cd_i"></div>
+                    <div class="bc_info">
+                      <p class="bc_tit">청담어학원</p>
+                      <p class="bc_subTit">청라국제 브랜치</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#none">
+                    <div class="bc_logo ap_i"></div>
+                    <div class="bc_info">
+                      <p class="bc_tit">April어학원</p>
+                      <p class="bc_subTit">청라국제 브랜치</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#none">
+                    <div class="bc_logo mt_i"></div>
+                    <div class="bc_info">
+                      <p class="bc_tit">CMS영재교육센터</p>
+                      <p class="bc_subTit">목동센트럴영재교육센터</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#none">
+                    <div class="bc_logo mg_i"></div>
+                    <div class="bc_info">
+                      <p class="bc_tit">CMS영재관</p>
+                      <p class="bc_subTit">청라국제 브랜치</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#none">
+                    <div class="bc_logo c3_i"></div>
+                    <div class="bc_info">
+                      <p class="bc_tit">씨큐브코딩</p>
+                      <p class="bc_subTit">청라국제 브랜치</p>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="bc_student">
+              <div class="st_name"><i class="nameI"></i>김민서</div>
+              <ul class="st_list">
+                <li>
+                  <a href="#none">
+                    <div class="bc_logo cd_i"></div>
+                    <div class="bc_info">
+                      <p class="bc_tit">청담어학원</p>
+                      <p class="bc_subTit">청라국제 브랜치</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#none">
+                    <div class="bc_logo ap_i"></div>
+                    <div class="bc_info">
+                      <p class="bc_tit">April어학원</p>
+                      <p class="bc_subTit">청라국제 브랜치</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#none">
+                    <div class="bc_logo mt_i"></div>
+                    <div class="bc_info">
+                      <p class="bc_tit">CMS영재교육센터</p>
+                      <p class="bc_subTit">목동센트럴영재교육센터</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#none">
+                    <div class="bc_logo mg_i"></div>
+                    <div class="bc_info">
+                      <p class="bc_tit">CMS영재관</p>
+                      <p class="bc_subTit">청라국제 브랜치</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#none">
+                    <div class="bc_logo c3_i"></div>
+                    <div class="bc_info">
+                      <p class="bc_tit">씨큐브코딩</p>
+                      <p class="bc_subTit">청라국제 브랜치</p>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mo_popwrap" id="map_mopop">
+    <div class="mo_popBg"></div>
+    <div class="mo_popContain mapCon">
+      <div class="mo_popHeader">
+        <h2>응시 학원 위치</h2>
+        <button type="button" class="popClose"></button>
+      </div>
+      <div class="mo_popBody">        
+        <h2 class="popmapI"><i class="map_i"></i>청담어학원 동탄 2 브랜치</h2>
+        <div class="popmap">
+
+        </div>
+      </div>
+      <div class="mo_popFooter">
+        <button type="button" class="popBtn">확인</button>
+        <!-- <button type="button" class="popBtn">현재 학원으로 예약</button> -->
+      </div>
+    </div>
+  </div>  
+  <div class="mo_popwrap" id="privacy_mopop">
+    <div class="mo_popBg"></div>
+    <div class="mo_popContain privacy">      
+      <div class="mo_popHeader">
+        <button type="button" class="mo_popClose"></button>
+      </div>
+      <div class="mo_popBody">
+        <h1 class="mo_popTit">개인정보 수집안내, 이용안내</h1>
+        <div class="mo_popCon ">
+          <ul>
+            <li>
+              <h1>(주)크레버스는 서비스 제공을 위하여 아래와 같이 회원의 개인정보를 수집, 이용합니다.</h1>
+            </li>
+            <li>
+              <h1>수집 및 이용 목적 </h1>
+              <ul class="ulList">
+                <li>입학시험 예약 및 응시</li>
+                <li>Live class 또는 Online 수업 서비스 제공</li>
+              </ul> 
+            </li>
+            <li>
+              <h1>수집 항목</h1>          
+              <ul class="ulList">
+                <li>
+                  입학시험 예약 및 응시 시
+                  <ul>
+                    <li>학교, 이메일(학부모)</li>
+                  </ul>
+                </li>
+                <li>
+                  Live class 또는 Online 수업 서비스 제공 시
+                  <ul>
+                    <li>영상(초상 포함), 음성 정보, 사진(학생)</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <h1>보유 및 이용기간</h1>          
+              <ul class="ulList">
+                <li>
+                  이메일(학부모)
+                  <ul>
+                    <li>회원탈퇴 시 까지</li>
+                  </ul>
+                </li>
+                <li>
+                  영상(초상 포함), 음성 정보, 사진(학생)
+                  <ul>
+                    <li>1년</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <p>개인정보 수집 및 이용에 대해 동의를 거부할 권리가 있습니다. 단, 동의 거부 시에는 입학시험 및 입학, 수업 서비스를 이용할 수 없습니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mo_popwrap" id="privacy_mopop02">
+    <div class="mo_popBg"></div>
+    <div class="mo_popContain privacy">      
+      <div class="mo_popHeader">
+        <button type="button" class="mo_popClose"></button>
+      </div>
+      <div class="mo_popBody">
+        <h1 class="mo_popTit">가맹점에 정보 제공 동의 (필수)</h1>
+        <div class="mo_popCon ">
+          <ul>
+            <li>
+              <h1>(주)크레버스는 제3자 서비스와의 연결을 위해서 아래와 같이 이용자의 개인정보를 제공하고 있습니다.</h1>
+            </li>
+            <li>
+              <h1>제공 대상</h1>          
+              <ul>
+                <li>
+                  ㈜크레버스가 운영하는 <u>각 프랜차이즈 가맹점</u>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <h1>제공하는 개인정보 항목</h1>          
+              <ul>
+                <li>
+                  아이디, 이름, 생년월일, 이메일(학생), 휴대폰 번호(학생), 휴대폰 번호(학부모), 닉네임
+                </li>
+              </ul>
+            </li>
+            <li>
+              <h1>제공 정보의 이용 목적</h1>
+              <ul>
+                <li>각 프랜차이즈 가맹점 재원생 학습/운영/첨삭평가, 교재 등 물품의 배송 정보 및 재원여부 확인, 이벤트 진행</li>
+              </ul> 
+            </li>
+            <li>
+              <h1>제공기간</h1>
+              <ul>
+                <li>제3자 제공 동의철회 및 회원 탈퇴 시까지</li>
+              </ul> 
+            </li>
+          </ul>
+          <p>개인정보 제공에 대한 동의를 거부할 권리가 있으며, 동의를 거부할 경우 서비스 이용에 별도의 불이익은 없습니다. 단, 해당 서비스를 이용이 불가능하거나, 서비스 이용목적에 따른 서비스 제공에 제한이 따르게 됩니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mo_popwrap" id="privacy_mopop03">
+    <div class="mo_popBg"></div>
+    <div class="mo_popContain privacy">      
+      <div class="mo_popHeader">
+        <button type="button" class="mo_popClose"></button>
+      </div>
+      <div class="mo_popBody">
+        <h1 class="mo_popTit">가맹점에 정보 제공 동의 (선택)</h1>
+        <div class="mo_popCon ">
+          <ul>
+            <li>
+              <h1>(주)크레버스는 제3자 서비스와의 연결을 위해서 아래와 같이 이용자의 개인정보를 제공하고 있습니다.</h1>
+            </li>
+            <li>
+              <h1>제공 대상</h1>          
+              <ul>
+                <li>
+                  ㈜크레버스가 운영하는 <u>각 프랜차이즈 가맹점</u>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <h1>제공하는 개인정보 항목</h1>          
+              <ul>
+                <li>
+                  이메일(학부모), 주소
+                </li>
+              </ul>
+            </li>
+            <li>
+              <h1>제공 정보의 이용 목적</h1>
+              <ul>
+                <li>각 프랜차이즈 가맹점 재원생 학습/운영/첨삭평가, 교재 등 물품의 배송 정보 및 재원여부 확인, 이벤트 진행</li>
+              </ul> 
+            </li>
+            <li>
+              <h1>제공기간</h1>
+              <ul>
+                <li>제3자 제공 동의철회 및 회원 탈퇴 시까지</li>
+              </ul> 
+            </li>
+          </ul>
+          <p>개인정보 수집 및 이용에 대해 동의를 거부할 권리가 있습니다. 단, 동의 거부 시에는 L포인트 사용 서비스를 이용할 수 없습니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mo_popwrap" id="mo_sharePopup">
+    <div class="mo_popBg"></div>
+    <div class="mo_popContain mo_ty2 pop_shareCon">
+      <div class="mo_popHeader">
+        <button type="button" class="mo_popClose"></button>
+      </div>
+      <div class="mo_popBody">
+        <h1 class="mo_popTit">공유하기</h1>
+        <!-- <p class="mo_popSubTit">카카오톡이나 URL 복사를 통해 시험 예약 내용을 공유하세요.</p> -->
+        <div class="mo_popCon sharceBox">
+          <div>
+            <a href="#none">
+              <div class="kakaoI"></div>
+              <p>카카오톡</p>
+            </a>
+          </div>
+          <div>
+            <a href="#none">
+              <div class="URLI"></div>
+              <p>URL 복사</p>   
+            </a>         
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mo_popwrap" id="mo_pop01">
+    <div class="mo_popBg"></div>
+    <div class="mo_popContain mo_ty1">
+      <div class="mo_popBody">
+        <h1 class="mo_popTit">입학시험 예약을 위해서는<br>
+          홈페이지 로그인이 필요합니다.
+        </h1>
+        <p class="mo_popSub">
+          회원가입을 하지 않으셨다면,<br>
+          회원가입 후 입학시험예약을 진행해주세요
+        </p>
+      </div>
+      <div class="mo_popFooter">
+        <button type="button" class="popBtn line">로그인</button>
+        <button type="button" class="popBtn">회원가입</button>
+      </div>
+    </div>
+  </div>  
+  <div class="mo_popwrap" id="mo_pop02">
+    <div class="mo_popBg"></div>
+    <div class="mo_popContain mo_ty1">
+      <div class="mo_popBody">
+        <!-- <h1 class="mo_popTit">입학시험 예약을 위해서는<br>
+          홈페이지 로그인이 필요합니다.
+        </h1> -->
+        <p class="mo_popSub">
+          현재 위치를 제공하여<br>
+          주변 학원을 검색합니다.
+        </p>
+      </div>
+      <div class="mo_popFooter">
+        <button type="button" class="popBtn line">차단</button>
+        <button type="button" class="popBtn">허용</button>
+      </div>
+    </div>
+  </div>
+  <div class="mo_popwrap" id="mo_pop03">
+    <div class="mo_popBg"></div>
+    <div class="mo_popContain mo_ty1">
+      <div class="mo_popBody">
+        <h1 class="mo_popTit">로그인 후 선호브랜치로<br>
+          학원보기를 할 수 있습니다.
+        </h1>
+        <p class="mo_popSub">
+          로그인 후 진행해주세요.
+        </p>
+      </div>
+      <div class="mo_popFooter">
+        <button type="button" class="popBtn line">취소</button>
+        <button type="button" class="popBtn">로그인</button>
+      </div>
+    </div>
+  </div>
+  <div class="mo_popwrap" id="mo_pop04">
+    <div class="mo_popBg"></div>
+    <div class="mo_popContain mo_ty1">
+      <div class="mo_popBody">
+        <h1 class="mo_popTit">시험 예약이 취소되었습니다.</h1>
+      </div>
+      <div class="mo_popFooter">
+        <button type="button" class="popBtn line">다시 예약하기</button>
+        <button type="button" class="popBtn">확인</button>
+      </div>
+    </div>
+  </div>
+  <div class="mo_popwrap" id="mo_pop05">
+    <div class="mo_popBg"></div>
+    <div class="mo_popContain mo_ty1">
+      <div class="mo_popBody">
+        <h1 class="mo_popTit">선호브랜치 정보가 없습니다.
+        </h1>
+        <p class="mo_popSub">
+          내 정보 관리에서 선호브랜치<br>
+          정보입력 후 사용해주세요.
+        </p>
+      </div>
+      <div class="mo_popFooter">
+        <button type="button" class="popBtn line">등록하기</button>
+        <button type="button" class="popBtn">취소</button>
+      </div>
+    </div>
+  </div>
+  <div class="mo_popwrap" id="mo_pop06">
+    <div class="mo_popBg"></div>
+    <div class="mo_popContain mo_ty1">
+      <div class="mo_popBody">
+        <h1 class="mo_popTit">로그인 후 내주소로<br>
+          학원보기를 할 수 있습니다.
+        </h1>
+        <p class="mo_popSub">
+          로그인 후 진행해주세요.
+      </div>
+      <div class="mo_popFooter">
+        <button type="button" class="popBtn line">취소</button>
+        <button type="button" class="popBtn">로그인</button>
+      </div>
+    </div>
+  </div>
+  <div class="mo_popwrap" id="mo_pop07">
+    <div class="mo_popBg"></div>
+    <div class="mo_popContain mo_ty1">
+      <div class="mo_popBody">
+        <h1 class="mo_popTit">입력된 주소가 없습니다.
+        </h1>
+        <p class="mo_popSub">
+          내 정보 관리에서<br>
+          주소를 입력후 사용해주세요.
+        </p>
+      </div>
+      <div class="mo_popFooter">
+        <button type="button" class="popBtn line">취소</button>
+        <button type="button" class="popBtn">로그인</button>
+      </div>
+    </div>
+  </div>
+  <div class="mo_popwrap" id="mo_pop08">
+    <div class="mo_popBg"></div>
+    <div class="mo_popContain mo_ty1">
+      <div class="mo_popBody">
+        <h1 class="mo_popTit">동일 브랜드에<br>
+          예약된 입학시험이 있습니다.
+        </h1>
+        <p class="mo_popSub">기존 예약사항을 확인하시고,<br>
+          다시 예약해 주시기 바랍니다.
+        </p>
+      </div>
+      <div class="mo_popFooter">
+        <button type="button" class="popBtn">예약/응시현황</button>
+      </div>
+    </div>
+  </div>
+  <div class="mo_popwrap" id="mo_pop09">
+    <div class="mo_popBg"></div>
+    <div class="mo_popContain mo_ty1">
+      <div class="mo_popBody">
+        <h1 class="mo_popTit">예약된 입학시험이 있습니다.
+        </h1>
+        <p class="mo_popSub">기존 예약사항을 확인하시고,<br>
+          다시 예약해 주시기 바랍니다.
+        </p>
+      </div>
+      <div class="mo_popFooter">
+        <button type="button" class="popBtn">예약/응시현황</button>
+      </div>
+    </div>
+  </div>
+  <div class="mo_popwrap" id="mo_pop10">
+    <div class="mo_popBg"></div>
+    <div class="mo_popContain mo_ty1">
+      <div class="mo_popBody">
+        <h1 class="mo_popTit">현재 입학시험예약 페이지는 <br>
+          청담어학원, April어학원<br>
+          CMS 영재교육센터, CMS 영재관<br>
+          4개 브랜드만 가능합니다.
+        </h1>
+        <p class="mo_popSub">그 외 브랜드 예약은 <br>
+          PC 환경에서 진행해주세요.
+        </p>
+      </div>
+      <div class="mo_popFooter">
+        <button type="button" class="popBtn">확인</button>
+      </div>
+    </div>
+  </div>
+  <div class="mo_popwrap" id="mo_pop11">
+    <div class="mo_popBg"></div>
+    <div class="mo_popContain mo_ty1">
+      <div class="mo_popBody">
+        <h1 class="mo_popTit">Pre-Test 문제 풀기는 <br>
+          모바일 환경에서 진행 불가능 해요.
+        </h1>
+        <p class="mo_popSub">PC 환경에서 진행해 주세요.
+        </p>
+      </div>
+      <div class="mo_popFooter">
+        <button type="button" class="popBtn">확인</button>
+      </div>
+    </div>
+  </div>  
+  <div class="mo_popwrap" id="mo_pop12">
+    <div class="mo_popBg"></div>
+    <div class="mo_popContain mo_ty2">
+      <div class="mo_popHeader ty2">
+        <button type="button" class="mo_popClose"></button>
+      </div>
+      <div class="mo_popBody">
+        <h1 class="mo_popTit">시험 예약을 정말로 취소 하시겠습니까?</h1>
+        <div class="mo_popCon mo_conLine">
+          <ul class="pop_ul">
+            <li>
+              <p class="pop_titP">학생이름</p>
+              <p class="pop_subP">김민지</p>
+            </li>
+            <li>
+              <p class="pop_titP">시험 일시</p>
+              <p class="pop_subP">10월 24일<span>화</span><span>16:00</span></p>
+            </li>
+            <li>
+              <p class="pop_titP">시험 장소</p>
+              <p class="pop_subP">청담어학원 남동탄브랜치</p>
+            </li>
+          </ul>
+        </div>
+      </div>      
+      <div class="mo_popFooter">
+        <button type="button" class="popBtn line">취소</button>
+        <button type="button" class="popBtn">확인</button>
+      </div>
+    </div>
+  </div>
+  <div class="mo_popwrap" id="mo_pop13">
+    <div class="mo_popBg"></div>
+    <div class="mo_popContain mo_ty2">
+      <div class="mo_popHeader">
+        <button type="button" class="mo_popClose"></button>
+      </div>
+      <div class="mo_popBody">
+        <h1 class="mo_popTit">The Open 브랜드 안내</h1>
+         <p class="mo_popSubTit">The Open은 특목고 진학을 위한 수준별 학습 관리 솔루션을 제공하는 브랜드 입니다.</p>
+
+      </div>
+    </div>
+  </div>
+<script>  
+  // popup
+  $(document).on("click", ".popClose, .popBg, .mo_popBg, .mo_popClose, .close_b2", function(){
+    $(this).parents('.popwrap,.mo_popwrap').removeClass('on');
+    $('body').css('overflow', 'auto');
+  });
+  $('body').click(function(){
+    if($('.popwrap, .mo_popwrap').hasClass('on')){
+        $('body').css('overflow', 'hidden');
+    }
+  });
+  $('.popBg').click(function(){
+    $('.branchPrefer').removeClass('on');
+  });
+  $('.map_pop').click(function(){
+    $('#mapPopup').addClass('on');
+  });
+  $('.share_pop').click(function(){
+    $('#sharePopup').addClass('on');
+  });
+  $('.urlcp').click(function(){
+    $('#urlcpPopup').addClass('on');
+  });
+  $('.privacyPop').click(function(){
+    $('#privacyPopup').addClass('on');
+  });
+  $('.privacyPop02').click(function(){
+    $('#privacyPopup02').addClass('on');
+  });
+  $('.privacyPop03').click(function(){
+    $('#privacyPopup03').addClass('on');
+  });
+  $('.testPop').click(function(){
+    $('#testPopup').addClass('on');
+  }); 
+  $('.popup1').click(function(){
+    $('#pop_ty1').addClass('on');
+  });
+  $('.popup2').click(function(){
+    $('#pop_ty2').addClass('on');
+  });  
+  $('.popup3').click(function(){
+    $('#pop_ty3').addClass('on');
+  });
+  $('.popup4').click(function(){
+    $('#pop_ty4').addClass('on');
+  });
+  $('.popup5').click(function(){
+    $('#pop_ty5').addClass('on');
+  });
+  $('.popup6').click(function(){
+    $('#pop_ty6').addClass('on');
+  });
+  $('.popup7').click(function(){
+    $('#pop_ty7').addClass('on');
+  });
+  $('.popup8').click(function(){
+    $('#pop_ty8').addClass('on');
+  });
+  $('.popup9').click(function(){
+    $('#pop_ty9').addClass('on');
+  });
+  $('.popup10').click(function(){
+    $('#pop_ty10').addClass('on');
+  });
+  $('.popup11').click(function(){
+    $('#pop_ty11').addClass('on');
+  });
+  $('.popup12').click(function(){
+    $('#pop_ty12').addClass('on');
+  });
+  $('.popup13').click(function(){
+    $('#pop_ty13').addClass('on');
+  });
+  $('.popup14').click(function(){
+    $('#pop_ty14').addClass('on');
+  });
+  // mobile  
+  $('.preferBtn_mo').click(function(){
+    $('#branchPrefer_mo').addClass('on');
+  });
+  $('.map_mopop').click(function(){
+    $('#map_mopop').addClass('on');
+  });
+  $('.mo_share').click(function(){
+    $('#mo_sharePopup').addClass('on');
+  });
+
+  $('.mopop13').click(function(){
+    $('#mo_pop13').addClass('on');
+  });
+
+  $('.mo_privacyPop').click(function(){
+    $('#privacy_mopop').addClass('on');
+  });
+  $('.mo_privacyPop02').click(function(){
+    $('#privacy_mopop02').addClass('on');
+  });  
+  $('.mo_privacyPop03').click(function(){
+    $('#privacy_mopop03').addClass('on');
+  });
+  $('.mopop01').click(function(){
+    $('#mo_pop01').addClass('on');
+  });
+  $('.mopop02').click(function(){
+    $('#mo_pop02').addClass('on');
+  });
+  $('.mopop03').click(function(){
+    $('#mo_pop03').addClass('on');
+  });
+  $('.mopop04').click(function(){
+    $('#mo_pop04').addClass('on');
+  });
+  $('.mopop05').click(function(){
+    $('#mo_pop05').addClass('on');
+  });
+  $('.mopop06').click(function(){
+    $('#mo_pop06').addClass('on');
+  });
+  $('.mopop07').click(function(){
+    $('#mo_pop07').addClass('on');
+  });
+  $('.mopop08').click(function(){
+    $('#mo_pop08').addClass('on');
+  });
+  $('.mopop09').click(function(){
+    $('#mo_pop09').addClass('on');
+  });
+  $('.mopop10').click(function(){
+    $('#mo_pop10').addClass('on');
+  });
+  $('.mopop11').click(function(){
+    $('#mo_pop11').addClass('on');
+  });
+  $('.mopop12').click(function(){
+    $('#mo_pop12').addClass('on');
+  });
+  //body 스크롤
+  $(window).resize(function() {
+    if($(window).width() >= 767) {
+      if($('.popwrap').hasClass('on')){
+        $('body').css('overflow', 'auto');
+        $('.popwrap').removeClass('on')
+      }
+      else if($('.mo_popwrap').hasClass('on')){
+        $('body').css('overflow', 'auto');
+        $('.popwrap').removeClass('on')
+      }
+    }
+  });
+</script>
+</body>
+</html>

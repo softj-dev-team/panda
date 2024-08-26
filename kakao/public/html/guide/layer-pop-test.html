@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>CHUNGDAHM</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <link rel="shortcut icon" type="image/x-icon" href="../../images/common/favicon.ico" />
+  <link rel="apple-touch-icon-precomposed" href="../../images/common/apple-touch-icon.png" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <link rel="stylesheet" href="../../css/global.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/sub.css">
+  <script src="../../js/ui.vendor.js"></script>
+  <script src="../../js/ui.js"></script>
+</head>
+
+<body>
+<!-- MYPC_Main_01p2 // -->
+<div id="MYPC_Main_01p2" class="pop-wrap pop-layer pop-w" data-uipopset='{"isDim" : true}'>
+  <!-- pop-head // -->
+  <div class="pop-head">
+    <button type="button" class="pop-btn-close" data-uipop='0'>닫기</button>
+    <h1 class="pop-title">성취도 평가</h1>
+  </div>
+  <!-- // pop-head -->
+  <!-- pop-cont // -->
+  <div class="pop-cont">
+    <h3 class="g-title-6 cmgt-0">성취도 평가 결과</h3>
+
+    <!-- tab // -->
+    <ul class="tab tab-col-2 cmgt-5" data-tab='{"acttit":".tab-item", "activeidx" : "0"}'>
+      <li class="tab-item active"><a href="#achievement" data-blind-title="tabAchievement"><span class="mid">총점 및 영역별 점수</span></a></li>
+      <li class="tab-item"><a href="#achievement-2" data-blind-title="tabAchievement"><span class="mid">영역별 평가 보기</span></a></li>
+    </ul>
+    <h3 class="blind" id="tabAchievement" title="선택">총점 및 영역별 점수</h3>
+    <!-- // tab -->
+
+    <!-- 학생 정보 // -->
+    <div class="tb-data-wrap cmgt-7">
+      <table class="tb-data-5">
+        <caption>학생 정보</caption>
+        <colgroup><col width="20%" span="5" /></colgroup>
+        <thead>
+        <tr>
+          <th scope="col">이름</th>
+          <th scope="col">연령</th>
+          <th scope="col">학기</th>
+          <th scope="col">수강단계</th>
+          <th scope="col">담당강사</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td class="ac"><em class="fake-th"><span class="fake-th-in">이름</span></em><span class="fake-td">김단우</span></td>
+          <td class="ac"><em class="fake-th"><span class="fake-th-in">연령</span></em><span class="fake-td">유아 7세</span></td>
+          <td class="ac"><em class="fake-th"><span class="fake-th-in">학기</span></em><span class="fake-td">2018 2학기</span></td>
+          <td class="ac"><em class="fake-th"><span class="fake-th-in">수강단계</span></em><span class="fake-td">i6-2</span></td>
+          <td class="ac"><em class="fake-th"><span class="fake-th-in">담당강사</span></em><span class="fake-td">Annandale Hendrik</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- // 학생 정보 -->
+
+    <!-- 성적 결과 // -->
+    <div class="g-title-wrap-8">
+      <h3 class="g-title-8">성적 결과</h3>
+      <span class="g-title-txt-4">특정 문제 유형에 득점이 없을 경우, “자신의 점수“ 그래프가 표시되지 않습니다.</span>
+    </div>
+    <div class="tb-data-wrap cmgt-6">
+      <table class="tb-data-5">
+        <caption>성적 결과</caption>
+        <colgroup><col width="20%" span="5" /></colgroup>
+        <thead>
+        <tr>
+          <th scope="col">Total</th>
+          <th scope="col">Reading</th>
+          <th scope="col">Listening</th>
+          <th scope="col">Speaking</th>
+          <th scope="col">Writing</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td class="ac"><em class="fake-th"><span class="fake-th-in">Total</span></em><span class="fake-td"><strong class="fc-12">28</strong> / 88</span></td>
+          <td class="ac"><em class="fake-th"><span class="fake-th-in">Reading</span></em><span class="fake-td"><strong class="fc-12">0</strong> / 30</span></td>
+          <td class="ac"><em class="fake-th"><span class="fake-th-in">Listening</span></em><span class="fake-td"><strong class="fc-12">0</strong> / 30</span></td>
+          <td class="ac"><em class="fake-th"><span class="fake-th-in">Speaking</span></em><span class="fake-td"><strong class="fc-12">14</strong> / 14</span></td>
+          <td class="ac"><em class="fake-th"><span class="fake-th-in">Writing</span></em><span class="fake-td"><strong class="fc-12">14</strong> / 14</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- // 성적 결과 -->
+    <!-- 총점 및 영역별 점수 // -->
+    <div id="achievement">
+      <!-- 차트 // -->
+      <!-- <div class="bar-graph cmgt">
+        <div class="legend"><span class="case">자신의 점수</span></div>
+        <div class="graph-line">
+          <ul class="x-axis col-5">
+            <li class="item first">
+              <span class="name">총점</span>
+              <span class="case">
+                <span class="bar" style="height:calc(28/90*100%)"><strong class="value">28</strong></span>
+              </span>
+            </li>
+            <li class="item">
+              <span class="name">Reading</span>
+              <span class="case">
+                <span class="bar" style="height:0"><strong class="value">0</strong></span>
+              </span>
+            </li>
+            <li class="item">
+              <span class="name">Listening</span>
+              <span class="case">
+                <span class="bar" style="height:0"><strong class="value">0</strong></span>
+              </span>
+            </li>
+            <li class="item">
+              <span class="name">Speaking</span>
+              <span class="case">
+                <span class="bar" style="height:calc(34/90*100%)"><strong class="value">34</strong></span>
+              </span>
+            </li>
+            <li class="item">
+              <span class="name">Writing</span>
+              <span class="case">
+                <span class="bar" style="height:calc(14/90*100%)"><strong class="value">14</strong></span>
+              </span>
+            </li>
+          </ul>
+          <span class="y-axis">
+            <span class="item"><span class="name">90</span></span>
+            <span class="item"><span class="name">80</span></span>
+            <span class="item"><span class="name">70</span></span>
+            <span class="item"><span class="name">60</span></span>
+            <span class="item"><span class="name">50</span></span>
+            <span class="item"><span class="name">40</span></span>
+            <span class="item"><span class="name">30</span></span>
+            <span class="item"><span class="name">20</span></span>
+            <span class="item"><span class="name">10</span></span>
+            <span class="item first"><span class="name">0</span></span>
+          </span>
+        </div>
+      </div> -->
+      <div class="bar-graph cmgt bar-v-graph-1">
+        <div class="graph-wrap"><div id="columnchart_values" class="graph"></div></div>
+      </div>
+      <!-- // 차트 -->
+
+      <!-- 문제유형별 점수 // -->
+      <h3 class="g-title-8 cmgt">문제유형별 점수</h3>
+      <div class="tb-data-wrap cmgt-6">
+        <!-- <table class="tb-data">
+          <caption>문제유형별 점수</caption>
+          <colgroup><col class="tb-col-8" /><col class="tb-col-9" /><col class="tb-col-3" /></colgroup>
+          <tbody>
+            <tr>
+              <th scope="row" rowspan="3">Speaking</th>
+              <td class="ac fc">유창성</td>
+              <td class="tb-img"><span class="graph-wrap"><span class="graph" style="width:100%"><span class="graph-in ty-ig" style="width:100%"></span><span class="graph-txt"><strong class="fc-12">100</strong> / 100</span></span></span></td>
+            </tr>
+            <tr>
+              <td class="ac fc">어휘</td>
+              <td class="tb-img"><span class="graph-wrap"><span class="graph" style="width:100%"><span class="graph-in ty-ig" style="width:90%"></span><span class="graph-txt"><strong class="fc-12">90</strong> / 100</span></span></span></td>
+            </tr>
+            <tr>
+              <td class="ac fc">내용</td>
+              <td class="tb-img"><span class="graph-wrap"><span class="graph" style="width:100%"><span class="graph-in ty-ig" style="width:100%"></span><span class="graph-txt"><strong class="fc-12">100</strong> / 100</span></span></span></td>
+            </tr>
+            <tr>
+              <th scope="row" rowspan="3">Writing</th>
+              <td class="ac fc">문제&amp;어휘</td>
+              <td class="tb-img"><span class="graph-wrap"><span class="graph" style="width:100%"><span class="graph-in ty-ig" style="width:100%"></span><span class="graph-txt"><strong class="fc-12">100</strong> / 100</span></span></span></td>
+            </tr>
+            <tr>
+              <td class="ac fc">맞춤법</td>
+              <td class="tb-img"><span class="graph-wrap"><span class="graph" style="width:100%"><span class="graph-in ty-ig" style="width:100%"></span><span class="graph-txt"><strong class="fc-12">100</strong> / 100</span></span></span></td>
+            </tr>
+            <tr>
+              <td class="ac fc">과제완성</td>
+              <td class="tb-img"><span class="graph-wrap"><span class="graph" style="width:100%"><span class="graph-in ty-ig" style="width:100%"></span><span class="graph-txt"><strong class="fc-12">100</strong> / 100</span></span></span></td>
+            </tr>
+          </tbody>
+        </table> -->
+        <table class="tb-data">
+          <caption>문제유형별 점수</caption>
+          <colgroup><col class="tb-col-8" /><col class="tb-col-3" /></colgroup>
+          <tbody>
+          <tr>
+            <th scope="row">Reading</th>
+            <td><div class="bar-h-graph-1"><div id='barchart_values1' class='graph' style="height:calc(4 * 28px + 24px)"></div></div></td>
+          </tr>
+          <tr>
+            <th scope="row">Listening</th>
+            <td><div class="bar-h-graph-1"><div id='barchart_values2' class='graph' style="height:calc(4 * 28px + 24px)"></div></div></td>
+          </tr>
+          <tr>
+            <th scope="row">Speaking</th>
+            <td><div class="bar-h-graph-1"><div id='barchart_values3' class='graph' style="height:calc(3 * 28px + 24px)"></div></div></td>
+          </tr>
+          <tr>
+            <th scope="row">Writing</th>
+            <td><div class="bar-h-graph-1"><div id='barchart_values4' class='graph' style="height:calc(3 * 28px + 24px)"></div></div></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- // 문제유형별 점수 -->
+      <p class="tb-data-des">* 각 문제유형별 점수는 100점 만점 기준입니다.</p>
+    </div>
+    <!-- // 총점 및 영역별 점수 -->
+
+    <!-- 영역별 평가 보기 // -->
+    <div id="achievement-2">
+      <!-- Speaking // -->
+      <h3 class="g-title-8 cmgt">Speaking</h3>
+      <!-- 차트 // -->
+      <!-- <div class="bar-graph ty-2 max-w cmgt-2">
+        <h3 class="caption">문제 유형별 득점력</h3>
+        <div class="legend"><span class="case">자신의 점수</span></div>
+        <div class="graph-line">
+          <ul class="x-axis col-3">
+            <li class="item first">
+              <span class="name">유창성</span>
+              <span class="case">
+                <span class="bar" style="height:28%"><span class="value">28</span></span>
+              </span>
+            </li>
+            <li class="item">
+              <span class="name">어휘</span>
+              <span class="case">
+                <span class="bar" style="height:34%"><span class="value">34</span></span>
+              </span>
+            </li>
+            <li class="item">
+              <span class="name">내용</span>
+              <span class="case">
+                <span class="bar" style="height:14%"><span class="value">14</span></span>
+              </span>
+            </li>
+          </ul>
+          <span class="y-axis">
+            <span class="item"><span class="name">100</span></span>
+            <span class="item"><span class="name">80</span></span>
+            <span class="item"><span class="name">60</span></span>
+            <span class="item"><span class="name">40</span></span>
+            <span class="item"><span class="name">20</span></span>
+            <span class="item first"><span class="name">0</span></span>
+          </span>
+        </div>
+      </div> -->
+      <div class="bar-graph ty-2 max-w cmgt-2 bar-v-graph-1">
+        <h3 class="caption">문제 유형별 득점력</h3>
+        <div class="graph-wrap"><div id="columnchart_values_5" class="graph"></div></div>
+        <div class="legend-2">1 단어 이해 능력 / 2 문장 이해 능력 / 3 어휘 추론 능력 / 4 세부 사항 파악 능력</div>
+      </div>
+      <!-- // 차트 -->
+      <table class="tb-data-strategy">
+        <caption>평가 및 학습전략</caption>
+        <colgroup><col width="50%" /><col width="50%" /></colgroup>
+        <thead>
+        <tr>
+          <th scope="col" colspan="2">평가 및 학습전략</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td class="ac"><strong>평가</strong></td>
+          <td class="ac"><strong>학습전략</strong></td>
+        </tr>
+        <tr>
+          <td>
+            • 관련성<br />
+            - 질문 내용을 완벽하게 이해할 수 있으며, 주제와 관련된 정보를 충분히 말할 수 있습니다.<br /><br />
+            • 구성<br />
+            - 질문에 대한 응답을 완벽하게 구성할 수 있습니다.<br /><br />
+            • 전달력<br />
+            - 질문에 대한 답을 완벽하게 표현할 수 있으며, 유창하게 말할 수 있습니다.
+          </td>
+          <td>
+            - 매일 2-3분씩 그날 있었던 일을 정리해서 큰소리로 말해보세요.<br />
+            - 수업 시간에 발표해보세요.<br />
+            - 온라인 ESL Learning의 학습을 꾸준히 해보세요.
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <!-- // Speaking -->
+
+      <!-- Writing // -->
+      <h3 class="g-title-8 cmgt-2">Writing</h3>
+      <!-- 차트 // -->
+      <div class="bar-graph ty-2 max-w cmgt-2">
+        <h3 class="caption">문제 유형별 득점력</h3>
+        <div class="legend"><span class="case">자신의 점수</span></div>
+        <div class="graph-line">
+          <ul class="x-axis col-3">
+            <li class="item first">
+              <span class="name">문법&amp;어휘</span>
+              <span class="case">
+                <span class="bar" style="height:28%"><span class="value">28</span></span>
+              </span>
+            </li>
+            <li class="item">
+              <span class="name">맞춤법</span>
+              <span class="case">
+                <span class="bar" style="height:34%"><span class="value">34</span></span>
+              </span>
+            </li>
+            <li class="item">
+              <span class="name">과제완성</span>
+              <span class="case">
+                <span class="bar" style="height:14%"><span class="value">14</span></span>
+              </span>
+            </li>
+          </ul>
+          <span class="y-axis">
+            <span class="item"><span class="name">100</span></span>
+            <span class="item"><span class="name">80</span></span>
+            <span class="item"><span class="name">60</span></span>
+            <span class="item"><span class="name">40</span></span>
+            <span class="item"><span class="name">20</span></span>
+            <span class="item first"><span class="name">0</span></span>
+          </span>
+        </div>
+      </div>
+      <!-- // 차트 -->
+      <table class="tb-data-strategy">
+        <caption>평가 및 학습전략</caption>
+        <colgroup><col width="50%" /><col width="50%" /></colgroup>
+        <thead>
+        <tr>
+          <th scope="col" colspan="2">평가 및 학습전략</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td class="ac"><strong>평가</strong></td>
+          <td class="ac"><strong>학습전략</strong></td>
+        </tr>
+        <tr>
+          <td>
+            <dl class="strategy-list">
+              <dt><strong>관련성</strong></dt>
+              <dd>- 제시된 그림을 보고 관련된 내용을 충분히 쓸 수 있습니다.</dd>
+              <dd>- 글을 읽고 중요한 요점을 파악하여 글을 충분히 쓸 수 있습니다.</dd>
+              <dt><strong>구성</strong></dt>
+              <dd>- 문장과 문장을 연결하는 연결어를 충분히 사용할 수 있습니다.</dd>
+              <dd>- 글을 읽고 중요한 요점을 요약하여 글을 충분히 구성할 수 있습니다.</dd>
+              <dt><strong>표현</strong></dt>
+              <dd>- 다양한 어휘를 충분히 사용할 수 있습니다.</dd>
+              <dd>- 정확한 문법적 및 어휘를 충분히 사용할 수 있습니다.</dd>
+            </dl>
+          </td>
+          <td>
+            <ul class="strategy-list">
+              <li>- 배운 문장과 표현을 활용하여 글로 표현해 보세요.</li>
+              <li>- 수업 시간에 최선을 다해 학습에 임하세요.</li>
+            </ul>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <!-- // Writing -->
+
+    </div>
+    <!-- // 영역별 평가 보기 -->
+  </div>
+  <!-- // pop-cont -->
+</div>
+<!-- // MYPC_Main_01p2 -->
+
+<!-- 실서버 차트 // -->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+  google.charts.load('current', { 'packages': ['corechart'] });
+  google.charts.setOnLoadCallback(drawChart);
+  function drawChart() {
+    var ismo = document.documentElement.offsetWidth<768;
+    var data = google.visualization.arrayToDataTable([
+      ['', '자신의 점수', { role: 'annotation' }],
+      ['총점', 88, 88],
+      ['Reading', 30, 30],
+      ['Listening', 30, 30],
+      ['Speaking', 14, 14],
+      ['Writing', 14, 14]
+    ]);
+
+    var view = new google.visualization.DataView(data);
+    var total = Math.ceil(88 * 0.1) * 10;
+    var count = 0;
+
+    if (total > 100) count = Math.ceil(88 * 0.1) + 1;
+    else count = 11;
+
+    var options = {
+      width: '100%', height: '100%',
+      title: '',
+      bar: { groupWidth: ismo?22:44 },
+      legend: { position: 'top', alignment:'end', textStyle: { fontName: 'arial', fontSize: ismo?10:12, color: '#666666'}},
+      colors: ['#03328d'],
+      vAxis: { textStyle: { fontName: 'arial', fontSize: ismo?10:12, color: '#666666'}, viewWindow: { max: total, min: 0 }, baselineColor:'#ced1d9', gridlines: { color: '#e4e4e4', count: count }, minorGridlines: {count:0} },
+      hAxis: { textStyle: { fontName: 'arial', fontSize: ismo?10:12, color: '#666666'} },
+      chartArea: { top: 40, right: 12, bottom: 24, left: 24, width: '100%', height: '100%', backgroundColor: { strokeWidth: 0}}
+    };
+
+    var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+    chart.draw(view, options);
+  }
+
+  google.charts.load('current', {'packages': ['bar']});
+  google.charts.setOnLoadCallback(drawChart1);
+  function drawChart1() {
+    var ismo = document.documentElement.offsetWidth<768;
+    var data = google.visualization.arrayToDataTable([
+      ['', '', {role: 'annotation'}],
+      ['단어 이해 능력 ', 100, 100],
+      ['문장 이해 능력 ', 100, 100],
+      ['어휘 추론 능력 ', 100, 100],
+      ['세부 사항 파악 능력', 100, 100]
+    ]);
+    var view = new google.visualization.DataView(data);
+    var options = {
+      width: '100%', height: "100%",
+      title: '',
+      bar: {groupWidth: 18},
+      legend: {position: 'none'},
+      colors: ['#03328d'],
+      vAxis: { textStyle: { fontName: 'arial', fontSize: ismo?10:12, color: '#666666'} },
+      hAxis: { viewWindow: {max: 100,min: 0}, gridlines: {count: 0} },
+      chartArea: {top: 0, right: 10, bottom: 30, left: ismo?95:130, width: '100%', height: '100%'}
+    };
+    var chartEl = document.getElementById('barchart_values1');
+    chartEl.style.height = "height:calc("+4+" * 28px + 24px)";
+    var chart = new google.visualization.BarChart(chartEl);
+    chart.draw(view, options);
+  }
+
+  google.charts.load('current', {'packages': ['bar']});
+  google.charts.setOnLoadCallback(drawChart2);
+  function drawChart2() {
+    var ismo = document.documentElement.offsetWidth<768;
+    var data = google.visualization.arrayToDataTable([
+      ['', '', {role: 'annotation'}],
+      ['추론능력', 100, 100],
+      ['문장 이해 능력 ', 100, 100],
+      ['세부 사항 파악 능력', 100, 100],
+      ['대화 이해 능력', 100, 100]
+    ]);
+    var view = new google.visualization.DataView(data);
+    var options = {
+      width: '100%', height: "100%",
+      title: '',
+      bar: {groupWidth: 18},
+      legend: {position: 'none'},
+      colors: ['#03328d'],
+      vAxis: { textStyle: { fontName: 'arial', fontSize: ismo?10:12, color: '#666666'} },
+      hAxis: { viewWindow: {max: 100,min: 0}, gridlines: {count: 0} },
+      chartArea: {top: 0, right: 10, bottom: 30, left: ismo?95:130, width: '100%', height: '100%'}
+    };
+    var chartEl = document.getElementById('barchart_values2');
+    chartEl.style.height = "height:calc("+4+" * 28px + 24px)";
+    var chart = new google.visualization.BarChart(chartEl);
+    chart.draw(view, options);
+  }
+
+  google.charts.load('current', {'packages': ['bar']});
+  google.charts.setOnLoadCallback(drawChart3);
+  function drawChart3() {
+    var ismo = document.documentElement.offsetWidth<768;
+    var data = google.visualization.arrayToDataTable([
+      ['', '', {role: 'annotation'}],
+      ['유창성', 100, 100],
+      ['어휘', 100, 100],
+      ['내용', 100, 100]
+    ]);
+    var view = new google.visualization.DataView(data);
+    var options = {
+      width: '100%', height: "100%",
+      title: '',
+      bar: {groupWidth: 18},
+      legend: {position: 'none'},
+      colors: ['#03328d'],
+      vAxis: { textStyle: { fontName: 'arial', fontSize: ismo?10:12, color: '#666666'} },
+      hAxis: { viewWindow: {max: 100,min: 0}, gridlines: {count: 0} },
+      chartArea: {top: 0, right: 10, bottom: 30, left: ismo?95:130, width: '100%', height: '100%'}
+    };
+    var chartEl = document.getElementById('barchart_values3');
+    chartEl.style.height = "height:calc("+3+" * 28px + 24px)";
+    var chart = new google.visualization.BarChart(chartEl);
+    chart.draw(view, options);
+  }
+
+  google.charts.load('current', {'packages': ['bar']});
+  google.charts.setOnLoadCallback(drawChart4);
+  function drawChart4() {
+    var ismo = document.documentElement.offsetWidth<768;
+    var data = google.visualization.arrayToDataTable([
+      ['', '', {role: 'annotation'}],
+      ['문법&어휘', 100, 100],
+      ['맞춤법', 100, 100],
+      ['과제완성', 100, 100]
+    ]);
+    var view = new google.visualization.DataView(data);
+    var options = {
+      width: '100%', height: "100%",
+      title: '',
+      bar: {groupWidth: 18},
+      legend: {position: 'none'},
+      colors: ['#03328d'],
+      vAxis: { textStyle: { fontName: 'arial', fontSize: ismo?10:12, color: '#666666'} },
+      hAxis: { viewWindow: {max: 100,min: 0}, gridlines: {count: 0} },
+      chartArea: {top: 0, right: 10, bottom: 30, left: ismo?95:130, width: '100%', height: '100%'}
+    };
+    var chartEl = document.getElementById('barchart_values4');
+    chartEl.style.height = "height:calc("+3+" * 28px + 24px)";
+    var chart = new google.visualization.BarChart(chartEl);
+    chart.draw(view, options);
+  }
+
+
+  google.charts.load('current', { 'packages': ['corechart'] });
+  google.charts.setOnLoadCallback(drawChart5);
+  function drawChart5() {
+    var ismo = document.documentElement.offsetWidth<768;
+    var data = google.visualization.arrayToDataTable([
+      ['', '자신의 점수', {role: 'annotation'}],
+      ['1', 100, 100],
+      ['2', 100, 100],
+      ['3', 100, 100],
+      ['4', 100, 100]
+    ]);
+
+    var view = new google.visualization.DataView(data);
+    var options = {
+      width: '100%', height: '100%',
+      title: '',
+      bar: { groupWidth: ismo?22:44 },
+      legend: { position: 'top', alignment:'end', textStyle: { fontName: 'arial', fontSize: ismo?10:12, color: '#666666'}},
+      colors: ['#03328d'],
+      vAxis: { textStyle: { fontName: 'arial', fontSize: ismo?10:12, color: '#666666'}, viewWindow: { max: 100, min: 0 }, baselineColor:'#ced1d9', gridlines: { color: '#e4e4e4', count: 6 }, minorGridlines: {count:0} },
+      hAxis: { textStyle: { fontName: 'arial', fontSize: ismo?10:12, color: '#666666'} },
+      chartArea: { top: 40, right: 12, bottom: 24, left: 24, width: '100%', height: '100%', backgroundColor: { strokeWidth: 0}}
+    };
+
+    var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values_5"));
+    chart.draw(view, options);
+  } //탭:영역별평가
+
+  $jq(document).ready(function (){
+    $jq(window).resize(function(){
+      drawChart();
+      drawChart1();
+      drawChart2();
+      drawChart3();
+      drawChart4();
+
+      drawChart5(); //탭:영역별평가
+    });
+  });
+</script>
+<!-- // 실서버 차트 -->
+
+<script>
+  $jq("#MYPC_Main_01p2").uipop("open");
+</script>
+</body>
+</html>

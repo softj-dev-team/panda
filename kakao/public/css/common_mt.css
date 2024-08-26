@@ -1,0 +1,56 @@
+@charset "UTF-8";
+
+/********************* 브랜치 키컬러 적용 *********************/
+.fc-7 { color:#f08200 !important; }
+.ico-txt-5 { background-color:#f08200; }
+.ico-txt-2.ty-2 { color:#f08200; }
+.i-schedule.ty-2 { background:#f08200; }
+.i-schedule.ty-3 { background-position:-308px -225px; }
+.slick-dots .slick-active button { background-color:#f08200; }
+.btn-like.active .i-like { background-position:-308px -182px; }
+
+.location .location-item .title { color:#f08200; }
+.tab .tab-item.point a { border-color:#f08200; color:#f08200; }
+.tab .tab-item.point.active a { background-color:#f08200; border-color:#f08200; }
+.route-list li::before { background:#f08200; }
+.route-list li .num { background:#f08200; }
+.route-list li .time { color:#f08200; }
+.fm-rad:checked + .fm-rad-i:after { background-color:#f08200; }
+.fm-chk.ty-2:checked + .fm-chk-i:before { border-color:#f08200; background-color:#f08200; }
+.list-children .fm-rad:checked + .fm-rad-i { border-color:#f08200; }
+.step .active { border-color:#f08200; }
+.step .active .num { color:#f08200; }
+.step-item .title em { color:#f08200; }
+
+/* step-list */
+.step-item::before { background-image:url("../../../april/resource/images/sub/sprite-steplist.png"); }
+.step-item.ico-pr1::before { background-position:-220px -570px; }
+.step-item.ico-pr1-2::before { background-position:0 -760px; }
+.step-item.ico-pr1-3::before { background-position:-193px -760px; }
+.step-item.ico-pr1-4::before { background-position:0 -954px; }
+.step-item.ico-pr1-5::before { background-position:-220px -954px; }
+.step-item.ico-hr1::before { background-position:0 0; }
+.step-item.ico-hr1-2::before { background-position:-220px 0; }
+.step-item.ico-hr1-3::before { background-position:0 -190px; }
+.step-item.ico-hr1-4::before { background-position:-220px -190px; }
+.step-item.ico-hr1-5::before { height:187px; background-position:0 -380px; }
+.step-item.ico-hr1-6::before { background-position:-220px -380px; }
+.step-item.ico-hr1-7::before { background-position:0 -570px; }
+
+@media screen and (max-width:767px){
+  .i-schedule.ty-3 { background-position:-180px -8px; }
+  .btn-like.active .i-like { background-position:-130px -318px; }
+
+  .step-item::before { background-image:url("../../../april/resource/images/sub/sprite-steplist-mo.png"); background-size:221px 128px; }
+  .step-item.ico-pr1::before { background-position:-90px -45px; }
+  .step-item.ico-pr1-2::before { background-position:-135px -45px; }
+  .step-item.ico-pr1-3::before { background-position:-180px -45px; }
+  .step-item.ico-pr1-4::before { background-position:0 -88px; }
+  .step-item.ico-pr1-5::before { background-position:-45px -88px; }
+  .step-item.ico-hr1-2::before { background-position:-45px 0; }
+  .step-item.ico-hr1-3::before { background-position:-90px 0; }
+  .step-item.ico-hr1-4::before { background-position:-135px 0; }
+  .step-item.ico-hr1-5::before { background-position:-181px 0; }
+  .step-item.ico-hr1-6::before { background-position:0 -45px; }
+  .step-item.ico-hr1-7::before { background-position:-45px -45px; }
+}

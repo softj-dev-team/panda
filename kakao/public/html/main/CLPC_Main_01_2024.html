@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <title>크레버스</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" type="image/x-icon" href="../../images/common/favicon.ico" />
+  <link rel="apple-touch-icon-precomposed" href="../../images/common/apple-touch-icon.png" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <link rel="stylesheet" href="../../css/global.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/main.css">
+  <script src="../../js/ui.vendor.js"></script>
+  <script src="../../js/ui.js?var=1"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+</head>
+
+<body>
+<div class="skip"><a href="#container"><span>본문 바로가기</span></a></div>
+<div class="wrap">
+  <!-- header : /html/gnb_new.html 최종 참고 // -->
+  <header class="header head_n transparent">
+    <div class="sc-wrap-mo">
+      <div class="sc-wrap">
+        <div class="inner-top">
+          <h1 class="gnb-logo"><a href="../index.html"><span class="irg ig-logo cr-logo">CREVERSE</span></a></h1>
+          <div class="pc-hide gnb-top-btn">
+            <a href="#none"><i class="testI"></i>입학시험 예약</a>
+            <a href="#none">로그인</a>
+          </div>
+          <!-- 햄버거메뉴[전체메뉴] // -->
+          <button type="button" class="gnb-all-btn pc-hide"><span class="line"></span></button>
+          <!-- // 햄버거메뉴[전체메뉴] -->
+        </div>
+        <div class="inner">
+          <div class="gnb-right">
+            <div class="user">
+              <div class="pc-hide user_top">
+                <!-- <p class="login"><span>로그인</span> 해주세요</p>                 -->
+                <p class="login">안녕하세요, <span>홍길동</span> 님</p>
+              </div>
+              <!-- 비로그인 -->
+              <!-- <ul>
+                <li class="item tip-balloon" data-dropdown=''>
+                  <a href=""  data-act="title">수강료 납입</a>
+                  <div class="tip-cont pay-head-tip" data-act="cont">
+                    <ul class="list">
+                      <li><a href="#none">김선아</a></li>
+                      <li><a href="#none">김정아</a></li>
+                      <li><a href="#none">김선아</a></li>
+                    </ul>
+                  </div>
+                </li>
+                <li><a href="">교재구매</a></li>
+                <li><a href="">고객센터</a></li>
+                <li><a href="">로그인</a></li>
+                <li><a href="">회원가입</a></li>
+              </ul> -->
+
+              <!-- 로그인 -->
+              <ul class="gnb_user_top">
+                <li class="item tip-balloon" data-dropdown=''>
+                  <a href=""  data-act="title" class="tip-subj card_i">수강료 납입</a>
+                  <div class="tip-cont pay-head-tip" data-act="cont">
+                    <ul class="list">
+                      <li><a href="#none">김선아</a></li>
+                      <li><a href="#none">김정아</a></li>
+                      <li><a href="#none">김선아</a></li>
+                    </ul>
+                  </div>
+                </li>
+                <li><a href="" class="book_i">교재구매</a></li>
+                <li class="mo-hide"><a href="">고객센터</a></li>
+                <li  class="item tip-balloon">
+                  <a href="" class="tip-subj fWeight500 myInfo_i" >내정보</a>
+                </li>
+                <li  class="item tip-balloon mo-hide">
+                  <a href="" class="fWeight500" >로그아웃</a>
+                </li>
+                <li class="pc-hide item tip-balloon"  data-dropdown=''>
+                  <a href="" class="school_i tip-subj"  data-act="title">학원생활</a>
+                  <div class="tip-cont my-head-tip" data-act="cont">
+                      <span class="profile">
+                        <strong>김청담</strong>님 안녕하세요.
+                        <button type="button" class="irg ig-logout">로그아웃</button>
+                        <button type="button" class="payment">수강료 납입내역 조회</button>
+                      </span>
+                    <!-- multi-branch -->
+                    <div class="list">
+                      <ul class="childs">
+                        <li>
+                          <!-- 학부모(자녀1) // -->
+                          <span class="names">
+                              <span class="user-name"><strong>김선아</strong>학생</span>
+                            <!-- chonors 신청완료 -->
+                              <button type="button" class="chonors-member">C-Honors<span class="ir">이동</span></button>
+                              <span class="branch-name cd"><em></em>청담어학원 청담 본원</span>
+                              <span class="btns">
+                                <a href="#none">마이페이지</a>
+                                <a href="#none">학원 홈페이지</a>
+                              </span>
+                              <span class="branch-name ap"><em></em>April어학원 청담 본원</span>
+                              <span class="btns">
+                                <a href="#none">마이페이지</a>
+                                <a href="#none">학원 홈페이지</a>
+                              </span>
+                              <span class="branch-name bouncy"><em></em>Bouncy 센터</span>
+                              <span class="btns">
+                                <a href="#none">마이페이지</a>
+                                <a href="#none">홈페이지</a>
+                              </span>
+                              <span class="branch-name bouncy-eGO"><em></em>Bouncy eGO 센터</span>
+                              <span class="btns">
+                                <a href="#none">마이페이지</a>
+                                <a href="#none">홈페이지</a>
+                              </span>
+                            </span>
+                          <!-- // 학부모(자녀1) -->
+                        </li>
+                        <li>
+                          <!-- 학부모(자녀2) // -->
+                          <span class="names">
+                              <span class="user-name"><strong>김선아2</strong>학생</span>
+                            <!-- chonors 신청이후 -->
+                              <button type="button" class="chonors-member-proceed">C-Honors<span
+                                class="ir">이동</span></button>
+                              <span class="branch-name noisy"><em></em>NOISY 센터</span>
+                              <span class="btns">
+                                <a href="#none">마이페이지</a>
+                                <a href="#none">홈페이지</a>
+                              </span>
+                              <span class="branch-name ig"><em></em>아이가르텐</span>
+                              <span class="btns">
+                                <a href="#none">마이페이지</a>
+                              </span>
+                            </span>
+                          <!-- // 학부모(자녀2) -->
+                        </li>
+                        <li>
+                          <!-- 학부모(자녀3) // -->
+                          <span class="names">
+                              <span class="user-name"><strong>김선아3</strong>학생</span>
+                            <!-- chonors 신청이전 -->
+                              <button type="button" class="chonors">C-Honors 가입<span class="ir">이동</span></button>
+                              <span class="branch-name pbp"><em></em>Page by Page 대치</span>
+                              <span class="btns">
+                                <a href="#none">마이페이지</a>
+                                <a href="#none">학원 홈페이지</a>
+                              </span>
+                            </span>
+                          <!-- // 학부모(자녀3) -->
+                        </li>
+                        <!-- 학부모(자녀 없음)
+                        <li class="single">
+                          <span class="btns">
+                            <a href="#none">마이페이지</a>
+                          </span>
+                        </li>
+                        -->
+                      </ul>
+                    </div>
+                    <!--// multi-branch -->
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="util-2" data-dropdown=''>
+            <ul class="academyUl">
+              <li  class="item tip-balloon"  data-dropdown=''>
+                <a href="" class="tip-subj fWeight500 myInfo_i academybtn" data-act="title">학원생활</a>
+                <div class="tip-cont my-head-tip" data-act="cont">
+                      <span class="profile">
+                        <strong>김청담</strong>님 안녕하세요.
+                        <button type="button" class="irg ig-logout">로그아웃</button>
+                        <button type="button" class="payment">수강료 납입내역 조회</button>
+                      </span>
+                  <!-- multi-branch -->
+                  <div class="list">
+                    <ul class="childs">
+                      <li>
+                        <!-- 학부모(자녀1) // -->
+                        <span class="names">
+                              <span class="user-name"><strong>김선아</strong>학생</span>
+                          <!-- chonors 신청완료 -->
+                              <button type="button" class="chonors-member">C-Honors<span class="ir">이동</span></button>
+                              <span class="branch-name cd"><em></em>청담어학원 청담 본원</span>
+                              <span class="btns">
+                                <a href="#none">마이페이지</a>
+                                <a href="#none">학원 홈페이지</a>
+                              </span>
+                              <span class="branch-name ap"><em></em>April어학원 청담 본원</span>
+                              <span class="btns">
+                                <a href="#none">마이페이지</a>
+                                <a href="#none">학원 홈페이지</a>
+                              </span>
+                              <span class="branch-name bouncy"><em></em>Bouncy 센터</span>
+                              <span class="btns">
+                                <a href="#none">마이페이지</a>
+                                <a href="#none">홈페이지</a>
+                              </span>
+                              <span class="branch-name bouncy-eGO"><em></em>Bouncy eGO 센터</span>
+                              <span class="btns">
+                                <a href="#none">마이페이지</a>
+                                <a href="#none">홈페이지</a>
+                              </span>
+                            </span>
+                        <!-- // 학부모(자녀1) -->
+                      </li>
+                      <li>
+                        <!-- 학부모(자녀2) // -->
+                        <span class="names">
+                              <span class="user-name"><strong>김선아2</strong>학생</span>
+                          <!-- chonors 신청이후 -->
+                              <button type="button" class="chonors-member-proceed">C-Honors<span
+                                class="ir">이동</span></button>
+                              <span class="branch-name noisy"><em></em>NOISY 센터</span>
+                              <span class="btns">
+                                <a href="#none">마이페이지</a>
+                                <a href="#none">홈페이지</a>
+                              </span>
+                              <span class="branch-name ig"><em></em>아이가르텐</span>
+                              <span class="btns">
+                                <a href="#none">마이페이지</a>
+                              </span>
+                            </span>
+                        <!-- // 학부모(자녀2) -->
+                      </li>
+                      <li>
+                        <!-- 학부모(자녀3) // -->
+                        <span class="names">
+                              <span class="user-name"><strong>김선아3</strong>학생</span>
+                          <!-- chonors 신청이전 -->
+                              <button type="button" class="chonors">C-Honors 가입<span class="ir">이동</span></button>
+                              <span class="branch-name pbp"><em></em>Page by Page 대치</span>
+                              <span class="btns">
+                                <a href="#none">마이페이지</a>
+                                <a href="#none">학원 홈페이지</a>
+                              </span>
+                            </span>
+                        <!-- // 학부모(자녀3) -->
+                      </li>
+                      <!-- 학부모(자녀 없음)
+                      <li class="single">
+                        <span class="btns">
+                          <a href="#none">마이페이지</a>
+                        </span>
+                      </li>
+                      -->
+                    </ul>
+                  </div>
+                  <!--// multi-branch -->
+                </div>
+              </li>
+              <li>
+                <a href="#none" class="exambtn">입학시험 예약</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- 전체메뉴 // -->
+        <div class="gnb-all-nav pc-hide">
+          <ul class="group" data-accordion='{"reset":true,"media":"(max-width: 767px)"}'>
+            <li data-menu='main' data-act='title'><a href="#none" class="im-1">브랜드<button type="button" data-act="btn" class="mo-show">하위메뉴 토글</button></a>
+              <ul class="sub" data-act='cont'>
+                <li><a href="#none" class="cdi">청담어학원</a></li>
+                <li><a href="#none" class="april">April어학원</a></li>
+                <li><a href="#none" class="cms"><span>CMS</span>영재교육센터</a></li>
+                <li><a href="#none" class="cms">CMS영재관</a></li>
+              </ul>
+            </li>
+            <li data-menu='main' data-act='title'><a href="#none" class="im-2">학원찾기<button type="button" data-act="btn" class="mo-show">하위메뉴 토글</button></a>
+              <ul class="sub" data-act='cont'>
+                <li><a href="#none">국내학원</a></li>
+                <li><a href="#none">해외학원</a></li>
+              </ul>
+            </li>
+            <li data-menu='main' data-act='title'><a href="#none" class="im-2">입학안내<button type="button" data-act="btn" class="mo-show">하위메뉴 토글</button></a>
+              <ul class="sub" data-act='cont'>
+                <li><a href="#none">국내학원</a></li>
+                <li><a href="#none">해외학원</a></li>
+              </ul>
+            </li>
+            <li  data-menu='main' data-act='title'><a href="#none" class="im-3">채널 크레버스<button type="button" data-act="btn" class="mo-show">하위메뉴 토글</button></a>
+              <ul class="sub" data-act='cont'>
+                <li><a href="#none">크레버스 소식</a>
+                </li>
+                <li><a href="#none">크레버스 스토리</a>
+                </li>
+                <li><a href="#none">톡톡에듀<!-- <sup>+</sup> --></a></li>
+                <li><a href="#none">이벤트</a></li>
+              </ul>
+            </li>
+            <li  data-menu='util' data-act='title' class="allmenu-cs"><a href="#none">고객센터<button type="button" data-act="btn" class="mo-show">하위메뉴 토글</button></a>
+              <ul class="sub" data-act='cont'>
+                <li><a href="#none">FAQ</a></li>
+                <li><a href="#none">Q&A (본사문의)</a></li>
+                <li><a href="#none">1:1문의 (학원문의)</a></li>
+                <li><a href="#none">온라인학습 지원</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <!-- // 전체메뉴 -->
+        <!-- GNB // -->
+        <div class="gnb-nav2 mo-hide">
+          <ul class="pc_gnb">
+            <li><a href="">브랜드</a></li>
+            <li><a href="">학원찾기</a></li>
+            <li><a href="">입학안내</a></li>
+            <li><a href="">채널 크레버스</a></li>
+          </ul>
+          <div class="gnbBox">
+            <div class="gnb_list">
+              <div class="flexBox">
+                <ul class="gnb_ul">
+                  <li><a href="">청담어학원</a></li>
+                  <li><a href="">April어학원</a></li>
+                  <li><a href="">CMS영재교육센터</a></li>
+                  <li><a href="">CMS영재관</a></li>
+                </ul>
+                <ul class="gnb_ul">
+                  <li><a href="">국내학원</a></li>
+                  <li><a href="">해외학원</a></li>
+                </ul>
+                <ul>
+                  <li><a href="">입학절차</a></li>
+                  <li><a href="">입학시험 예약</a></li>
+                  <li><a href="">입학시험 예약현황</a></li>
+                </ul>
+                <ul>
+                  <li><a href="">크레버스 소식</a></li>
+                  <li><a href="">크레버스 스토리</a></li>
+                  <li><a href="">톡톡에듀</a></li>
+                  <li><a href="">이벤트</a></li>
+                </ul>
+              </div>
+              <div class="serviceBox">
+                <p>서비스 이용에 <strong>어려움</strong>이 있으신가요?</p>
+                <a href="#none" class="serviceA">고객센터 바로가기</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- // GNB -->
+      </div>
+      <!-- Header내 Footer 영역 // -->
+      <div class="external-link">
+        <div class="link-group familysite" data-dropdown='{"effect":"slide","focusout":false}'>
+          <button type="button" class="subj g-toggle" data-act='title'>크레버스 패밀리 사이트</button>
+          <div class="list" data-act='cont'>
+
+            <dl class="group">
+              <dt class="full">브랜드 채널</dt>
+              <dd><a href="https://www.chungdahm.com/">Learning Center</a></dd>
+              <dd><a href="" target="">iGARTEN</a></dd>
+              <dd><a href="" target="">BOUNCY</a></dd>
+              <dd><a href="" target="">NOISY</a></dd>
+              <dd><a href="" target="">씨큐브코딩</a></dd>
+              <dd><a href="" target="">크레버스 X</a></dd>
+              <dd><a href="" target="">EDGE</a></dd>
+              <dd><a href="" target="">CodeAlive</a></dd>
+            </dl>
+            <dl class="group">
+              <dt class="full">제휴 프로그램</dt>
+              <dd><a href="http://ei.chungdahm.com/expression/" target="_blank" title="새창으로 열립니다.">표현어학원</a></dd>
+              <dd><a href="http://www.bluesprings.co.kr/" target="_blank" title="새창으로 열립니다.">블루스프링스</a></dd>
+            </dl>
+            <dl class="group">
+              <dt class="full">러닝 솔루션</dt>
+              <dd><a href="http://www.loudclass.com/" target="_blank" title="새창으로 열립니다.">Loudclass</a></dd>
+            </dl>
+            <dl class="group">
+              <dt class="full">교재 쇼핑몰</dt>
+              <dd><a href="http://www.learn21.co.kr/" target="_blank" title="새창으로 열립니다.">Learn21</a></dd>
+            </dl>
+            <dl class="group">
+              <dt class="full">강사채용</dt>
+              <dd><a href="http://www.teachinkorea.com/" target="_blank" title="새창으로 열립니다.">Faculty Recruiting</a>
+              </dd>
+            </dl>
+          </div>
+        </div>
+        <div class="link-group other" data-dropdown='{"effect":"slide","focusout":false}'>
+          <button type="button" class="subj g-toggle" data-act='title'>크레버스 앱</button>
+          <ul class="list" data-act='cont'>
+            <li><a class="irg-b ig-app-1 js-allim" href="#none"><span>크레버스올림</span></a></li>
+            <li><a class="irg-b ig-app-2" href="#none"><span>청담러닝포털</span></a></li>
+            <li><a class="irg-b ig-app-6" href="#none"><span>April &<br> iGARTEN<br> Learning<br> Portal</span></a></li>
+            <li><a class="irg-b ig-app-3 js-buff" href="#none"><span>청담버프</span></a></li>
+            <li><a class="irg-b ig-app-8" href="#none"><span>April Buff</span></a></li>
+            <li><a class="irg-b ig-app-4" href="#none"><span>BOUNCY<br> BUFF</span></a></li>
+            <li><a class="irg-b ig-app-5" href="#none"><span>청담 <br>e-Library</span></a></li>
+            <li><a class="irg-b ig-app-7" href="#none"><span>April<br> VENA Talk</span></a></li>
+            <li><a class="irg-b ig-app-9" href="#none"><span>April MeMe</span></a></li>
+            <li><a class="irg-b ig-app-10" href="#none"><span>BOUNCY<br> MeMe</span></a></li>
+            <li><a class="irg-b ig-app-11" href="#none"><span>Thinking<br> MeMe</span></a></li>
+            <li><a class="irg-b ig-app-12" href="#none"><span>Chunk<br>Toon</span></a></li>
+            <!-- <li><a class="irg-b ig-app-4" href="#none">Phonics Concert</a></li> -->
+            <!--// 20200303 modify -->
+          </ul>
+        </div>
+        <div class="link-group other border-ty2" data-dropdown='{"effect":"slide","focusout":false}'>
+          <button type="button" class="subj g-toggle" data-act='title'>크레버스 SNS</button>
+          <ul class="sns list"  data-act='cont'>
+            <li><a href="#none" class="irg ig-sns-ig"><span>인스타그램</span></a></li>
+            <li><a href="#none" class="irg ig-sns-yt"><span>유튜브</span></a></li>
+            <li><a href="#none" class="irg ig-sns-bg"><span>블로그</span></a></li>
+            <li><a href="#none" class="irg ig-sns-fb"><span>페이스북</span></a></li>
+          </ul>
+        </div>
+
+        <a href="#" class="irg-b ig-logout-2 mo-show">로그아웃</a>
+      </div>
+      <!-- // Header내 Footer 영역 -->
+    </div>
+    <div class="quickNav">
+      <ul class="Qright">
+        <li class="shareLi">
+          <ul class="shareUl">
+            <li><button type="button" class="Qfacebook"><span>페이스북</span></button></li>
+            <li><button type="button" class="Qblog"><span>블로그</span></button></li>
+            <li><button type="button" class="Qband"><span>밴드</span></button></li>
+            <li><button type="button" class="Qkakao"><span>카카오</span></button></li>
+            <li><button type="button" class="Qlink"><span>링크</span><p class="tooltip">링크복사</p></button></li>
+          </ul>
+          <button type="button" class="share-btn"><span>공유하기</span></button>
+        </li>
+        <li class="findBtn edu-case" ><button data-edusrc="f-head-brand-1" class="edu-btn"><span>학원찾기</span></button></li>
+        <li class="topLi"><button type="button" class="top-btn"><span>TOP</span></button></li>
+      </ul>
+      <div class="edu-select">
+        <div class="edu-inner">
+          <button type="button" class="close">닫기</button>
+          <div class="nearest"><a href="#none" class="irg-b ig-point">내 주변 어학원 보기</a></div>
+          <div class="brand-check mo-hide" style="display: none;">
+            <span class="brand fm-trans ty-1">
+              <input type="radio" name="f-head-brand" id="f-head-brand-1">
+              <label for="f-head-brand-1"><span class="irg-b ig-brand-1">청담어학원</span></label>
+            </span>
+            <span class="brand fm-trans ty-2">
+              <input type="radio" name="f-head-brand" id="f-head-brand-2">
+              <label for="f-head-brand-2"><span class="irg-b ig-brand-2">April어학원</span></label>
+            </span>
+            <span class="brand fm-trans ty-3">
+              <input type="radio" name="f-head-brand" id="f-head-brand-3">
+              <label for="f-head-brand-3"><span class="irg-b ig-brand-3">아이가르텐</span></label>
+            </span>
+          </div>
+          <div class="zone">
+            <div class="mo-hide">
+              <h3 class="subj irg-b ig-zone">지역선택 <small>원하는 지역을 선택해주세요.</small></h3>
+              <div class="list" data-scrollbar='{"axis":"y"}'>
+                <ul>
+                  <li><button type="button" data-for="edusearchZone" class="option irg-b ig-option">전체</button></li>
+                  <li><button type="button" data-for="edusearchZone" class="option irg-b ig-option">서울특별시</button></li>
+                  <li><button type="button" data-for="edusearchZone" class="option irg-b ig-option">경기도</button></li>
+                  <li><button type="button" data-for="edusearchZone" class="option irg-b ig-option">부산광역시</button></li>
+                  <li><button type="button" data-for="edusearchZone" class="option irg-b ig-option">세종특별시</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="edu">
+            <div class="">
+              <h3 class="subj irg-b ig-edu">학원선택 <small>원하는 학원을 선택해주세요.</small></h3>
+              <div class="mo-show">
+                <select id="edusearchZone" class="fm-sel-3" data-placeholder='지역을 선택해주세요.'>
+                  <option>지역을 선택해주세요.</option>
+                  <option>전체</option>
+                  <option>서울특별시</option>
+                  <option>경기도</option>
+                  <option>부산광역시</option>
+                  <option>세종특별시</option>
+                </select>
+              </div>
+              <div class="mo-show moHr">
+                <p class="searchP">전체 <span>25</span>건 검색결과가 있습니다</p>
+              </div>
+              <div class="list" data-scrollbar='{"axis":"y"}'>
+                <ul>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">청담본원</a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">문정 브랜치</a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">송파 브랜치</a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">목동 제2 캠퍼스</a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">중계 브랜치 <span class="ico-txt-6"></span></a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">2 청담본원</a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">2 문정 브랜치</a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">2 송파 브랜치</a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">2 목동 제2 캠퍼스</a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">2 중계 브랜치 <span class="ico-txt-6"></span></a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">3 청담본원</a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">3 문정 브랜치</a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">3 송파 브랜치</a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">3 목동 제2 캠퍼스</a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">3 중계 브랜치 <span class="ico-txt-6"></span></a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">4 청담본원</a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">4 문정 브랜치</a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">4 송파 브랜치</a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">4 목동 제2 캠퍼스</a></li>
+                  <li><a href="#" data-for="edusearchEdu" class="option irg-b ig-option">4 중계 브랜치 <span class="ico-txt-6"></span></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="all-bg pc-hide"></div>
+  </header>
+  <!-- // header : /html/gnb_new.html 최종 참고 -->
+  <!-- container // -->
+  <div id="container" class="container portal  mainH">
+    <!-- 비주얼 영역 // -->
+    <div class="vis-section">
+      <div class="vis-slide">
+        <div class="slide">
+          <div>
+            <div class="">
+              <iframe src="https://play.mbus.tv/hls/17fcdfc68c42b700?autoplay=1&loop=1&mute=1" frameborder="0"loop="true"allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen> </iframe>
+            </div>
+          </div>
+          <div class="sliderF">
+            <button type="button" class="sliderP">
+              <div class="before"></div>
+              <div class="after"></div>
+            </button>
+            <p class="pagingInfo"><span class="sNum"></span></p>
+            <button type="button" class="btnPlay">
+              <div class="on" style="border-left:9px solid #ffffff">
+                <div class="before"></div>
+                <div class="after"></div>
+              </div>
+            </button>
+            <button type="button" class="sliderN">
+              <div class="before"></div>
+              <div class="after"></div>
+            </button>
+          </div>
+        </div>
+        <div class="slide">
+          <div>
+            <div class="">
+              <video muted autoplay playsinline loop align="center">
+                <source src="https://cdncdi.chungdahm.com/cdidown/creverse/cognition.mp4" />
+              </video>
+            </div>
+          </div>
+          <div class="sliderF">
+            <button type="button" class="sliderP">
+              <div class="before"></div>
+              <div class="after"></div>
+            </button>
+            <p class="pagingInfo"><span class="sNum"></span></p>
+            <button type="button" class="btnPlay">
+              <div class="on" style="border-left:9px solid #ffffff">
+                <div class="before"></div>
+                <div class="after"></div>
+              </div>
+            </button>
+            <button type="button" class="sliderN">
+              <div class="before"></div>
+              <div class="after"></div>
+            </button>
+          </div>
+        </div>
+        <div class="slide">
+          <div>
+            <div class="textBox">
+              <p class="maincopy1" style="color:#ffffff">패턴을 깨는 사고력</p>
+              <p class="maincopy2" style="color:#F08300">CMS영재교육센터</p>
+              <p class="subcopy white" style="font-size:20px;">2023 Spring 3월 2일<br>봄학기 개강</p>
+              <div class="btnmore" style="--tooltip-color:#ffffff; --tooltip-hovercolor:#111921;">자세히 보기<div class="before"></div><div class="after"></div></div>
+            </div>
+            <div class="img1920px" style="background-image:url('../../images/@temp/@main_banner_mt1920.png')"></div>
+            <div class="img1280px" style="background-image:url('../../images/@temp/@main_banner_mt1280.png')"></div>
+            <div class="img640px" style="background-image:url('../../images/@temp/@main_banner_mt640.png')"></div>
+          </div>
+          <div class="sliderF">
+            <button type="button" class="sliderP">
+              <div class="before"></div>
+              <div class="after"></div>
+            </button>
+            <p class="pagingInfo"><span class="sNum"></span></p>
+            <button type="button" class="btnPlay">
+              <div class="on" style="border-left:9px solid #ffffff">
+                <div class="before"></div>
+                <div class="after"></div>
+              </div>
+            </button>
+            <button type="button" class="sliderN">
+              <div class="before"></div>
+              <div class="after"></div>
+            </button>
+          </div>
+        </div>
+        <div href="" class="slide">
+          <div>
+            <div class="textBox">
+              <p class="maincopy1" style="color:#111921">메타버스 영어·수학</p>
+              <p class="maincopy2" style="color:#5F2883">BOUNCY & NOISY</p>
+              <p class="subcopy dark" style="font-size:20px;">봄학기 신입생 모집</p>
+              <div class="btnmore" style="--tooltip-color:#111921; --tooltip-hovercolor:#ffffff;">자세히 보기<div class="before"></div><div class="after"></div></div>
+            </div>
+            <div class="img1920px" style="background-image:url('../../images/@temp/@main_banner_vlc1920.png')"></div>
+            <div class="img1280px" style="background-image:url('../../images/@temp/@main_banner_vlc1280.png')"></div>
+            <div class="img640px" style="background-image:url('../../images/@temp/@main_banner_vlc640.png')"></div>
+          </div>
+          <div class="sliderF">
+            <button type="button" class="sliderP">
+              <div class="before"></div>
+              <div class="after"></div>
+            </button>
+            <p class="pagingInfo"><span class="sNum"></span></p>
+            <button type="button" class="btnPlay">
+              <div class="on" style="border-left:9px solid #ffffff">
+                <div class="before"></div>
+                <div class="after"></div>
+              </div>
+            </button>
+            <button type="button" class="sliderN">
+              <div class="before"></div>
+              <div class="after"></div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    <!-- // 비주얼 영역 -->
+
+    <!--  공지사항-->
+    <div class="sec2">
+      <ul class="tab-ul" id="maintab">
+        <li class="active" tab="tab1"><a href="">개강소식</a></li>
+        <li tab="tab2"><a href="">공지사항</a></li>
+        <li tab="tab3"><a href="">뉴스</a></li>
+      </ul>
+      <div class="sec2-in">
+        <ul class="sec-ul">
+          <li class="sec-li active" id="tab1">
+            <h3>개강소식</h3>
+            <ul class="content-list pc">
+              <li class="new"><a href="">청담어학원 11월 28일(월) 겨울학기 개강</a></li>
+              <li><a href="">April어학원 11월 28일(월) 겨울학기 개강</a></li>
+              <li><a href="">CMS 영재교육센터 겨울학기 설명회</a></li>
+              <li><a href="">	CMS 영재교육센터 12월 1일(목) 겨울학기 개강</a></li>
+            </ul>
+            <a href="#" class="detail">바로가기</a>
+          </li>
+          <li class="sec-li" id="tab2">
+            <h3>공지사항</h3>
+            <ul class="content-list">
+              <li><a href="">시스템 점검 예정 안내 - 크레버스 패밀리 사이트</a></li>
+              <li><a href="">CMS영재관 2023학년도 영재학교 합격생 301명!</a></li>
+              <li><a href="">CMS 영재관 겨울학기 신입생 모집</a></li>
+            </ul>
+            <a href="#" class="detail">바로가기</a>
+          </li>
+          <li class="sec-li" id="tab3">
+            <h3>뉴스</h3>
+            <ul class="content-list">
+              <li class="new"><a href="">April어학원 ‘대한민국 하이스트 브랜드’ 10년 연속 1위</a></li>
+              <li><a href="">아이가르텐 ‘대한민국 하이스트 브랜드’ 6년 연속 1위</a></li>
+              <li><a href="">청담어학원, ‘2022 프리미엄브랜드지수’ 14년 연속 1위</a></li>
+              <li><a href="">April어학원 ‘대한민국 하이스트 브랜드’ 9년 연속 1위 선정</a></li>
+            </ul>
+            <a href="#" class="detail">바로가기</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!--  // 공지사항-->
+
+    <!--    브랜드-->
+    <div class="sec3">
+      <div class="sec3-in">
+        <h2 class="mainttl">21세기 인재를 키우는 <strong>언어 · 수리 사고력 학습</strong></h2>
+        <!--        <h3 class="mainttl-sub">우리아이에게 필요한 교육은 무엇일까요?</h3>-->
+        <!--        <ul class="tab-ul" id="brandtab">-->
+        <!--          <li class="active" tab="brandtab1"><a href="">전체</a></li>-->
+        <!--          <li tab="brandtab2"><a href="">영어</a></li>-->
+        <!--          <li tab="brandtab3"><a href="">수리</a></li>-->
+        <!--          <li tab="brandtab4"><a href="">코딩</a></li>-->
+        <!--        </ul>-->
+        <ul class="sec-ul">
+          <li class="sec-li active" id="brandtab1">
+            <ul class="brandUl">
+              <li>
+                <div class="card">
+                  <div class="clickF" style="background-image: url(../../images/Nbrand/CD.png);"></div>
+                  <a class="clickB" href="" style="background-image: url(../../images/Nbrand/cl_CD.png);"><button class="moclick"></button></a>
+                </div>
+              </li>
+              <li>
+                <div class="card">
+                  <div class="clickF" style="background-image: url(../../images/Nbrand/AP.png);"></div>
+                  <a class="clickB" href="" style="background-image: url(../../images/Nbrand/cl_AP.png);"><button class="moclick"></button></a>
+                </div>
+              </li>
+              <!--              <li>-->
+              <!--                <div class="card">-->
+              <!--                  <div class="clickF" style="background-image: url(../../images/Nbrand/IG.png);"></div>-->
+              <!--                  <a class="clickB" href="" style="background-image: url(../../images/Nbrand/cl_IG.png);"><button class="moclick"></button></a>-->
+              <!--                </div>-->
+              <!--              </li>-->
+              <li>
+                <div class="card">
+                  <div class="clickF" style="background-image: url(../../images/Nbrand/MT.png);"></div>
+                  <a class="clickB" href="" style="background-image: url(../../images/Nbrand/cl_MT.png);"><button class="moclick"></button></a>
+                </div>
+              </li>
+              <li>
+                <div class="card">
+                  <div class="clickF" style="background-image: url(../../images/Nbrand/MG.png);"></div>
+                  <a class="clickB" href="" style="background-image: url(../../images/Nbrand/cl_MG.png);"><button class="moclick"></button></a>
+                </div>
+              </li>
+              <!--              <li>-->
+              <!--                <div class="card">-->
+              <!--                  <div class="clickF" style="background-image: url(../../images/Nbrand/C3.png);"></div>-->
+              <!--                  <a class="clickB" href="" style="background-image: url(../../images/Nbrand/cl_C3.png);"><button class="moclick"></button></a>-->
+              <!--                </div>-->
+              <!--              </li>-->
+              <!--              <li>-->
+              <!--                <div class="card">-->
+              <!--                  <div class="clickF" style="background-image: url(../../images/Nbrand/BOUNCY.png);"></div>-->
+              <!--                  <a class="clickB" href="" style="background-image: url(../../images/Nbrand/cl_BOUNCY.png);"><button class="moclick"></button></a>-->
+              <!--                </div>-->
+              <!--              </li>-->
+              <!--              <li>-->
+              <!--                <div class="card">-->
+              <!--                  <div class="clickF" style="background-image: url(../../images/Nbrand/NOISY.png);"></div>-->
+              <!--                  <a class="clickB" href="" style="background-image: url(../../images/Nbrand/cl_NOISY.png);"><button class="moclick"></button></a>-->
+              <!--                </div>-->
+              <!--              </li>-->
+              <!--              <li>-->
+              <!--                <div class="card">-->
+              <!--                  <div class="clickF" style="background-image: url(../../images/Nbrand/EDGE.png);"></div>-->
+              <!--                  <a class="clickB" href="" style="background-image: url(../../images/Nbrand/cl_EDGE.png);"><button class="moclick"></button></a>-->
+              <!--                </div>-->
+              <!--              </li>-->
+              <!--              <li>-->
+              <!--                <div class="card">-->
+              <!--                  <div class="clickF" style="background-image: url(../../images/Nbrand/codeAlive.png);"></div>-->
+              <!--                  <a class="clickB" href="" style="background-image: url(../../images/Nbrand/cl_CODE.png);"><button class="moclick"></button></a>-->
+              <!--                </div>-->
+              <!--              </li>-->
+              <!--              <li>-->
+              <!--                <div class="card">-->
+              <!--                  <div class="clickF" style="background-image: url(../../images/Nbrand/CREVERSEX.png);"></div>-->
+              <!--                  <a class="clickB" href="" style="background-image: url(../../images/Nbrand/cl_CREVERSEX.png);"><button class="moclick"></button></a>-->
+              <!--                </div>-->
+              <!--              </li>-->
+            </ul>
+          </li>
+          <!--          <li class="sec-li" id="brandtab2">-->
+          <!--            <ul class="brandUl">-->
+          <!--              <li class="brand_CD">-->
+          <!--                <div class="card">-->
+          <!--                  <div class="clickF" style="background-image: url(../../images/Nbrand/CD.png);"></div>-->
+          <!--                  <a class="clickB" href="" style="background-image: url(../../images/Nbrand/cl_CD.png);"><button class="moclick"></button></a>-->
+          <!--                </div>-->
+          <!--              </li>-->
+          <!--              <li class="brand_AP">-->
+          <!--                <div class="card">-->
+          <!--                  <div class="clickF" style="background-image: url(../../images/Nbrand/AP.png);"></div>-->
+          <!--                  <a class="clickB" href="" style="background-image: url(../../images/Nbrand/cl_AP.png);"><button class="moclick"></button></a>-->
+          <!--                </div>-->
+          <!--              </li>-->
+          <!--              <li class="brand_IG">-->
+          <!--                <div class="card">-->
+          <!--                  <div class="clickF" style="background-image: url(../../images/Nbrand/IG.png);"></div>-->
+          <!--                  <a class="clickB" href="" style="background-image: url(../../images/Nbrand/cl_IG.png);"><button class="moclick"></button></a>-->
+          <!--                </div>-->
+          <!--              </li>-->
+
+          <!--              <li class="brand_BOUNCY">-->
+          <!--                <div class="card">-->
+          <!--                  <div class="clickF" style="background-image: url(../../images/Nbrand/BOUNCY.png);"></div>-->
+          <!--                  <a class="clickB" href="" style="background-image: url(../../images/Nbrand/cl_BOUNCY.png);"><button class="moclick"></button></a>-->
+          <!--                </div>-->
+          <!--              </li>-->
+          <!--              <li class="brand_CREVERSEX">-->
+          <!--                <div class="card">-->
+          <!--                  <div class="clickF" style="background-image: url(../../images/Nbrand/CREVERSEX.png);"></div>-->
+          <!--                  <a class="clickB" href="" style="background-image: url(../../images/Nbrand/cl_CREVERSEX.png);"><button class="moclick"></button></a>-->
+          <!--                </div>-->
+          <!--              </li>-->
+          <!--            </ul>-->
+          <!--          </li>-->
+          <!--          <li class="sec-li" id="brandtab3">-->
+          <!--            <ul class="brandUl">-->
+          <!--              <li class="brand_MT">-->
+          <!--                <div class="card">-->
+          <!--                  <div class="clickF" style="background-image: url(../../images/Nbrand/MT.png);"></div>-->
+          <!--                  <a class="clickB" href="" style="background-image: url(../../images/Nbrand/cl_MT.png);"><button class="moclick"></button></a>-->
+          <!--                </div>-->
+          <!--              </li>-->
+          <!--              <li class="brand_MG">-->
+          <!--                <div class="card">-->
+          <!--                  <div class="clickF" style="background-image: url(../../images/Nbrand/MG.png);"></div>-->
+          <!--                  <a class="clickB" href="" style="background-image: url(../../images/Nbrand/cl_MG.png);"><button class="moclick"></button></a>-->
+          <!--                </div>-->
+          <!--              </li>-->
+          <!--              <li class="brand_NOISY">-->
+          <!--                <div class="card">-->
+          <!--                  <div class="clickF" style="background-image: url(../../images/Nbrand/NOISY.png);"></div>-->
+          <!--                  <a class="clickB" href="" style="background-image: url(../../images/Nbrand/cl_NOISY.png);"><button class="moclick"></button></a>-->
+          <!--                </div>-->
+          <!--              </li>-->
+          <!--              <li class="brand_EDGE">-->
+          <!--                <div class="card">-->
+          <!--                  <div class="clickF" style="background-image: url(../../images/Nbrand/EDGE.png);"></div>-->
+          <!--                  <a class="clickB" href="" style="background-image: url(../../images/Nbrand/cl_EDGE.png);"><button class="moclick"></button></a>-->
+          <!--                </div>-->
+          <!--              </li>-->
+          <!--            </ul>-->
+          <!--          </li>-->
+          <!--          <li class="sec-li" id="brandtab4">-->
+          <!--            <ul class="brandUl">-->
+          <!--              <li class="brand_C3">-->
+          <!--                <div class="card">-->
+          <!--                  <div class="clickF" style="background-image: url(../../images/Nbrand/C3.png);"></div>-->
+          <!--                  <a class="clickB" href="" style="background-image: url(../../images/Nbrand/cl_C3.png);"><button class="moclick"></button></a>-->
+          <!--                </div>-->
+          <!--              </li>-->
+          <!--              <li class="brand_codeAlive">-->
+          <!--                <div class="card">-->
+          <!--                  <div class="clickF" style="background-image: url(../../images/Nbrand/codeAlive.png);"></div>-->
+          <!--                  <a class="clickB" href="" style="background-image: url(../../images/Nbrand/cl_CODE.png);"><button class="moclick"></button></a>-->
+          <!--                </div>-->
+          <!--              </li>-->
+          <!--            </ul>-->
+          <!--          </li>-->
+        </ul>
+      </div>
+
+    </div>
+    <!-- //  브랜드-->
+
+    <!--  수상실적-->
+    <div class="sec4">
+      <div class="sec4-in">
+        <h2 class="mainttl"><strong>PERFORMANCE</strong></h2>
+        <h3 class="mainttl-sub">크레버스의 힘! 수상실적으로 증명하다</h3>
+        <div class="btnwrap">
+          <a class="btnblack" href="">바로가기</a>
+        </div>
+        <div class="perform-section">
+          <div class="perform-slide">
+            <div class="slide">
+              <a href="#">
+                <div class="slide-img img1920px" style="background-image: url(../../images/@temp/perform-slide1.png)"></div>
+                <div class="slide-img img1280px" style="background-image: url(../../images/@temp/perform-slide2.png)"></div>
+                <div class="slide-img img1024px" style="background-image: url(../../images/@temp/perform-slide3.png)"></div>
+                <div class="slide-img img640px" style="background-image: url(../../images/@temp/perform-slide4.png)"></div>
+              </a>
+              <div class="slide-ttl">
+                <h4><a href="#">청담어학원, ‘2022 프리미엄브랜드지수’ 14년 연속 1위</a></h4>
+                <p class="date">2022.11.28</p>
+              </div>
+            </div>
+            <div class="slide">
+              <a href="#">
+                <div class="slide-img img1920px" style="background-image: url(../../images/@temp/perform-slide2.png)"></div>
+                <div class="slide-img img1280px" style="background-image: url(../../images/@temp/perform-slide2.png)"></div>
+                <div class="slide-img img1024px" style="background-image: url(../../images/@temp/perform-slide2.png)"></div>
+                <div class="slide-img img640px" style="background-image: url(../../images/@temp/perform-slide2.png)"></div>
+              </a>
+              <div class="slide-ttl">
+                <h4><a href="#">아이가르텐 ‘대한민국 하이스트 브랜드’ 6년 연속 1위 선정</a></h4>
+                <p class="date">2022.11.28</p>
+              </div>
+            </div>
+            <div class="slide">
+              <a href="#">
+                <div class="slide-img img1920px" style="background-image: url(../../images/@temp/perform-slide3.png)"></div>
+                <div class="slide-img img1280px" style="background-image: url(../../images/@temp/perform-slide3.png)"></div>
+                <div class="slide-img img1024px" style="background-image: url(../../images/@temp/perform-slide3.png)"></div>
+                <div class="slide-img img640px" style="background-image: url(../../images/@temp/perform-slide3.png)"></div>
+              </a>
+              <div class="slide-ttl">
+                <h4><a href="#">April어학원 ‘대한민국 브랜드스타’ 초등영어교육 부문 9년 연속 1위 선정</a></h4>
+                <p class="date">2022.11.28</p>
+              </div>
+            </div>
+            <div class="slide">
+              <a href="#">
+                <div class="slide-img img1920px" style="background-image: url(../../images/@temp/perform-slide4.png)"></div>
+                <div class="slide-img img1280px" style="background-image: url(../../images/@temp/perform-slide4.png)"></div>
+                <div class="slide-img img1024px" style="background-image: url(../../images/@temp/perform-slide4.png)"></div>
+                <div class="slide-img img640px" style="background-image: url(../../images/@temp/perform-slide4.png)"></div>
+              </a>
+              <div class="slide-ttl">
+                <h4><a href="#">CMS영재관 2023학년도 영재학교 합격생 301명!</a></h4>
+                <p class="date">2022.11.28</p>
+              </div>
+            </div>
+            <div class="slide">
+              <a href="#">
+                <div class="slide-img img1920px" style="background-image: url(../../images/@temp/perform-slide1.png)"></div>
+                <div class="slide-img img1280px" style="background-image: url(../../images/@temp/perform-slide1.png)"></div>
+                <div class="slide-img img1024px" style="background-image: url(../../images/@temp/perform-slide1.png)"></div>
+                <div class="slide-img img640px" style="background-image: url(../../images/@temp/perform-slide1.png)"></div>
+              </a>
+              <div class="slide-ttl">
+                <h4><a href="#">청담어학원, ‘2022 프리미엄브랜드지수’ 14년 연속 1위</a></h4>
+                <p class="date">2022.11.28</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--  //수상실적-->
+
+    <!--  이벤트-->
+    <div class="sec5">
+      <div class="sec5-in clearfix">
+        <div class="event-con">
+          <!--          <div class="num-box">-->
+          <!--            <span class="current">1</span><span> / </span><span class="total-num">6</span>-->
+          <!--            <button class="sliderP"></button>-->
+          <!--            <button class="sliderN"></button>-->
+          <!--          </div>-->
+          <div class="event-slide">
+            <div class="slide" style="background-color:#155FAF;">
+              <a href="#">
+                <h5 class="subttl">April어학원<br> 미래를 미리 만났다!</h5>
+                <h3 class="mainttl">메타러닝<br> 런칭 이벤트</h3>
+                <p class="date">기간 ㅣ <span>12월 8일~ 1월 8일</span></p>
+                <div class="thumb" style="background-image: url(../../images/main/event-slide2.png)"></div>
+              </a>
+              <div class="num-box">
+                <div>
+                  <span class="current">1</span><span> / </span><span class="total-num">6</span>
+                </div>
+                <button class="sliderP"></button>
+                <button class="sliderN"></button>
+              </div>
+            </div>
+            <div class="slide" style="background-color:#FF7A4C;">
+              <a href="#">
+                <h5 class="subttl">April어학원&청담어학원 가을학기 이벤트</h5>
+                <h3 class="mainttl">Welcome Goods Event</h3>
+                <p class="date">기간 ㅣ <span>7월~8월 가을 학기 모집</span></p>
+                <div class="thumb" style="background-image: url(../../images/main/event-slide1.png)"></div>
+              </a>
+              <div class="num-box">
+                <div>
+                  <span class="current">1</span><span> / </span><span class="total-num">6</span>
+                </div>
+                <button class="sliderP"></button>
+                <button class="sliderN"></button>
+              </div>
+            </div>
+            <div class="slide" style="background-color:#155FAF;">
+              <a href="#">
+                <h5 class="subttl">April어학원<br> 미래를 미리 만났다!</h5>
+                <h3 class="mainttl">메타러닝<br> 런칭 이벤트</h3>
+                <p class="date">기간 ㅣ <span>12월 8일~ 1월 8일</span></p>
+                <div class="thumb" style="background-image: url(../../images/main/event-slide2.png)"></div>
+              </a>
+              <div class="num-box">
+                <div>
+                  <span class="current">1</span><span> / </span><span class="total-num">6</span>
+                </div>
+                <button class="sliderP"></button>
+                <button class="sliderN"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="event-vis"  style="background-color:#F5F6F7;">
+          <a href="#">
+            <h3>크레버스 가맹 안내</h3>
+            <p>크레버스는21세기가 요청하는 사회· 문화적 가치를 발굴하고, 가치를 구현하기 위한 역량들로 융합인재 양성의 길을 열어갑니다.
+              크레버스와 함께할 가맹점을 모집합니다.</p>
+            <span class="detail">바로가기</span>
+            <div class="thumb" style="background-image: url(../../images/main/event-visual.png)"></div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <!--  //이벤트-->
+
+    <!--    학원 찾기-->
+    <div class="sec6">
+      <div class="sec6-in">
+        <div class="find-wrap">
+          <h3>크레버스 학원을 찾고 계신가요? 가까운 학원을 찾아보세요.</h3>
+          <div class="selectbox">
+            <div class="find-institute" data-dropdown='{"selected":true}'>
+              <a href="#none" class="find-institute-subj" data-act='title'>브랜드 선택</a>
+              <div class="find-institute-cont-scroll" data-act='cont' data-scrollbar='{"axis":"y"}'>
+                <ul class="find-institute-cont">
+                  <li><a href="#none" data-blind-title="brandSelTitle">청담어학원</a></li>
+                  <li><a href="#none" data-blind-title="brandSelTitle">April 어학원</a></li>
+                  <li><a href="#none" data-blind-title="brandSelTitle">아이가르텐</a></li>
+                </ul>
+              </div>
+              <span class="blind" id="brandSelTitle" title="선택">브랜드 선택</span>
+            </div>
+
+            <div class="find-institute" data-dropdown='{"selected":true}'>
+              <a href="#none" class="find-institute-subj" data-act='title'>지역 선택</a>
+              <div class="find-institute-cont-scroll" data-act='cont' data-scrollbar='{"axis":"y"}'>
+                <ul class="find-institute-cont">
+                  <li><a href="#none" data-blind-title="areaSelTitle">서울특별시</a></li>
+                  <li><a href="#none" data-blind-title="areaSelTitle">경기도</a></li>
+                  <li><a href="#none" data-blind-title="areaSelTitle">부산광역시</a></li>
+                  <li><a href="#none" data-blind-title="areaSelTitle">세종특별시</a></li>
+                  <li><a href="#none" data-blind-title="areaSelTitle">인천광역시</a></li>
+                  <li><a href="#none" data-blind-title="areaSelTitle">경기도</a></li>
+                  <li><a href="#none" data-blind-title="areaSelTitle">부산광역시</a></li>
+                  <li><a href="#none" data-blind-title="areaSelTitle">세종특별시</a></li>
+                  <li><a href="#none" data-blind-title="areaSelTitle">인천광역시</a></li>
+                </ul>
+              </div>
+              <span class="blind" id="areaSelTitle" title="선택">지역 선택</span>
+            </div>
+
+            <div class="find-institute" data-dropdown='{"selected":true}'>
+              <a href="#none" class="find-institute-subj" data-act='title'>학원 선택</a>
+              <div class="find-institute-cont-scroll" data-act='cont' data-scrollbar='{"axis":"y"}'>
+                <ul class="find-institute-cont">
+                  <li><a href="#none" data-blind-title="classSelTitle">청담본원</a></li>
+                  <li><a href="#none" data-blind-title="classSelTitle">문정 브랜치</a></li>
+                  <li><a href="#none" data-blind-title="classSelTitle">송파 브랜치</a></li>
+                  <li><a href="#none" data-blind-title="classSelTitle">목동 제2캠퍼스</a></li>
+                  <li><a href="#none" data-blind-title="classSelTitle">송파 브랜치</a></li>
+                  <li><a href="#none" data-blind-title="classSelTitle">청담본원</a></li>
+                  <li><a href="#none" data-blind-title="classSelTitle">문정 브랜치</a></li>
+                  <li><a href="#none" data-blind-title="classSelTitle">송파 브랜치</a></li>
+                  <li><a href="#none" data-blind-title="classSelTitle">목동 제2캠퍼스</a></li>
+                  <li><a href="#none" data-blind-title="classSelTitle">송파 브랜치</a></li>
+                </ul>
+              </div>
+              <span class="blind" id="classSelTitle">학원 선택</span>
+            </div>
+          </div>
+          <div class="find-img" style="background-image:url(../../images/main/find-img.png)"></div>
+        </div>
+      </div>
+    </div>
+    <!--    //학원 찾기-->
+
+    <!--    미디어-->
+    <div class="sec7">
+      <div class="sec7-bg">
+        <div class="sec7-in">
+          <h3 class="mainttl">MEDIA</h3>
+          <h4 class="mainttl-sub">크레버스 스토리와 영상을 한곳에서 만나보세요</h4>
+          <div class="btnwrap">
+            <a class="btnwhite" href="">바로가기</a>
+          </div>
+          <div class="mediawrap">
+            <div class="scroll clearfix">
+              <div class="mediabox">
+                <a href="#">
+                  <div class="thumb" style="background-image: url(../../images/@temp/media1.png)"></div>
+                </a>
+                <div class="ttlbox">
+                  <a href="#" class="cate-more">크레버스 스토리</a>
+                  <p class="title"><a href="">문해력, 상상력, 서사력을 키우는 영어학습 iGARTEN</a></p>
+                </div>
+              </div>
+              <div class="mediabox">
+                <a href="#">
+                  <div class="thumb" style="background-image: url(../../images/@temp/media2.png)"></div>
+                </a>
+                <div class="ttlbox">
+                  <a href="#" class="cate-more">톡톡에듀</a>
+                  <p class="title"><a href="">[크레버스 캠퍼스] 연고대생 vs 영재 중학생들과 대결</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--    //미디어-->
+
+    <!-- Main_slide_01P // -->
+    <div id="Main_slide_01P" class="pop-layer-2" data-uipopset='{"isFixed":true}'>
+      <button type="button" class="pop-btn-close" data-uipop='0' i-today="20230804">닫기</button>
+      <div class="editor-wrap">
+        <div class="pop-slide-container">
+          <div class="pop-slide">
+            <div class="slide">
+              <a href="1"><img src="../../images/@temp/Popup_img01.png" /></a>             
+              <div class="pagingState">
+                <button type="button" class="btnPlay">
+                  <div class="on" style="border-left:9px solid #ffffff">
+                    <div class="before"></div>
+                    <div class="after"></div>
+                  </div>
+                </button>
+                <div class="paging">
+                  <span class="current">1</span><span> / </span><span class="total-num">2</span>
+                </div>
+              </div>
+              <div class="sliderF">
+                <button type="button" class="sliderP"></button>                
+                <button type="button" class="sliderN"></button>
+              </div>
+              <!-- <div class="detailview-btn"><a href="1" class="btn-t-5 btn-c-9">자세히 보기</a></div> -->
+            </div>
+            <div class="slide">
+              <a href="2"><img src="../../images/@temp/Popup_img02.png" /></a>
+              <div class="pagingState">
+                <button type="button" class="btnPlay">
+                  <div class="on" style="border-left:9px solid #ffffff">
+                    <div class="before"></div>
+                    <div class="after"></div>
+                  </div>
+                </button>
+                <div class="paging">
+                  <span class="current">2</span><span> / </span><span class="total-num">2</span>
+                </div>
+              </div>
+              <div class="sliderF">
+                <button type="button" class="sliderP"></button>                
+                <button type="button" class="sliderN"></button>
+              </div>
+              <!-- <div class="detailview-btn"><a href="2" class="btn-t-5 btn-c-9">자세히 보기</a></div> -->
+            </div>
+          </div>  
+        </div>
+      </div>
+      <div class="pop-layer-btm noneSpace">
+        <input type="checkbox" id="f-chk-notice1" class="fm-chk ty-2 iNoTodayView" >
+        <label for="f-chk-notice1" class="fm-chk-i">오늘 하루 열지 않음</label>
+        <a href="#" class="btn-t-5 btn-c-9">자세히 보기</a>
+      </div>
+    </div>
+    <!-- // Main_slide_01P -->
+    <script>
+      $jq(".gnb-logo a").focus(); $jq("#Main_slide_01P").uipop("open");
+    </script>
+
+    <!-- footer // -->
+    <footer class="footer">
+      <div class="inner">
+          <span class="fmenu">
+            <span class="mid">
+              <a href="https://creverse.com/" target="_blank" title="새창으로 열립니다.">회사소개</a>
+              <a href="https://chungdahm.recruiter.co.kr" target="_blank" title="새창으로 열립니다.">인재채용</a>
+              <a href="../html/etc/CLPC_Footer_TE01P.html" onclick="termsLayer(); return false;">이용약관</a>
+              <a href="../html/etc/CLPC_Footer_PP01P.html"
+                 onclick="privacyLayer(); return false;"><strong>개인정보처리방침</strong></a>
+              <span class="cms">
+                <a href="#">고객센터</a>
+              </span>
+            </span>
+          </span>
+        <address class="mo-show">© CREVERSE Learning Inc.</address>
+        <div class="biz-info" data-dropdown='{"effect":"slide","focusout":false, "media":"(max-width: 767px)"}'>
+          <h2 class="biz-name"><button type="button" data-act='title' class="irg-a ig-arr-2">㈜크레버스</button></h2>
+          <div class="biz-cont" data-act='cont'>
+            <div class="info">
+              <span class="item">대표이사 <em>이충국</em></span>
+              <span class="item">주소 <em>서울특별시 강남구 테헤란로 521, 21층(삼성동, 파르나스타워)</em></span>
+              <span class="item">사업자등록번호 <em>211-87-16710</em></span>
+              <span class="item">통신판매업신고 <em>제 강남-8282호</em></span>
+              <span class="item">대표전화 <em>02-3429-9407</em></span>
+            </div>
+            <address class="mo-hide">Copyright © CREVERSE Inc. All rights reserved.</address>
+            <div class="awards scrollwrap">
+              <div class="group">
+                  <span class="item irg-b ig-awards-1"><span class="mid">프리미엄브랜드지수 14년 <br class="mo-show" />연속
+                      1위</span></span>
+                <span class="item irg-b ig-awards-2"><span class="mid">2022 브랜드스타 9년 <br class="mo-show" />연속 1위</span></span>
+                <span class="item irg-b ig-awards-3"><span class="mid">대한민국 하이스트 <br class="mo-show" />브랜드 10년 연속
+                      1위</span></span>
+                <span class="item irg-b ig-awards-4"><span class="mid">ETS 공인 <br class="mo-show" />토플주니어 시험성적
+                      취득</span></span>
+                <span class="item irg-b ig-awards-5 js-isms"><span class="mid">[인증범위] 크레버스 온라인 교육 서비스 운영<br class="mo-show" />[유효기간] 2023-01-18 ~ 2026-01-17</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="external-link">
+          <div class="link-group familysite" data-dropdown='{"effect":"slide","focusout":false}'>
+            <button type="button" class="subj g-toggle" data-act='title'>Family Site</button>
+            <ul class="list" data-act='cont'>
+              <li class="ttl">브랜드 채널</li>
+              <li><a class="" href="#none"><span>Learning Center VLC</span></a></li>
+              <li><a class="" href="#none"><span class="link">iGARTEN</span></a></li>
+              <li><a class="" href="#none"><span class="link">씨큐브코딩</span></a></li>
+              <li><a class="" href="#none"><span class="link">크레버스 x</span></a></li>
+              <li><a class="" href="#none"><span class="link">EDGE</span></a></li>
+              <li><a class="" href="#none"><span class="link">codeAlive</span></a></li>
+              <li class="ttl">제휴 프로그램</li>
+              <li><a class="" href="#none" style="margin-right:5px;"><span>표현어학원</span></a><a class="" href="#none"><span>클루빌</span></a></li>
+              <li><a class="" href="#none"><span>블루스프링스</span></a></li>
+              <li style="margin-top: 8px;"><strong>러닝 솔루션 </strong><a class="" href="#none"><span>Louldclass</span></a></li>
+              <li><strong>교재 쇼핑몰 </strong><a class="" href="#none"><span>Learn21</span></a></li>
+              <li><strong>강사채용 </strong><a class="" href="#none"><span>Faculty recruiting</span></a></li>
+            </ul>
+          </div>
+          <div class="link-group other" data-dropdown='{"effect":"slide","focusout":false}'>
+            <button type="button" class="subj g-toggle" data-act='title'>크레버스 앱</button>
+            <ul class="list" data-act='cont'>
+              <!-- 20230102 modify -->
+              <li><a class="ig-app-1 js-allim" href="#none"><span>청담올림</span></a></li>
+              <li><a class="ig-app-6" href="#none"><span>CREVERSE Learning Portal</span></a></li>
+              <li><a class="ig-app-8" href="#none"><span>April Buff</span></a></li>
+              <li><a class="ig-app-5" href="#none"><span>청담e-Library</span></a></li>
+              <li><a class="ig-app-9" href="#none"><span>April MeMe</span></a></li>
+              <li><a class=" ig-app-11" href="#none"><span>Thinking MeMe</span></a></li>
+              <li><a class=" ig-app-2" href="#none"><span>청담러닝포털</span></a></li>
+              <li><a class=" ig-app-3 js-buff" href="#none"><span>청담버프</span></a></li>
+              <li><a class=" ig-app-4" href="#none"><span>Bouncy Buff</span></a></li>
+              <li><a class=" ig-app-7" href="#none"><span>April VENA Talk</span></a></li>
+              <li><a class=" ig-app-10" href="#none"><span>Bouncy MeMe</span></a></li>
+              <li><a class=" ig-app-12" href="#none"><span>ChunkToon</span></a></li>
+              <!-- <li><a class="irg-b ig-app-4" href="#none">Phonics Concert</a></li> -->
+              <!--// 20230102 modify -->
+            </ul>
+          </div>
+          <div class="sns">
+            <a href="#none"><span class="irg ig-sns-fb">페이스북</span></a>
+            <a href="#none"><span class="irg ig-sns-bg">블로그</span></a>
+            <a href="#none"><span class="irg ig-sns-ig">인스타그램</span></a>
+            <a href="#none"><span class="irg ig-sns-yt">유튜브</span></a>
+          </div>
+
+          <a href="#" class="irg-b ig-logout-2 mo-show">로그아웃</a>
+        </div>
+      </div>
+    </footer>
+    <!-- // footer -->
+
+  </div>
+  <!-- // container -->
+
+
+</div>
+<script>
+  $(document).ready(function(){
+    let $status = $('.pagingInfo');
+    let $bannerS = $('.vis-slide');
+    $bannerS.on('init reInit', function (event, slick) {
+      if(!slick.$dots) return;
+      $status.html('<span>'+(slick.currentSlide+1)+'</span>'+ ' · ' + (slick.$dots[0].children.length));
+    }).on('beforeChange', function(event, slick, currentSlide, nextSlide){
+      if(!slick.$dots) return;
+      var i = (nextSlide ? nextSlide : 0) + 1;
+      $status.find("span").text(i);
+    });    
+    $bannerS.slick({
+      autoplay:true,
+      dots: true,
+      infinite: true,
+      speed: 1000,
+      fade: true,
+      prevArrow: $('.vis-section .sliderP'),
+      nextArrow: $('.vis-section .sliderN'),
+    });
+    let play = 0;
+    $(document).on("click",".btnPlay", function(){
+      if(play==0){
+        $('.btnPlay').addClass('on');
+        $bannerS.slick('slickPause')
+        play = 1;
+      }else{
+        $('.btnPlay').removeClass('on');
+        $bannerS.slick('slickPlay')
+        play = 0;
+      }
+    });
+  });
+
+  $(window).resize(function() {
+    $('.vis-slide').slick('resize');
+  });
+  $('.perform-slide').slick({
+    slidesToShow : 4,
+    slidesToScroll : 4,
+    infinite:false,
+    speed : 600,
+    dots : false,
+    autoplay : false,
+    autoplaySpeed : 3000,
+    pauseOnHover : true,
+    arrows : true,
+    prevArrow : "<button type='button' class='slick-prev'></button>",
+    nextArrow : "<button type='button' class='slick-next'></button>",
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow:3,
+          slidesToScroll : 3
+        }
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow:2,
+          slidesToScroll : 2,
+          arrows : false,
+        }
+      }
+    ],
+  });
+  $('.event-slide').slick({
+    slidesToShow:1,
+    infinite:false,
+    fade: true,
+    speed : 600,
+    dots : true,
+    autoplay : true,
+    autoplaySpeed : 3000,
+    pauseOnHover : false,
+    arrows: true,
+    prevArrow: $('.event-con .sliderP'),
+    nextArrow: $('.event-con .sliderN'),
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          fade: false,
+          arrows : false,
+        }
+      }
+    ],
+  }).slick('slickPause');
+  let $status2 = $('.event-con .num-box > div');
+  let $bannerS2 = $('.event-con');
+  $bannerS2.on('init reInit', function (event, slick) {
+    if(!slick.$dots) return;
+    $status2.html('<span class="current">'+ '1' +'</span><span> / </span><span class="total-num">' + (slick.$dots[0].children.length) + '</span>');
+    if(!slick.$dots) return;
+    $status2.each(function(index, item){
+      let i = index + 1;
+      console.log($(this))
+      $(this).find("span.current").text(i);
+    });
+  });
+
+
+
+    
+  $('.pop-slide').slick({
+    slidesToShow:1,
+    infinite:false,
+    fade: true,
+    speed : 600,
+    dots : true,
+    autoplay : true,
+    autoplaySpeed : 3000,
+    pauseOnHover : false,
+    arrows: true,
+    prevArrow: $('.pop-slide-container .sliderP'),
+    nextArrow: $('.pop-slide-container .sliderN'),
+  }).slick('slickPause');
+  let $status3 = $('.pop-slide-container .pagingState > .paging');
+  let $bannerS3 = $('.pop-slide-container');
+  $bannerS3.on('init reInit', function (event, slick) {
+    if(!slick.$dots) return;
+    $status3.html('<span class="current">'+ '1' +'</span><span> / </span><span class="total-num">' + (slick.$dots[0].children.length) + '</span>');
+    if(!slick.$dots) return;
+    $status3.each(function(index, item){
+      let i = index + 1;
+      console.log($(this))
+      $(this).find("span.current").text(i);
+    });
+  });
+
+  var slider = $('.scroll');
+  var slickOptions = {
+    infinite: false,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    dots:false,
+    arrows:false
+  };
+  $(window).on('load resize', function() {
+    if($(window).width() > 767) {
+      slider.slick('unslick');
+    }else{
+      slider.not('.slick-initialized').slick(slickOptions);
+    }
+  });
+  /*var slider2 = $('.sec-ul .content-list:not(.pc)');
+  var slickOptions2 = {
+    infinite: true,
+    slidesToShow: 2,
+    slidesToScroll: 2,
+    dots:false,
+    arrows:false,
+    vertical:true,
+    autoplay : true,
+    autoplaySpeed : 3000,
+  };
+  $(window).on('load resize', function() {
+    if($(window).width() > 767) {
+      slider2.slick('unslick');
+    }else{
+      slider2.not('.slick-initialized').slick(slickOptions2);
+    }
+  });*/
+  var slider3 = $('.sec-ul .content-list.pc');
+  var slickOptions3 = {
+    infinite: true,
+    slidesToShow: 2,
+    slidesToScroll: 2,
+    dots:false,
+    arrows:false,
+    vertical:true,
+    autoplay : true,
+    autoplaySpeed : 3000,
+  };
+  slider3.slick(slickOptions3);
+
+  //탭메뉴
+  $('.tab-ul li a').on('click',function(e){
+    e.preventDefault();
+    var tab_id = $(this).parent('li').attr('tab');
+    var arti = $(this).closest("div");
+
+    arti.find('.tab-ul li').removeClass('active');
+    arti.find('.sec-li').removeClass('active');
+
+    $(this).parent().addClass('active');
+    $("#" + tab_id).addClass('active');
+
+  });
+  /*gnb 공통 스크립트*/
+  $('.gnb-all-nav .group>li>a').click(function(){
+    console.log('1')
+    $(this).parent().toggleClass('active');
+    $(this).next('.sub').slideToggle();
+  });
+  /*gnb 공통 스크립트*/
+
+  /*main gnb 스크립트*/
+  $(window).scroll(function(){
+    if(document.documentElement.scrollTop == 0){
+      $('.header').addClass('transparent')
+    }else{
+      if($('.header').hasClass('transparent')) {
+        $('.header').removeClass('transparent')
+      }
+    }
+  });
+  $(document).on('mouseenter', '.header .sc-wrap',function(){
+    $(this).parents('.header').removeClass('transparent');
+  }).on('mouseleave', '.header',function(){
+    if(document.documentElement.scrollTop == 0){
+      setTimeout(function(){
+        $('.header').addClass('transparent');
+      },200);
+    }
+  });
+  /*main gnb 스크립트*/
+
+  /*brand section align*/
+  $(window).on('load resize', function() {
+    $('.brandUl').each(function(index, item){
+      var brandnum = $(item).children('li').length
+      if($(window).width() > 1024){
+        if(brandnum<6){
+          $(this).addClass('center')
+        }else{
+          $(this).removeClass('center')
+        }
+      }else if(767 < $(window).width() < 1025){
+        if(brandnum<4){
+          $(this).addClass('center')
+        }else{
+          $(this).removeClass('center')
+        }
+      }else{
+        if(brandnum<3){
+          $(this).addClass('center')
+        }else{
+          $(this).removeClass('center')
+        }
+      }
+    })
+  });
+  /*brand section align*/
+
+  /*top button*/
+  $(document).ready(function(){
+    var currentPosition = parseInt($(".top-btn").css("bottom"));
+    $(window).scroll(function() {
+      var footerHei = $('footer').outerHeight();
+      var scrollBottom = $(document).height() - $(window).height() - $(window).scrollTop();
+      if(scrollBottom < footerHei){
+        scrollBottom = footerHei + 30;
+        $(".top-btn").css({
+          "position":"absolute",
+          "bottom":scrollBottom+"px"
+        });
+      }else{
+        $(".top-btn").css({
+          "position":"fixed",
+          "bottom":"30px"
+        });
+      }
+    });
+  });
+  $(document).on('click', '.top-btn', function(){
+    $('html, body').animate({scrollTop: 0}, 300);
+  });
+  /*top button*/
+
+  const options = {
+    root: null,
+    threshold: .05,
+  }
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("trOn");
+      } else {
+        entry.target.classList.remove("trOn");
+      }
+    });
+  }, options);
+  const titleList = document.querySelectorAll('.sec3-in,.sec4-in,.sec5-in,.sec6-in,.sec7-in');
+  titleList.forEach(el => observer.observe(el));
+
+  //$(".scrollwrap").mCustomScrollbar({ theme:"dark", axis:"x"});
+  // $(document).on('click', '.biz-name button', function(){
+  //   $(".scrollwrap").mCustomScrollbar("scrollTo",0,{
+  //     scrollInertia:0
+  //   });
+  // });
+</script>
+
+
+
+</body>
+
+</html>

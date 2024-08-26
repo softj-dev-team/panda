@@ -1,0 +1,15 @@
+.tlb.board th, .tlb.board td{text-align: left; vertical-align: top}
+
+.content_are{min-height: 500px; border-top: 2px solid #666; border-bottom: 1px solid #ddd}
+
+
+.board_list{}
+
+.board_list table{width: 100%; border-top: solid #222}
+.board_list table th{text-align: center; padding: 10px; border-bottom: 1px solid #ddd; font-size: 16px;}
+.board_list table td{text-align: left; padding: 10px; border-bottom: 1px solid #ddd; font-size: 16px;}
+.board_list table td a{color: #222; font-weight: bold}
+.board_list table td.num{text-align: center; width: 60px;}
+.board_list table td.name{text-align: center; width: 80px;}
+.board_list table td.date{text-align: center; width: 100px;}
+

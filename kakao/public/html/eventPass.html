@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Pragma" content="no-cache">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-386607467"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-386607467');
+  </script>
+
+<!--이벤트 페이지 내에서 구글 분석 실행 후 이동 하기 위한 더미 페이지 (공동 수강 이벤트 에서 사용 중)-->
+<script type="text/javascript">
+  function goEvent(){
+    var no = getParam("no");
+    if(no == "1"){
+      //Event snippet for 설명회 예약
+      gtag('event', 'conversion', { 'send_to': 'AW-386607467/7zcFCIbstIcCEOvSrLgB' });
+      location.href = "https://forms.gle/QDRYts8i6hQFs3QA6";
+    }else if(no == "2"){
+      //Event snippet for URL 응모
+      gtag('event', 'conversion', { 'send_to': 'AW-386607467/w7CsCNrvtIcCEOvSrLgB' });
+      location.href = "https://forms.gle/bhLp9hiufaFkQ6Xx6";
+    }
+    else if(no == "3"){
+      //Event snippet for 정답 입력
+      gtag('event', 'conversion', { 'send_to': 'AW-386607467/XN7ICIKF3YcCEOvSrLgB' });
+      location.href = "https://forms.gle/K9iWdEhRCA2zVg4TA";
+    }
+    else if(no == "4"){
+      //Event snippet for 이미지 응모
+      gtag('event', 'conversion', { 'send_to': 'AW-386607467/s9DACIP4tIcCEOvSrLgB' });
+      location.href = "https://pf.kakao.com/_AqzXxl";
+    }
+
+  }
+function getParam(sname) {
+    var params = location.search.substr(location.search.indexOf("?") + 1);
+    var sval = "";
+    params = params.split("&");
+    for (var i = 0; i < params.length; i++) {
+        var temp = params[i].split("=");
+        if ([temp[0]] == sname) { sval = temp[1]; }
+    }
+    return sval;
+
+}
+</script>
+
+</head>
+<body onload='goEvent()'>
+
+</body>
+</html>

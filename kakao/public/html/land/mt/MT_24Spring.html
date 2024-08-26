@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <title>CREVERSE</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=320,initial-scale=1.1625,minimum-scale=1.1625,maximum-scale=1.1625,user-scalable=no">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" type="image/x-icon" href="../mt/images/common/favicon.ico" />
+  <link rel="apple-touch-icon-precomposed" href="../mt/images/common/apple-touch-icon.png" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/D_marketing.css">
+  <script src="js/ui.vendor.js"></script>
+  <script src="js/ui.js?var=1"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+</head>
+<style>
+</style>
+<body>
+<div class="dm_wrap">
+  <header class="marketingHeader">
+    <h1>CMS 영재교육센터</h1>
+    <a href="#">instagram link</a>
+  </header>
+
+  <!-- container // -->
+  <div id="container" class="container MTContainer spring24">
+    <div class="containImg">
+      <img src="../../../images/D_marketing/24MT.png" alt="">
+    </div>
+    <div class="video">
+      <div id="MTplay"></div>
+    </div>
+    <div class="footimg">
+      <img src="../../../images/D_marketing/24MT_foot.png" alt="">
+    </div>
+    <div class="linkBox">
+      <a href="#" class="main_btn mt" id="btn1"><img src="../../../images/D_marketing/24CD_btn.png" alt=""></a>
+      <a href="#" class="main_btn mt" id="btn2" style="display:none;"><img src="../../../images/D_marketing/24CD_btn.png" alt=""></a>
+      <a href="#" class="main_btn mt" id="btn3" style="display:none;"><img src="../../../images/D_marketing/24CD_btn.png" alt=""></a>
+      <a href="#" class="main_btn mt" id="btn4" style="display:none;"><img src="../../../images/D_marketing/24CD_btn.png" alt=""></a>
+      <a href="#" class="main_btn mt" id="btn5" style="display:none;"><img src="../../../images/D_marketing/24CD_btn.png" alt=""></a>
+    </div>
+
+    <!-- footer // -->
+    <!-- <footer class="dm_footer">
+      <div class="inner">
+        <button type="button" class="footerbtn">(주)크레버스 사업자정보</button>
+        <div class="biz-cont active">
+          <div class="info">
+            <span class="item">대표이사 <em>김형준</em></span>
+            <span class="item">주소 <em>서울특별시 강남구 테헤란로 521, 21층<br>(삼성동, 파르나스타워)</em></span>
+            <span class="item">사업자등록번호 <em>211-87-16710</em></span>
+            <span class="item">통신판매업신고 <em>제 강남-8282호</em></span>
+            <span class="item">대표전화 <em>02-3429-9407</em></span>
+          </div>
+          <address>© CREVERSE Inc. All rights reserved.</address>
+        </div>
+      </div>
+    </footer> -->
+    <!-- // footer -->
+  </div>
+</div>
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script>
+
+    //영상 링크 추가 예정
+
+  let MTplay1;
+  function onYouTubeIframeAPIReady(){    
+    MTplay = new YT.Player('MTplay', { videoId:'Hb4tRoiqerw',playerVars:{autoplay:1, mute:1, playlist: 'Hb4tRoiqerw', loop:1,rel:0,controls:1},events:{ 'onReady':onPlayerReady,'onStateChange': onPlayerStateChange  } });
+  }
+  function onPlayerStateChange(event) {
+    if (event.data == YT.PlayerState.PLAYING) { }
+  }
+  function onPlayerReady(event) {
+       event.target.playVideo();
+    // event.target.stopVideo();
+  }
+
+    // 푸터는 base 로 이동
+  // $(document).on('click', '.footerbtn', function() {
+  //   $(this).closest('.dm_footer').toggleClass('active')
+  // });
+
+  $(window).on('road scroll', function() {
+    var btn = $('.main_btn')
+    var scroll = $(window).scrollTop()
+    if(scroll < $('#top2').offset().top - 200){
+      btn.hide();
+      $('#btn1').show();
+    }else if(scroll < $('#top3').offset().top - 200){
+      btn.hide();
+      $('#btn2').show();
+    }else if(scroll < $('#top4').offset().top - 200){
+      btn.hide();
+      $('#btn3').show();
+    }else if(scroll < $('#top5').offset().top - 200){
+      btn.hide();
+      $('#btn4').show();
+    }else if(scroll < $('#top6').offset().top - 200) {
+      btn.hide();
+      $('#btn5').show();
+    }else{
+      btn.hide();
+      $('#btn6').show();
+    }
+    //
+    // if(scroll > $('#top2').offset().top-200){MTplay1.playVideo();}
+    // if(scroll > $('#top3').offset().top-200){MTplay2.playVideo();}
+    // if(scroll > $('#top4').offset().top-200){MTplay3.playVideo();}
+    // if(scroll > $('#top5').offset().top-200){MTplay4.playVideo();}
+  });
+
+  </script>
+
+
+  <script>
+    $(document).on('click', '.footerbtn', function() {
+      $(this).closest('.dm_footer').toggleClass('active')
+    });
+  </script>
+</body>
+
+</html>

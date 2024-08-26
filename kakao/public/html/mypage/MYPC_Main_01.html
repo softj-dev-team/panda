@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>CHUNGDAHM</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <link rel="shortcut icon" type="image/x-icon" href="../../../resource/images/common/favicon.ico" />
+  <link rel="apple-touch-icon-precomposed" href="../../../resource/images/common/apple-touch-icon.png" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <link rel="stylesheet" href="../../../resource/css/global.css">
+  <link rel="stylesheet" href="../../../resource/css/common.css">
+  <link rel="stylesheet" href="../../../resource/css/sub.css">
+  <script src="../../../resource/js/ui.vendor.js"></script>
+  <script src="../../../resource/js/ui.js"></script>
+</head>
+
+<body>
+<div class="skip"><a href="#contents"><span>본문바로가기</span></a></div>
+<div class="wrap">
+  <!-- header : /guide/gnb.html 최종 참고 // -->
+  <header class="header">
+    <div class="sc-wrap-mo">
+      <div class="sc-wrap">
+        <div class="inner-top">
+          <button type="button" class="page-back" onclick="history.back(-1)"><span class="irg ig-back">뒤로가기</span></button> <!-- 마이페이지일 경우만 -->
+          <h1 class="gnb-logo"><a href="../../index.html"><span class="irg ig-logo">CHUNGDAHM</span></a></h1>
+          <div class="global-brand">
+            <div class="brand-select">
+              <span class="home active"><a href="#none" class="mo-hide"><span class="ig-home">청담러닝</span></a></span>
+              <span class="item"><button type="button" class="edu-case ty-1">청담어학원</button></span>
+              <span class="item"><button type="button" class="edu-case ty-2">April어학원</button></span>
+              <span class="item"><button type="button" class="edu-case ty-3">아이가르텐</button></span>
+            </div>
+            <div class="edu-select"></div>
+          </div>
+          <!-- C.Honors 모바일 // -->
+          <button type="button" class="chonors-mo"><span>C.Honors</span></button>
+          <!-- // C.Honors 모바일 -->
+          <button type="button" class="gnb-all-btn"><span class="line"></span></button>
+        </div>
+        <div class="inner"></div>
+        <div class="gnb-all-nav"></div>
+        <div class="gnb-nav mo-hide">[gnb.html 참고]</div> <!-- 페이지 뎁스 명시 // -->
+      </div>
+    </div>
+  </header>
+  <!-- // header : /guide/gnb.html 최종 참고 -->
+
+  <!-- container // -->
+  <div id="container" class="container container-mypage"> <!-- 회원케이스 클래스 추가 : (청담어학원) mybranch-cdi, (April) mybranch-april, (아이가르텐) mybranch-ig -->
+    <!-- location // -->
+    <div class="lnb">
+      <div class="lnb-in">
+        <ul class="nav">
+          <li class="home"><a href="#none" class="home-in"><span class="ir i-home">홈</span></a></li>
+          <li class="dep"><a href="#none" class="dep-in" data-addtitle='this'>마이페이지</a></li><!-- 
+          <li class="dep" data-dropdown='{"effect" : "slide"}'>
+            <a href="#none" class="dep-in" data-act='title'>문의현황</a>
+            <ul class="nav-sub" data-act="cont">
+              <li><a href="#none" class="dep-2-in">수강료 납입/조회</a></li>
+              <li><a href="#none" class="dep-2-in">입학시험 결과</a></li>
+            </ul>
+          </li>
+          <li class="dep" data-dropdown='{"effect" : "slide"}'>
+            <a href="#none" class="dep-in" data-act='title'>수강료 납입</a>
+            <ul class="nav-sub" data-act="cont">
+              <li><a href="#none" class="dep-2-in">납입내역 조회</a></li>
+            </ul>
+          </li> -->
+        </ul>
+      </div>
+    </div>
+    <!-- // location -->
+
+    <!-- contents // -->
+    <div id="contents" class="contents">
+      <!-- my info // -->
+      <div class="my-intro">
+        <div class="my-profile">
+          <!-- <div class="my-info" data-dropdown=''>
+            <a href="#" data-act="title">김선아 <small class="mo-show">마이페이지</small></a>
+            <div class="option" data-act="cont">
+              <a href="#">김선아</a>
+              <a href="#">김선아</a>
+            </div>
+            <div class="btns">
+              <a href="#" class="ir-a i-myplus">자녀추가</a>
+              <a href="#" class="ir-a i-myset mo-hide">정보수정</a>
+            </div>
+          </div> -->
+          <!-- chonors 표기 (chonors 가입완료, chonors-proceed 신청진행) -->
+          <div class="my-info chonors-proceed" data-dropdown=''>
+            <a href="#" data-act="title">김선아 <small class="mo-show">마이페이지</small></a>
+            <div class="option" data-act="cont">
+              <a href="#">김선아</a>
+              <a href="#">김선아</a>
+            </div>
+            <div class="btns">
+              <a href="#" class="ir-a i-myplus">자녀추가</a>
+              <a href="#" class="ir-a i-myset mo-hide">정보수정</a>
+            </div>
+          </div>
+        </div>
+        <div class="my-quick">
+          <dl class="quick-item">
+            <dt><span class="title">학원</span></dt>
+            <dd class="des">
+              <div class="des-in">
+                청담어학원<br class="mo-hide" /> 청담 본원
+              </div>
+            </dd>
+            <dd class="btn"><a href="#">학원 바로가기</a></dd>
+          </dl>
+          <dl class="quick-item">
+            <dt><span class="title">수강레벨</span></dt>
+            <dd class="des">
+              <div class="des-in">
+                Eagle
+              </div>
+            </dd>
+            <dd class="btn" data-dropdown=''>
+              <button type="button" data-act="title">성적보기</button>
+              <div class="option" data-act="cont">
+                <a href="#">학습 성취 현황</a>
+                <a href="#">과거 성적 조회</a>
+                <a href="#">새학기 단계 시간표</a>
+                <a href="#">특강 종합 평가</a>
+              </div>
+            </dd>
+          </dl>
+          <dl class="quick-item">
+            <dt><span class="title">러닝포인트</span></dt>
+            <dd class="des">
+              <div class="des-in">
+                <span class="ir-b i-mystar">1,210</span>
+              </div>
+            </dd>
+            <dd class="btn"><a href="https://learning.chungdahm.com/" target="_blank" title="새창으로 열립니다.">러닝포인트 더보기</a></dd>
+          </dl>
+        </div>
+      </div>
+      <!-- // my info -->
+
+      <div class="my-wrap">
+        <!-- my side // -->
+        <div class="my-side">
+         <h2 class="title active"><a href="#">마이페이지</a></h2>
+          <ul class="my-mn">
+            <li><a href="#" class="dep-in">수강료 납입/조회</a>
+              <!-- 202005modify: 메뉴구성 수정 -->
+              <ul class="dep-2">
+                <li><a href="#" class="dep-2-in">청구내역</a></li>
+                <li><a href="#" class="dep-2-in">납입내역 조회</a></li>
+                <li><a href="#" class="dep-2-in">배송조회</a></li>
+              </ul>
+            </li>
+            <li><a href="#" class="dep-in">문의현황</a> <em class="num">3</em>
+              <ul class="dep-2">
+                <li><a href="#" class="dep-2-in">Q&A(본사문의)</a></li>
+                <li><a href="#" class="dep-2-in">1:1문의(학원문의)</a></li>
+                <li><a href="#" class="dep-2-in">온라인 학습문의</a></li>
+              </ul>
+            </li>
+            <li><a href="#" class="dep-in">입학시험 결과</a></li>
+          </ul>
+          <ul class="side-banner">
+            <!-- 2019-05-02 삭제 : <li>
+              <a href="#" class="in ir-a i-myadd"><strong>통합고객지원센터</strong><small>온라인학습 지원</small></a>
+            </li> -->
+            <li>
+              <a href="https://cdi.spindlebooks.com" target="_blank" title="새창으로 열립니다." class="in ir-a i-myadd-2"><strong>청담 e-Library</strong><small>학습하기</small></a>
+            </li>
+            <!-- 청담어학원일 경우만 노출 // -->
+            <li>
+              <a href="#" class="in ir-a i-myadd-5"><strong>러닝포털</strong><small>바로가기</small></a>
+            </li>
+            <!-- // 청담어학원일 경우만 노출 -->
+          </ul>
+        </div>
+        <!-- // my side -->
+
+        <!-- my contents // -->
+        <div class="my-contents">
+          <!-- 납입안내 // -->
+          <!-- chonors 표기 (chonors 가입완료, chonors-proceed 신청진행) -->
+          <h3 class="g-title cmgt-0">납입안내<a href="#none" target="_blank" class="view-chonors">C.Honors 혜택보기<span class="ir">이동</span></a></h3>
+          <div class="my-pay-list">
+            <div class="pay-item">
+              <dl class="pay-info ir-a i-pay">
+                <dt>총 수강료</dt>
+                <dd>250,000원</dd>
+                <dt>납기일</dt>
+                <dd>2019.01.08까지 <span class="small">(외 1건)</span></dd>
+              </dl>
+              <div class="btn">
+                <a href="#"><span class="btn-in">납입내역 조회</span></a>
+                <a href="#"><span class="btn-in fc-point"><strong>결제하기</strong></span></a>
+              </div>
+            </div>
+            <div class="pay-item">
+              <dl class="pay-info ir-a i-pay-2">
+                <dt>총 교재비</dt>
+                <dd>70,000원</dd>
+                <dt>납입일</dt>
+                <dd>2018 겨울학기</dd>
+              </dl>
+              <div class="btn">
+                <a href="#"><span class="btn-in">주문/배송조회</span></a>
+                <a href="#"><span class="btn-in">취소/교환/반품</span></a>
+                <a href="#"><span class="btn-in fc-point"><strong>결제하기</strong></span></a>
+              </div>
+            </div>
+          </div>
+          <!-- // 납입안내 -->
+
+          <br /><br /><br /><!-- 검수용 br 입니다 개발시 삭제해주세요 -->
+
+          <div class="my-pay-list">
+            <div class="pay-item">
+              <div class="pay-info-nodata">수강료 납부 대상자가 아닙니다.</div><!-- 문구 케이스 추가 -->
+              <div class="btn">
+                <a href="#"><span class="btn-in">납입내역 조회</span></a>
+              </div>
+            </div>
+            <div class="pay-item"><!-- 문구 케이스 추가 -->
+              <div class="pay-info-nodata">교재비 납부 대상자가 아닙니다.</div>
+              <div class="btn">
+                <a href="#"><span class="btn-in">주문/배송조회</span></a>
+                <a href="#"><span class="btn-in">취소/교환/반품</span></a>
+              </div>
+            </div>
+          </div>
+
+          <ul class="mycom-banner col-2 menu-banner">
+            <li><a href="#" class="in ir-a i-myadd-6"><strong>문의현황</strong><small class="light">바로가기</small></a></li>
+            <!-- <li><a href="#" class="in ir-a i-myadd-7"><strong>입학시험 결과</strong><small class="light">바로가기</small></a></li> 아이가르텐에서 숨김. -->
+          </ul>
+
+          <!-- 출결현황 // -->
+          <!-- 202005modify: 타이틀변경 -->
+          <h3 class="g-title cmgt-2">출석현황</h3>
+          <div class="my-state">
+            <div class="my-calendar-wrap">
+              <!-- calendar // -->
+              <div class="my-calendar">
+                <!-- calendar head // -->
+                <div class="my-calendar-head">
+                  <a href="#none" class="my-cal-pag my-cal-prev"><span class="ir i-arr-3">이전</span></a>
+                  <h4 class="my-cal-month">1월<span class="my-cal-year">January 2019</span></h4>
+                  <a href="#none" class="my-cal-pag my-cal-next"><span class="ir i-arr-4">다음</span></a>
+                </div>
+                <!-- // calendar head -->
+
+                <!-- calendar list // -->
+                <table class="my-calendar-list">
+                  <caption>출결현황 달력</caption>
+                  <colgroup><col class="tb-col-6" span="7" /></colgroup>
+                  <thead>
+                    <tr>
+                      <th scope="col">Sun</th>
+                      <th scope="col">Mon</th>
+                      <th scope="col">Tue</th>
+                      <th scope="col">Wed</th>
+                      <th scope="col">Thu</th>
+                      <th scope="col">Fri</th>
+                      <th scope="col">Sat</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="day"><em class="cal-date"></em></span></td>
+                      <td><span class="day"><em class="cal-date"></em></span></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">1</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">2</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">3</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">4</em></button></td>
+                      <td><button type="button" class="day"><em class="cal-date">5</em></button></td>
+                    </tr>
+                    <tr>
+                      <td><button type="button" class="day"><em class="cal-date">6</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">7</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">8</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">9</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">10</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">11</em></button></td>
+                      <td><button type="button" class="day"><em class="cal-date">12</em></button></td>
+                    </tr>
+                    <tr>
+                      <td><button type="button" class="day"><em class="cal-date">13</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">14</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">15</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">16</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">17</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">18</em></button></td>
+                      <td><button type="button" class="day"><em class="cal-date">19</em></button></td>
+                    </tr>
+                    <tr>
+                      <td><button type="button" class="day"><em class="cal-date">20</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">21</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">22</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">23</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">24</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">25</em></button></td>
+                      <td><button type="button" class="day"><em class="cal-date">26</em></button></td>
+                    </tr>
+                    <tr>
+                      <td><button type="button" class="day"><em class="cal-date">27</em></button></td>
+                      <td class="day-case-2"><button type="button" class="day"><em class="cal-date">28</em></button></td><!-- 지각/조퇴 -->
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">29</em></button></td><!-- 출석 -->
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">30</em></button></td>
+                      <td class="day-case-3"><button type="button" class="day"><em class="cal-date">31</em></button></td><!-- 결석 -->
+                      <td class="day-case"><span class="day"><em class="cal-date"></em></span></td>
+                      <td><span class="day"><em class="cal-date"></em></span></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!-- // calendar list -->
+
+                <!-- schedule // -->
+                <ul class="my-schedule">
+                  <li><span class="ir i-schedule ty-4"></span>출석</li>
+                  <li><span class="ir i-schedule ty-5"></span>지각/조퇴</li>
+                  <li><span class="ir i-schedule ty-6"></span>결석</li>
+                </ul>
+                <!-- // schedule -->
+              </div>
+              <!-- // calendar -->
+            </div>
+            <div id="my-homework" class="my-homework">
+              <h4 class="title"><span class="cal-today">TODAY</span><strong>2019.01.25 Friday</strong></h4>
+              <div class="homework-scroll" tabindex="0">
+                <ul class="homework-list">
+                  <li>
+                    <span class="type ty-4"><span class="in">출석</span></span><span class="subj">Topical Writing & Speaking</span><span class="day">오후 5시 40분</span>
+                  </li>
+                  <li>
+                    <span class="type ty-5"><span class="in">지각</span></span><span class="subj">Topical Writing & Speaking</span><span class="day">오후 5시 40분</span>
+                  </li>
+                  <li>
+                    <span class="type ty-5"><span class="in">조퇴</span></span><span class="subj">C1</span><span class="day">오후 5시 40분</span>
+                  </li>
+                  <li class="homework-more">
+                    <span class="type ty-6"><span class="in">결석</span></span><span class="subj">Topical Writing & Speaking</span><span class="day">오후 5시 40분</span>
+                  </li>
+                  <li class="homework-more">
+                    <span class="type ty-6"><span class="in">통보결석</span></span><span class="subj">C1</span><span class="day">오후 5시 40분</span>
+                  </li>
+                  <li class="homework-more">
+                    <span class="type ty-6"><span class="in">공식결석</span></span><span class="subj">C1</span><span class="day">오후 5시 40분</span>
+                  </li>
+                </ul>
+              </div>
+              <button type="button" onclick='$jq("#my-homework .homework-more").removeClass("homework-more");this.disabled=true;' class="btn-homework-more mo-show"><span class="in ir-a i-myplus">더보기</span></button>
+            </div>
+          </div>
+          <!-- // 출결현황 -->
+
+          <!-- 출결현황 // -->
+          <h3 class="g-title cmgt-2">출결현황</h3>
+          <div class="my-state">
+            <div class="my-calendar-wrap">
+              <!-- calendar // -->
+              <div class="my-calendar">
+                <!-- calendar head // -->
+                <div class="my-calendar-head">
+                  <a href="#none" class="my-cal-pag my-cal-prev"><span class="ir i-arr-3">이전</span></a>
+                  <h4 class="my-cal-month">1월<span class="my-cal-year">January 2019</span></h4>
+                  <a href="#none" class="my-cal-pag my-cal-next"><span class="ir i-arr-4">다음</span></a>
+                </div>
+                <!-- // calendar head -->
+
+                <!-- calendar list // -->
+                <table class="my-calendar-list">
+                  <caption>출결현황 달력</caption>
+                  <colgroup><col class="tb-col-6" span="7" /></colgroup>
+                  <thead>
+                    <tr>
+                      <th scope="col">Sun</th>
+                      <th scope="col">Mon</th>
+                      <th scope="col">Tue</th>
+                      <th scope="col">Wed</th>
+                      <th scope="col">Thu</th>
+                      <th scope="col">Fri</th>
+                      <th scope="col">Sat</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="day"><em class="cal-date"></em></span></td>
+                      <td><span class="day"><em class="cal-date"></em></span></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">1</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">2</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">3</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">4</em></button></td>
+                      <td><button type="button" class="day"><em class="cal-date">5</em></button></td>
+                    </tr>
+                    <tr>
+                      <td><button type="button" class="day"><em class="cal-date">6</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">7</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">8</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">9</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">10</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">11</em></button></td>
+                      <td><button type="button" class="day"><em class="cal-date">12</em></button></td>
+                    </tr>
+                    <tr>
+                      <td><button type="button" class="day"><em class="cal-date">13</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">14</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">15</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">16</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">17</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">18</em></button></td>
+                      <td><button type="button" class="day"><em class="cal-date">19</em></button></td>
+                    </tr>
+                    <tr>
+                      <td><button type="button" class="day"><em class="cal-date">20</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">21</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">22</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">23</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">24</em></button></td>
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">25</em></button></td>
+                      <td><button type="button" class="day"><em class="cal-date">26</em></button></td>
+                    </tr>
+                    <tr>
+                      <td><button type="button" class="day"><em class="cal-date">27</em></button></td>
+                      <td class="day-case-2"><button type="button" class="day"><em class="cal-date">28</em></button></td><!-- 지각/조퇴 -->
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">29</em></button></td><!-- 출석 -->
+                      <td class="day-case"><button type="button" class="day"><em class="cal-date">30</em></button></td>
+                      <td class="day-case-3"><button type="button" class="day"><em class="cal-date">31</em></button></td><!-- 결석 -->
+                      <td class="day-case"><span class="day"><em class="cal-date"></em></span></td>
+                      <td><span class="day"><em class="cal-date"></em></span></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!-- // calendar list -->
+
+                <!-- schedule // -->
+                <ul class="my-schedule">
+                  <li><span class="ir i-schedule ty-4"></span>출석</li>
+                  <li><span class="ir i-schedule ty-5"></span>지각/조퇴</li>
+                  <li><span class="ir i-schedule ty-6"></span>결석</li>
+                </ul>
+                <!-- // schedule -->
+              </div>
+              <!-- // calendar -->
+            </div>
+            <div id="my-homework" class="my-homework">
+              <div class="my-homework-nodata">
+                <span class="mid">현재 수강중인 강의가 없으며,<br />최근 6개월간의 출결현황만 조회하실 수 있습니다.</span>
+              </div>
+            </div>
+          </div>
+          <!-- // 출결현황 -->
+
+          <!-- 우리 학원 소식 // -->
+          <h3 class="g-title cmgt-4">우리 학원 소식</h3>
+          <table class="board-list ty-2 cmgt">
+            <caption>우리 학원 소식 목록</caption>
+            <colgroup><col class="tb-col-2" /><col class="tb-col-3" /><col class="tb-col-4" /><col class="tb-col-5" /></colgroup>
+            <thead>
+              <tr>
+                <th scope="col">구분</th>
+                <th scope="col">제목</th>
+                <th scope="col">등록일</th>
+                <th scope="col">조회</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="mo-tb-hide ">NOTICE</td>
+                <td class="tb-subj mo-tb-1"><a href="#none" class="subj">April어학원 ‘하이스트 브랜드’6년 연속 1위 선정 April어학원 ‘하이스트 브랜드’6년 연속 1위 선정</a><span class="ir i-attach">첨부파일</span><span class="ico-txt">NEW</span></td>
+                <td class="mo-tb-2-1">2018.03.05</td>
+                <td class="mo-tb-hide">12,543</td>
+              </tr>
+              <tr>
+                <td class="mo-tb-hide">NOTICE</td>
+                <td class="tb-subj mo-tb-1"><a href="#none" class="subj">아이가르텐 ‘2018 대한민국 하이스트 브랜드’2년 연속 1위 선정 아이가르텐 ‘2018 대한민국 하이스트 브랜드’2년 연속 1위 선정 아이가르텐 ‘2018 대한민국 하이스트 브랜드’2년 연속 1위 선정</a><span class="ico-txt">NEW</span></td>
+                <td class="mo-tb-2-1">2018.03.05</td>
+                <td class="mo-tb-hide">12,543</td>
+              </tr>
+              <tr>
+                <td class="mo-tb-hide">NOTICE</td>
+                <td class="tb-subj mo-tb-1"><a href="#none" class="subj">April어학원 ‘대한민국 하이스트 브랜드’ 6년 연속 1위 선정</a><span class="ir i-attach">첨부파일</span></td>
+                <td class="mo-tb-2-1">2018.03.05</td>
+                <td class="mo-tb-hide">12,543</td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- // 우리 학원 소식 -->
+
+          <!-- 전 페이지 공통 // -->
+          <ul class="mycom-banner">
+            <!-- April의 경우만 노출 // -->
+            <li>
+              <a href="http://aprilclr.echungdahm.com/eClient/setupinfo/AprilGate.aspx" target="_blank" title="새창으로 열립니다." class="in ir-a i-myadd-3"><strong>April GATE</strong><small>온라인 학습 프로그램 이용안내</small></a>
+            </li>
+            <li>
+              <a href="#" class="in ir-a i-myadd-4"><strong>수업자료</strong><small>수업 진행 시 필요한 자료입니다.</small></a>
+            </li>
+            <!-- // April의 경우만 노출 -->
+            <!-- 2019-05-02 삭제 : <li class="mo-show">
+              <a href="#" class="in ir-a i-myadd"><strong>통합고객지원센터</strong><small>온라인학습 지원</small></a>
+            </li> -->
+            <li class="mo-show">
+              <a href="https://cdi.spindlebooks.com" target="_blank" title="새창으로 열립니다." class="in ir-a i-myadd-2"><strong>청담 e-Library</strong><small>학습하기</small></a>
+            </li>
+            <!-- 청담어학원일 경우만 노출 // -->
+            <li class="mo-show">
+              <a href="#" class="in ir-a i-myadd-5"><strong>러닝포털</strong><small>바로가기</small></a>
+            </li>
+            <!-- // 청담어학원일 경우만 노출 -->
+          </ul>
+          <!-- // 전 페이지 공통 -->
+        </div>
+        <!-- // my contents -->
+      </div>
+    </div>
+    <!-- // contents -->
+  </div>
+  <!-- // container -->
+
+  <!-- footer // -->
+  <footer class="footer">
+  </footer>
+  <!-- // footer -->
+</div>
+</body>
+</html>

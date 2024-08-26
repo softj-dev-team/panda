@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>입학시험 결과 조회 인쇄하기</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initi al-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" type="image/x-icon" href="../../images/common/favicon.ico" />
+  <link rel="apple-touch-icon-precomposed" href="../../images/common/apple-touch-icon.png" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <link rel="stylesheet" href="../../css/global.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/result_pc.css">
+  <link rel="stylesheet" href="../../css/sub.css">
+  <link rel="stylesheet" href="../../css/print.css" media="print">
+  <script src="../../js/ui.vendor.js"></script>
+  <script src="../../js/ui.js"></script>
+</head>
+
+<body>
+  <div class="pop-wrap re-pop-wrap" data-resizewrap="true">
+    <!-- pop-cont // -->
+<!-- pc -->
+    <div class="pop-cont">
+      <div class="result-bg"></div>
+      <div class="result-head">
+        <h2 class="result-title">
+          <span data-picture='' data-alt='청담어학원' class="result-logo">
+              <span data-src='../../images/common/result-title-mo.png'></span>
+              <span data-src='../../images/common/result-title.png' data-media='(min-width: 768px)'></span>
+            </span>Diagnostic Test Report
+        </h2>
+        <dl class="result-profile">
+          <dt>이름</dt>
+          <dd>김선아</dd>
+          <dt>학교 / 학년</dt>
+          <dd>대도초등학교 / 5학년</dd>
+          <dt>응시일</dt>
+          <dd>2019년 1월 17일</dd>
+        </dl>
+      </div>
+      <div class="result-info">
+        <div class="info-item ty2">
+          <dl class="my-result ty2">
+            <dt>등급</dt>
+            <dd><strong class="fc-4">2등급</strong></dd>
+          </dl>
+          <dl class="my-result">
+            <dd>높은 수준의 이해력과 언어 사용 능력을 보여줍니다. 리스닝 대화와 리딩 지문에 대한 이해도가 우수하며, 고급 어휘와 복잡한 문장 구조에 대한 판단력도 좋습니다. </dd>
+          </dl>
+        </div>
+        <div class="info-item score">
+          <dl class="my-result">
+            <dt>레벨</dt>
+            <dd><strong class="fc-4">TO 1</strong></dd>
+          </dl>
+          <div class="points">
+            <div class="points-item points-half">
+              <dl>
+                <dt>Listening</dt>
+                <dd><strong>8</strong> / <span class="">37</span></dd>
+              </dl>
+              <dl>
+                <dt>Reading</dt>
+                <dd><strong>21</strong> / <span class="">63</span></dd>
+              </dl>
+            </div>
+            <div class="points-item">
+              <dl>
+                <dt>종합</dt>
+                <dd class="total"><strong class="fc-4">29</strong> / 100</dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="print-tit">수능 모의고사 성적표</div>
+      <!-- 등급 & 누적 & 비율 // -->
+      <div class="print-inside">
+        <h3 class="g-title-5 cmgt-2 first-1">등급 & 누적 & 비율</h3>
+        <div class="tb-data-wrap cmgt-3">
+          <table class="tb-data">
+            <caption>등급 & 누적 & 비율</caption>
+            <colgroup>
+              <col width="12%" />
+              <col width="9.7%" />
+              <col width="9.7%" />
+              <col width="9.7%" />
+              <col width="9.7%" />
+              <col width="9.7%" />
+              <col width="9.7%" />
+              <col width="9.7%" />
+              <col width="9.7%" />
+              <col width="9.7%" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th scope="col">구분</th>
+                <th scope="col">1등급</th>
+                <th scope="col">2등급</th>
+                <th scope="col">3등급</th>
+                <th scope="col">4등급</th>
+                <th scope="col">5등급</th>
+                <th scope="col">6등급</th>
+                <th scope="col">7등급</th>
+                <th scope="col">8등급</th>
+                <th scope="col">9등급</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>등급점수</td>
+                <td class="ac">90</td>
+                <td class="ac">80</td>
+                <td class="ac">70</td>
+                <td class="ac">60</td>
+                <td class="ac">50</td>
+                <td class="ac">40</td>
+                <td class="ac">30</td>
+                <td class="ac">20</td>
+                <td class="ac">20미만</td>
+              </tr>
+              <tr>
+                <td>누적인원</td>
+                <td class="ac">385</td>
+                <td class="ac">1,488</td>
+                <td class="ac">34,725</td>
+                <td class="ac">6,073</td>
+                <td class="ac">8,696</td>
+                <td class="ac">11,181</td>
+                <td class="ac">13,573</td>
+                <td class="ac">16,070</td>
+                <td class="ac">16,824</td>
+              </tr>
+              <tr>
+                <td>누적비율</td>
+                <td class="ac">2.3</td>
+                <td class="ac">8.8</td>
+                <td class="ac">20.6</td>
+                <td class="ac">36.1</td>
+                <td class="ac">51.7</td>
+                <td class="ac">66.5</td>
+                <td class="ac">80.7</td>
+                <td class="ac">95.5</td>
+                <td class="ac">100</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- // 등급 & 누적 & 비율 -->
+
+      <!-- 영역별 점수 // -->
+      <div class="print-inside">
+        <h3 class="g-title-5 cmgt-2">영역별 점수</h3>
+        <div class="tb-data-wrap cmgt-3">
+          <table class="tb-data">
+            <caption>영역별 점수</caption>
+            <colgroup>
+              <col width="10%" />
+              <col width="10%" />
+              <col width="10%" />
+              <col width="10%" />
+              <col width="10%" />
+              <col width="10%" />
+              <col width="10%" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th scope="col" colspan="2">구분</th>
+                <th scope="col">문항</th>
+                <th scope="col">맞은 갯수</th>
+                <th scope="col">문항 점수</th>
+                <th scope="col">내 점수</th>
+                <th scope="col">해당 문항</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="ac">Listening</td>
+                <td class="ac">듣기 / 말하기</td>
+                <td class="ac">17</td>
+                <td class="ac">4</td>
+                <td class="ac">37</td>
+                <td class="ac">8</td>
+                <td class="ac">1 ~ 17</td>
+              </tr>
+              <tr>
+                <td class="ac" rowspan="6">Reading</td>
+                <td class="ac">대의파악</td>
+                <td class="ac">7</td>
+                <td class="ac">0</td>
+                <td class="ac">14</td>
+                <td class="ac">0</td>
+                <td class="ac">18 ~ 24</td>
+              </tr>
+              <tr>
+                <td class="ac">세부 사항</td>
+                <td class="ac">4</td>
+                <td class="ac">1</td>
+                <td class="ac">8</td>
+                <td class="ac">2</td>
+                <td class="ac">25 ~ 28</td>
+              </tr>
+              <tr>
+                <td class="ac">어법 / 어휘</td>
+                <td class="ac">2</td>
+                <td class="ac">1</td>
+                <td class="ac">5</td>
+                <td class="ac">1</td>
+                <td class="ac">29 ~ 30</td>
+              </tr>
+              <tr>
+                <td class="ac">빈칸 추론</td>
+                <td class="ac">4</td>
+                <td class="ac">2</td>
+                <td class="ac">11</td>
+                <td class="ac">6</td>
+                <td class="ac">31 ~ 34</td>
+              </tr>
+              <tr>
+                <td class="ac">간접 쓰기</td>
+                <td class="ac">6</td>
+                <td class="ac">3</td>
+                <td class="ac">14</td>
+                <td class="ac">7</td>
+                <td class="ac">35 ~ 40</td>
+              </tr>
+              <tr>
+                <td class="ac">장문 독해 </td>
+                <td class="ac">5</td>
+                <td class="ac">2</td>
+                <td class="ac">11</td>
+                <td class="ac">4</td>
+                <td class="ac">41 ~ 45</td>
+              </tr>
+            </tbody>
+            <tfoot class="tfoot-cd">
+              <tr>
+                <td  colspan="2">총합</td>
+                <td >45</td>
+                <td >13</td>
+                <td >100</td>
+                <td >29</td>
+                <td >-</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <!-- // 영역별 점수 -->
+      <!-- 성적 분포도 // -->
+      <div class="print-inside">
+        <h3 class="g-title-5 cmgt-2">성적 분포도</h3>
+        <div class="radar-chart">
+          <div class="legend">
+            <span class="case">문항</span> 
+            <span class="case ty-2">맞은 갯수</span>
+            <span class="case ty-3">문항 점수</span>
+            <span class="case ty-4">내 점수</span>
+          </div>
+          <div class="chartBox">
+            <div class="chart">
+              <canvas id="chart1" width="100%" max-height="251px"></canvas>
+            </div>
+            <div class="chart">
+              <canvas id="chart2" width="100%" max-height="251px"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 안내설명 -->
+      <div class="print-inside">
+        <div class="print-inside ty2  txt-inside inside-ul">
+          <ul>
+            <li>
+              <span>듣기 / 말하기</span>
+              듣기 능력과 응답 능력을 평가하기 위한 문제입니다. 듣기 문항은 대화, 발표, 강연 등의 내용이 있고 주요 내용, 세부 정보, 화자의 의도 및 태도 등을 정확하게 파악하여 적절하게 반응하는 능력을 간접적으로 평가 합니다.
+            </li>
+            <li>
+              <span>대의 파악</span>
+              글의 전체적인 주제나 중심 메시지를 이해하고 파악하는 능력을 평가하는 문제입니다. 주로 글의 주제, 작가의 주장 또는 의도, 글의 요지 등을 파악해야 하며 전반적인 글의 내용을 종합적으로 이해하는 능력을 평가합니다.
+            </li>
+            <li>
+              <span>세부 사항</span>
+              글에 제시된 특정 정보를 사실적이고 정확하게 이해하는 능력을 평가하는 문제입니다. 글의 내용과 그림∙도표 등의 일치/불일치, 화자의 할/한 일, 부탁할/한 일, 숫자 정보나 기타 세부 정보를 파악할 수 있는 능력을 평가합니다.
+            </li>
+            <li>
+              <span>어법 / 어휘</span>
+              기본적인 문법 지식을 평가하는 문제입니다. 고난도의 문법사항 보다는 문장에서 정확한 쓰임을 파악하는 능력을 평가 합니다. 제시된 글 안에서 적절한 어휘, 또는 어긋나는 어휘를 고를 수 있는지를 평가하는 문제입니다. 문맥에 따른 어휘 선택 능력을 평가 합니다.
+            </li>
+            <li>
+              <span>빈칸 추론</span>
+              글의 주제와 요지를 파악하여 읽는 대의파악 능력과 빈칸의 앞뒤 문맥을 이해하는 논리적 능력을 평가하는 문제입니다. 기본적인 어휘력과 글의 전체적일 흐름을 파악 및 추론 할 수 있는 능력을 평가 합니다.
+            </li>
+            <li>
+              <span>간접 쓰기</span>
+              글의 전체적인 맥락과 문장 간의 논리적 흐름을 파악하여 가상의 글쓰기에 적용할 수 있는 능력을 평가하는 문제입니다. 흐름에 무관한 문장이나 주어진 문장의 적합한 위치 파악, 글의 순서 파악, 그리고 문단을 요약할 수 있는 능력을 평가 합니다.
+            </li>
+            <li>
+              <span>장문 독해</span>
+              비교적 긴 글을 읽고 내용을 이해하는 능력을 평가하는 문제입니다. 전체적인 내용과 구조를 분석하고, 중요한 정보를 추출하는 능력을 평가하며 추론과 분석, 종합적인 독해 능력과 논리적 사고력을 평가 합니다.
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="btn-wrap btn-print">
+        <span class="btn-in">
+          <button type="button" class="btn-t btn-c" onclick="window.print();">인쇄</button>
+        </span>
+        <span class="btn-in">
+          <a href="#none" target="_blank" title="새창으로 열립니다." class="btn-t btn-c-2">PDF</a>
+        </span>
+      </div>
+    </div>
+    <!-- // pop-cont -->
+  </div>
+  <script src="../../js/chart.min.js"></script>
+  <script type="text/javascript">
+    var ctx = document.getElementById('chart1').getContext('2d');
+    var ctx2 = document.getElementById('chart2').getContext('2d');
+    var chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['듣기 / 말하기'],
+        datasets: [
+          {
+            label: '문항',
+            backgroundColor: '#B3DD7D',
+            borderWidth: 0,
+            data: [25 ],
+          },
+          {
+            label: '맞은 갯수',
+            backgroundColor: '#F27376',
+            borderWidth: 0,
+            data: [23]
+          },
+          {
+            label: '문항 점수',
+            backgroundColor: '#83B167',
+            borderWidth: 0,
+            data: [22]
+          },
+          {
+            label: '내점수',
+            backgroundColor: '#E83B3F',
+            borderWidth: 0,
+            data: [22]
+          },      
+        ]
+      },
+      options: {
+        categoryPercentage: 0.9,
+            barPercentage: 0.8,
+        minBbarThickness: 11,
+        maxBbarThickness: 11,
+        maintainAspectRatio:false,
+        borderRadius:2,
+        layout: {
+          padding:0,
+          // margin:12
+        },
+        legend: {//범례 설정            
+          display: false,
+        },
+        responsive: true,
+        scales: {
+            y: { 
+              min: 0,
+              max: 40,  
+              grid: { 
+                // display:false,
+                // drawTicks: false,
+                tickLength: 0,
+                color: function(context) {
+    								if (context.tick.value === 0) {
+    									return '#000000';
+    								}
+    								else {
+    									return 'transparent';
+    								}    								
+    							}
+              },
+              ticks: {
+                color:'#888888',
+                font:{
+                  size:14,
+                  // weight: 'bold',
+                }
+              },
+            },
+            x: {
+              grid: {
+                tickLength: 0,
+                color: '#E7E1E1',                
+              },
+              border: {
+                dash: [2,4],
+              },
+              ticks: {
+                padding: 9,
+                  color:'#000000',
+                font:{
+                  size:14,
+                  // weight: 'bold',
+                }
+              },
+            },
+        },
+        plugins: {
+          legend: {
+            display: false,
+          },          
+        }
+      }
+    });  
+    var chart = new Chart(ctx2, {
+      type: 'bar',
+      data: {
+        labels: ['대의 파악','세부 사항','어법 / 어휘','빈칸 추론','간접 쓰기','장문 독해'],
+        datasets: [
+          {
+            label: '문항',
+            backgroundColor: '#B3DD7D',
+            borderWidth: 0,
+            data: [4 ,11, 8,5 ,10, 15],
+          },
+          {
+            label: '맞은 갯수',
+            backgroundColor: '#F27376',
+            borderWidth: 0,
+            data: [3 ,6, 6,8 ,10, 3]
+          },
+          {
+            label: '문항 점수',
+            backgroundColor: '#83B167',
+            borderWidth: 0,
+            data: [4 ,11, 9,12 ,6, 10]
+          },
+          {
+            label: '내점수',
+            backgroundColor: '#E83B3F',
+            borderWidth: 0,
+            data: [2 ,12, 13,14 ,7, 8]
+          },      
+        ]
+      },
+      options: {
+        categoryPercentage: 0.6,
+            barPercentage: 0.8,
+        minBbarThickness: 12,
+        maxBbarThickness: 12,
+        maintainAspectRatio:false,
+        borderRadius:2,
+        layout: {
+          padding:0,
+          // margin:12
+        },
+        legend: {//범례 설정            
+          display: false,
+        },
+        responsive: true,
+        scales: {
+            y: { 
+              min: 0,
+              max: 16,
+              grid: { 
+                // display:false,
+                // drawTicks: false,
+                tickLength: 0,
+                color: function(context) {
+    								if (context.tick.value === 0) {
+    									return '#000000';
+    								}
+    								else {
+    									return 'transparent';
+    								}    								
+    							}
+              },
+              ticks: {
+                color:'#888888',
+                font:{
+                  size:14,
+                  // weight: 'bold',
+                }
+              },
+            },
+            x: {
+              grid: {
+                tickLength: 0,
+                color: '#E7E1E1',                
+              },
+              border: {
+                dash: [2,4],
+              },
+              ticks: {
+                padding: 9,
+                  color:'#000000',
+                font:{
+                  size:14,
+                  // weight: 'bold',
+                }
+              },
+            },
+        },
+        plugins: {
+          legend: {
+            display: false,
+          },          
+        }
+      }
+    });  
+  
+  </script>
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>크레버스</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" type="image/x-icon" href="../../images/common/favicon.ico" />
+  <link rel="apple-touch-icon-precomposed" href="../../images/common/apple-touch-icon.png" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <link rel="stylesheet" href="../../css/global.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/sub.css">
+  <link rel="stylesheet" href="../../css/brand.css">
+  <script src="../../js/ui.vendor.js"></script>
+  <script src="../../js/ui.js?var=1"></script>
+
+  <!--    slick slider-->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+</head>
+
+<body>
+<div class="skip"><a href="#contents"><span>본문바로가기</span></a></div>
+<div class="wrap">
+  <!-- header : /guide/gnb.html 최종 참고 // -->
+  <header class="header">
+    <div class="sc-wrap-mo">
+      <div class="sc-wrap">
+        <div class="inner-top">
+          <h1 class="gnb-logo"><a href="../index.html"><span class="irg ig-logo cr-logo">CREVERSE</span></a></h1>
+          <!-- 브랜드 선택 // -->
+          <div class="global-brand">
+            <div class="brand-select">
+              <span class="home "><a href="/"class="mo-hide"><span class="ig-home">HOME</span></a></span>
+              <span class="item cr-home"><a href="https://www.creverse.com/" target="_blank" class="mo-hide"><span class="">COMPANY</span></a></span>
+              <span class="item"><button type="button" class="edu-case ty-1" data-dep="mdep1">사고력</button></span>
+              <span class="item "><button type="button" class="edu-case ty-2" data-dep="mdep2">V-사고력</button></span>
+              <span class="item "><button type="button" class="edu-case ty-3" data-dep="mdep3">융합사고력</button></span>
+            </div>
+            <div class="brand-select-depth pc">
+              <ul class="brand-select-in select1" id="mdep1">
+                <li><a href="/brand/cdi">청담어학원</a></li>
+                <li><a href="/brand/april">April어학원</a></li>
+                <li><a href="/brand/igarten">아이가르텐</a></li>
+                <li><a href="/brand/page">Page By Page</a></li>
+                <li><a href="/brand/mt">CMS 영재교육센터</a></li>
+                <li><a href="/brand/mg">CMS 영재관</a></li>
+                <li><a href="https://www.c3coding.com/" target="_blank" class="link-i">씨큐브코딩</a></li>
+                <li class="location2"><a href="/branch-map"><span></span>학원찾기</a></li>
+              </ul>
+              <ul class="brand-select-in select2 " id="mdep2">
+                <li><a href="https://vlc.chungdahm.com/brand/bouncy" target="_blank" class="link-i">BOUNCY</a></li>
+                <li><a href="https://vlc.chungdahm.com/brand/noisy" target="_blank" class="link-i">NOISY</a></li>
+                <li><a href="https://www.cmson.com/" target="_blank" class="link-i">EDGE</a></li>
+                <li><a href="https://www.codealive.co.kr/" target="_blank" class="link-i">codeAlive</a></li>
+              </ul>
+              <ul class="brand-select-in select3 " id="mdep3">
+                <li><a href="/i-garten/creversekids/curriculum/program/">크레버스 KIDS</a></li>
+                <li><a href="/i-garten/creversekidsx/">크레버스 X</a></li>
+                <li><a href="https://www.chungdahm.com/channel/news/detail?bdId=16105">크레버스 캠퍼스</a></li>
+              </ul>
+            </div>
+            <div class="brand-select-pop">
+              <div class="mo-bg"></div>
+              <div class="mo-con">
+                <div class="mo-close"><button class="close-i"></button></div>
+                <div class="mo-select-tab">
+                  <ul>
+                    <li data-id="mid1" class="active">사고력</li>
+                    <li data-id="mid2">V-사고력</li>
+                    <li data-id="mid3">융합사고력</li>
+                  </ul>
+                </div>
+                <ul class="brand-select-in select1 active" id="mid1">
+                  <li><a href="/brand/cdi" class="cdi-i">청담어학원</a></li>
+                  <li><a href="/brand/april" class="ap-i">April어학원</a></li>
+                  <li><a href="/brand/igarten" class="ig-i">아이가르텐</a></li>
+                  <li><a href="/brand/page" class="pbp-i">Page By Page</a></li>
+                  <li><a href="/brand/mt" class="cms-i">CMS 영재교육센터</a></li>
+                  <li><a href="/brand/mg" class="cms2-i">CMS 영재관</a></li>
+                  <li class="link-i"><a href="https://www.c3coding.com/"  class="c3-i" target="_blank">씨큐브코딩</a></li>
+                  <li class="location2"><a href="/branch-map?mb=Y"><span></span>내 주변 학원 보기</a></li>
+                </ul>
+                <ul class="brand-select-in select2 " id="mid2">
+                  <li class="link-i"><a href="https://vlc.chungdahm.com/brand/bouncy" class="bo-i" target="_blank" >BOUNCY</a></li>
+                  <li class="link-i"><a href="https://vlc.chungdahm.com/brand/noisy" class="no-i" target="_blank" >NOISY</a></li>
+                  <li class="link-i"><a href="https://www.cmson.com/" class="ed-i" target="_blank">EDGE</a></li>
+                  <li class="link-i"><a href="https://www.codealive.co.kr" class="al-i" target="_blank" >codeAlive</a></li>
+                </ul>
+                <ul class="brand-select-in select3 " id="mid3">
+                  <li><a href="/i-garten/creversekids/curriculum/program/" class="cr-i">크레버스 KIDS</a></li>
+                  <li><a href="/i-garten/creversekidsx/" class="crx-i">크레버스 X</a></li>
+                  <li><a href="/channel/news/detail?bdId=16105" class="cam-i">크레버스 캠퍼스</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- // 브랜드 선택 -->
+          <button type="button" class="gnb-all-btn"><span class="line"></span></button>
+        </div>
+        <div class="inner"></div>
+        <div class="gnb-all-nav"></div>
+        <div class="gnb-nav mo-hide">[gnb.html 참고]</div> <!-- 페이지 뎁스 명시 // -->
+      </div>
+    </div>
+  </header>
+  <!-- // header : /guide/gnb.html 최종 참고 -->
+  <!-- container // -->
+  <div id="container" class="br-container">
+    <!-- contents // -->
+    <div class="br-contents cmsEd-con1">
+      <div class="content-in banner-con">
+        <div class="banner-txt">
+          <h2 class="banner-tit tit-img">CMS 영재교육센터</h2>
+          <p class="banner-sub">수리 사고력의 토대</p>
+          <a class="banner-button cmsEd-btn" href="#">입학 절차 보러가기</a>
+        </div>
+      </div>
+    </div>
+    <div class="br-contents cmsEd-con2">
+      <div class="content-in">
+        <h2 class="con2-tit">발문과 토론으로<br class="moBr"> 생각하는 힘을 키우는<Br> CMS 영재교육센터</h2>
+        <div class="video-box"></div>
+      </div>
+    </div>
+    <div class="br-contents cmsEd-con3">
+      <div class="content-in">
+        <h2 class="con3-tit">CMS 영재교육센터는<br class="moBr"> 상상력과 창의력을 키워<br>다양한 방식으로 문제를 해결하고<br>의미 있는 결과물을 창조하는<br class="moBr"> 융합인재를 키웁니다.</h2>
+        <div class="slide-Box"id="slide1">
+          <div class="slider">
+            <div class="slide-img1 cmsed1-img" style="background-image: url(../../images/brand/cmsEd_slide1.png);"></div>
+            <h3>수학적 호기심 확장</h3>
+            <p>300여 가지 수학 주제를 통해 <br>수학적 흥미와 호기심 확장</p>
+          </div>
+          <div class="slider">
+            <div class="slide-img1 cmsed2-img" style="background-image: url(../../images/brand/cmsEd_slide2.png);"></div>
+            <h3>의사소통 능력 강화</h3>
+            <p>자유로운 토론 수업으로 <br>협업 및 의사소통 능력 향상</p>
+          </div>
+          <div class="slider">
+            <div class="slide-img1" style="background-image: url(../../images/brand/cmsEd_slide3.png);"></div>
+            <h3>문제해결력 향상</h3>
+            <p>폴리아의 4단계 학습법으로 <br>추론 능력과 창의적 문제해결 능력 증진</p>
+          </div>
+          <div class="slider">
+            <div class="slide-img1" style="background-image: url(../../images/brand/cmsEd_slide4.png);"></div>
+            <h3>자기주도 학습 <span class="mo-none">기틀 마련</span></h3>
+            <p>발문법에 기초한 발견학습으로 <br>자기 주도성과 학습 참여율 향상</p>
+          </div>
+        </div>
+        <a href="#" class="slider-button slider-button-cmsEd">통합 커리큘럼 보러가기 </a>
+      </div>
+    </div>
+    <div class="br-contents cmsEd-con4">
+      <div class="content-in">
+        <p class="con4-sub">소크라테스가 발문을 통해 제자들이<br class="moBr"> 진리를 깨우치도록<br class="pcBr"/> 도왔듯이<br class="moBr"> CMS 영재교육센터의 교육은 발문을 통해<br class="moBr"><br class="pcBr"/> 우리 아이들이 스스로 문제를<br class="moBr"> 해결할 수 있도록 이끕니다.</p>
+        <div class="con4-box">
+          <div class="so-img"></div>
+          <div class="so-txt">
+            <div class="com com1"></div>
+            <p>질문으로 인도할 수 있을 때는<br> 결코 설명으로 인도하지 말라. <span>- 소크라테스(Socrates)</span></p>
+            <div class="com com2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="br-contents cmsEd-con5">
+      <div class="content-in">
+        <h2 class="con5-tit">상상과 창조의 허브,<br class="moBr"> CMS 영재교육센터</h2>
+        <p class="con5-sub">아이들의 잠재력을 깨워<br class="moBr"> 미래를 이끄는 융합인재로 성장시킵니다.</p>
+        <div class="con5-box">
+          <div>
+            <p>전국진단평가 <span>(입학전형)</span></p>
+            <ul>
+              <li>· 교과 평가</li>
+              <li>· 수학적 사고능력 평가</li>
+              <li><span>▶</span> 레벨 및 반 배정</li>
+            </ul>
+          </div>
+          <div>
+            <p>수업 <span>(토론식 테마)</span></p>
+            <ul>
+              <li>· 자유로운 토론</li>
+              <li>· 발견학습</li>
+              <li>· 창의적 문제해결</li>
+              <li><span>▶</span> 사고력, 창의력 신장</li>
+            </ul>
+          </div>
+          <div>
+            <p>주간 학습평가</p>
+            <ul>
+              <li>· 주별 테스트</li>
+              <li>· 과제 성취도</li>
+              <li>· 수업 태도 · 관찰</li>
+              <li><span>▶</span> 학습 성취도 확인</li>
+            </ul>
+          </div>
+          <div>
+            <p>총괄평가<span>(학습진단평가)</span></p>
+            <ul>
+              <li>· 테마별 성취도  평가</li>
+              <li>· 서술형 평가</li>
+              <li><span>▶</span> 문제해결력 확인</li>
+            </ul>
+          </div>
+          <div>
+            <p>학습진단평가 보고서</p>
+            <ul>
+              <li>· 온라인 성적 조회</li>
+              <li>· 주간 학습평가 진단</li>
+              <li>· 총괄 평가 분석</li>
+              <li><span>▶</span> 취약 요소 확인 및 분석</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="br-contents cmsEd-con6">
+      <div class="content-in">
+        <h2 class="con6-tit"><p class="tit-top">스마트하게 사고력 UP!</p> CMS 영재교육센터 <p class="pen">사고력 수학 <span class="orangeT">i-Learning</span></p></h2>
+        <p class="con6-sub">교실에서는 사고력 수업에 몰입!<br class="moBr"> 온라인에서는 자기주도학습 강화!<br class="moBr"> 학습 목표 달성을 위한 선순환 학습 구조<br class="moBr"> 서비스로 사고력 교육이 더 완벽해집니다.</p>
+        <div class="con6-box">
+          <div class="lierning-img"></div>
+          <div class="slide-Box" id="slide2">
+            <div class="slider">
+              <div class="slide-img1" style="background-image: url(../../images/brand/cmsEd_slide5.png);"></div>
+            </div>
+            <div class="slider">
+              <div class="slide-img1" style="background-image: url(../../images/brand/cmsEd_slide6.png);"></div>
+            </div>
+            <div class="slider">
+              <div class="slide-img1" style="background-image: url(../../images/brand/cmsEd_slide7.png);"></div>
+            </div>
+            <div class="slider">
+              <div class="slide-img1" style="background-image: url(../../images/brand/cmsEd_slide8.png);"></div>
+            </div>
+          </div>
+          <ul class="con6-ul">
+            <li>맞춤형 영상</li>
+            <li>스마트 과제 시스템</li>
+            <li>디지털 퍼즐</li>
+            <li>소셜 러닝</li>
+            <li>학습 결과 리포트</li>
+          </ul>
+        </div>
+      </div>
+      <div class="popup">
+        <div class="popup-bg"></div>
+        <div class="popup-content">
+          <div class="popup-header">
+            <button class="popupClose"></button>
+          </div>
+          <div class="popup-body">
+            <iframe width="100%" height="315" src="https://www.youtube.com/embed/xnZO_aX8jfU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+      <!-- // contents -->
+    </div>
+    <!-- // container -->
+    <!-- footer // -->
+    <footer class="footer">
+    </footer>
+    <!-- // footer -->
+  </div>
+  <script>
+    $('#slide1').slick({
+      slidesToShow:1,
+      infinite:false,
+      fade: true,
+      speed : 600,
+      dots : true,
+      autoplay : false,
+      autoplaySpeed : 3000,
+      pauseOnHover : true,
+      // arrows : true,
+      prevArrow : "<button type='button' class='slick-prev'></button>",
+      nextArrow : "<button type='button' class='slick-next'></button>",
+    });
+    $('#slide2').slick({
+      slidesToShow:1,
+      infinite:false,
+      fade: true,
+      speed : 600,
+      dots : true,
+      autoplay : false,
+      autoplaySpeed : 3000,
+      pauseOnHover : true,
+      // arrows : true,
+      prevArrow : "<button type='button' class='slick-prev'></button>",
+      nextArrow : "<button type='button' class='slick-next'></button>",
+    });
+    let video_i=$('.popup-body').html();
+    $(".video-box").click(function(){
+      $(".popup").addClass("on");
+      $('body').css("overflow", "hidden");
+      $('.popup-body').html(video_i);
+    });
+    $(".popupClose").click(function(){
+      $(".popup").removeClass("on");
+      $('body').css("overflow", "auto");
+      $('.popup-body').html('');
+    });
+
+    $(window).on('scroll', function () {
+      var s_top = $(window).scrollTop();
+      var con3_top = $('.cmsEd-con3').offset().top;
+      var con6_top = $('.cmsEd-con6').offset().top;
+      var con3_bot = $('.cmsEd-con3').offset().top + $(window).innerHeight();
+      var con6_bot = $('.cmsEd-con6').offset().top + $(window).innerHeight();
+      if(con3_top <= s_top && s_top < con3_bot) {
+        $('#slide1').slick('slickSetOption',{
+          initialSlide: 1,
+          autoplay : true,
+        }, true);
+      }
+      if(con6_top <= s_top && s_top < con6_bot) {
+        $('#slide2').slick('slickSetOption',{
+          initialSlide: 1,
+          autoplay : true,
+        }, true);
+      }
+    });
+  </script>
+</body>
+</html>

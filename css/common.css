@@ -1,0 +1,435 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+.korfont{
+ font-family: 'Noto Sans KR', sans-serif;
+}
+
+.engfont{font-family: 'Poppins', sans-serif;}
+
+.prefont{font-family: 'Pretendard', sans-serif;}
+
+
+html {position: relative; height: 100%; min-height: 100%; margin: 0; -webkit-text-size-adjust:none;}
+body {position: relative; width: 100%; height: auto; min-height: 100%; font-family:'Noto Sans KR', 'Poppins', sans-serif; overflow-y: auto; overflow-x: hidden; letter-spacing: -0.5px; color:#222; word-break:keep-all; min-width: 1260px}
+*, *::before, *::after {padding:0; margin:0; box-sizing: border-box;}
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;outline:0;vertical-align:baseline;background:transparent;font-family:'Noto Sans KR', 'Poppins', sans-serif;; word-break:keep-all; color: #222}
+input,button,textarea,select{font-family:'Noto Sans KR', 'Poppins', sans-serif; color:#222; word-break:keep-all;}
+ul {list-style-type: none; padding-inline-start: 0;}
+a {text-decoration: none;}
+table{padding:0; border:0; border-spacing:0px; border-collapse:collapse;}
+th, td{padding:0;}
+button {border: none; background:none; cursor: pointer;}
+input:focus, select:focus, option:focus, textarea:focus, button:focus{outline: none;}
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {-webkit-appearance: none; margin: 0;}
+textarea:focus {outline:none;}
+
+.image100 {display: flex;}
+.image100 img {width: 100%;}
+.container {overflow: hidden; padding-bottom: 200px;}
+.section {position: relative; background-color: #fff; z-index: 2;}
+.contents_wrapper {width: 100%; max-width: 1432px; padding: 0 16px; margin: 0 auto; position: relative;}
+.txt_block span {display: block;}
+
+.hidden {display: none;}
+input {height: 40px; border-radius: 5px; border: 1px solid #dfdfdf; padding: 0 15px; font-size: 16px; width: 100%; line-height: 40px}
+input::placeholder {color:#b2b2b2;}
+input:focus, textarea:focus {border: 1px solid #0271D8;}
+textarea {height: 130px; border-radius: 5px; border: 2px solid #e6e6e6; padding: 18px 28px; font-size: 16px; width: 100%; resize: none;}
+textarea::placeholder {color:#b2b2b2;}
+
+div::-webkit-scrollbar {width:18px; height: 3px;}
+div::-webkit-scrollbar-thumb {background-color: #e1e1e1; background-clip : padding-box; border: 5px solid transparent;}
+div::-webkit-scrollbar-track {background:none;}
+
+input[type="checkbox"]{display: inline-block; width: 20px; height: 20px; border: 1px solid #dfdfdf; border-radius: 5px}
+
+.inner{margin: 0 auto; width: 1260px}
+
+.tlb table td select {height: 40px; border-radius: 5px; border: 1px solid #dfdfdf; padding: 0 15px; font-size: 16px; width: 100%; line-height: 40px}
+
+
+
+
+/** header **/
+
+header{
+    position: relative
+}
+.header{ margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 20px 0; width: 1260px}
+.header .logo{}
+.header .logo h2{color: #222; font-size: 25px; font-weight: 700}
+.header .logo h2 b{color: orangered}
+
+
+.right_nav{display: flex; align-items: center}
+.right_nav .user p{font-size: 18px; font-weight: normal}
+.right_nav .user p b{font-weight: bold;}
+.right_nav .user p span{color: #000; font-weight: bold}
+
+button.coin{color: #fff; border-radius: 50px; font-size: 18px; font-weight: 500; line-height: 38px; border: 1px solid #FEC425; height: 40px; width: 110px; margin: 0 20px; background: #FEC425}
+
+.right_nav a.login{color: #222; font-size: 18px; font-weight: normal}
+
+.center_nav{border-top: 1px solid #dfdfdf; border-bottom: 1px solid #dfdfdf; background: #fff; position: relative; min-width: 1260px; display: flex; justify-content: space-between; padding: 0 20rem}
+
+
+.center_nav ul{display: flex; align-items: center; justify-content: flex-start; gap:30px}
+.center_nav ul li{padding: 20px 0px}
+.center_nav ul li a{color: #222; font-size: 20px; font-weight: normal; }
+
+.center_nav ul:first-child li a{font-weight: bold}
+
+.center_nav ul:first-child li > ul li a{font-weight: normal}
+
+.center_nav ul li > ul{ width:100%; opacity:0; position: absolute; transition:0.3s 0s; left: 0; overflow: hidden; top: 100%; background: #fff; border-top: 1px solid #dfdfdf; height: 0; padding: 0 20rem; z-index:3;}
+.center_nav > ul > li:hover ul{opacity:1;  border-bottom: 1px solid #dfdfdf; height: 80px}
+.center_nav > ul > li:hover ul li{}
+
+.center_nav ul:last-child li > ul{justify-content: flex-end}
+
+.center_nav ul li > ul li{ }
+.center_nav ul li > ul li a{font-size: 18px; font-weight: normal}
+.center_nav ul li > ul li a:hover{color:#FF7A00 }
+
+
+.center_nav.fixed{position: fixed; left: 0; top: 0; width: 100%}
+
+/** footer **/
+
+.foot_cs{background: #f9f9f9; padding: 50px 0}
+.foot_cs .inner{display: flex; justify-content: space-between; align-items: center;}
+.foot_cs .more_text{width: 30%}
+.foot_cs .more_text h2{font-size: 30px;}
+.foot_cs .more_text a{height: 35px; border: 1px solid #ddd; line-height: 35px; text-align: center; display: inline-block; font-size: 16px; color: #333; background: #fff; padding: 0 25px; border-radius: 50px; margin: 10px 0 0}
+
+.foot_cs ul{display: flex;flex:1; }
+.foot_cs ul li{flex: 1; }
+.foot_cs ul li p{font-size: 16px; color: #666; font-weight: bold}
+.foot_cs ul li p a{color: #666}
+.foot_cs ul li p.date{font-weight: normal; margin-top: 20px}
+
+.foot_link{background: #333; padding: 30px 0}
+.foot_link ul{display: flex; gap:30px}
+.foot_link ul li a{color: #fff; font-size: 16px}
+
+footer{background: #fff; padding: 50px 0}
+footer h3{font-size: 30px; color: #000}
+footer h2{font-size: 60px; color:#FFBA14 }
+footer p.bold{color: #000; font-weight: bold}
+footer p{font-size: 16px; color: #666; font-weight: 300; margin-top: 20px}
+
+.floating_nav{position: fixed; right: 30px; top: 50%; transform: translateY(-50%)}
+.floating_nav a{display: block; max-width: 60px;}
+.floating_nav a + a{ margin-top: 5px}
+.floating_nav a img{width: 100%}
+.floating_nav a.side-banner{max-width:120px; margin-left:-30px; margin-top:10px;}
+
+.floating_nav .bank{width: 120px; border: 1px solid #ddd; border-radius: 15px; padding: 15px; text-align: center; background: #fff; margin-top: 5px; position: relative; margin-left: -30px}
+.floating_nav .bank p{font-size: 16px; color: #000; font-weight: bold}
+.floating_nav .bank p + p{margin-top: 5px; }
+.floating_nav .bank p span{font-weight: 400; display: inline-block}
+/** login **/
+
+.login_box{position: absolute; border: 1px solid #dfdfdf; padding: 20px; width: 320px; top: 70px; background: #fff; z-index: 2; border-radius: 15px; display: none; margin-left: -45px}
+
+.login_box.atv{display: block}
+
+.login_box .form_login{}
+.login_box .form_login input{font-size: 16px; padding:10px 15px; border: 1px solid #dfdfdf;height: 50px; line-height: 50px; }
+.login_box .form_login input + input{margin-top: 10px}
+.login_box .form_login .summit{display: flex; align-items: center; padding-top: 10px; margin-top: 10px; border-top: 1px solid #dfdfdf; justify-content: space-between}
+.login_box .form_login .summit a{font-size: 14px; font-weight: normal; display: inline-block; color: #555}
+
+.login_box .form_login .summit .btn{font-size: 16px; color: #000; background: #FFBA14; padding:10px 25px; border-radius: 5px; display: inline-block; font-weight: bold}
+
+#mob_menu_btn{display: none}
+
+.emt20{height: 20px}
+.emt30{height: 30px}
+
+.input_radio{
+  width:auto;
+  height:auto;
+}
+
+ul#pay_price li{
+  font-size:18px;
+  line-height:1.5;
+}
+
+ul#pay_price li #price_other{
+  display:none;
+}
+
+#mobile_menu_wrap{
+  display:none;
+}
+
+#mobile_menu a, #mobile_menu a:visited, #mobile_menu a:link, #mobile_menu a:hover, #mobile_menu a:active{
+  text-decoration:none;
+  color:#000;
+}
+
+
+
+@media (max-width: 1700px) {
+  
+}
+
+
+
+
+@media (max-width: 1600px) {
+ 
+
+}
+
+
+
+@media (max-width: 1440px) { 
+  
+    .center_nav{padding: 0 2rem}
+    .center_nav ul li > ul{padding: 0 2rem}
+
+}
+
+
+
+@media (max-width: 1260px) { 
+  .center_nav,
+  .center_nav ul li > ul{padding: 0}
+
+}
+
+
+
+@media (max-width: 1024px) { 
+  
+  
+  
+
+
+}
+
+@media (max-width: 959px) { 
+  
+
+}
+
+
+
+@media (max-width: 900px) {
+
+  #mobile_menu_wrap{
+    position: fixed;
+    width: calc(100% - 240px);
+    z-index: 99;
+    height: calc(100vh - 56px);
+    display: none;
+    top: 56px;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  #mobile_menu {
+      position: fixed;
+      width: 240px;
+      height: calc(100vh - 56px);
+      right: 0px;
+      top: 56px;
+      display:none;
+      background: white;
+      box-shadow: -4px 4px 20px rgba(0, 0, 0, 0.12);
+      z-index: 99;
+      padding-top: 20px;
+      overflow-y:scroll;
+    }
+  
+  #mobile_menu > ul > li{
+    padding-top:10px;
+    padding-bottom:10px;
+    font-size:20px;
+    border-top:1px solid #ddd;
+  }
+
+  #mobile_menu > ul > li > ul > li{
+    padding-top:10px;
+    padding-bottom:10px;
+    padding-left:20px;
+    font-size:14px;
+  }
+
+  #mobile_menu > ul > li > a{
+    border-bottom:1px solid #ddd;
+    padding-bottom:10px;
+    padding-left:20px;
+    display:block;
+  }
+  
+    
+  #mob_menu_btn{display: block; margin-left:10px;}
+    html,body{overflow-x: hidden}
+    body{min-width: 100%}
+    img{max-width: 100%}
+    
+    .header{width: 100%; padding: 1rem}
+    
+    .right_nav .user{display: none}
+    
+    button.coin {
+    font-size: 16px;
+    line-height: 28px;
+    height: 30px;
+    width: 80px;
+    margin: 0 10px;}
+    
+    .center_nav {
+    padding: 0;
+    flex-wrap: nowrap;
+    overflow-x: auto; min-width: 100%; padding: 0 1rem; display:none;}
+    
+    .center_nav ul{gap:15px; flex-wrap: nowrap;}
+
+    .center_nav ul li a{font-size: 16px}
+    .center_nav ul li {
+    padding: 10px 0px;
+    flex: 0 0 auto;}
+    
+    
+    .center_nav ul:nth-child(2){display: none}
+    
+    
+    .floating_nav {
+    position: fixed;
+    right: 10px;
+    top: auto;
+    transform: translateY(-0%);
+    bottom: 10px;}
+    
+    .floating_nav .bank{display: none}
+    .floating_nav a{max-width: 40px}
+    
+    .inner {
+    margin: 0 auto;
+    max-width: 1260px;
+    width: 100%;
+    padding: 0 1rem;}
+    
+    .foot_link ul {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;}
+    
+    .foot_cs .inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 15px;}
+    
+    .foot_cs .more_text {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;}
+    
+    .foot_cs ul li p.date {
+    font-weight: normal;
+    margin-top: 5px;}
+   
+    
+    footer h2 {
+    font-size: 30px;
+    color: #FFBA14;}
+    
+ 
+   footer h3 {
+    font-size: 20px;
+    color: #000;}
+    
+    
+    
+    .login_box {
+    position: fixed;
+    border: 1px solid #dfdfdf;
+    padding: 20px;
+    width: 90%;
+    top: 70px;
+    background: #fff;
+    z-index: 2;
+    border-radius: 15px;
+    display: none;
+    margin-left: 0;
+    left: 50%;
+    transform: translateX(-50%);}
+    
+    
+    .right_nav a.login{font-size: 16px}
+    
+    ul#pay_price li {
+    font-size: 18px;
+    line-height: 1.5;
+    display: flex;}
+    
+    .pay_price_flex {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;}
+    
+
+}
+
+
+
+@media (max-width: 640px) {
+ 
+}
+
+
+
+
+
+@media (max-width: 479px) {
+ 
+}
+
+.btn_are {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0 0 0;
+}
+
+.btn_are .btn label, .btn_are .btn a, .btn_are .btn button {
+    color: #222;
+    font-size: 14px;
+    font-weight: 500;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 10px;
+    border: 1px solid #dfdfdf;
+    border-radius: 5px;
+    text-align: center;
+    display: inline-block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

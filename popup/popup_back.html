@@ -1,0 +1,104 @@
+<? include $_SERVER["DOCUMENT_ROOT"]."/pro_inc/include_default.php"; ?>
+<?// {include "../inc/header.php";} ?>
+<?
+$idx = trim(sqlfilter($_REQUEST['idx']));
+$mode = trim(sqlfilter($_REQUEST['mode']));
+$query = "select * from popup_div where idx='".$idx."' ";
+$result_popup = mysql_query($query);
+$row_popup = mysql_fetch_array($result_popup);
+
+//echo $query;
+?>
+<link href="/css/common.css" rel="stylesheet" type="text/css" >
+<script language="JavaScript">
+<!--
+function notice_setCookie( name, value, expiredays )
+    {
+        var todayDate = new Date();
+        todayDate.setDate( todayDate.getDate() + expiredays );
+        document.cookie = name + "=" + escape( value ) + "; path=/; expires=" + todayDate.toGMTString() + ";"
+        }
+
+
+function notice_closeWin() 
+{ 
+        notice_setCookie( "Notice_<?=$idx?>", "done" , 1); // 1=하룻동안 공지창 열지 않음
+        self.close(); 
+}
+
+
+//-->
+</script>
+
+
+<script language="JavaScript">
+<!--
+function na_call(str)
+{
+  eval(str);
+}
+
+// -->
+</script>
+
+</head>
+
+<body topmargin="0" leftmargin="0">
+<form name="form1">
+<table width="660" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td height="60" background="img/top.jpg" align="right" style="padding:20px; 20px 0 0px"><A HREF="javascript:self.close();"><img src="img/btn_close.gif" align="absmiddle" border="0"></A></td>
+  </tr>
+  <tr>
+    <td background="img/pop_bg.jpg">
+	<table width="605" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+	  <tr>
+        <td><table width="605" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td><img src="img/p_top.jpg" width="605" height="10"></td>
+          </tr>
+          <tr>
+            <td background="img/p_bg.jpg" style="padding:5px 5px 5px 5px;">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td width="500"><strong><?=$row_popup[subject]?></strong></td>
+					<td width="*" align="right">
+					<? if ($row_popup[file]) { ?>
+					<img src="img/icon_file.gif"> <a href="<?=$_P_DIR_BBS?>download_file.php?file=<?=$row_popup[file]?>"><?=substr($row_popup[file],11)?></a>
+					<? } ?>
+					</td>
+				</tr>
+				</table>
+			</td>
+          </tr>
+          <tr>
+            <td><img src="img/p_btm.jpg" width="605" height="10"></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td><?=$row_popup[content]?></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+	  <?if($mode != "prev"){?>
+      <tr>
+        <td align="right" bgcolor="f3f3f3">오늘은 이창을 띄우지 않음  <input type="checkbox" name="checkbox" id="checkbox" onclick="javascript:notice_closeWin();"><A HREF="javascript:self.close();"><img src="img/btn_close2.gif" align="absmiddle" border="0"></A></td>
+      </tr>
+	  <?}?>
+    </table></td>
+  </tr>
+  <tr>
+    <td><img src="img/pop_btm.jpg"></td>
+  </tr>
+</table>
+</form>
+</body>
+</html>

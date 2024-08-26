@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <title>크레버스</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" href="/resource/images/common/favicon.ico" />
+    <link rel="apple-touch-icon-precomposed" href="/resource/images/common/apple-touch-icon.png" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link rel="stylesheet" href="/resource/css/global.css">
+    <link rel="stylesheet" href="/resource/css/common.css">
+    <link rel="stylesheet" href="/resource/css/main.css">
+    <script src="/resource/js/ui.vendor.js"></script>
+    <script src="/resource/js/ui.js?var=1"></script>
+    
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
+<!--    <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>-->
+<!--    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>-->
+</head>
+
+<body>
+    
+    <div class="skip"><a href="#container"><span>본문바로가기</span></a></div>
+    <div class="wrap">
+        <header class="header">
+            <div class="sc-wrap-mo">
+              <div class="sc-wrap">
+                <div class="inner-top">
+                  <h1 class="gnb-logo"><a href="../index.html"><span class="irg ig-logo cr-logo">CREVERSE</span></a></h1>
+                  <!-- 브랜드 선택 // -->
+                  <div class="global-brand">
+                    <div class="brand-select">
+                      <span class="home"><a href="#" class="mo-hide"><span class="ig-home">HOME</span></a></span>
+                      <span class="item cr-home"><a href="https://www.creverse.com/" target="_blank" class="mo-hide"><span class="">COMPANY</span></a></span>
+                      <span class="item"><button type="button" class="edu-case ty-1" data-dep="mdep1">사고력</button></span>
+                      <span class="item "><button type="button" class="edu-case ty-2" data-dep="mdep2">V-사고력</button></span>
+                      <span class="item "><button type="button" class="edu-case ty-3" data-dep="mdep3">융합사고력</button></span>
+                    </div>
+                    <div class="brand-select-depth pc">
+                      <ul class="brand-select-in select1" id="mdep1">
+                        <li><a href="https://www.chungdahm.com/brand/cdi">청담어학원</a></li>
+                        <li><a href="https://www.chungdahm.com/brand/april">April어학원</a></li>
+                        <li><a href="https://www.chungdahm.com/brand/igarten">아이가르텐</a></li>
+                        <li><a href="https://www.chungdahm.com/brand/page">Page By Page</a></li>
+                        <li><a href="https://www.chungdahm.com/brand/mt">CMS 영재교육센터</a></li>
+                        <li><a href="https://www.chungdahm.com/brand/mg">CMS 영재관</a></li>
+                        <li><a href="https://www.c3coding.com/" target="_blank" class="link-i">씨큐브코딩</a></li>
+                        <li class="location2"><a href="#"><span></span>학원찾기</a></li>
+                      </ul>
+                      <ul class="brand-select-in select2 " id="mdep2">
+                        <li><a href="https://vlc.chungdahm.com/brand/bouncy" target="_blank" class="link-i">BOUNCY</a></li>
+                        <li><a href="https://vlc.chungdahm.com/brand/noisy" target="_blank" class="link-i">NOISY</a></li>
+                        <li><a href="https://www.cmson.com/" target="_blank" class="link-i">EDGE</a></li>
+                        <li><a href="https://www.codealive.co.kr/" target="_blank" class="link-i">codeAlive</a></li>
+                      </ul>
+                      <ul class="brand-select-in select3 " id="mdep3">
+                        <li><a href="https://www.chungdahm.com/i-garten/creversekids/curriculum/program/">크레버스 KIDS</a></li>
+                        <li><a href="https://www.chungdahm.com/i-garten/creversekidsx/">크레버스 X</a></li>
+                        <li><a href="https://www.chungdahm.com/channel/news/detail?bdId=16105">크레버스 캠퍼스</a></li>
+                      </ul>
+                    </div>
+                    <div class="brand-select-pop">
+                      <div class="mo-bg"></div>
+                      <div class="mo-con">
+                        <div class="mo-close"><button class="close-i"></button></div>
+                        <div class="mo-select-tab">
+                          <ul>
+                            <li data-id="mid1" class="active">사고력</li>
+                            <li data-id="mid2">V-사고력</li>
+                            <li data-id="mid3">융합사고력</li>
+                          </ul>
+                        </div>
+                        <ul class="brand-select-in select1 active" id="mid1">
+                          <li><a href="https://www.chungdahm.com/brand/cdi" class="cdi-i">청담어학원</a></li>
+                          <li><a href="https://www.chungdahm.com/brand/april" class="ap-i">April어학원</a></li>
+                          <li><a href="https://www.chungdahm.com/brand/igarten" class="ig-i">아이가르텐</a></li>
+                          <li><a href="https://www.chungdahm.com/brand/page" class="pbp-i">Page By Page</a></li>
+                          <li><a href="https://www.chungdahm.com/brand/mt" class="cms-i">CMS 영재교육센터</a></li>
+                          <li><a href="https://www.chungdahm.com/brand/mg" class="cms2-i">CMS 영재관</a></li>
+                          <li class="link-i"><a href="https://www.c3coding.com/"  class="c3-i" target="_blank">씨큐브코딩</a></li>
+                          <li class="location2"><a href="#"><span></span>내 주변 학원 보기</a></li>
+                        </ul>
+                        <ul class="brand-select-in select2 " id="mid2">
+                          <li class="link-i"><a href="https://vlc.chungdahm.com/brand/bouncy" class="bo-i" target="_blank" >BOUNCY</a></li>
+                          <li class="link-i"><a href="https://vlc.chungdahm.com/brand/noisy" class="no-i" target="_blank" >NOISY</a></li>
+                          <li class="link-i"><a href="https://www.cmson.com/" class="ed-i" target="_blank">EDGE</a></li>
+                          <li class="link-i"><a href="https://www.codealive.co.kr" class="al-i" target="_blank" >codeAlive</a></li>
+                        </ul>
+                        <ul class="brand-select-in select3 " id="mid3">
+                          <li><a href="https://www.chungdahm.com/i-garten/creversekids/curriculum/program/" class="cr-i">크레버스 KIDS</a></li>
+                          <li><a href="https://www.chungdahm.com/i-garten/creversekidsx/" class="crx-i">크레버스 X</a></li>
+                          <li><a href="https://www.chungdahm.com/channel/news/detail?bdId=16105" class="cam-i">크레버스 캠퍼스</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- // 브랜드 선택 -->
+        
+                  <!-- 햄버거메뉴[전체메뉴] // -->
+                  <button type="button" class="pop-btn"></button>
+                  <button type="button" class="gnb-all-btn"><span class="line"></span></button>
+                  <!-- // 햄버거메뉴[전체메뉴] -->
+                </div>
+                <div class="inner">
+                  <!-- 로그인 상태 // -->
+                  <div class="user">
+                    <a href="#" class="irg ig-home-2 mo-show">Home</a>
+                    <!-- <div class="item login"><a href="#none">로그인</a><span class="mo-show">을 해주세요.</span></div>
+                    <div class="item mo-hide"><a href="#none">회원가입</a></div> -->
+                    <div class="item usermod mo-show"><a href="#none"><span class="irg ig-usermod">정보수정</span></a></div>
+                    <div class="item tip-balloon" data-dropdown=''>
+                      <a href="#none" class="tip-subj irg-b ig-mypage" data-act="title">마이페이지</a>
+                      <div class="tip-cont my-head-tip" data-act="cont">
+                        <span class="profile">
+                          <strong>김청담</strong>님 안녕하세요.
+                          <button type="button" class="irg ig-logout">로그아웃</button>
+                        </span>
+                        <ul class="childs">
+                          <li>
+                            <!-- 학부모(재원생 자녀) // -->
+                            <span class="names">
+                              <span class="user-name"><strong>김선아</strong>학생</span>
+                              <span class="branch-name">청담어학원 청담 본원</span>
+                            </span>
+                            <span class="btns">
+                              <a href="#none">마이페이지</a>
+                              <a href="#none">학원 홈페이지</a>
+                            </span>
+                            <!-- // 학부모(재원생 자녀) -->
+                          </li>
+                          <li>
+                            <!-- 재원생 // -->
+                            <span class="names">
+                              <span class="branch-name">청담어학원 청담 본원</span>
+                            </span>
+                            <span class="btns">
+                              <a href="#none">마이페이지</a>
+                              <a href="#none">학원 홈페이지</a>
+                            </span>
+                            <!-- // 재원생 -->
+                          </li>
+                          <!-- 학부모(자녀 없음) : <li class="single">
+                            <span class="btns">
+                              <a href="#none">마이페이지</a>
+                            </span>
+                          </li> -->
+                          <!-- 비재원생 : <li class="single">
+                            <span class="btns">
+                              <a href="#none">어학원 찾기</a>
+                            </span>
+                          </li> -->
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="item mo-hide"><a href="#none">로그아웃</a></div>
+        
+                  </div>
+                  <!-- // 로그인 상태 -->
+        
+                  <!-- 바로가기 // -->
+                  <div class="util-1">
+                    <div class="item tip-balloon" data-dropdown=''>
+                      <a href="#none" class="irg-b ig-pay tip-subj" data-act="title">수강료납입</a>
+                      <div class="tip-cont pay-head-tip" data-act="cont">
+                        <ul class="list">
+                          <li><a href="#none">김선아</a></li>
+                          <li><a href="#none">김정아</a></li>
+                          <li><a href="#none">김선아</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="item"><a href="#none" class="irg-b ig-book">교재구매</a></div>
+                    <div class="item"><a href="#none" class="irg-b ig-src">학원찾기</a></div>
+                  </div>
+                  <div class="util-2">
+                    <a href="#none" class="e-Library">청담 e-Library</a>
+                    <a href="#none" class="point"><strong>이벤트</strong></a>
+                    <a href="#none">통합고객지원센터</a>
+                  </div>
+                  <!-- // 바로가기 -->
+                </div>
+        
+                <!-- 전체메뉴 // -->
+                <div class="gnb-all-nav">
+                  <ul class="group" data-accordion='{"reset":true,"media":"(max-width: 767px)"}'>
+                    <li data-menu='main' data-act='title'><a href="#none" class="im-1">브랜드소개<button type="button" data-act='btn' class="mo-show">하위메뉴 토글</button></a>
+                      <ul class="sub" data-act='cont'>
+                        <li><a href="#none">브랜드</a></li>
+                        <li><a href="#none">커리큘럼</a></li>
+                        <li><a href="#none">통합로드맵</a></li>
+                      </ul>
+                    </li>
+                    <li data-menu='main'><a href="#none" class="im-2">입학안내</a>
+                      <ul class="sub mo-hide">
+                        <li><a href="#none">입학안내</a></li>
+                      </ul>
+                    </li>
+                    <li data-menu='main' data-act='title'><a href="#none" class="im-3">채널청담<button type="button" data-act='btn' class="mo-show">하위메뉴 토글</button></a>
+                      <ul class="sub" data-act='cont'>
+                        <li><a href="#none">청담소식</a>
+                          <ul class="sub-3">
+                            <li><a href="#none">청담어학원</a></li>
+                            <li><a href="#none">April어학원</a></li>
+                            <li><a href="#none">아이가르텐</a></li>
+                          </ul>
+                        </li>
+                        <li><a href="#none">청담스토리</a>
+                          <ul class="sub-3">
+                            <li><a href="#none">청담어학원</a></li>
+                            <li><a href="#none">April어학원</a></li>
+                            <li><a href="#none">아이가르텐</a></li>
+                          </ul>
+                        </li>
+                        <li><a href="#none">톡톡에듀</a></li>
+                        <li><a href="#none">교육정보</a></li>
+                      </ul>
+                    </li>
+                    <li data-menu='util' data-act='title' class="allmenu-my"><a href="#none">마이페이지<button type="button" data-act='btn' class="mo-show">하위메뉴 토글</button></a>
+                      <ul class="sub" data-act='cont'>
+                        <li><a href="#none">수강료 납입/조회</a>
+                          <ul class="sub-3">
+                            <li><a href="#none">수강료 납입</a></li>
+                            <li><a href="#none">납입내역 조회</a></li>
+                          </ul>
+                        </li>
+                        <li><a href="#none">문의현황</a>
+                          <ul class="sub-3">
+                            <li><a href="#none">Q&A(본사문의)</a></li>
+                            <li><a href="#none">1:1문의(학원문의)</a></li>
+                            <li><a href="#none">온라인 학습문의</a></li>
+                          </ul>
+                        </li>
+                        <li><a href="#none">입학시험 결과</a></li>
+                      </ul>
+                    </li>
+                    <li data-menu='util' data-act='title' class="allmenu-cs"><a href="#none"><span class="iblock">통합고객</span><span class="iblock">지원센터</span><button type="button" data-act='btn' class="mo-show">하위메뉴 토글</button></a>
+                      <ul class="sub" data-act='cont'>
+                        <li><a href="#none">FAQ</a></li>
+                        <li><a href="#none">Q&A(본사문의)</a></li>
+                        <li><a href="#none">1:1문의(학원문의)</a></li>
+                        <li><a href="#none">온라인학습 지원</a></li>
+                      </ul>
+                    </li>
+                    <li class="menu-group active">
+                      <ul>
+                        <li data-menu='util' class="mo-hide active"><a href="#none">어학원 찾기</a>
+                          <ul class="sub">
+                            <li class="active"><a href="#none">국내 어학원 찾기</a></li>
+                            <li><a href="#none">해외 어학원 찾기</a></li>
+                          </ul>
+                        </li>
+                        <li data-menu='util'><a href="#none">이벤트</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+                <!-- // 전체메뉴 -->
+        
+                <!-- GNB // -->
+                <div class="gnb-nav mo-hide"><!-- 전체 메뉴 중 [data-menu='main'] 항목 가져옴. --></div>
+                <!-- // GNB -->
+              </div>
+              <!-- Header내 Footer 영역 // -->
+              <div class="external-link">
+                <div class="link-group familysite" data-dropdown='{"effect":"slide","focusout":false}'>
+                  <button type="button" class="subj g-toggle" data-act='title'>Family Site</button>
+                  <div class="list" data-act='cont'>
+                    <ul class="group">
+                      <li><a href="https://creverse.com/" target="_blank" class="irg ig-portal">크레버스</a></li>
+                    </ul>
+                    <dl class="group">
+                      <dt class="full">브랜드 채널</dt>
+                      <dd><a href="https://www.chungdahm.com/" target="_blank" title="새창으로 열립니다.">Learning Center</a></dd>
+                      <dd><a href="https://vlc.chungdahm.com/" target="_blank" title="새창으로 열립니다.">VLC</a></dd>
+                    </dl>
+                    <dl class="group">
+                      <dt class="full">제휴 프로그램</dt>
+                      <dd><a href="http://ei.chungdahm.com/expression/" target="_blank" title="새창으로 열립니다.">표현어학원</a></dd>
+                      <dd><a href="http://cis.chungdahm.com" target="_blank" title="새창으로 열립니다.">CIS</a></dd>
+                      <dd><a href="http://clue.chungdahm.com/" target="_blank" title="새창으로 열립니다.">클루빌</a></dd>
+                      <dd><a href="http://www.bluesprings.co.kr/" target="_blank" title="새창으로 열립니다.">블루스프링스</a></dd>
+                    </dl>
+                    <dl class="group">
+                      <dt>러닝 솔루션</dt>
+                      <dd><a href="http://www.loudclass.com/" target="_blank" title="새창으로 열립니다.">Loudclass</a></dd>
+                    </dl>
+                    <dl class="group">
+                      <dt>교재 쇼핑몰</dt>
+                      <dd><a href="http://www.learn21.co.kr/" target="_blank" title="새창으로 열립니다.">Learn21</a></dd>
+                    </dl>
+                    <dl class="group">
+                      <dt>강사채용</dt>
+                      <dd><a href="http://www.teachinkorea.com/" target="_blank" title="새창으로 열립니다.">Faculty Recruiting</a></dd>
+                    </dl>
+                  </div>
+                </div>
+                <div class="link-group other" data-dropdown='{"effect":"slide","focusout":false}'>
+                  <button type="button" class="subj g-toggle" data-act='title'>크레버스 앱</button>
+                  <ul class="list" data-act='cont'>
+                    <li><a class="irg-b ig-app-1 js-allim" href="#" ><span>청담올림</span></a></li>
+                    <li><a class="irg-b ig-app-2 js-learningportal" href="#" ><span>청담러닝포털</span></a></li>
+                    <li><a class="irg-b ig-app-3 js-buff" href="#"><span>청담버프</span></a></li>
+                    <li><a class="irg-b ig-app-5 js-elibrary" href="#"><span>청담e-Library</span></a></li>
+                    <li><a class="irg-b ig-app-6 js-aprillearningportal" href="#" ><span>CREVERSE Learning Portal</span></a></li>
+                    <li><a class="irg-b ig-app-7 js-aprilvenatalk" href="#"><span>April VENA Talk</span></a></li>
+                    <li><a class="irg-b ig-app-8 js-aprilbuff" href="#"><span>April Buff</span></a></li>
+                    <li><a class="irg-b ig-app-9 js-aprilmeme" href="#"><span>April MeMe</span></a></li>
+                  </ul>
+                </div>
+                <div class="sns">
+                  <a href="https://www.facebook.com/CREVERSE" target="_blank" title="새창으로 열립니다."><span class="irg ig-sns-fb">페이스북</span></a>
+                  <a href="https://www.instagram.com/creverse_official/" target="_blank" title="새창으로 열립니다."><span class="irg ig-sns-ig">인스타그램</span></a>
+                  <a href="https://goo.gl/1BFkUo" target="_blank" title="새창으로 열립니다."><span class="irg ig-sns-bg">블로그</span></a>
+                  <a href="https://goo.gl/3CifF5" target="_blank" title="새창으로 열립니다."><span class="irg ig-sns-yt">유튜브</span></a>
+                  <a href="https://post.naver.com/cms_edu" target="_blank" title="새창으로 열립니다."><span class="irg ig-sns-po">네이버포스트</span></a>
+                </div>
+        
+              </div>
+              <!-- // Header내 Footer 영역 -->
+            </div>
+          </header>
+
+        <!-- container // -->
+        <div id="container" class="container">
+            <!-- 비주얼 영역 // -->
+            <div class="section">
+                <div class="vis-main" data-slide='{"case":"case1","option":{"dots":false, "infinite":true, "fade":true}}'>
+                    <div class="slide">
+                        <span class="img-wrap">
+                            <span data-picture='' data-alt='청담4.0 에듀테크를 통한 소셜러닝의 진화(2019 Summer 5월27일 월요일 청담어학원 여름학기 개강) - 입학시험 예약하기'>
+                                <span data-src='/resource/images/@temp/@cl-main-vis-mo.jpg'></span>
+                                <span data-src='/resource/images/@temp/@cl-main-vis.jpg' data-media='(min-width: 768px)'></span> <!-- 1024 -->
+                                <span data-src='/resource/images/@temp/@cl-main-vis.jpg' data-media='(min-width: 1025px)'></span> <!-- 1280 -->
+                                <span data-src='/resource/images/@temp/@cl-main-vis.jpg' data-media='(min-width: 1281px)'></span> <!-- 1920 -->
+                            </span>
+                        </span>
+                    </div>
+                    <div class="slide">
+                        <a href="#" class="img-wrap">
+                            <span data-picture='' data-alt='청담이 만든 프리미엄 키즈 영어앱 "파닉스 콘서트" 청담 영어교육, 이제 모바일에서도 만나세요 - 자세히 보기'>
+                                <span data-src='/resource/images/@temp/@cl-main-vis-mo.jpg'></span>
+                                <span data-src='/resource/images/@temp/@cl-main-vis.jpg' data-media='(min-width: 768px)'></span> <!-- 1024 -->
+                                <span data-src='/resource/images/@temp/@cl-main-vis.jpg' data-media='(min-width: 1025px)'></span> <!-- 1280 -->
+                                <span data-src='/resource/images/@temp/@cl-main-vis.jpg' data-media='(min-width: 1281px)'></span> <!-- 1920 -->
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- // 비주얼 영역 -->
+
+            <!-- 학원 찾기 // -->
+            <div class="section-2">
+                <div class="section-2-in">
+                    <h2 class="find-institute-title ir-b i-sch-4">학원 바로가기</h2>
+                    <div class="find-institute" data-dropdown='{"selected":true}'>
+                        <a href="#none" class="find-institute-subj" data-act='title'>브랜드 선택</a>
+                        <div class="find-institute-cont-scroll" data-act='cont' data-scrollbar='{"axis":"y"}'>
+                            <ul class="find-institute-cont">
+                                <li><a href="#none" data-blind-title="brandSelTitle">청담어학원</a></li>
+                                <li><a href="#none" data-blind-title="brandSelTitle">April 어학원</a></li>
+                                <li><a href="#none" data-blind-title="brandSelTitle">아이가르텐</a></li>
+                            </ul>
+                        </div>
+                        <span class="blind" id="brandSelTitle" title="선택">브랜드 선택</span>
+                    </div>
+
+                    <div class="find-institute" data-dropdown='{"selected":true}'>
+                        <a href="#none" class="find-institute-subj" data-act='title'>지역 선택</a>
+                        <div class="find-institute-cont-scroll" data-act='cont' data-scrollbar='{"axis":"y"}'>
+                            <ul class="find-institute-cont">
+                                <li><a href="#none" data-blind-title="areaSelTitle">서울특별시</a></li>
+                                <li><a href="#none" data-blind-title="areaSelTitle">경기도</a></li>
+                                <li><a href="#none" data-blind-title="areaSelTitle">부산광역시</a></li>
+                                <li><a href="#none" data-blind-title="areaSelTitle">세종특별시</a></li>
+                                <li><a href="#none" data-blind-title="areaSelTitle">인천광역시</a></li>
+                                <li><a href="#none" data-blind-title="areaSelTitle">경기도</a></li>
+                                <li><a href="#none" data-blind-title="areaSelTitle">부산광역시</a></li>
+                                <li><a href="#none" data-blind-title="areaSelTitle">세종특별시</a></li>
+                                <li><a href="#none" data-blind-title="areaSelTitle">인천광역시</a></li>
+                            </ul>
+                        </div>
+                        <span class="blind" id="areaSelTitle" title="선택">지역 선택</span>
+                    </div>
+
+                    <div class="find-institute" data-dropdown='{"selected":true}'>
+                        <a href="#none" class="find-institute-subj" data-act='title'>학원 선택</a>
+                        <div class="find-institute-cont-scroll" data-act='cont' data-scrollbar='{"axis":"y"}'>
+                            <ul class="find-institute-cont">
+                                <li><a href="#none" data-blind-title="classSelTitle">청담본원</a></li>
+                                <li><a href="#none" data-blind-title="classSelTitle">문정 브랜치</a></li>
+                                <li><a href="#none" data-blind-title="classSelTitle">송파 브랜치</a></li>
+                                <li><a href="#none" data-blind-title="classSelTitle">목동 제2캠퍼스</a></li>
+                                <li><a href="#none" data-blind-title="classSelTitle">송파 브랜치</a></li>
+                                <li><a href="#none" data-blind-title="classSelTitle">청담본원</a></li>
+                                <li><a href="#none" data-blind-title="classSelTitle">문정 브랜치</a></li>
+                                <li><a href="#none" data-blind-title="classSelTitle">송파 브랜치</a></li>
+                                <li><a href="#none" data-blind-title="classSelTitle">목동 제2캠퍼스</a></li>
+                                <li><a href="#none" data-blind-title="classSelTitle">송파 브랜치</a></li>
+                            </ul>
+                        </div>
+                        <span class="blind" id="classSelTitle">학원 선택</span>
+                    </div>
+                </div>
+            </div>
+            <!-- // 학원 찾기 -->
+
+            <!-- 브랜드 -->
+            <div class="section-3">
+                <div class="section-3-in">
+                    <!-- 캠퍼스 스토리 // -->
+                    <div class="brand-con br1">
+                        <div class="num-box">
+                            <span>사고력 </span><span class="current">1</span><span class="total-num"> / 7</span>
+                        </div>
+                        <div class="brand-slide">
+                            <div class="slide">
+                                <a href="/brand/cdi" class="brand-item cd-slide">
+                                    <div class="cap">
+                                        <span class="brand-logo"><span class="ir i-brand-cd">청담어학원</span></span>
+                                    </div>
+                                    <dl class="brand-info">
+                                        <span class="period"><span class="term">22년 가을학기</span><span class="date"><span class="iblock">22.08.29</span><span class="iblock">~22.11.27</span></span></span>
+                                        <dt>창의 융합형 21세기<br>인재 양성</dt>
+                                        <dd class="des">풍부한 배경지식과 영어 사고력, 표현력, 상상력을 키워 자신만의 비전을 형성하는 ESL 창의사고 교육의 완성</dd>
+                                    </dl>
+                                    <div class="brand-imgBox cdiImg"></div>
+                                </a>
+                            </div>
+                            <div class="slide">
+                                <a href="/brand/april" class="brand-item ap-slide">
+                                    <div class="cap">
+                                        <span class="brand-logo"><span class="ir i-brand-ap">에이프릴어학원</span></span>
+                                    </div>
+                                    <dl class="brand-info">
+                                        <span class="period"><span class="term">2학기 가을</span><span class="date"><span class="iblock">22.08.29 </span><span class="iblock">~22.11.27</span></span></span>
+                                        <dt>언어, 사고, 예술의<br> 결합으로 창의사고력 개발</dt>
+                                        <dd class="des">언어, 사고, 예술의 유기적인 결합으로 창의사고력 쑥쑥! Creative Learning의 NO.1 에이프릴어학원</dd>
+                                    </dl>
+                                    <div class="brand-imgBox apImg"></div>
+                                </a>
+                            </div>
+                            <div class="slide">
+                                <a href="/brand/igarten" class="brand-item ig-slide">
+                                    <div class="cap">
+                                        <span class="brand-logo"><span class="ir i-brand-ig">아이가르텐</span></span>
+                                    </div>
+                                    <dl class="brand-info">
+                                        <span class="period"><span class="term">22년 가을학기</span><span class="date"><span class="iblock">22.09.01 </span><span class="iblock">~23.03.01 </span></span></span>
+                                        <dt>상상력과 창의력을 키우는<br> 유아전문 교육</dt>
+                                        <dd class="des">우리아이가 마음껏 상상의 나래를 펴고 자신을 표현하는 크레버스의 유아전문 ESL 교육기관 아이가르텐</dd>
+                                    </dl>
+                                    <div class="brand-imgBox igImg"></div>
+                                </a>
+                            </div>
+                            <div class="slide">
+                                <a href="/brand/page" class="brand-item pbp-slide">>
+                                    <div class="cap">
+                                        <span class="brand-logo"><span class="ir i-brand-pbp">페바페</span></span>
+                                    </div>
+                                    <dl class="brand-info">
+                                        <span class="period"><span class="term">22년 가을학기</span><span class="date"><span class="iblock">22.08.29 </span><span class="iblock">~22.11.27</span></span></span>
+                                        <dt>미래를 읽는 창의융합<br> 프로젝트 독서 논술</dt>
+                                        <dd class="des">4차 산업혁명 시대, 소통하고 공감하는 창의융합형 리더를 키우는 독서토론논술 교육</dd>
+                                    </dl>
+                                    <div class="brand-imgBox pbpImg"></div>
+                                </a>
+                            </div>
+                            <div class="slide">
+                                <a href="/brand/mt" class="brand-item cms-slide">
+                                    <div class="cap">
+                                        <span class="brand-logo"><span class="ir i-brand-cms">cms영재교육센터</span></span>
+                                    </div>
+                                    <dl class="brand-info">
+                                        <span class="period"><span class="term">22년 가을학기</span><span class="date"><span class="iblock">22.09.01 </span><span class="iblock">~22.11.30 </span></span></span>
+                                        <dt>발문과 토론으로 생각하는<br>힘을 키우는 사고력 수학 교육</dt>
+                                        <dd class="des">상상력과 창의력을 키워 문제해결 능력을 향상시키는 수학 기반 사고력 교육</dd>
+                                    </dl>
+                                    <div class="brand-imgBox cmsImg"></div>
+                                </a>
+                            </div>
+                            <div class="slide">
+                                <a href="/brand/mg" class="brand-item cms2-slide">
+                                    <div class="cap">
+                                        <span class="brand-logo"><span class="ir i-brand-cms2">cms영재관</span></span>
+                                    </div>
+                                    <dl class="brand-info">
+                                        <span class="period"><span class="term">수시 모집</span><span class="date"></span></span>
+                                        <dt>목표와 수준에 맞춘<br> 차별화된 수학·과학 교육</dt>
+                                        <dd class="des">개인별 목표에 따른 차별화된 프로그램과 콘텐츠로 최고의 성과 지향</dd>
+                                    </dl>
+                                    <div class="brand-imgBox cms2Img"></div>
+                                </a>
+                            </div>
+                            <div class="slide">
+                                <a href="https://www.c3coding.com/" class="brand-item c3-slide"  target="_blank">
+                                    <div class="cap">
+                                        <span class="brand-logo"><span class="ir i-brand-c3">씨큐브코딩</span></span>
+                                    </div>
+                                    <dl class="brand-info">
+                                        <dl class="brand-info">
+                                            <span class="period"><span class="term">22년 가을학기</span><span class="date"><span class="iblock">22.09.01 </span><span class="iblock">~22.11.30 </span></span></span>
+                                            <dt>세상에 없던 미래를 만드는<br>Future Creator</dt>
+                                            <dd class="des">창의적 알고리즘으로 컴퓨팅 사고력을 키워 ICT 융합인재 양성</dd>
+                                        </dl>
+                                    </dl>
+                                    <div class="brand-imgBox c3Img"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="brand-con br2">
+                        <div class="num-box">
+                            <span>V-사고력 </span><span class="current">1</span><span class="total-num"> / 4</span>
+                        </div>
+                        <div class="brand-slide">
+                            <div class="slide">
+                                <a href="https://vlc.chungdahm.com/brand/bouncy" class="brand-item bo-slide"  target="_blank">
+                                    <div class="cap">
+                                        <span class="brand-logo"><span class="ir i-brand-bo">BOUNCY</span></span>
+                                    </div>
+                                    <dl class="brand-info">
+                                        <span class="period"><span class="term">22년 가을학기</span><span class="date"><span class="iblock">22.08.29 </span><span class="iblock">~22.11.27</span></span></span>
+                                        <dt>버추얼에서 경험하는<br>ESL 영어 사고력</dt>
+                                        <dd class="des">미디어와 AI 개인화 시스템, 디지털 사고 도구의 버추얼 영어 클래스</dd>
+                                    </dl>
+                                    <div class="brand-imgBox boImg"></div>
+                                </a>
+                            </div>
+                            <div class="slide">
+                                <a href="https://vlc.chungdahm.com/brand/noisy" class="brand-item no-slide"  target="_blank">
+                                    <div class="cap">
+                                        <span class="brand-logo"><span class="ir i-brand-no">NOISY</span></span>
+                                    </div>
+                                    <dl class="brand-info">
+                                        <span class="period"><span class="term">22년 가을학기</span><span class="date"><span class="iblock">22.09.01 </span><span class="iblock">~22.11.30 </span></span></span>
+                                        <dt>버추얼에서 경험하는<br>ESL 수리 사고력</dt>
+                                        <dd class="des">양방향 소통 시스템과 디지털 교구로 버추얼에서도 집중력 UP</dd>
+                                    </dl>
+                                    <div class="brand-imgBox noImg"></div>
+                                </a>
+                            </div>
+                            <div class="slide">
+                                <a href="https://www.cmson.com/" class="brand-item ed-slide"  target="_blank">
+                                    <div class="cap">
+                                        <span class="brand-logo"><span class="ir i-brand-ed">EDGE</span></span>
+                                    </div>
+                                    <dl class="brand-info">
+                                        <span class="period"><span class="term">수시 모집</span><span class="date"></span></span>
+                                        <dt>전국 어디서나 경험하는<br> CMS 대치영재관 라이브 클래스</dt>
+                                        <dd class="des">CMS 대치영재관의 영재학교·특목고·올림피아드 수업과 관리 그대로/dd>
+                                    </dl>
+                                    <div class="brand-imgBox edImg"></div>
+                                </a>
+                            </div>
+                            <div class="slide">
+                                <a href="https://www.codealive.co.kr/" class="brand-item al-slide"  target="_blank">
+                                    <div class="cap">
+                                        <span class="brand-logo"><span class="ir i-brand-al">codeAlive</span></span>
+                                    </div>
+                                    <dl class="brand-info">
+                                        <span class="period"><span class="term">수시 모집</span><span class="date"></span></span>
+                                        <dt>버추얼 컴퓨팅<br> 사고력 코드얼라이브</dt>
+                                        <dd class="des">유티니와 공동 개발한 메타버스 코딩 플랫폼에서 배우는 파이썬 버추얼 클래스</dd>
+                                    </dl>
+                                    <div class="brand-imgBox alImg"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="brand-con br3">
+                        <div class="num-box">
+                            <span>융합사고력 </span><span class="current">1</span><span class="total-num"> / 3</span>
+                        </div>
+                        <div class="brand-slide">
+                            <div class="slide">
+                                <a href="https://www.chungdahm.com/i-garten/creversekids/curriculum/program/" class="brand-item kids-slide">
+                                    <div class="cap">
+                                        <span class="brand-logo"><span class="ir i-brand-kids">creverseKIDS</span></span>
+                                    </div>
+                                    <dl class="brand-info">
+                                        <span class="period"><span class="term">22년 2학기</span><span class="date"><span class="iblock">22.09.01 </span><span class="iblock">~23.03.010 </span></span></span>
+                                        <dt>글로벌 창의 융합<br>사고력의 시작 </dt>
+                                        <dd class="des">4차 산업혁명 시대 최적화된 글로벌 인재 양성을 위한 유아 창의 사고력 ESL 브랜드</dd>
+                                    </dl>
+                                    <div class="brand-imgBox kidsImg"></div>
+                                </a>
+                            </div>
+                            <div class="slide">
+                                <a href="https://www.chungdahm.com/i-garten/creversekidsx/" class="brand-item crx-slide">
+                                    <div class="cap">
+                                        <span class="brand-logo"><span class="ir i-brand-crx">creversex</span></span>
+                                    </div>
+                                    <dl class="brand-info">
+                                        <span class="period"><span class="term">수시 모집</span><span class="date"></span>
+                                        <dt>지식을 연결하고 융합하는<br> 새로운 경험</dt>
+                                        <dd class="des">사고력과 다중 지능을 종합적으로 진단하고 크레버스를 경험할 수 있는 체험 공간</dd>
+                                    </dl>
+                                    <div class="brand-imgBox crxImg"></div>
+                                </a>
+                            </div>
+                            <div class="slide">
+                                <a href="https://www.chungdahm.com/channel/news/detail?bdId=16105" class="brand-item cam-slide">
+                                    <div class="cap">
+                                        <span class="brand-logo"><span class="ir i-brand-cam">creverse campus</span></span>
+                                    </div>
+                                    <dl class="brand-info">
+                                        <span class="period"><span class="term">수시 모집</span><span class="date"></span>
+                                        <dt>언어·수리·컴퓨팅<br> 사고력을 한 곳에서</dt>
+                                        <dd class="des">사고력과 다중지능 진단으로 개별 맞춤 학습로드맵과 진로 적성까지 제시하는 글로벌 리더 인재 양성 복합관</dd>
+                                    </dl>
+                                    <div class="brand-imgBox camImg"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- // 캠퍼스 스토리 -->
+                </div>
+            </div>
+            <!-- // 브랜드 -->
+
+            <!--   배너 / 소식-->
+            <div class="section-n-1">
+                <div class="section-3-col-2">
+                    <!-- 배너 // -->
+                    <div class="main-banner" data-slide='{"case":"case1","option":{"arrows":true, "dots":false, "infinite":true, "fade":true}}'>
+                        <div class="slide banner-item">
+                            <a href="#" class="banner-link">
+                                <span class="bg" data-picture=''>
+                                    <span data-src='https://image.chungdahm.com/mPortal/banner/20190905/recruit_Mobile.jpg'></span>
+                                    <span data-src='https://image.chungdahm.com/mPortal/banner/20200413/%EC%B1%84%EC%9A%A9%ED%99%88%ED%8E%98%EC%9D%B4%EC%A7%80.jpg' data-media='(min-width: 768px)'></span>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="slide banner-item">
+                            <a href="#" class="banner-link">
+                                <span class="bg" data-picture=''>
+                                    <span data-src='https://image.chungdahm.com/mPortal/banner/20190905/recruit_Mobile.jpg'></span>
+                                    <span data-src='https://image.chungdahm.com/mPortal/banner/20200413/%EC%B1%84%EC%9A%A9%ED%99%88%ED%8E%98%EC%9D%B4%EC%A7%80.jpg' data-media='(min-width: 768px)'></span>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- // 배너 -->
+
+                    <!-- 소식 // -->
+                    <div class="news">
+                        <h2 class="title">청담소식</h2>
+                        <ul class="news-list">
+                            <li><a href="#none" class="link"><span class="subj"><span class="subj-in">아이가르텐 '2018 하이스트 브랜드' 아이가르텐 '2018 하이스트 브랜드'</span></span><span class="ico-txt-7">N<span class="mo-hide">EW</span></span><span
+                                        class="date">2019.01.14</span></a></li>
+                            <li><a href="#none" class="link"><span class="subj"><span class="subj-in">April어학원 '대한민국 하이스트'</span></span><span class="ico-txt-7">N<span class="mo-hide">EW</span></span><span class="date">2019.01.14</span></a></li>
+                            <li><a href="#none" class="link"><span class="subj"><span class="subj-in">제18회 Master Debate Compe 제18회 Master Debate Compe'</span></span><span class="date">2019.01.14</span></a></li>
+                        </ul>
+                        <a href="#none" class="btn-more-2"><span class="ir i-more">더보기</span></a>
+                    </div>
+                    <!-- // 소식 -->
+                </div>
+            </div>
+            <!-- // 배너 / 소식 -->
+
+            <!-- 브랜드 찾기 // -->
+            <!-- // 브랜드 찾기 -->
+
+            <!-- 채널 // -->
+            <div class="section-5 main-channel">
+                <div class="section-5-col main-story">
+                    <h2 class="title short"><span class="title-in">크레버스 스토리</span></h2>
+                    <div class="main-story-in" data-slide='{"case":"case1","option":{"dots":false, "infinite":true}}'>
+                        <div class="slide">
+                            <a href="#" class="channel-item">
+                                <div class="channel-img">
+                                    <span class="ico-video-2"><span class="ir i-video-2">동영상 컨텐츠</span></span>
+                                    <img src="/resource/images/@temp/@main-story.jpg" alt="" />
+                                </div>
+                                <dl class="channel-des">
+                                    <dt><span class="cap">청담어학원</span><span class="subj">청담어학원 ‘대한민국 하이스트 브랜드’6년 연속 1위 선정</span></dt>
+                                    <dd class="des">교육기업 청담러닝(대표 이동훈)의 초등전문 ‘April어학원(에이프릴어학원)’이‘2018 대한민국 하이스트 브랜드’에서 초등영어교육 부문 6년연속 1위로 선정됐다.‘대한민국 하이스트 브랜드’는 브랜드 가치평가 전문 기관인 브랜드스탁이 주관하고 있으며 이번 조사는 지난 8월부터 9월까지 2개월 간 브랜드스탁의 패널 회원</dd>
+                                </dl>
+                            </a>
+                        </div>
+                        <div class="slide">
+                            <a href="#" class="channel-item ty-2">
+                                <div class="channel-img">
+                                    <span class="ico-video-2"><span class="ir i-video-2">동영상 컨텐츠</span></span>
+                                    <img src="/resource/images/@temp/@main-story.jpg" alt="" />
+                                </div>
+                                <dl class="channel-des">
+                                    <dt><span class="cap">April어학원</span><span class="subj">April어학원 ‘대한민국 하이스트 브랜드’6년 연속 1위 선정</span></dt>
+                                    <dd class="des">교육기업 청담러닝(대표 이동훈)의 초등전문 ‘April어학원(에이프릴어학원)’이‘2018 대한민국 하이스트 브랜드’에서 초등영어교육 부문 6년연속 1위로 선정됐다.‘대한민국 하이스트 브랜드’는 브랜드 가치평가 전문 기관인 브랜드스탁이 주관하고 있으며 이번 조사는 지난 8월부터 9월까지 2개월 간 브랜드스탁의 패널 회원</dd>
+                                </dl>
+                            </a>
+                        </div>
+                        <div class="slide">
+                            <a href="#" class="channel-item ty-3">
+                                <div class="channel-img">
+                                    <span class="ico-video-2"><span class="ir i-video-2">동영상 컨텐츠</span></span>
+                                    <img src="/resource/images/@temp/@main-story.jpg" alt="" />
+                                </div>
+                                <dl class="channel-des">
+                                    <dt><span class="cap">아이가르텐</span><span class="subj">아이가르텐 ‘대한민국 하이스트 브랜드’6년 연속 1위 선정</span></dt>
+                                    <dd class="des">교육기업 청담러닝(대표 이동훈)의 초등전문 ‘April어학원(에이프릴어학원)’이‘2018 대한민국 하이스트 브랜드’에서 초등영어교육 부문 6년연속 1위로 선정됐다.‘대한민국 하이스트 브랜드’는 브랜드 가치평가 전문 기관인 브랜드스탁이 주관하고 있으며 이번 조사는 지난 8월부터 9월까지 2개월 간 브랜드스탁의 패널 회원</dd>
+                                </dl>
+                            </a>
+                        </div>
+                    </div>
+                    <span class="btn"><a href="#" class="btn-more-2"><span class="blind">더보기</span></a></span>
+                </div>
+                <div class="section-5-col-2 main-edu">
+                    <h2 class="title"><span class="title-in">톡톡에듀<sup>+</sup></span></h2>
+                    <div class="main-edu-in">
+                        <a href="#" class="channel-item">
+                            <div class="channel-img">
+                                <img src="/resource/images/@temp/@main-edu.jpg" alt="" />
+                            </div>
+                            <dl class="channel-des">
+                                <dt><span class="cap ty">톡톡에듀</span><span class="subj">새로운 시대, 새로운 인재</span></dt>
+                                <dd class="des">교육기업 청담러닝(대표 이동훈)의 초등전문 ‘April어학원(에이프릴어학원)’이‘2018 대한민국 하이스트 브랜드’에서 초등영어교육 부문 6년연속 1위로 선정됐다.‘대한민국 하이스트 브랜드’는 브랜드 가치평가 전문 기관인 브랜드스탁이 주관하고 있으며 이번 조사는 지난 8월부터 9월까지 2개월 간 브랜드스탁의 패널 회원</dd>
+                            </dl>
+                        </a>
+                    </div>
+                    <span class="btn"><a href="#" class="btn-more-2"><span class="blind">더보기</span></a></span>
+                </div>
+            </div>
+            <!-- // 채널 -->
+        </div>
+        <!-- // container -->
+
+        <!-- footer // -->
+        <footer class="footer">
+        </footer>
+        <!-- // footer -->
+    </div>
+<!--    -->
+<!--<script>-->
+<!--    $('.brand-slide').slick({-->
+<!--            slidesToShow:1,-->
+<!--            infinite:true,-->
+<!--            fade: true,-->
+<!--            speed : 600,-->
+<!--            dots : false,-->
+<!--            // autoplay : true,-->
+<!--            autoplaySpeed : 3000,-->
+<!--            pauseOnHover : true,-->
+<!--            // arrows : true,-->
+<!--            prevArrow : "<button type='button' class='slick-prev'></button>",		-->
+<!--            nextArrow : "<button type='button' class='slick-next'></button>",-->
+<!--    });-->
+<!--    $('.br1').on('afterChange', function(event, slick, currentSlide){-->
+<!--        $(".br1 .current").text(currentSlide + 1 )-->
+<!--    });-->
+<!--    $('.br2').on('afterChange', function(event, slick, currentSlide){-->
+<!--        $(".br2 .current").text(currentSlide + 1 )-->
+<!--    });-->
+<!--    $('.br3').on('afterChange', function(event, slick, currentSlide){-->
+<!--        $(".br3 .current").text(currentSlide + 1 )-->
+<!--    });-->
+<!--    $('.slick-arrow').click(function(){-->
+<!--        $(this).parent('.brand-slide').slick('slickPause');-->
+<!--    });-->
+<!--    $(document).ready(function(){-->
+<!--        $('.br1 .brand-slide').slick('slickPlay');-->
+<!--    });-->
+<!--    $('.brand-con').on('beforeChange', function(event, slick, currentSlide){-->
+<!--        var total =slick.slideCount-->
+<!--        -->
+<!--    console.log(currentSlide)-->
+<!--    -->
+<!--    console.log(total-2)-->
+<!--        if(currentSlide == total - 2){-->
+<!--        $('.brand-slide').slick('slickPause');-->
+<!--        var nextSd = $(this).next('.brand-con').find('.brand-slide')-->
+<!--        if(nextSd.length == 0){-->
+<!--            $('.br1 .brand-slide').slick('slickPlay');-->
+<!--        }else{-->
+<!--            nextSd.slick('slickPlay');-->
+<!--        }-->
+
+<!--        }-->
+<!--    });-->
+<!--    -->
+<!--    $('.slick-arrow').on("touchstart", function(){-->
+<!--        $(this).addClass('active');-->
+<!--    });-->
+<!--    $('.slick-arrow').on("touchend", function(){-->
+<!--        $(this).removeClass('active');-->
+<!--    });-->
+<!--    $('.slick-arrow').click(function(){-->
+<!--        $('.brand-con .brand-slide').slick('slickPause');-->
+<!--    });-->
+<!--</script>-->
+</body>
+
+</html>

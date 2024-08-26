@@ -1,0 +1,42 @@
+@charset "utf-8";
+
+*{margin:0px; padding:0px;}
+.mileageKing20180409 {width:594px; margin:0 auto; font-size:12px; color:#666; line-height:1.5em; font-family:"dotum", "Arial", "Helvetica", "sans-serif"; background-color:#fff;}
+.mileageKing20180409 img {max-width:100%; border:none; vertical-align:middle;}
+.mileageKing20180409 .eventHeader {}
+.mileageKing20180409 .eventHeader img {}
+.mileageKing20180409 .frame {padding:20px; border-left:10px solid #77e2e1; border-right:10px solid #77e2e1; border-bottom:10px solid #77e2e1; vertical-align:top;}
+.mileageKing20180409 .frame .topBtn {position:relative;}
+.mileageKing20180409 .frame .topBtn a {display:inline-block; position:absolute; text-indent:-9999px; font-size:0px;}
+.mileageKing20180409 .frame .topBtn a.btn01 {width:31.5%; height:40.4%; bottom:0px; left:0px;}
+.mileageKing20180409 .frame .topBtn a.btn02 {width:31.5%; height:40.4%; bottom:0px; left:34.2%;}
+.mileageKing20180409 .frame .topBtn a.btn03 {width:31.5%; height:40.4%; bottom:0px; left:68.7%;}
+.mileageKing20180409 .frame .title {text-align:center; margin-top:50px;}
+.mileageKing20180409 .frame .title img {height:30px;}
+.mileageKing20180409 .frame .title p {margin-top:15px; color:#58303d; font-size:15px;}
+.mileageKing20180409 .frame .title p span {font-size:inherit; font-weight:bold; color:inherit;}
+.mileageKing20180409 .frame .list {margin-top:30px;}
+.mileageKing20180409 .frame .list ul {list-style:none; margin-top:5px;}
+.mileageKing20180409 .frame .list p.lineTwo {display:block;}
+.mileageKing20180409 .frame .list p.lineOne {display:none;}
+.mileageKing20180409 .frame .list li {display:inline-block; width:50%; margin:3px 0px; float:left;}
+.mileageKing20180409 .frame .list li span {display:block; padding-left:15px; word-spacing:10px; text-align:left;}
+.mileageKing20180409 .frame .prize {display:block; clear:both;}
+.mileageKing20180409 .frame .prize img {margin-top:30px;}
+
+/* For tablets & smart phones */
+@media (max-width: 812px) {
+.mileageKing20180409 {width:100%; font-size:14px;}
+.mileageKing20180409 .frame {padding:20px 15px; border:0px;}
+.mileageKing20180409 .frame .title {margin-top:30px;}
+.mileageKing20180409 .frame .title img {height:24px;}
+.mileageKing20180409 .frame .title p {font-size:15px;}
+.mileageKing20180409 .frame .list {margin-top:20px;}
+.mileageKing20180409 .frame .list ul {margin-top:10px;}
+.mileageKing20180409 .frame .list p.lineTwo {display:none;}
+.mileageKing20180409 .frame .list p.lineOne {display:block;}
+.mileageKing20180409 .frame .list li {display:block; width:100%; margin:3px 0px; float:left;}
+.mileageKing20180409 .frame .list li span {display:block; padding-left:5%; text-align:left;}
+.mileageKing20180409 .frame .prize img {margin-top:30px;}
+}
+/*// For tablets & smart phones */

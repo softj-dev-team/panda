@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>퍼블리싱 JS</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <link rel="shortcut icon" type="image/x-icon" href="../../images/common/favicon.ico" />
+  <link rel="apple-touch-icon-precomposed" href="../../images/common/apple-touch-icon.png" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <link rel="stylesheet" href="../../css/global.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/sub.css">
+  <link rel="stylesheet" type="text/css" href="rule.css">
+  <script src="../../js/ui.vendor.js"></script>
+  <script src="../../js/ui.js"></script>
+  <link rel="stylesheet" href="highlight.vs.css">
+  <script src="highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+  <style>
+    .guide-cont, pre { margin:10px 0; }
+    .guide-wrap-hidden { min-width:1200px; overflow:hidden; }
+    .guide-tab-2 li { display:inline; }
+    .guide-tab-2 li.active .btn-c { background-color:#11a5aa; }
+    .guide-tab-cont { display:none; padding:30px; }
+    .guide-cont-3 { padding:30px; }
+    .guide-comment { margin-left:1em; color:#007800; }
+    .guide-slide-list { position:relative; margin:10px auto 30px; }
+    .guide-slide-list.variable .slick-list { overflow:visible; }
+    .guide-slide-list.variable .slide { width:400px; }
+    .guide-slide-list .slide .inner { display:block; margin:3px; padding:50px; text-align:center; background:#f5f5f5; }
+    .guide-slide-list .slick-controls { position:relative; margin-top:10px; text-align:center; }
+    .guide-slide-list .slick-controls .slick-arrow { position:static; margin:0 10px 0 0; padding:0 3px; border:1px solid #000; font-size:12px; line-height:15px; }
+    .guide-slide-list .slick-controls .ir { font-size:inherit; text-indent:0; overflow:visible; color:inherit; line-height:inherit; }
+    .guide-slide-list .slick-controls .slick-prev { left:0; }
+    .guide-slide-list .slick-controls .slick-next { right:0; }
+    .guide-slide-list .slick-dots { display:inline; }
+    .guide-slide-list .slick-dots button.custom-btn { margin:0 8px; padding:0 5px; }
+    .guide-slide-list .slick-dots .slick-active button.custom-btn { color:#fff; }
+    .guide-slide-list .slick-controls .slick-play { position:relative; position:static; width:auto; height:auto; margin:0 10px 0 0; padding:0 3px; border:1px solid #000; border-radius:0; font-size:12px; line-height:15px; }
+    .guide-slide-list .slick-play .ir { display:inline; background:transparent; width:auto; height:auto; }
+    .guide-slide-list .slick-play.slick-pause .ir { background-position:-999px -999px; }
+    .guide-fit { position:relative; height:300px; overflow:hidden; background:#fff; -webkit-transition:all 0.3s ease; transition:all 0.3s ease; }
+    .guide-fit[data-areaani] { top:50px; height:100px; }
+    .guide-fit.ani { top:0 !important; background:#000; }
+    .guide-fit img.fit { display:block; }
+    .guide-fit span.fit { position:relative; display:block; width:100%; height:100%; overflow:hidden; }
+    .guide-btn { display:inline-block; height:30px; padding:0 10px; font-size:12px; line-height:30px; color:#666; background:#f0f0f0; border:solid e8e8e8; vertical-align:middle; text-align:center; font-weight:bold; border-radius:2px; }
+    .active > .guide-btn, .active.guide-btn { background:#000; color:#fff; }
+    .guide-sel-layer { display:inline-block; position:relative; }
+    .guide-sel-layer .guide-sel-layer-title { display:inline-block; margin:3px 0; height:48px; padding:0 16px 0 16px; color:#000; line-height:3.15; border:1px solid #ddd; border-radius:3px; background:#fff }
+    .guide-sel-layer .guide-sel-layer-title:after { content:'　▼'; }
+    .guide-sel-layer .guide-sel-layer-title.active:after { content:'　▲'; }
+    .guide-sel-layer .guide-sel-layer-cont { display:none; position:absolute; left:0; z-index:10; min-width:100%; border:1px solid #000; background:#fff; box-sizing:border-box; }
+
+    .guide-fm-sel.placeholder { color:#999; }
+    .guide-fm-sel.placeholder:focus { color:#111; }
+    .guide-fm-sel { width:100%; height:48px; padding:0 16px 0 16px; color:#000; line-height:3.15; border:1px solid #ddd; border-radius:3px; background:#fff url("../../images/common/i-sel.png") right 19px center no-repeat; }
+
+    .guide-fm { position:relative; width:100%; font-size:14px; box-sizing:border-box; vertical-align:top; }
+    .guide-fm.line { height:48px; padding:0 16px 0 16px; color:#000; line-height:3.15; border:1px solid #ddd; border-radius:3px; background:#fff }
+    .guide-fm + .guide-fm { margin-top:-1px; }
+    .guide-fm .fm-btn { position:absolute; top:50%; right:9px; margin-top:-15px; width:74px; text-align:center; height:30px; font-size:12px; line-height:30px; color:#666; background:#f0f0f0; border:solid e8e8e8; vertical-align:middle; font-weight:bold; border-radius:2px; }
+    .guide-fm.line .guide-fm-ipt { height:46px; border:0; vertical-align:top; }
+    .guide-fm-ipt { width:100%; height:48px; padding:0 16px 0 16px; color:#000; line-height:3.15; border:1px solid #ddd; border-radius:3px; background:#fff; box-sizing:border-box; }
+    .guide-fm .fm-del { position:absolute; right:10px; top:50%; width:20px; height:20px; visibility:hidden; text-indent:-999px; overflow:hidden; border:1px solid #333; border-radius:23px; -webkit-transform:translateY(-50%); transform:translateY(-50%); }
+    .guide-fm.del-view .fm-del { visibility:visible; }
+    .guide-fm .fm-del:before { content:''; position:absolute; left:50%; top:50%; width:12px; height:1px; background:#333; -webkit-transform:translate(-50%,-50%) rotate(45deg); transform:translate(-50%,-50%) rotate(45deg); }
+    .guide-fm .fm-del:after { content:''; position:absolute; left:50%; top:50%; width:12px; height:1px; background:#333; -webkit-transform:translate(-50%,-50%) rotate(135deg); transform:translate(-50%,-50%) rotate(135deg); }
+    .guide-del-wrap { position:relative; display:block; width:calc(100% - 85px); }
+    @media all and (max-width:767px) {
+      .guide-fm.line .guide-fm-ipt { height:43px; }
+      .guide-fm-ipt { height:45px; }
+    }
+
+    code.html { font-size:12px; }
+    [data-picture='set'] img { max-width:100%; box-sizing:border-box; -webkit-box-shadow: 0px 1px 15px 0px rgba(0,0,0,0.2); -moz-box-shadow: 0px 1px 15px 0px rgba(0,0,0,0.2); box-shadow: 0px 1px 15px 0px rgba(0,0,0,0.2); }
+
+    .slider-1 { padding:0 50px; border:1px solid #000; }
+    .slider-2 { padding:0 150px; border:1px solid #000; }
+  </style>
+</head>
+<body>
+<div class="guide-container">
+  <h1 class="guide-logo"><a href="../index.html"><img src="g-logo.png" alt="청담 닷컴" /></a></h1>
+
+  <!-- tab // -->
+  <ol class="guide-tab">
+    <li class="tab-item"><a href="path.html">PATH</a></li>
+    <li class="tab-item"><a href="sample.html">SAMPLE</a></li>
+    <li class="tab-item active"><a href="js.html">SCRIPT</a></li>
+  </ol>
+  <!-- // tab -->
+
+  <h2 class="guide-title">기본 설정</h2>
+  <div class="guide-cont">
+    <ul class="guide-list">
+      <li>- <strong>공통사용</strong><br />/../js/ui.vendor.js<br />/../js/ui.js</li>
+      <li>- <strong>ui.reInit($jq(#ID));</strong><br />페이지 로드 후 콘텐츠 변경 시, 변경 콘텐츠 내 슬라이드, 아코디언, 탭 등 공통 실행 함수가 포함되어 있을 때 공통실행 함수 재실행.</li>
+    </ul>
+  </div>
+
+  <h2 class="guide-title" data-addtitle='this'>title 접근성</h2>
+  <div>
+    <button type="button" class="guide-btn" data-blind-title='title-test'>텍스트변경1</button>
+    <button type="button" class="guide-btn" data-blind-title='title-test'>텍스트변경3</button>
+    <button type="button" class="guide-btn" data-blind-title='title-test'>텍스트변경2</button>
+    <h2 id="title-test" class="guide-cont-3">텍스트변경1</h2>
+  </div>
+  <pre><code class="html">
+    <strong>document.title += ' > title 접근성'</strong>  &lt;!-- document.title에 텍스트 추가 --&gt;
+    &lt;h2 data-addtitle='this'&gt;title 접근성&lt;/h2&gt;
+    &lt;h2 data-addtitle='title 접근성'&gt;&lt;/h2&gt;
+
+    <strong>텍스트 변경시,</strong>
+    &lt;button type="button" data-blind-title='<strong>title-test</strong>'&gt;텍스트변경1&lt;/button&gt;
+    &lt;button type="button" data-blind-title='title-test'&gt;텍스트변경3&lt;/button&gt;
+    &lt;button type="button" data-blind-title='title-test'&gt;텍스트변경2&lt;/button&gt;
+    &lt;h2 id="<strong>title-test</strong>"&gt;텍스트변경1&lt;/h2&gt;  &lt;!-- 클릭 이벤트 발생시, data-blind-title에 지정된 id를 찾아 텍스트 변경 --&gt;
+    </code></pre>
+  <div class="guide-cont">
+    <ul class="guide-list">
+      <li>- 페이지의 제목이 될 탭이나 상세 제목의 경우 <strong>data-addtitle</strong>로 document.title에 텍스트를 추가한다.</li>
+      <li>- <strong>data-addtitle='this' or "String"</strong> 값이 this일 경우 해당엘리먼트.text()가 추가 텍스트가 된다.</li>
+    </ul>
+  </div>
+
+  <h2 class="guide-title">이미지 반응형</h2>
+  <span data-picture='set' data-alt='알트1'>
+      <span data-src='s1.png'></span>
+      <span data-src='s2.png' data-media='(min-width: 641px)'></span>
+      <span data-src='s3.png' data-media='(min-width: 841px)' data-alt='알트2'></span>
+    </span>
+  <pre><code class="html">
+      &lt;span data-picture='' data-alt='알트1'&gt;
+        &lt;span data-src='s1.png'&gt;&lt;/span&gt;
+        &lt;span data-src='s2.png' data-media='(min-width: 641px)'&gt;&lt;/span&gt;
+        &lt;span data-src='s3.png' data-media='(min-width: 841px)' data-alt='알트2'&gt;&lt;/span&gt; &lt;!-- 이미지별로 다른 alt 속성을 가져야 할 경우. --&gt;
+      &lt;/span&gt;
+    </code></pre>
+
+  <h2 class="guide-title">탭</h2>
+  <div data-tab=''>
+    <a href="#overlap1" data-act='tab' class="guide-btn">overlap1</a>
+    <a href="#overlap2" data-act='tab' class="guide-btn">overlap2</a>
+    <div id="overlap1" class="guide-tab-cont">
+      overlap1
+      <div data-tab='{"activeidx" : "0", "acttit":".tab"}'>
+        <a href="#overlap1-1" class="guide-btn tab">overlap1-1</a>
+        <a href="#overlap1-2" class="guide-btn tab">overlap1-2</a>
+        <a href="#overlap1-3" class="guide-btn tab">overlap1-3</a>
+      </div>
+      <div id="overlap1-1" class="guide-tab-cont">overlap1-1</div>
+      <div id="overlap1-2" class="guide-tab-cont">overlap1-2</div>
+      <div id="overlap1-3" class="guide-tab-cont">overlap1-3</div>
+    </div>
+    <div id="overlap2" class="guide-tab-cont">
+      overlap2
+      <div data-tab='{"activeidx" : "0", "acttit":".tab-2"}'>
+        <a href="#overlap2-2" class="guide-btn tab-2">overlap2-1</a>
+        <a href="#overlap2-2" class="guide-btn tab-2">overlap2-2</a>
+        <a href="#overlap2-3" class="guide-btn tab-2">overlap2-3</a>
+      </div>
+      <div id="overlap2-1" class="guide-tab-cont">overlap2-1</div>
+      <div id="overlap2-2" class="guide-tab-cont">overlap2-2</div>
+      <div id="overlap2-3" class="guide-tab-cont">overlap2-3</div>
+    </div>
+  </div>
+  <!-- <ul data-tab='{"activeidx" : "0"}' class="guide-tab-2">
+    <li data-act='tab'><a href="#tabCont1" class="guide-btn">Tab 1</a></li>
+    <li data-act='tab'><a href="#tabCont2" class="guide-btn" data-callback='{"callback" : "alert(2)"}'>Tab 2</a></li>
+    <li data-act='tab'><a href="#tabCont3" class="guide-btn">Tab 3</a></li>
+  </ul> -->
+  <div id="tabCont1" class="guide-tab-cont">
+    <h3 class="blind">Tab 1</h3>
+    Content 1
+  </div>
+  <div id="tabCont2" class="guide-tab-cont">
+    <h3 class="blind">Tab 2</h3>
+    <div class="guide-swipe-wrap" data-swipe='{"type":"case1","breakel":".guide-swipe-item"}'>
+      <div class="guide-swipe-child">
+        <div class="guide-swipe-item">1</div>
+        <div class="guide-swipe-item">2</div>
+        <div class="guide-swipe-item">3</div>
+        <div class="guide-swipe-item">4</div>
+        <div class="guide-swipe-item">5</div>
+        <div class="guide-swipe-item">6</div>
+      </div>
+    </div>
+  </div>
+  <div id="tabCont3" class="guide-tab-cont">
+    <h3 class="blind">Tab 3</h3>
+    Content 3
+  </div>
+  <pre><code class="html">
+      &lt;ul data-tab='{"activeidx" : "0"}'&gt;
+        &lt;li data-act='tab'&gt;&lt;a href="#tabCont1"&gt;Tab 1&lt;/a&gt;&lt;/li&gt;
+        &lt;li data-act='tab'&gt;&lt;a href="#tabCont2" data-callback='{"callback" : "alert(2)"}'&gt;Tab 2&lt;/a&gt;&lt;/li&gt;
+        &lt;li data-act='tab'&gt;&lt;a href="#tabCont3"&gt;Tab 3&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+
+      &lt;!-- Case 2 // --&gt;
+      &lt;ul data-tab='{"acttit":".tab", "callback" : "alert(\"Tab callback이 다 같은 경우\")"}'&gt;
+        &lt;li class="tab"&gt;&lt;button type="button" data-url='#tabCont1, #tabCont1-1'&gt;Tab 1&lt;/button&gt;&lt;/li&gt;
+        &lt;li class="tab"&gt;&lt;button type="button" data-url='#tabCont2, #tabCont2-1'&gt;Tab 2&lt;/button&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    </code></pre>
+
+  <div class="guide-cont">
+    <ul class="guide-list">
+      <li>- <strong>data-tab=''</strong> 일 경우 공통 스크립트 실행 <code class="guide-comment">// $jq('ul[data-tab=''], div[data-tab='']').tab();</code></li>
+      <li>- <strong>activeidx : false</strong> 페이지 로딩시 활성화 시킬 목록이 있을때 해당 목록 index번호를 지정</li>
+      <li>- <strong>actbtn : null</strong> 탭 버튼이 별도로 있을 경우. 생략 시, acttit 값을 가져감</li>
+      <li>- <strong>acttit : '[data-act="tab"]'</strong> 탭 목록의 주제영역</li>
+      <li>- <strong>actcssname : "active"</strong> 활성화 시 클래스명</li>
+      <li>- <strong>callback : null</strong> 탭 이동 후 실행되어질 Function</li>
+      <li>- <strong>&lt;button data-callback=""&gt;</strong> 탭 버튼마다 다르게 실행 될 js가 있는 경우, 탭 이동 후 실행되어질 Function</li>
+      <li>- <strong>기본 설정 변경 시</strong> data-tab='{"activeidx" : "0", "actbtn" : ".btn", "acttit" : ".tabitem"}'</li>
+      <li>- a,button 태그의 <strong>href="#ID"</strong> or <strong>data-url="#ID"</strong> 데이터값으로 엘리먼트를 찾음</li>
+      <li>- 탭 클릭시 두개 이상의 콘텐츠가 보여져야 할 경우.<br />
+        &lt;a <strong>href</strong>="#ID" <strong>data-url</strong>='#ID, #ID2'&gt;<br />
+        &lt;button type="button" <strong>data-url</strong>='#ID, #ID2'&gt;
+      </li>
+    </ul>
+  </div>
+
+  <h2 class="guide-title">CLICK EVENT</h2>
+  <button type="button" data-toggleclass="active" class="guide-btn">data-toggleclass</button>
+  <pre><code class="html"> &lt;!-- 클릭할 때마다 클래스명이 추가/삭제 --&gt;
+      &lt;button type="button" <strong>data-toggleclass="active"</strong> class="guide-btn"&gt;class toggle&lt;/button&gt;
+    </code></pre>
+  <style>
+    #areabranch { background:#fff; padding:10px; }
+    #areabranch.branch-ig { background:darkblue; }
+    #areabranch.branch-april { background:darkgreen; }
+    #areabranch.branch-cdi { background:darkred; }
+    #areabranch.branch-default { background:lightgray; }
+  </style>
+  <div id="areabranch" class="branch-default">
+    <button type="button" class="guide-btn" onclick='$jq("#areabranch").replaceClass("branch-[^ ]*","branch-cdi")'>branch-cdi</button>
+    <button type="button" class="guide-btn" onclick='$jq("#areabranch").replaceClass("branch-[^ ]*","branch-april")'>branch-april</button>
+    <button type="button" class="guide-btn" onclick='$jq("#areabranch").replaceClass("branch-[^ ]*","branch-ig")'>branch-ig</button>
+    <button type="button" class="guide-btn" onclick='$jq("#areabranch").replaceClass("branch-[^ ]*","branch-ig","branch-default")'>branch-ig toggle</button>
+  </div>
+  <pre><code class="html"> &lt;!-- 원래 클래스명(정규식 가능)과 변경할 클래스명 받아 치환 --&gt;
+      &lt;button type="button" onclick='$jq("#areabranch").replaceClass("branch-[^ ]*","branch-cdi")'&gt;
+      &lt;button type="button" onclick='$jq("#areabranch").replaceClass("branch-[^ ]*","branch-april")'&gt;
+      &lt;button type="button" onclick='$jq("#areabranch").replaceClass("branch-[^ ]*","branch-ig")'&gt;
+      &lt;button type="button" onclick='$jq("#areabranch").replaceClass("branch-[^ ]*","branch-ig","branch-default")'&gt; &lt;!-- 인자가 세개일 경우 세번째는 디폴트 클래스임. --&gt;
+
+      &lt;!-- 데이터로 넘길 경우 이스케이프 처리 참고. --&gt;
+      data-callback='{"callback" : "$jq(\"#areabranch\").replaceClass(\"branch-[^ ]*\",\"branch-cdi\")"}'
+    </code></pre>
+
+  <br />
+  <div>
+    <input type="radio" id="f-chk-all-2" class="fm-rad" name="f-chk-all" onclick="ui.checkedToggle(this, {view:['case1'], hide:['case2'], closest:'div'});"><label for="f-chk-all-2" class="fm-rad-i"><strong>라디오 내용 토글 1</strong></label>
+    &nbsp;&nbsp;
+    <input type="radio" id="f-chk-all-3" class="fm-rad" name="f-chk-all" onclick="ui.checkedToggle(this, {view:['case2'], hide:['case1'], closest:'div'});" checked><label for="f-chk-all-3" class="fm-rad-i"><strong>라디오 내용 토글 2</strong></label>
+    &nbsp;&nbsp;
+    <input type="checkbox" id="f-chk-all" class="fm-chk" onchange="ui.checkedToggle(this, {view:['case1'], hide:['case2'], closest:'div'});"><label for="f-chk-all" class="fm-chk-i"><strong>체크박스 내용 토글</strong></label>
+    <div data-chkarea="case1" class="guide-tab-cont" style="display: none;">Content 1</div>
+    <div data-chkarea="case2" class="guide-tab-cont" style="display: block;">Content 2</div>
+  </div>
+  <pre><code class="html"> &lt;!-- 라디오/체크박스의 경우 토글로 내용을 보이고 숨길때 사용 --&gt;
+    &lt;div&gt;
+      &lt;input type="radio" id="f-chk-all-2" class="fm-rad" name="f-chk-all" onclick="ui.checkedToggle(this, {view:['case1'], hide:['case2'], closest:'div'});"&gt;
+      &lt;input type="radio" id="f-chk-all-3" class="fm-rad" name="f-chk-all" onclick="ui.checkedToggle(this, {view:['case2'], hide:['case1'], closest:'div'});" checked&gt;
+
+      &lt;input type="checkbox" id="f-chk-all" class="fm-chk" onchange="ui.checkedToggle(this, {view:['case1'], hide:['case2'], closest:'div'});"&gt;
+      &lt;div data-chkarea="case1" class="guide-tab-cont" style="display: none;"&gt;Content 1&lt;/div&gt;
+      &lt;div data-chkarea="case2" class="guide-tab-cont" style="display: block;"&gt;Content 2&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;!-- 체크박스의 경우 체크해제일때 view,hide가 반대로 동작 --&gt;
+    </code></pre>
+
+  <br />
+  <div class="board-sort">
+    <button type="button" class="btn-sort sort-desc" onclick="ui.sort(this, {'cname':'sort-desc','desc':'내림차순','asc':'오름차순'})">BY NAME<span class="ir i-sort">내림차순</span></button><!-- 내림차순 케이스 -->
+    <button type="button" class="btn-sort" onclick="ui.sort(this, {'cname':'sort-desc','desc':'내림차순','asc':'오름차순'})">BY UNIVERSITY<span class="ir i-sort">오름차순</span></button>
+  </div>
+  <pre><code class="html">
+      &lt;!-- 내림차순일 경우 --&gt;
+      &lt;button type="button" class="btn-sort sort-desc" onclick="ui.sort(this, {'cname':'sort-desc','desc':'내림차순','asc':'오름차순'})"&gt;BY NAME&lt;span class="ir i-sort"&gt;내림차순&lt;/span&gt;&lt;/button&gt;
+      &lt;!-- 오름차순일 경우 --&gt;
+      &lt;button type="button" class="btn-sort" onclick="ui.sort(this, {'cname':'sort-desc','desc':'내림차순','asc':'오름차순'})"&gt;BY UNIVERSITY&lt;span class="ir i-sort"&gt;오름차순&lt;/span&gt;&lt;/button&gt;
+    </code></pre>
+
+  <h2 class="guide-title" id="guideClickEvent">내부링크</h2>
+  <a href="#guideClickEvent" class="guide-btn" data-anchor=''>href="#guideClickEvent"</a>
+  <button type="button" class="guide-btn" data-url='#guideClickEvent' data-anchor=''>data-url='#guideClickEvent'</button>
+  <button type="button" class="guide-btn" data-url='#guideClickEvent' data-anchor='{"add" : 20}'>"add" : 20</button>
+  <button type="button" class="guide-btn" data-url='#guideClickEvent' data-anchor='{"isfocus" : false}'>"isfocus" : false</button>
+  <button type="button" class="guide-btn" data-url='#guideClickEvent' data-anchor='{"callback" : "alert(1)"}'>"callback" : "alert(1)"</button>
+  <pre><code class="html">
+      &lt;a href="#guideClickEvent" class="guide-btn" data-anchor=''&gt;href="#guideClickEvent"&lt;/a&gt;
+      &lt;button type="button" class="guide-btn" data-url='#guideClickEvent' data-anchor=''&gt;data-url='#guideClickEvent'&lt;/button&gt;
+      &lt;button type="button" class="guide-btn" data-url='#guideClickEvent' data-anchor='{"add" : 20}'&gt;"add" : 20&lt;/button&gt;
+      &lt;button type="button" class="guide-btn" data-url='#guideClickEvent' data-anchor='{"isfocus" : false}'&gt;"isfocus" : false&lt;/button&gt;
+      &lt;button type="button" class="guide-btn" data-url='#guideClickEvent' data-anchor='{"callback" : "alert(1)"}'&gt;"callback" : "alert(1)"&lt;/button&gt;
+    </code></pre>
+  <div class="guide-cont">
+    <ul class="guide-list">
+      <li>- <strong>data-anchor=''</strong> 일 경우 공통 스크립트 실행</li>
+      <li>- <strong>add:0</strong> : 스크롤 이동시 이동값에 수치를 더하는 경우</li>
+      <li>- <strong>isfocus:true</strong> : 스크롤 이동 후 포커스를 이동하지 않을 경우 false</li>
+      <li>- <strong>isscroll:true</strong> : 스크롤 이동하지 않을 경우 false</li>
+      <li>- <strong>callback:null</strong> : 포커스나 스크롤 실행 후 실행되어질 Function</li>
+      <li>- <strong>기본 설정 변경 시</strong> data-anchor='{"add" : 20, "isfocus" : false, "callback" : "alert(1)"}'</li>
+      <li>- a,button 태그의 <strong>href="#ID"</strong> or <strong>data-url="#ID"</strong> 데이터값으로 엘리먼트를 찾음</li>
+      <li>- <strong>data-anchorfocus</strong> : 스크롤 이동의 기준이 되는 엘리먼트내에 특정 엘리먼트로 포커스 이동시킬 경우 엘리면트에 추가.</li>
+      <li>- <strong>data-anchorwrap</strong> : 스크롤 값을 이동시킬 엘리먼트가 body가 아닌 경우 해당 엘리먼트에 추가.</li>
+    </ul>
+  </div>
+
+  <h2 class="guide-title">popup</h2>
+  <div>
+    <button type="button" class="guide-btn" data-uipop='1' data-url='#popsample'>레이어팝업 no-dim</button>
+    <a href="popup.html" class="guide-btn" data-uipop='["guidePopup", "width=422, height=800, left=0, top=0"]'>window popup</a>
+  </div>
+  <style type="text/css">
+    .layerpop { display:none; max-width:98%; width:500px; margin:0 auto; padding:50px; text-align:center; background:#fff; box-sizing:border-box; -webkit-box-shadow: 0px 1px 15px 0px rgba(0,0,0,0.2); -moz-box-shadow: 0px 1px 15px 0px rgba(0,0,0,0.2); box-shadow: 0px 1px 15px 0px rgba(0,0,0,0.2); }
+  </style>
+  <div id="popsample" class="layerpop" data-uipopset=''>
+    팝업 영역
+    <button type="button" class="guide-btn" data-uipop='1' data-url='#popsample2'>레이어팝업 dim</button>
+    <button type="button" class="guide-btn" data-uipop='0'>닫기</button>
+  </div>
+  <script>
+    $jq("#popsample").data("uipopset",{callbackOpen : function(){ alert("열림") }});
+    $jq("#popsample2").data("uipopset",{callbackClose : function(){ alert("닫힘") }});
+  </script>
+  <div id="popsample2" class="layerpop" data-uipopset='{"isDim" : true}'>
+    팝업 영역2
+    <button type="button" class="guide-btn" data-uipop='0'>닫기</button>
+  </div>
+  <pre><code class="html">
+      &lt;button type="button" class="guide-btn" <strong>data-uipop</strong>='1' data-url='#popsample'&gt;레이어팝업 no-dim&lt;/button&gt;
+      &lt;button type="button" class="guide-btn" <strong>data-uipop</strong>='1' data-url='#popsample2'&gt;레이어팝업 dim&lt;/button&gt;
+      &lt;a href="popup.html" class="guide-btn" <strong>data-uipop</strong>='["이름", "width=422, height=637, left=0, top=0"]'&gt;window popup&lt;/a&gt;
+      &lt;button type="button" class="guide-btn" <strong>data-uipop</strong>='0' <strong>data-url</strong>='#popsample2'&gt;닫기&lt;/button&gt;
+
+      &lt;div id="popsample" class="layerpop" <strong>data-uipopset</strong>=''&gt;
+        &lt;div class="layerpop-sc"&gt;
+          &lt;div class="layerpop-wrap"&gt;
+            팝업내용
+            &lt;button type="button" class="guide-btn" <strong>data-uipop</strong>='0'&gt;닫기&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div id="popsample2" class="layerpop" <strong>data-uipopset='{"isDim" : true}'</strong>&gt; &lt;!-- isDim:true일 경우 열리면 dim클래스가 붙음. class="layerpop dim" --&gt;
+        &lt;div class="layerpop-sc"&gt;
+          &lt;div class="layerpop-wrap"&gt;
+            팝업내용
+            &lt;button type="button" class="guide-btn" <strong>data-uipop</strong>='0'&gt;닫기&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;!-- 스크립트에서 레이어 열리고 닫힐때 callback 예) --&gt;
+      $jq("#popsample").data("<strong>uipopset</strong>",{<strong>callbackOpen</strong> : function(){ alert("열림") }});
+      $jq("#popsample2").data("<strong>uipopset</strong>",{<strong>callbackClose</strong> : function(){ alert("닫힘") }});
+
+      &lt;!-- 옵션 재설정 예) --&gt;
+      $jq("#popsample").uipop("setoption",{"callbackOpen":function(){ alert("열림2");} });
+      $jq("#popsample").uipop("setoption",{"callbackOpen":function(){ alert("열림3");}, "callbackClose":function(){ alert("닫힘3");} });
+
+      &lt;!-- 옵션값 참조 예) --&gt;
+      $jq("#popsample").uipop("getoption","callbackOpen");
+
+      &lt;!-- js내에서 팝업열때 예) --&gt;
+      $jq("#popsample").uipop("open");
+
+      &lt;!-- js내에서 팝업닫을때 예) --&gt;
+      $jq("#popsample").uipop("close");
+    </code></pre>
+  <div class="guide-cont">
+    <ul class="guide-list">
+      <li>- a,button 태그의 <strong>href="#ID"</strong> or <strong>data-url="#ID"</strong> 데이터값으로 엘리먼트를 찾음</li>
+      <li>- <strong>data-uipop='["이름", "width=300, height=400, left=0, top=0"]'</strong> window 팝업 열기</li>
+      <li>- <strong>data-uipop='1'</strong> 팝업 열기</li>
+      <li>- <strong>data-uipop='0'</strong> 팝업 닫기</li>
+      <li>- <strong>callbackOpen: null</strong> 팝업 열린 후, callback</li>
+      <li>- <strong>callbackClose: null</strong> 팝업 닫힌 후, callback</li>
+      <li>- <strong>isDim : false</strong> dim일 경우, 클래스 추가(.dim) isDim:true일 경우 css로 위치 잡음</li>
+      <li>- <strong>addClass : String</strong> .uipop-container에 클래스 추가시 사용.</li>
+      <li>- <strong>isRepos : true</strong> isDim:true가 아닐 경우, 위치 계산을 할 것인지 여부</li>
+      <li>- <strong>isFixed : true</strong> position:fixed 일 경우</li>
+      <li>- <strong>기본 설정 변경 시</strong> data-uipop='{isRepos : false}'</li>
+    </ul>
+  </div>
+
+  <h2 class="guide-title">dropdown</h2>
+  <h4 class="blind">카테고리 선택</h4>
+  <div class="guide-sel-layer" data-dropdown='{"selected":true}'>
+    <a href="#none" class="guide-sel-layer-title" data-act='title'>Dropdown Selected</a>
+    <ul class="guide-sel-layer-cont" data-act='cont'>
+      <li><a href="#none" data-blind-title='cat-sort-title'>전체</a></li>
+      <li><a href="#none" data-blind-title='cat-sort-title'>불꽃 interview</a></li>
+      <li><a href="#none" data-blind-title='cat-sort-title'>Asking Interview</a></li>
+      <li><a href="#none" data-blind-title='cat-sort-title'>Offline Interview</a></li>
+      <li><a href="#none" data-blind-title='cat-sort-title'>Career Insight</a></li>
+      <li><a href="#none" data-blind-title='cat-sort-title'>Start your Career</a></li>
+      <li><a href="#none" data-blind-title='cat-sort-title'>E/V Pitching</a></li>
+      <li><a href="#none" data-blind-title='cat-sort-title'>S/U 5Q5A</a></li>
+      <li><a href="#none" data-blind-title='cat-sort-title'>Connect your Career</a></li>
+    </ul>
+    <h5 class="blind" id="cat-sort-title">전체</h5>
+  </div>
+  <div class="guide-sel-layer" data-dropdown=''>
+    <a href="#none" class="guide-sel-layer-title" data-act='title'>Dropdown Normal</a>
+    <ul class="guide-sel-layer-cont"data-act='cont'>
+      <li><a href="#none">전체</a></li>
+      <li><a href="#none">불꽃 interview</a></li>
+      <li><a href="#none">Asking Interview</a></li>
+      <li><a href="#none">Offline Interview</a></li>
+      <li><a href="#none">Career Insight</a></li>
+      <li><a href="#none">Start your Career</a></li>
+      <li><a href="#none">E/V Pitching</a></li>
+      <li><a href="#none">S/U 5Q5A</a></li>
+      <li><a href="#none">Connect your Career</a></li>
+    </ul>
+  </div>
+  <div class="guide-sel-layer" data-dropdown=''>
+    <a href="#none" class="guide-sel-layer-title" data-act='title'>Dropdown Normal & close</a>
+    <div class="guide-sel-layer-cont"data-act='cont'>
+      <ul>
+        <li><a href="#none">전체</a></li>
+        <li><a href="#none">불꽃 interview</a></li>
+        <li><a href="#none">Asking Interview</a></li>
+        <li><a href="#none">Offline Interview</a></li>
+        <li><a href="#none">Career Insight</a></li>
+        <li><a href="#none">Start your Career</a></li>
+        <li><a href="#none">E/V Pitching</a></li>
+        <li><a href="#none">S/U 5Q5A</a></li>
+        <li><a href="#none">Connect your Career</a></li>
+      </ul>
+      <button type="button" class="guide-sel-layer-close"data-act='close'>닫기</button>
+    </div>
+  </div>
+  <div class="guide-cont">
+    <ul class="guide-list">
+      <li>- <strong>data-dropdown=''</strong> 일 경우 공통 스크립트 실행</li>
+      <li>- <strong>hover : false</strong> 마우스 오버 이벤트 일 경우 true</li>
+      <li>- <strong>selected : false</strong> &lt;select&gt; 처럼 선택시 주제가 변경될 경우 true</li>
+      <li>- <strong>focusout : true</strong> 포커스 아웃 시, 닫히는 이벤트 발생 여부</li>
+      <li>- <strong>anitime : 250</strong> 애니메이션 지속 시간</li>
+      <li>- <strong>effect : "fade"</strong> 애니메이션 type. slide or fade</li>
+      <li>- <strong>acttit : '[data-act="title"]'</strong> dropdown의 주제영역</li>
+      <li>- <strong>actcont : '[data-act="cont"]'</strong> dropdown의 컨텐츠영역</li>
+      <li>- <strong>actclose : '[data-act="close"]'</strong> 닫기 버튼이 별도로 존재할 경우</li>
+      <li>- <strong>actcssname : "active"</strong> 활성화 시 클래스명</li>
+      <li>- <strong>media : null</strong> 해상도에 따라 실행될때 사용. ex) "media":"(max-width: 767px)"</li>
+      <li>- <strong>기본 설정 변경 시</strong> data-dropdown='{"hover" : true, "acttit" : ".title"}'</li>
+    </ul>
+  </div>
+
+  <h2 class="guide-title">첨부파일 customizing / 삭제 버튼</h2>
+  <div class="guide-fm line">
+    <input type="file" id="f-attach" data-fakefile="file" data-delete=".fm-del" />
+    <label for="f-attach" class="fm-btn">파일 찾기</label>
+    <span class="guide-del-wrap">
+        <input type="text" title="첨부파일" placeholder="customizing 첨부파일 + 삭제" data-fakefile="text" class="guide-fm-ipt" readonly="readonly" />
+        <button type="button" class="fm-del">삭제</button>
+      </span>
+  </div>
+  <pre><code class="html">
+      &lt;div class="guide-fm"&gt;
+        &lt;input type="file" id="f-attach" <strong>data-fakefile="file"</strong> <strong>data-delete=".fm-del"</strong> /&gt;
+        &lt;label for="f-attach" class="fm-btn"&gt;파일 찾기&lt;/label&gt;
+        &lt;span class="guide-del-wrap"&gt;
+          &lt;input type="text" title="첨부파일" placeholder="첨부파일 + 삭제" <strong>data-fakefile="text" readonly="readonly"</strong> /&gt;
+          &lt;button type="button" class="<strong>fm-del</strong>"&gt;삭제&lt;/button&gt;
+        &lt;/span&gt;
+      &lt;/div&gt;
+    </code></pre>
+  <div class="guide-fm">
+    <input type="text" title="첨부파일" class="guide-fm-ipt" placeholder="삭제버튼" data-delete=".fm-del" />
+    <button type="button" class="fm-del">삭제</button>
+  </div>
+  <pre><code class="html">
+      &lt;div class="guide-fm"&gt;
+        &lt;input type="text" title="첨부파일" class="guide-fm-ipt" placeholder="삭제버튼" <strong>data-delete=".fm-del"</strong> /&gt;
+        &lt;button type="button" class="<strong>fm-del</strong>"&gt;삭제&lt;/button&gt;
+      &lt;/div&gt;
+    </code></pre>
+
+  <h2 class="guide-title">select placeholder</h2>
+  <select class="guide-fm-sel" data-placeholder='선택' style="width:100%;">
+    <option>선택</option>
+    <option>옵션1</option>
+    <option>옵션2</option>
+  </select>
+  <pre><code class="html">
+&lt;select class="guide-fm-sel" data-placeholder='전체' style="width:100%;"&gt;
+  &lt;option&gt;전체&lt;/option&gt; &lt;!-- selected일 경우 "placeholder" 클래스 추가 --&gt;
+  &lt;option&gt;옵션1&lt;/option&gt;
+  &lt;option&gt;옵션2&lt;/option&gt;
+&lt;/select&gt;
+    </code></pre>
+  <div class="guide-cont">
+    <ul class="guide-list">
+      <li>- <strong>data-placeholder='string'</strong> 일 경우 공통 스크립트 실행</li>
+      <li>- selected된 텍스트와 data-placeholder='string'이 동일 한경우 placeholder 클래스 추가.</li>
+    </ul>
+  </div>
+
+  <h2 class="guide-title">캘린더</h2>
+  <div class="guide-fm">
+    <label for="f-time" class="blind">상담 가능 날짜 선택</label>
+    <input type="text" class="guide-fm-ipt" id="f-time" data-calendar='' />
+  </div>
+  <pre><code class="html">
+&lt;!-- 스크립트 적용전 코드 --&gt;
+&lt;input type="text" <strong>data-calendar=''</strong> /&gt;
+
+&lt;!-- 스크립트 적용후 코드 (.flatpickr-wrapper 추가됨) --&gt;
+&lt;div class="flatpickr-wrapper"&gt;
+  &lt;label for="f-time" class="blind"&gt;상담 가능 날짜 선택&lt;/label&gt;
+  &lt;input type="text" id="f-time" <strong>data-calendar=''</strong> /&gt;
+&lt;/div&gt;
+    </code></pre>
+
+  <h2 class="guide-title">아코디언</h2>
+  <style>
+    .guide-accordion { border-top:solid 2px #111; }
+    .guide-accordion-title { display:block; position:relative; height:80px; padding:0 46px 0 9px; margin:0 0 -1px; font-size:20px; line-height:80px; font-weight:500; border:solid 1px #eee; border-width:1px 0; box-sizing:border-box; }
+    .guide-accordion-title .arr { position:absolute; right:10px; top:50%; -webkit-transform:translateY(-50%); transform:translateY(-50%); }
+    .guide-accordion-cont { display:none; padding:30px 20px; border-top:solid 1px #eee; }
+  </style>
+  <div data-accordion='' class="guide-accordion">
+    <div class="guide-accordion-item">
+      <a href="#none" data-act='title' class="guide-accordion-title">1. 타이틀<span class="arr">view</span></a>
+      <div data-act='cont' class="guide-accordion-cont">
+        콘텐츠 내용 영역 1
+      </div>
+    </div>
+    <div class="guide-accordion-item">
+      <a href="#none" data-act='title' class="guide-accordion-title">2. 타이틀<span class="arr">view</span></a>
+      <div data-act='cont' class="guide-accordion-cont">
+        콘텐츠 내용 영역 2<br /><button type="button" class="guide-btn" data-act='close'>닫기</button>
+      </div>
+    </div>
+  </div>
+  <pre><code class="html">
+      &lt;div data-accordion='' class="guide-accordion"&gt;
+        &lt;div class="guide-accordion-item"&gt;
+          &lt;a href="#none" data-act='title' class="guide-accordion-title"&gt;1. Logistics&lt;span class="arr"&gt;view&lt;/span&gt;&lt;/a&gt;
+          &lt;div data-act='cont' class="guide-accordion-cont"&gt;
+            콘텐츠 내용 영역 1
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="guide-accordion-item"&gt;
+          &lt;a href="#none" data-act='title' class="guide-accordion-title"&gt;2. Grading&lt;span class="arr"&gt;view&lt;/span&gt;&lt;/a&gt;
+          &lt;div data-act='cont' class="guide-accordion-cont"&gt;
+            콘텐츠 내용 영역 2&lt;br /&gt;&lt;button type="button" class="guide-btn" data-act='close'&gt;닫기&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    </code></pre>
+  <div class="guide-cont">
+    <ul class="guide-list">
+      <li>- <strong>data-accordion=''</strong> 일 경우 공통 스크립트 실행</li>
+      <li>- <strong>type : "normal"</strong> 일반적인 아코디언 "normal", 항상 한개는 열린 상태 "single", 토글 개별로 작동 "multi"</li>
+      <li>- <strong>notslide : false</strong> 컨텐츠 block/hidden 없이 class만 변경 시킬때 true</li>
+      <li>- <strong>reset : false</strong> hover 값이 false일 경우 blur/true일 경우 mouseleave 이벤트 발생 시 초기 상태로 돌아가야 할 경우 true or "class"</li>
+      <li>- <strong>effoverlap : false</strong> 열려있는 컨텐츠가 있을 경우 애니메이션 효과 없앨 경우 true</li>
+      <li>- <strong>effect : "slide"</strong> 애니메이션 type. slide or fade</li>
+      <li>- <strong>hover : false</strong> 마우스 hover/leave로 열리고 닫힐 경우 true</li>
+      <li>- <strong>activeidx : false</strong> 페이지 로딩시 활성화 시킬 목록이 있을때 해당 목록 index번호를 지정</li>
+      <li>- <strong>anitime : 300</strong> 애니메이션 지속 시간</li>
+      <li>- <strong>acttit : '[data-act="title"]'</strong> 아코디언 목록의 주제영역</li>
+      <li>- <strong>actbtn : '[data-act="btn"]'</strong> 아코디언 토글 버튼이 별도로 있을 경우. 생략 시, acttit 값을 가져감</li>
+      <li>- <strong>actcont : '[data-act="cont"]'</strong> 아코디언 목록의 컨텐츠영역</li>
+      <li>- <strong>actclose : '[data-act="close"]'</strong> 닫기 버튼이 별도로 존재할 경우</li>
+      <li>- <strong>actcssname : "active"</strong> 활성화 시 클래스명</li>
+      <li>- <strong>media : null</strong> 해상도에 따라 실행될때 사용. ex) "media":"(max-width: 767px)"</li>
+      <li>- <strong>기본 설정 변경 시</strong> data-accordion='{"type" : "single", "acttit" : ".title"}'</li>
+    </ul>
+  </div>
+
+  <h2 class="guide-title">grid.case1</h2>
+  <style>
+    .guide-grid { overflow:hidden; text-align:center; }
+    .guide-grid .item { float:left; width:50%; padding:0 0 0 1px; vertical-align:top; font-size:14px; vertical-align:top; box-sizing:border-box; }
+    .guide-grid .btn { float:left; width:50%; padding:10px; margin-left:-1px; vertical-align:top; font-size:14px; vertical-align:top; border:1px solid #f5f5f5;box-sizing:border-box; }
+    .guide-grid .cont { float:left; width:50%; padding:10px; margin-top:-1px; margin-left:-1px; vertical-align:top; color:#999; font-size:14px; border:1px solid #f5f5f5;box-sizing:border-box; }
+    .guide-grid .item.active .cont { border-color:#ccc; background:#f5f5f5; color:#111; }
+    .guide-grid .item.active .cont.active { position:relative; border-color:#111; }
+    .guide-grid .item.active .btn { border-color:#ccc; }
+    .guide-grid .item.active .btn.active { position:relative; background:#111; border-color:#111; color:#fff; }
+  </style>
+  <div class="guide-grid" data-grid='{"name":"case1","cssname":"active","item":".item","btn":".btn","cont":".cont"}'>
+    <div class="item">
+      <button type="button" class="btn active">btn1-1</button>
+      <button type="button" class="btn">btn1-2</button>
+      <div class="cont">
+        cont1-1
+      </div>
+      <div class="cont">
+        cont1-2
+      </div>
+    </div>
+    <div class="item">
+      <button type="button" class="btn">btn2-1</button>
+      <button type="button" class="btn">btn2-2</button>
+      <div class="cont">
+        cont2-1
+      </div>
+      <div class="cont">
+        cont2-2
+      </div>
+    </div>
+  </div>
+  <pre><code class="html">
+      &lt;div class="guide-grid" data-grid='{"name":"case1","cssname":"active","item":".item","btn":".btn","cont":".cont"}'&gt;
+        &lt;div class="item"&gt;
+          &lt;button type="button" class="btn active"&gt;btn1-1&lt;/button&gt;
+          &lt;button type="button" class="btn"&gt;btn1-2&lt;/button&gt;
+          &lt;div class="cont"&gt;cont1-1&lt;/div&gt;
+          &lt;div class="cont"&gt;cont1-2&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="item"&gt;
+          &lt;button type="button" class="btn"&gt;btn2-1&lt;/button&gt;
+          &lt;button type="button" class="btn"&gt;btn2-2&lt;/button&gt;
+          &lt;div class="cont"&gt;cont2-1&lt;/div&gt;
+          &lt;div class="cont"&gt;cont2-2&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    </code></pre>
+  <div class="guide-cont">
+    <ul class="guide-list">
+      <li>- <strong>data-grid='{"name":"case1"}'</strong> 일 경우 공통 스크립트 실행</li>
+      <li>- "btn" 클릭시, 버튼이 포함된 "item"이 활성화 되고, "btn"에 해당하는 "cont" 활성화될때 사용. 활성화된 영역에 클래스를 추가시키고, 비활성화된 영역의 클래스를 삭제.</li>
+      <li>- <strong>"name"</strong> grid 케이스명</li>
+      <li>- <strong>"cssname"</strong> 활성화된 영역에 추가될 클래스명</li>
+      <li>- <strong>"item"</strong> "btn", "cont" 그룹핑 영역</li>
+      <li>- <strong>"btn"</strong> 클릭 이벤트 발생시킬 버튼</li>
+      <li>- <strong>"cont"</strong> 이벤트 발생시, 버튼과 매칭되는 컨텐츠</li>
+    </ul>
+  </div>
+
+  <h2 class="guide-title">슬라이드</h2>
+  <div class="guide-cont">
+    <ul class="guide-list">
+      <li>- <strong>data-slide='-중략-'</strong> 일 경우 공통 스크립트 실행</li>
+      <li>- <strong>"option":{기본설정}</strong><br />
+        dots: true, slidesToShow: 1, slidesToScroll: 1, variableWidth: false, infinite: false, fade: false, autoplay: false, speed:600, autoplaySpeed: 3000
+      </li>
+      <li>- <strong>"option":{"arrows":false}</strong> slick에 없는 속성으로 이전/다음 버튼 한번에 노출 안시킬때 사용.</li>
+      <li>- <strong>"option":{"dots":"custom"}</strong> slick에 없는 속성값으로 페이징 버튼에 텍스트(data-title 값을 가져감)를 변경할때 사용.</li>
+      <li>- <strong>"option":{"pagecount":true}</strong> slick에 없는 속성으로 현재 페이지 번호 표시여부 예) 1/10</li>
+      <li>- option은 <a href="http://kenwheeler.github.io/slick/" target="_blank" class="txt-line-2">slick settings</a>를 참조</li>
+    </ul>
+  </div>
+
+  <pre><code class="html">
+      &lt;div class="guide-slide-list" data-slide='{"case":"case1","option":{"autoplay":true, "dots":"custom"}}'&gt;
+        &lt;div class="slide" data-title='slide title 1'&gt;&lt;a href="#none" class="inner"&gt;1&lt;/a&gt;&lt;/div&gt;
+        &lt;div class="slide" data-title='slide title 2'&gt;&lt;a href="#none" class="inner"&gt;2&lt;/a&gt;&lt;/div&gt;
+        &lt;div class="slide" data-title='slide title 3'&gt;&lt;a href="#none" class="inner"&gt;3&lt;/a&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    </code></pre>
+  <div class="guide-slide-list" data-slide='{"case":"case1","option":{"autoplay":true, "dots":"custom"}}'>
+    <div class="slide" data-title='slide title 1'><a href="#none" class="inner">1</a></div>
+    <div class="slide" data-title='slide title 2'><a href="#none" class="inner">2</a></div>
+    <div class="slide" data-title='slide title 3'><a href="#none" class="inner">3</a></div>
+  </div>
+
+  <pre><code class="html">
+      &lt;div class="guide-slide-list" data-slide='{"case":"case2","option":{"arrows":false, "pagecount":true}}'&gt;
+        &lt;div class="slide"&gt;&lt;a href="#none" class="inner"&gt;1&lt;/a&gt;&lt;/div&gt;
+        &lt;div class="slide"&gt;&lt;a href="#none" class="inner"&gt;2&lt;/a&gt;&lt;/div&gt;
+        &lt;div class="slide"&gt;&lt;a href="#none" class="inner"&gt;3&lt;/a&gt;&lt;/div&gt;
+        &lt;div class="slide"&gt;&lt;a href="#none" class="inner"&gt;4&lt;/a&gt;&lt;/div&gt;
+        &lt;div class="slide"&gt;&lt;a href="#none" class="inner"&gt;5&lt;/a&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    </code></pre>
+  <div class="guide-slide-list" data-slide='{"case":"case2","option":{"arrows":false, "pagecount":true}}'>
+    <div class="slide"><a href="#none" class="inner">1</a></div>
+    <div class="slide"><a href="#none" class="inner">2</a></div>
+    <div class="slide"><a href="#none" class="inner">3</a></div>
+    <div class="slide"><a href="#none" class="inner">4</a></div>
+    <div class="slide"><a href="#none" class="inner">5</a></div>
+  </div>
+
+
+  <h2 class="guide-title">스크롤바</h2>
+  <div class="guide-cont" style="overflow:hidden;">
+    <div style="margin:0;height:100px;background:#fff;" class="test1" data-scrollbar='{"axis":"x"}'>
+      <ul style="white-space:nowrap;">
+        <li><pre style="width:470px;"><code class="html">&lt;div data-scrollbar='{"axis":"x"}'&gt;&lt;!-- 내용 --&gt;&lt;/div&gt;</code></pre></li>
+        <li>가로스크롤 가로스크롤 가로스크롤 가로스크롤 가로스크롤 가로스크롤 가로스크롤 가로스크롤 가로스크롤 가로스크롤</li>
+        <li>3</li>
+      </ul>
+    </div>
+
+    <div style="margin:20px 0 0 0;height:100px;background:#fff;" class="test1" data-scrollbar='{"axis":"y"}'>
+      <ul>
+        <li><pre style="width:470px;"><code class="html">&lt;div data-scrollbar='{"axis":"y"}'&gt;&lt;!-- 내용 --&gt;&lt;/div&gt;</code></pre></li>
+        <li>세로스크롤 1</li>
+        <li>세로스크롤 2</li>
+        <li>세로스크롤 3</li>
+        <li>세로스크롤 4</li>
+        <li>세로스크롤 5</li>
+      </ul>
+    </div>
+
+    <div style="margin:20px 0 0 0;height:100px;background:#fff;" class="test1" data-scrollbar='{"axis":"yx","autohide":true}'>
+      <ul style="white-space:nowrap;">
+        <li><pre style="width:470px;"><code class="html">&lt;div data-scrollbar='{"axis":"yx","autohide":true}'&gt;&lt;!-- 내용 --&gt;&lt;/div&gt;</code></pre></li>
+        <li>가로스크롤 가로스크롤 가로스크롤 가로스크롤 가로스크롤 가로스크롤 가로스크롤 가로스크롤 가로스크롤 가로스크롤</li>
+        <li>세로스크롤 1</li>
+        <li>세로스크롤 2</li>
+        <li>세로스크롤 3</li>
+        <li>세로스크롤 4</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="guide-title">Swipe</h2>
+  <style>
+    .guide-swipe-wrap { width:100%; height:90px; background:#f5f5f5; }
+    .guide-swipe-wrap + .guide-swipe-wrap { margin-top:10px; }
+    .guide-swipe-child { width:1200px; height:90px; overflow:hidden; }
+    .guide-swipe-item { position:relative; float:left; width:200px; height:100%; padding:20px; box-sizing:border-box; border-left:1px solid #ddd; }
+  </style>
+  <div class="guide-swipe-wrap" data-swipe='{"type":"case1","breakel":".guide-swipe-item"}'>
+    <div class="guide-swipe-child">
+      <div class="guide-swipe-item">1</div>
+      <div class="guide-swipe-item">2</div>
+      <div class="guide-swipe-item">3</div>
+      <div class="guide-swipe-item">4</div>
+      <div class="guide-swipe-item">5</div>
+      <div class="guide-swipe-item">6</div>
+    </div>
+  </div>
+  <div class="guide-swipe-wrap" data-swipe='{"type":"case1"}'>
+      <span style="display:inline-block; padding:20px; white-space:nowrap;">
+        일이삼사오육칠팔구십. 일이삼사오육칠팔구십. 일이삼사오육칠팔구십. 일이삼사오육칠팔구십. 일이삼사오육칠팔구십. <a href="#none">일이삼사오육칠팔구십</a>. 일이삼사오육칠팔구십.
+      </span>
+  </div>
+  <pre><code class="html">
+      &lt;div class="guide-swipe-wrap" data-swipe='{"type":"case1","breakel":".guide-swipe-item"}'&gt; &lt;!-- js 실행 후 css 추가 : swipe-off swipe-guide swipe-initialized --&gt;
+        &lt;div class="guide-swipe-child"&gt; &lt;!-- js 실행 후 css 추가 : swipe-cont --&gt;
+          &lt;div class="guide-swipe-item"&gt;1&lt;/div&gt;
+          &lt;div class="guide-swipe-item"&gt;2&lt;/div&gt;
+          &lt;div class="guide-swipe-item"&gt;3&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    </code></pre>
+  <div class="guide-cont">
+    <ul class="guide-list">
+      <li>- <strong>data-swipe=''</strong> 일 경우 공통 스크립트 실행</li>
+      <li>- <strong>.swipe-initialized</strong> 스크립트 실행 후 클래스 추가</li>
+      <li>- <strong>.swipe-off</strong> 스와이프 안될 경우 클래스 추가</li>
+      <li>- <strong>.swipe-guide</strong> 스와이프 될 경우 클래스 추가. 사용자 액션 후 클래스 삭제.</li>
+      <li>- <strong>.swipe-cont</strong> 스크립트 실행 후 [data-swipe] 첫번째 자식노드에 클래스 추가. 실제로 left가 이동되는 노드임.</li>
+      <li>- 기본속성 : {type:"case1", guide:true, arrow:false, start:null, breakel:null}</li>
+      <li>- guide : 터치 가능할때 안내 아이콘 노출여부</li>
+      <li>- arrow : 이전/다음 버튼 노출여부</li>
+      <li>- start : 초기 실행시, 특정 위치로 보낸다면 ".active"처럼 셀렉터 넣어줌</li>
+      <li>- breakel : 자식 노드별로 움직일 경우 ".guide-swipe-item"처럼 셀렉터 넣어줌</li>
+    </ul>
+  </div>
+</div>
+<script>
+  $jq(document).ready(function() {
+    $jq('pre code').each(function(i, block) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+</body>
+</html>

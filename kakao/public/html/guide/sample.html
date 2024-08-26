@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>퍼블리싱 SAMPLE</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <link rel="shortcut icon" type="image/x-icon" href="../../images/common/favicon.ico" />
+  <link rel="apple-touch-icon-precomposed" href="../../images/common/apple-touch-icon.png" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <link rel="stylesheet" href="../../css/global.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/sub.css">
+  <link rel="stylesheet" type="text/css" href="rule.css">
+  <script src="../../js/ui.vendor.js"></script>
+  <script src="../../js/ui.js"></script>
+</head>
+
+<body>
+<div class="guide-container">
+  <h1 class="guide-logo"><a href="../index.html"><img src="g-logo.png" alt="청담 닷컴" /></a></h1>
+
+  <!-- tab // -->
+  <ol class="guide-tab">
+    <li class="tab-item"><a href="path.html">PATH</a></li>
+    <li class="tab-item active"><a href="sample.html">SAMPLE</a></li>
+    <li class="tab-item"><a href="js.html">SCRIPT</a></li>
+  </ol>
+  <!-- // tab -->
+
+  <h2 class="guide-title-2">기본폰트</h2>
+  <div class="guide-cont">
+    <ul class="guide-list">
+      <li>- [맑은 고딕] font-size:14px, color:#666</li>
+    </ul>
+  </div>
+
+  <!------------------------------------ 게시판 ------------------------------------>
+  <h2 class="guide-title">게시판</h2>
+  <h3 class="guide-title-2">게시판 리스트</h3>
+  <div class="guide-cont">
+    <table class="guide-tb-data">
+      <caption>게시판 정의</caption>
+      <colgroup><col style="width:60%" /><col /></colgroup>
+      <thead>
+      <tr>
+        <th scope="col">type</th>
+        <th scope="col">code</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>tb-col-1(No), tb-col-2(구분), tb-col-3(제목), tb-col-4(등록일), tb-col-5(조회)</td>
+        <td>
+          colgroup class 구분으로 width 정의
+        </td>
+      </tr>
+      <tr>
+        <td>mo-tb-hide</td>
+        <td>모바일에서 숨기는 경우</td>
+      </tr>
+      <tr>
+        <td>tb-subj</td>
+        <td>제목 좌측정렬 여백</td>
+      </tr>
+      <tr>
+        <td>mo-tb-1, mo-tb-2-1, mo-tb-2-2</td>
+        <td>모바일에서 표시되는 방식, 순서 정의</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="guide-cont-2">
+    <table class="board-list">
+      <caption>청담소식 목록</caption>
+      <colgroup><col class="tb-col-1" /><col class="tb-col-2" /><col class="tb-col-3" /><col class="tb-col-4" /><col class="tb-col-5" /></colgroup>
+      <thead>
+      <tr>
+        <th scope="col">No</th>
+        <th scope="col">구분</th>
+        <th scope="col">제목</th>
+        <th scope="col">등록일</th>
+        <th scope="col">조회</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td class="mo-tb-hide">10000</td>
+        <td class="mo-tb-2-1">NOTICE</td>
+        <td class="tb-subj mo-tb-1"><a href="#none" class="subj">April어학원 ‘하이스트 브랜드’6년 연속 1위 선정</a><span class="ir i-attach">첨부파일</span><span class="ico-txt">NEW</span></td>
+        <td class="mo-tb-2-2">2018.03.05</td>
+        <td class="mo-tb-hide">12,543</td>
+      </tr>
+      <tr>
+        <td class="mo-tb-hide">215</td>
+        <td class="mo-tb-2-1">NOTICE</td>
+        <td class="tb-subj mo-tb-1"><a href="#none" class="subj">아이가르텐 ‘2018 대한민국 하이스트 브랜드’2년 연속 1위 선정 아이가르텐 ‘2018 대한민국 하이스트 브랜드’2년 연속 1위 선정 아이가르텐 ‘2018 대한민국 하이스트 브랜드’2년 연속 1위 선정</a><span class="ico-txt">NEW</span></td>
+        <td class="mo-tb-2-2">2018.03.05</td>
+        <td class="mo-tb-hide">12,543</td>
+      </tr>
+      <tr>
+        <td class="mo-tb-hide">215</td>
+        <td class="mo-tb-2-1">NOTICE</td>
+        <td class="tb-subj mo-tb-1"><a href="#none" class="subj">April어학원 ‘대한민국 하이스트 브랜드’ 6년 연속 1위 선정</a><span class="ir i-attach">첨부파일</span></td>
+        <td class="mo-tb-2-2">2018.03.05</td>
+        <td class="mo-tb-hide">12,543</td>
+      </tr>
+      <tr>
+        <td colspan="5" class="no-data"><span class="ir-b i-nodata">검색 결과가 없습니다.</span></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="guide-title-2">게시판 상세보기</h3>
+  <div class="guide-cont">
+    <table class="guide-tb-data">
+      <caption>게시판 상세보기 정의</caption>
+      <colgroup><col style="width:60%" /><col /></colgroup>
+      <thead>
+      <tr>
+        <th scope="col">code</th>
+        <th scope="col">type</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>board-title-wrap(이벤트), board-title, <br /><strong>board-img, board-video, board-event, board-content</strong>, <br />board-source, board-tag, board-attatch</td>
+        <td>
+          각 영역별로 구분 (각 영역 추가, 삭제 용이)
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="guide-cont-2">
+    <div class="board-view">
+      <!-- <div class="board-title-wrap">
+        <span class="ico-txt-4">D-99</span>
+        <h3 class="board-title">겨울학기 장기재원생을 위해 청담과 April이 준비한 행운 뿜뿜! 선물 뿜뿜!</h3>
+        <dl class="board-info">
+          <dt>기간</dt>
+          <dd>2018.01.19 ~ 2018.12.31</dd>
+          <dt>조회</dt>
+          <dd>2,109</dd>
+        </dl>
+      </div> -->
+
+      <h3 class="board-title">[NOTICE] SKY캐슬식 입시코칭, 의원·장관 아빠 줄섰다</h3>
+      <dl class="board-info">
+        <dt>등록일</dt>
+        <dd>2019.01.14</dd>
+        <dt>조회</dt>
+        <dd>2,109</dd>
+      </dl>
+
+      <!-- 이미지 // -->
+      <div class="board-img">
+        <img src="../../images/@temp/@main-edu.jpg" alt="" />
+      </div>
+      <!-- // 이미지 -->
+
+      <!-- 동영상 //
+      <div class="board-video">
+        <div class="video-in">
+         <img src="../../images/@temp/@main-edu.jpg" alt="" />
+        </div>
+      </div>
+       // 동영상 -->
+
+      <!-- 이벤트 내용 //
+      <div class="board-event">
+        <img src="../../images/@temp/@main-edu.jpg" alt="내용 필수 alt" />
+        <div class="btn">
+          <button type="button" class="btn-t-2 btn-c-2">참여하기</button><br /><br />
+          <button type="button" class="btn-t-2 btn-c-2" disabled="disabled">참여완료</button>
+        </div>
+      </div>
+      // 이벤트 내용 -->
+
+      <div class="board-content">
+        <p><strong>논∙서술형 수행평가 대비를 위한 ‘인문학 기술 탐구’ 수업인 T4 특강이 1월에 개강합니다.</strong></p>
+        <p>T4란? 21세기 신기술을 기술/역사/철학/커리어 등 다양한 분야의 관점에서 다룸으로써 학생들의 독해력/표현력/사고력을 종합적으로 길러주는 인문학 수업으로 각종 논∙구술 평가와 통합교과 지문, 내신 수행평가에 대한 대응력을 높이고, 4차 산업혁명 시대를 대비한 기술 지식 습득과 인문학적 성찰의 경험을 제공하는 청담어학원의 과학∙인문학 커리큘럼입니다.(수업은 한국어로 진행) 겨울방학을 맞아 청담어학원만의 21세기형 독서토론∙논술 수업을 경험해보시기 바랍니다. 소수 정예로 진행되므로 관심 있으신 학부모님께서는 학원(02-516-9407)으로 빠른 연락 주세요.</p>
+      </div>
+
+      <!-- 출처 // -->
+      <div class="board-source">
+        <span class="ico-txt-3">출처</span>[톡톡에듀] 계획하고, 학습하고, 평가하라<a href="#none" class="copy">복사</a>
+      </div>
+      <!-- // 출처 -->
+
+      <!-- 관련태그 // -->
+      <div class="board-tag">
+        <a href="#none" class="tag">#청담어학원</a><a href="#none" class="tag">#중등교육</a><a href="#none" class="tag">#입시교육</a><a href="#none" class="tag">#창의교육</a>
+      </div>
+      <!-- // 관련태그 -->
+
+      <!-- 첨부파일 // -->
+      <ul class="board-attatch">
+        <li class="all-down ir-b i-file"><strong class="title">첨부파일 3개</strong><a href="#none">모두 저장하기</a> <span class="size">(1.2MB)</span></li>
+        <li class="only-down"><a href="#none">2018_겨울특강셔틀버스노선_최종.PDF</a> <span class="size">(0.1MB)</span></li>
+        <li class="only-down"><a href="#none">2018_겨울특강셔틀버스노선_최종.PDF</a> <span class="size">(0.1MB)</span></li>
+      </ul>
+      <!-- // 첨부파일 -->
+
+      <!-- 이전/다음글 // -->
+      <ul class="board-preview">
+        <li class="ir-b i-arr-2">
+          <em class="blind">이전글</em>
+          <span class="subject">이전 글이 없습니다.</span>
+        </li>
+        <li class="ir-b i-arr">
+          <em class="blind">다음글</em>
+          <span class="subject">
+            <a href="#none">청담어학원 11월 26일(월) 겨울학기 개강 청담어학원 11월 26일(월) 겨울학기 개강 청담어학원 11월 26일(월) 겨울학기 개강 청담어학원 11월 26일(월) 겨울학기 개강 청담어학원 11월 26일(월) 겨울학기 개강 청담어학원 11월 26일(월) 겨울학기 개강</a>
+          </span>
+        </li>
+      </ul>
+      <!-- // 이전/다음글 -->
+    </div>
+  </div>
+
+  <!------------------------------------ 폼 ------------------------------------>
+  <h2 class="guide-title">폼</h2>
+  <div class="guide-cont">
+    <table class="guide-tb-data mgt-20">
+      <caption>폼요소</caption>
+      <colgroup><col style="width:42%" /><col /></colgroup>
+      <thead>
+      <tr>
+        <th scope="col">type</th>
+        <th scope="col">code</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>blind로 숨기는 라벨의 경우 placeholder 내용까지 함께 표기.</td>
+        <td>
+          &lt;label for="fm-ipt-2" class="blind"&gt;‘-’없이 숫자만 입력해 주세요.&lt;/label&gt;<br />
+          &lt;input type="password" placeholder="‘-’없이 숫자만 입력해 주세요." id="fm-ipt-2" class="fm-ipt" /&gt;
+        </td>
+      </tr>
+      <tr>
+        <td>디자인상 표시되는 라벨이 있고, placeholder 에 텍스트가 있을 경우 placeholder 텍스트 내용을 blind로 삽입.</td>
+        <td>
+          &lt;label for="f-tel"&gt;상담 가능 연락처&lt;/label&gt;<br />
+          &lt;span class="blind"&gt;‘-’없이 숫자만 입력해 주세요.&lt;/span&gt;<br />
+          &lt;input type="text" id="f-tel" class="fm-ipt" placeholder="‘-’없이 숫자만 입력해 주세요." /&gt;
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <table class="guide-tb-data">
+      <caption>폼요소</caption>
+      <colgroup><col style="width:20%" /><col style="width:20%" /><col /></colgroup>
+      <thead>
+      <tr>
+        <th scope="col">type</th>
+        <th scope="col">class name</th>
+        <th scope="col">view</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>form label</td>
+        <td>fm-label</td>
+        <td>
+          <div class="fm-row">
+            <label for="f-title" class="fm-label">제목 *<span class="blind">필수항목</span></label>
+            <div class="fm-box">
+              <input type="text" placeholder="제목을 입력해 주세요." id="f-title" class="fm-ipt" />
+            </div>
+            <span class="fm-error-txt">제목을 입력해 주세요.</span><!-- 에러일 경우 classs: "active" 추가 -->
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>form input</td>
+        <td>fm-ipt</td>
+        <td>
+          <div class="fm-box">
+            <input type="text" placeholder="제목을 입력해 주세요." id="f-title-2" class="fm-ipt" />
+          </div>
+          <span class="fm-error-txt">제목을 입력해 주세요.</span><!-- 에러일 경우 classs: "active" 추가 -->
+        </td>
+      </tr>
+      <tr>
+        <td>form input error</td>
+        <td>fm-error</td>
+        <td>
+          <div class="fm-box">
+            <input type="text" placeholder="제목을 입력해 주세요." id="f-title-3" class="fm-ipt fm-error" /><!-- 에러일 경우 class="fm-error" 추가 -->
+          </div>
+          <span class="fm-error-txt active">제목을 입력해 주세요.</span><!-- 에러일 경우 classs: "active" 추가 -->
+        </td>
+      </tr>
+      <tr>
+        <td>form input disabled</td>
+        <td>disabled="disabled"</td>
+        <td>
+          <div class="fm-box">
+            <input type="text" disabled="disabled" placeholder="제목을 입력해 주세요." id="f-subj" class="fm-ipt" /><!-- 에러일 경우 class="fm-error" 추가 -->
+            <span class="fm-error-txt">제목을 입력해 주세요.</span><!-- 에러일 경우 class="active" 추가 -->
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>form select</td>
+        <td>fm-sel</td>
+        <td>
+          <div class="fm-box">
+            <textarea placeholder="내용을 입력해 주세요." id="f-des" class="fm-ta"></textarea>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>form select</td>
+        <td>fm-sel</td>
+        <td>
+          <div class="fm-box">
+            <label for="f-sel" class="blind">선택 * 필수항목</label>
+            <select id="f-sel" class="fm-sel">
+              <option value="">선택 *</option>
+              <option value="">건의사항</option>
+              <option value="">불편사항</option>
+              <option value="">제안사항</option>
+              <option value="">기타</option>
+            </select>
+            <span class="fm-error-txt">항목을 선택해 주세요.</span><!-- 에러일 경우 class="active" 추가 -->
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>form select error</td>
+        <td>fm-error</td>
+        <td>
+          <div class="fm-box">
+            <label for="f-sel-2" class="blind">선택 * 필수항목</label>
+            <select id="f-sel-2" class="fm-sel fm-error">
+              <option value="">선택 *</option>
+              <option value="">건의사항</option>
+              <option value="">불편사항</option>
+              <option value="">제안사항</option>
+              <option value="">기타</option>
+            </select>
+            <span class="fm-error-txt active">항목을 선택해 주세요.</span><!-- 에러일 경우 class="active" 추가 -->
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>form file</td>
+        <td></td>
+        <td>
+          <div class="fm-box">
+            <input type="file" id="f-attach" data-fakefile="file" />
+            <label for="f-attach" class="fm-file-btn">파일첨부</label>
+            <input type="text" data-fakefile="text" readonly="readonly" placeholder="파일을 선택해 주세요. (5MB 이하)" class="fm-ipt fm-file" />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>form col 3</td>
+        <td>fm-col-3</td>
+        <td>
+          <div class="fm-col-3">
+            <div class="fm-box fm-col-in-full">
+              <label for="f-time" class="blind">상담 가능 날짜 선택</label>
+              <input type="text" value="2019.01.23" id="f-time" class="fm-ipt" data-calendar='' /><!-- 에러일 경우 classs: "fm-error" 추가 -->
+            </div>
+            <div class="fm-box fm-col-in-half">
+              <label for="f-time-2" class="blind">상담 가능 시작 시간</label>
+              <select id="f-time-2" class="fm-sel"><!-- 에러일 경우 classs: "fm-error" 추가 -->
+                <option value="">상담 가능 시간 선택</option>
+                <option value="">가나다라마바사</option>
+                <option value="">가나다라마바사</option>
+              </select>
+            </div>
+            <div class="fm-box fm-col-in-half">
+              <label for="f-time-3" class="blind">상담 가능 종료 시간</label>
+              <select id="f-time-3" class="fm-sel"><!-- 에러일 경우 classs: "fm-error" 추가 -->
+                <option value="">가나다라마바사</option>
+                <option value="">가나다라마바사</option>
+              </select>
+            </div>
+          </div>
+          <span class="fm-error-txt">상담 가능 시간 선택을 선택해주세요.</span><!-- 에러일 경우 classs: "active" 추가 -->
+        </td>
+      </tr>
+      <tr>
+        <td>checkbox 1</td>
+        <td>fm-chk</td>
+        <td>
+          <input type="checkbox" id="f-chk-all" class="fm-chk" checked="checked"><label for="f-chk-all" class="fm-chk-i"><strong>약관 동의</strong></label>&nbsp;&nbsp;&nbsp;
+          <input type="checkbox" id="f-chk-all" class="fm-chk ty-2" checked="checked"><label for="f-chk-all" class="fm-chk-i"><strong>약관 동의</strong></label>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!------------------------------------ 버튼 ------------------------------------>
+  <h2 class="guide-title">버튼</h2>
+  <h3 class="guide-title-2">사이즈, 폰트, 스타일</h3>
+  <div class="guide-cont">
+    <table class="guide-tb-data">
+      <caption>버튼</caption>
+      <colgroup><col style="width:70%" /><col style="width:15%" /><col /></colgroup>
+      <thead>
+      <tr>
+        <th scope="col">type</th>
+        <th scope="col">class name</th>
+        <th scope="col">view</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>min-width:140px; height:60px; font-size:16px; padding:0 30px; line-height:3.75; font-weight:bold; border-radius:5px;</td>
+        <td>btn-t</td>
+        <td><a href="#none" class="btn-t btn-c">Button</a></td>
+      </tr>
+      <tr>
+        <td>min-width:140px; height:50px; font-size:16px; padding:0 16px; line-height:3.125; font-weight:bold; border-radius:5px;</td>
+        <td>btn-t-2</td>
+        <td><a href="#none" class="btn-t-2 btn-c">Button</a></td>
+      </tr>
+      <tr>
+        <td>min-width:100px; height:36px; padding:0 11px; line-height:2.4; font-weight:bold; border-radius:4px;</td>
+        <td>btn-t-3</td>
+        <td><a href="#none" class="btn-t-2 btn-c">Button</a></td>
+      </tr>
+      <tr>
+        <td>height:29px; border-radius:3px; box-sizing:border-box; font-size:12px; line-height:2.2;</td>
+        <td>btn-t-4</td>
+        <td><a href="#none" class="btn-t-2 btn-c">Button</a></td>
+      </tr>
+      <tr>
+        <td>min-width:160px; height:48px; padding:0 18px; border-radius:3px; box-sizing:border-box; line-height:3.4; font-weight:bold;</td>
+        <td>btn-t-5</td>
+        <td><a href="#none" class="btn-t-2 btn-c">Button</a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="guide-title-2">컬러</h3>
+  <div class="guide-cont">
+    <table class="guide-tb-data">
+      <caption>버튼</caption>
+      <colgroup><col style="width:50%" /><col style="width:35%" /><col /></colgroup>
+      <thead>
+      <tr>
+        <th scope="col">color</th>
+        <th scope="col">class name</th>
+        <th scope="col">view</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>color:#fff; background-color:#303f50;</td>
+        <td>btn-c</td>
+        <td><a href="#none" class="btn-t btn-c">Button</a></td>
+      </tr>
+      <tr>
+        <td>color:#303f50; border:solid 1px #303f50;</td>
+        <td>btn-c-2</td>
+        <td><a href="#none" class="btn-t btn-c-2">Button</a></td>
+      </tr>
+      <tr>
+        <td>background-color:#ccc; color:#fff; </td>
+        <td>disabled="disabled", class="disabled"</td>
+        <td><a href="#none" class="btn-t btn-c-2 disabled">Button</a></td>
+      </tr>
+      <tr>
+        <td>color:#000; border:solid 1px #666; background:#fff;</td>
+        <td></td>
+        <td><a href="#none" class="btn-t btn-c-3">Button</a></td>
+      </tr>
+      <tr>
+        <td>color:#333; border:solid 1px #999;</td>
+        <td></td>
+        <td><a href="#none" class="btn-t btn-c-4">Button</a></td>
+      </tr>
+      <tr>
+        <td>color:#333; border:solid 1px #333;</td>
+        <td></td>
+        <td><a href="#none" class="btn-t btn-c-5">Button</a></td>
+      </tr>
+      <tr>
+        <td>color:#000; border:solid 1px #000;</td>
+        <td></td>
+        <td><a href="#none" class="btn-t btn-c-6">Button</a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="guide-title-2">버튼 그룹</h3>
+  <div class="btn-wrap">
+    <span class="btn-in"><a href="#none" class="btn-t btn-c">목록</a></span>
+  </div>
+
+  <!------------------------------------ 탭 ------------------------------------>
+  <h2 class="guide-title">탭</h2>
+  <h3 class="guide-title-2">타입 1</h3>
+  <div class="guide-cont">
+    <ul class="guide-list-ty">
+      <li><strong>default</strong> : 60px (m:30px)</li>
+      <li><strong>cmgt</strong> : 90px (m:20px)</li>
+      <li><strong>cmgt-2</strong> : 40px (m:18px)</li>
+      <li><strong>cmgt-3</strong> : (m:16px)</li>
+      <li><strong>cmgt-4</strong> : 22px (m:6px)</li>
+    </ul>
+    <table class="guide-tb-data">
+      <caption>탭 정의</caption>
+      <colgroup><col style="width:60%" /><col /></colgroup>
+      <thead>
+      <tr>
+        <th scope="col">code</th>
+        <th scope="col">type</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>tab-col-2, tab-col-3</td>
+        <td>
+          모바일 한줄 col 갯수로 구분
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="guide-cont-3">
+    <ul class="tab tab-col-2">
+      <li class="tab-item active"><a href="#none" data-blind-title="tabSelTitle"><span class="mid">전체</span></a></li><!-- 선택시 classs: "active" 추가 -->
+      <li class="tab-item"><a href="#none" data-blind-title="tabSelTitle"><span class="mid">청담어학원</span></a></li>
+    </ul>
+    <h3 class="blind" id="tabSelTitle" title="선택">전체</h3>
+
+    <ul class="tab tab-col-2">
+      <li class="tab-item"><a href="#none" data-blind-title="tabSelTitle-2"><span class="mid">전체</span></a></li>
+      <li class="tab-item active"><a href="#none" data-blind-title="tabSelTitle-2"><span class="mid">청담어학원</span></a></li><!-- 선택시 classs: "active" 추가 -->
+      <li class="tab-item"><a href="#none" data-blind-title="tabSelTitle-2"><span class="mid">April어학원</span></a></li>
+      <li class="tab-item"><a href="#none" data-blind-title="tabSelTitle-2"><span class="mid">아이가르텐</span></a></li>
+      <li class="tab-item"><a href="#none" data-blind-title="tabSelTitle-2"><span class="mid">사이트이용</span></a></li>
+      <li class="tab-item"><a href="#none" data-blind-title="tabSelTitle-2"><span class="mid">기타</span></a></li>
+    </ul>
+    <h3 class="blind" id="tabSelTitle-2" title="선택">전체</h3>
+
+    <ul class="tab tab-col-3">
+      <li class="tab-item active"><a href="#none" data-blind-title="tabSelTitle-3"><span class="mid">전체</span></a></li><!-- 선택시 classs: "active" 추가 -->
+      <li class="tab-item"><a href="#none" data-blind-title="tabSelTitle-3"><span class="mid">청담어학원</span></a></li>
+      <li class="tab-item"><a href="#none" data-blind-title="tabSelTitle-3"><span class="mid">April어학원</span></a></li>
+    </ul>
+    <h3 class="blind" id="tabSelTitle-3" title="선택">전체</h3>
+
+    <ul class="tab tab-col-3">
+      <li class="tab-item"><a href="#none" data-blind-title="tabSelTitle-4"><span class="mid">전체</span></a></li>
+      <li class="tab-item active"><a href="#none" data-blind-title="tabSelTitle-4"><span class="mid">청담어학원</span></a></li><!-- 선택시 classs: "active" 추가 -->
+      <li class="tab-item"><a href="#none" data-blind-title="tabSelTitle-4"><span class="mid">April어학원</span></a></li>
+      <li class="tab-item"><a href="#none" data-blind-title="tabSelTitle-4"><span class="mid">아이가르텐</span></a></li>
+      <li class="tab-item"><a href="#none" data-blind-title="tabSelTitle-4"><span class="mid">사이트이용</span></a></li>
+      <li class="tab-item"><a href="#none" data-blind-title="tabSelTitle-4"><span class="mid">기타</span></a></li>
+    </ul>
+    <h3 class="blind" id="tabSelTitle-4" title="선택">전체</h3>
+
+    <ul class="tab ty-2 tab-col-2">
+      <li class="tab-item"><a href="#none" data-blind-title="tabSelTitle-5"><span class="mid">전체</span></a></li>
+      <li class="tab-item"><a href="#none" data-blind-title="tabSelTitle-5"><span class="mid">청담어학원</span></a></li><!-- 선택시 classs: "active" 추가 -->
+      <li class="tab-item ty-2 active"><a href="#none" data-blind-title="tabSelTitle-5"><span class="mid">April어학원</span></a></li>
+      <li class="tab-item"><a href="#none" data-blind-title="tabSelTitle-5"><span class="mid">아이가르텐</span></a></li>
+      <li class="tab-item"><a href="#none" data-blind-title="tabSelTitle-5"><span class="mid">사이트이용</span></a></li>
+      <li class="tab-item"><a href="#none" data-blind-title="tabSelTitle-5"><span class="mid">기타</span></a></li>
+    </ul>
+    <h3 class="blind" id="tabSelTitle-5" title="선택">전체</h3>
+
+    <h3 class="guide-title-2">타입 2</h3>
+    <div class="swipe-tab tab-2" data-swipe='{"type":"case1","guide":false,"arrow":true,"start":".active"}'>
+      <ul data-tab='{"acttit":".tab-item"}'>
+        <li data-act='tab' class="tab-item active"><a href="#program-course-1-1" title="선택됨"><span class="in">C1</span></a></li>
+        <li data-act='tab' class="tab-item"><a href="#program-course-1-2"><span class="in">C2</span></a></li>
+        <li data-act='tab' class="tab-item"><a href="#program-course-1-3"><span class="in">V1</span></a></li>
+        <li data-act='tab' class="tab-item"><a href="#program-course-1-4"><span class="in">A2</span></a></li>
+        <li data-act='tab' class="tab-item"><a href="#program-course-1-5"><span class="in">A3</span></a></li>
+        <li data-act='tab' class="tab-item"><a href="#program-course-1-6"><span class="in">F1</span></a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!------------------------------------ 컨텐츠 리스트 스타일 ------------------------------------>
+  <h2 class="guide-title">게시판 강조 리스트</h2>
+  <div class="guide-cont-2">
+    <div class="card-list" data-slide='{"case":"case3","option":{"autoplay":true, "arrows":false}}'>
+      <div class="slide">
+        <a href="#none">
+          <dl class="card-item">
+            <dt><span class="cap">NOTICE</span><span class="title">1 에이프릴어학원 대한민국 하이스트 브랜드 6년 연속 에이프릴어학원 대한민국 하이스트 브랜드 6년 연속 에이프릴어학원 대한민국 하이스트 브랜드 6년 연속</span></dt>
+            <dd class="date">2018.12.19</dd>
+            <dd class="hit">조회 2,109</dd>
+          </dl>
+        </a>
+      </div>
+      <div class="slide">
+        <a href="#none">
+          <dl class="card-item">
+            <dt><span class="cap">NOTICE</span><span class="title">2 에이프릴어학원 대한민국 하이스트 브랜드 6년 연속 에이프릴어학원 대한민국 하이스트 브랜드 6년 연속</span></dt>
+            <dd class="date">2018.12.19</dd>
+            <dd class="hit">조회 2,109</dd>
+          </dl>
+        </a>
+      </div>
+      <div class="slide">
+        <a href="#none">
+          <dl class="card-item">
+            <dt><span class="cap">NOTICE</span><span class="title">3 에이프릴어학원 대한민국 하이스트 브랜드 6년 연속 에이프릴어학원 대한민국 하이스트 브랜드 6년 연속</span></dt>
+            <dd class="date">2018.12.19</dd>
+            <dd class="hit">조회 2,109</dd>
+          </dl>
+        </a>
+      </div>
+      <div class="slide">
+        <a href="#none">
+          <dl class="card-item">
+            <dt><span class="cap">NOTICE</span><span class="title">4 에이프릴어학원 대한민국 하이스트 브랜드 6년 연속 에이프릴어학원 대한민국 하이스트 브랜드 6년 연속</span></dt>
+            <dd class="date">2018.12.19</dd>
+            <dd class="hit">조회 2,109</dd>
+          </dl>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="guide-title">컨텐츠 그리드 리스트</h2>
+  <div class="guide-cont">
+    <ul class="guide-list-ty">
+      <li><strong>default</strong> : 0</li>
+      <li><strong>grid-list cmgt</strong> : 20px (m:12px)</li>
+      <li><strong>grid-list-2 cmgt</strong> : 24px (m:12px)</li>
+      <li><strong>grid-list-3 cmgt</strong> : 32px (m:18px)</li>
+    </ul>
+    <table class="guide-tb-data">
+      <caption>탭 정의</caption>
+      <colgroup><col style="width:60%" /><col /></colgroup>
+      <thead>
+      <tr>
+        <th scope="col">type</th>
+        <th scope="col">icon</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>닷컴</td>
+        <td>
+          <span class="ico-video"><span class="ir i-video">동영상 컨텐츠</span></span>
+          <span class="ico-txt-2">N<span class="blind">EW</span></span><!-- 새 글 -->
+        </td>
+      </tr>
+      <tr>
+        <td>청담어학원</td>
+        <td>
+          <span class="ico-video"><span class="ir i-video">동영상 컨텐츠</span></span>
+          <span class="ico-txt-2">N<span class="blind">EW</span></span><!-- 새 글 -->
+        </td>
+      </tr>
+      <tr>
+        <td>April어학원</td>
+        <td>
+          <span class="ico-video"><span class="ir i-video">동영상 컨텐츠</span></span>
+          <span class="ico-txt-2">N<span class="blind">EW</span></span><!-- 새 글 -->
+        </td>
+      </tr>
+      <tr>
+        <td>아이가르텐</td>
+        <td>
+          <span class="ico-video"><span class="ir i-video">동영상 컨텐츠</span></span>
+          <span class="ico-txt-2">N<span class="blind">EW</span></span><!-- 새 글 -->
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="guide-title-2">그리드 리스트 1</h3>
+  <div class="guide-cont-3">
+    <ul class="grid-list">
+      <li class="grid-item">
+        <a href="#none" class="grid-link">
+          <div class="grid-img">
+            <img src="../../images/@temp/@grid-list-2.jpg" alt="" class="thumb" />
+            <span class="ico-txt-2">N<span class="blind">EW</span></span><!-- 새 글 -->
+            <!-- <span class="ico-video"><span class="ir i-video">동영상 컨텐츠</span></span> -->
+          </div>
+          <div class="grid-txt">
+            <dl class="grid-txt-in">
+              <dt class="title">[청담본원] 한국학생은 하루 15시간 공부를 하고있다 [청담본원] 한국학생은 하루 15시간 공부를 하고있다</dt>
+              <dd class="info">
+                <span class="hit"><span class="ir i-hit">조회수</span> 2,109</span>
+                <span class="date"><span class="ir i-date">등록일</span> 2019.01.14</span>
+              </dd>
+            </dl>
+          </div>
+        </a>
+      </li>
+      <li class="grid-item">
+        <a href="#none" class="grid-link">
+          <div class="grid-img">
+            <img src="../../images/@temp/@grid-list-2.jpg" alt="" class="thumb" />
+            <span class="ico-txt-2">N<span class="blind">EW</span></span><!-- 새 글 -->
+            <!-- <span class="ico-video"><span class="ir i-video">동영상 컨텐츠</span></span> -->
+          </div>
+          <div class="grid-txt">
+            <dl class="grid-txt-in">
+              <dt class="title">[청담본원] 한국학생은 하루 15시간 공부를 하고있다 [청담본원] 한국학생은 하루 15시간 공부를 하고있다</dt>
+              <dd class="info">
+                <span class="hit"><span class="ir i-hit">조회수</span> 2,109</span>
+                <span class="date"><span class="ir i-date">등록일</span> 2019.01.14</span>
+              </dd>
+            </dl>
+          </div>
+        </a>
+      </li>
+      <li class="grid-item">
+        <a href="#none" class="grid-link">
+          <div class="grid-img">
+            <img src="../../images/@temp/@grid-list-2.jpg" alt="" class="thumb" />
+            <span class="ico-video"><span class="ir i-video">동영상 컨텐츠</span></span>
+            <span class="ico-txt-2">N<span class="blind">EW</span></span><!-- 새 글 -->
+          </div>
+          <div class="grid-txt">
+            <dl class="grid-txt-in">
+              <dt class="title">[청담본원] 한국학생은 하루 15시간 공부를 하고있다 [청담본원] 한국학생은 하루 15시간 공부를 하고있다</dt>
+              <dd class="info">
+                <span class="hit"><span class="ir i-hit">조회수</span> 2,109</span>
+                <span class="date"><span class="ir i-date">등록일</span> 2019.01.14</span>
+              </dd>
+            </dl>
+          </div>
+        </a>
+      </li>
+      <li class="grid-item">
+        <a href="#none" class="grid-link">
+          <div class="grid-img">
+            <img src="../../images/@temp/@grid-list-2.jpg" alt="" class="thumb" />
+            <span class="ico-video"><span class="ir i-video">동영상 컨텐츠</span></span>
+            <span class="ico-txt-2">N<span class="blind">EW</span></span><!-- 새 글 -->
+          </div>
+          <div class="grid-txt">
+            <dl class="grid-txt-in">
+              <dt class="title">[청담본원] 한국학생은 하루 15시간 공부를 하고있다 [청담본원] 한국학생은 하루 15시간 공부를 하고있다</dt>
+              <dd class="info">
+                <span class="hit"><span class="ir i-hit">조회수</span> 2,109</span>
+                <span class="date"><span class="ir i-date">등록일</span> 2019.01.14</span>
+              </dd>
+            </dl>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <h3 class="guide-title-2">그리드 리스트 2 (연관컨텐츠 - 5개부터 hidden)</h3>
+  <div class="guide-cont-3">
+    <ul class="grid-list related">
+      <li class="grid-item">
+        <a href="#none" class="grid-link">
+          <div class="grid-img">
+            <img src="../../images/@temp/@grid-list-2.jpg" alt="" class="thumb" />
+            <span class="ico-video"><span class="ir i-video">동영상 컨텐츠</span></span>
+            <span class="ico-txt-2">N<span class="blind">EW</span></span><!-- 새 글 -->
+          </div>
+          <div class="grid-txt">
+            <dl class="grid-txt-in">
+              <dt class="title">[청담본원] 한국학생은 하루 15시간 공부를 하고있다 [청담본원] 한국학생은 하루 15시간 공부를 하고있다</dt>
+              <dd class="info">
+                <span class="hit"><span class="ir i-hit">조회수</span> 2,109</span>
+                <span class="date"><span class="ir i-date">등록일</span> 2019.01.14</span>
+              </dd>
+            </dl>
+          </div>
+        </a>
+      </li>
+      <li class="grid-item">
+        <a href="#none" class="grid-link">
+          <div class="grid-img">
+            <img src="../../images/@temp/@grid-list-2.jpg" alt="" class="thumb" />
+            <span class="ico-video"><span class="ir i-video">동영상 컨텐츠</span></span>
+            <span class="ico-txt-2">N<span class="blind">EW</span></span><!-- 새 글 -->
+          </div>
+          <div class="grid-txt">
+            <dl class="grid-txt-in">
+              <dt class="title">[청담본원] 한국학생은 하루 15시간 공부를 하고있다 [청담본원] 한국학생은 하루 15시간 공부를 하고있다</dt>
+              <dd class="info">
+                <span class="hit"><span class="ir i-hit">조회수</span> 2,109</span>
+                <span class="date"><span class="ir i-date">등록일</span> 2019.01.14</span>
+              </dd>
+            </dl>
+          </div>
+        </a>
+      </li>
+      <li class="grid-item">
+        <a href="#none" class="grid-link">
+          <div class="grid-img">
+            <img src="../../images/@temp/@grid-list-2.jpg" alt="" class="thumb" />
+            <span class="ico-video"><span class="ir i-video">동영상 컨텐츠</span></span>
+            <span class="ico-txt-2">N<span class="blind">EW</span></span><!-- 새 글 -->
+          </div>
+          <div class="grid-txt">
+            <dl class="grid-txt-in">
+              <dt class="title">[청담본원] 한국학생은 하루 15시간 공부를 하고있다 [청담본원] 한국학생은 하루 15시간 공부를 하고있다</dt>
+              <dd class="info">
+                <span class="hit"><span class="ir i-hit">조회수</span> 2,109</span>
+                <span class="date"><span class="ir i-date">등록일</span> 2019.01.14</span>
+              </dd>
+            </dl>
+          </div>
+        </a>
+      </li>
+      <li class="grid-item">
+        <a href="#none" class="grid-link">
+          <div class="grid-img">
+            <img src="../../images/@temp/@grid-list-2.jpg" alt="" class="thumb" />
+            <span class="ico-video"><span class="ir i-video">동영상 컨텐츠</span></span>
+            <span class="ico-txt-2">N<span class="blind">EW</span></span><!-- 새 글 -->
+          </div>
+          <div class="grid-txt">
+            <dl class="grid-txt-in">
+              <dt class="title">[청담본원] 한국학생은 하루 15시간 공부를 하고있다 [청담본원] 한국학생은 하루 15시간 공부를 하고있다</dt>
+              <dd class="info">
+                <span class="hit"><span class="ir i-hit">조회수</span> 2,109</span>
+                <span class="date"><span class="ir i-date">등록일</span> 2019.01.14</span>
+              </dd>
+            </dl>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <h3 class="guide-title-2">그리드 리스트 3</h3>
+  <div class="guide-cont-3">
+    <ul class="grid-list-2">
+      <!-- 포인트 썸네일 // -->
+      <li class="grid-item point">
+        <a href="#none" class="grid-link">
+          <div class="grid-img">
+            <img src="../../images/@temp/@grid-list.jpg" alt="" class="thumb" />
+          </div>
+          <div class="grid-txt">
+            <span class="flag">
+              <span class="ico-video"><span class="ir i-video">동영상 컨텐츠</span></span>
+              <span class="ico-txt-2">NEW</span><!-- 새 글 -->
+            </span>
+            <dl class="grid-txt-in">
+              <dt class="title">[청담본원] 한국학생은 하루 15시간 공부를 하고있다 [청담본원] 한국학생은 하루 15시간 공부를 하고있다</dt>
+              <dd class="info">
+                <span class="hit"><span class="ir i-hit-2">조회수</span> 2,109</span>
+                <span class="date"><span class="ir i-date-2">등록일</span> 2019.01.14</span>
+              </dd>
+            </dl>
+          </div>
+        </a>
+      </li>
+      <!-- // 포인트 썸네일 -->
+
+      <li class="grid-item">
+        <a href="#none" class="grid-link">
+          <div class="grid-img">
+            <img src="../../images/@temp/@grid-list-2.jpg" alt="" class="thumb" />
+            <span class="ico-video"><span class="ir i-video">동영상 컨텐츠</span></span>
+            <span class="ico-txt-2">N<span class="blind">EW</span></span><!-- 새 글 -->
+          </div>
+          <div class="grid-txt">
+            <dl class="grid-txt-in">
+              <dt class="title">[청담본원] 한국학생은 하루 15시간 공부를 하고있다 [청담본원] 한국학생은 하루 15시간 공부를 하고있다</dt>
+              <dd class="info">
+                <span class="hit"><span class="ir i-hit">조회수</span> 2,109</span>
+                <span class="date"><span class="ir i-date">등록일</span> 2019.01.14</span>
+              </dd>
+            </dl>
+          </div>
+        </a>
+      </li>
+      <li class="grid-item">
+        <a href="#none" class="grid-link">
+          <div class="grid-img">
+            <img src="../../images/@temp/@grid-list-2.jpg" alt="" class="thumb" />
+            <span class="flag">
+              <span class="ico-video"><span class="ir i-video">동영상 컨텐츠</span></span>
+            </span>
+          </div>
+          <div class="grid-txt">
+            <dl class="grid-txt-in">
+              <dt class="title">[청담본원] 한국학생은 하루 15시간 공부를 하고있다 [청담본원] 한국학생은 하루 15시간 공부를 하고있다</dt>
+              <dd class="info">
+                <span class="hit"><span class="ir i-hit">조회수</span> 2,109</span>
+                <span class="date"><span class="ir i-date">등록일</span> 2019.01.14</span>
+              </dd>
+            </dl>
+          </div>
+        </a>
+      </li>
+      <li class="grid-item">
+        <a href="#none" class="grid-link">
+          <div class="grid-img">
+            <img src="../../images/@temp/@grid-list-2.jpg" alt="" class="thumb" />
+            <span class="flag">
+              <span class="ico-video"><span class="ir i-video">동영상 컨텐츠</span></span>
+            </span>
+          </div>
+          <div class="grid-txt">
+            <dl class="grid-txt-in">
+              <dt class="title">[청담본원] 한국학생은 하루 15시간 공부를 하고있다 [청담본원] 한국학생은 하루 15시간 공부를 하고있다</dt>
+              <dd class="info">
+                <span class="hit"><span class="ir i-hit">조회수</span> 2,109</span>
+                <span class="date"><span class="ir i-date">등록일</span> 2019.01.14</span>
+              </dd>
+            </dl>
+          </div>
+        </a>
+      </li>
+    </ul>
+
+    <ul class="grid-list-2 cmgt">
+      <!-- 포인트 썸네일 // -->
+      <li class="grid-item point">
+        <a href="#none" class="grid-link">
+          <div class="grid-img">
+            <img src="../../images/@temp/@grid-list.jpg" alt="" class="thumb" />
+          </div>
+          <div class="grid-txt">
+            <span class="flag-2"><!-- 포인트 썸네일 동영상 아닌경우 "flag-2" -->
+              <span class="ico-txt-2">NEW</span><!-- 새 글 -->
+            </span>
+            <dl class="grid-txt-in">
+              <dt class="title">[청담본원] 한국학생은 하루 15시간 공부를 하고있다 [청담본원] 한국학생은 하루 15시간 공부를 하고있다</dt>
+              <dd class="date"><span class="ir i-date-2">등록일</span> 2019.01.14</dd>
+            </dl>
+          </div>
+        </a>
+      </li>
+      <!-- // 포인트 썸네일 -->
+
+      <li class="grid-item">
+        <a href="#none" class="grid-link">
+          <div class="grid-img">
+            <img src="../../images/@temp/@grid-list-2.jpg" alt="" class="thumb" />
+            <span class="ico-video"><span class="ir i-video">동영상 컨텐츠</span></span>
+            <span class="ico-txt-2">N<span class="blind">EW</span></span><!-- 새 글 -->
+          </div>
+          <div class="grid-txt">
+            <dl class="grid-txt-in">
+              <dt class="title">[청담본원] 한국학생은 하루 15시간 공부를 하고있다 [청담본원] 한국학생은 하루 15시간 공부를 하고있다</dt>
+              <dd class="date"><span class="ir i-date">등록일</span> 2019.01.14</dd>
+            </dl>
+          </div>
+        </a>
+      </li>
+      <li class="grid-item">
+        <a href="#none" class="grid-link">
+          <div class="grid-img">
+            <img src="../../images/@temp/@grid-list-2.jpg" alt="" class="thumb" />
+            <span class="ico-video"><span class="ir i-video">동영상 컨텐츠</span></span>
+            <span class="ico-txt-2">N<span class="blind">EW</span></span><!-- 새 글 -->
+          </div>
+          <div class="grid-txt">
+            <dl class="grid-txt-in">
+              <dt class="title">[청담본원] 한국학생은 하루 15시간 공부를 하고있다 [청담본원] 한국학생은 하루 15시간 공부를 하고있다</dt>
+              <dd class="date"><span class="ir i-date">등록일</span> 2019.01.14</dd>
+            </dl>
+          </div>
+        </a>
+      </li>
+      <li class="grid-item">
+        <a href="#none" class="grid-link">
+          <div class="grid-img">
+            <img src="../../images/@temp/@grid-list-2.jpg" alt="" class="thumb" />
+            <span class="ico-video"><span class="ir i-video">동영상 컨텐츠</span></span>
+            <span class="ico-txt-2">N<span class="blind">EW</span></span><!-- 새 글 -->
+          </div>
+          <div class="grid-txt">
+            <dl class="grid-txt-in">
+              <dt class="title">[청담본원] 한국학생은 하루 15시간 공부를 하고있다 [청담본원] 한국학생은 하루 15시간 공부를 하고있다</dt>
+              <dd class="date"><span class="ir i-date">등록일</span> 2019.01.14</dd>
+            </dl>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <h3 class="guide-title-2">그리드 리스트 4</h3>
+  <div class="guide-cont-3">
+    <ul class="grid-list-3">
+      <li class="grid-item-2">
+        <a href="#none" class="grid-link">
+          <div class="grid-img-3">
+            <img src="../../images/@temp/@event.jpg" alt="" class="thumb" />
+            <span class="flag">
+              <span class="ico-txt-4">D-99</span><!-- 남은 날짜 -->
+            </span>
+          </div>
+          <div class="grid-txt-3">
+            <dt class="title">2018 April 가을 이벤트: 비나 쿠션 주인 찾기 대소동!<span class="ico-txt">NEW</span></dt>
+            <dd class="date"><span class="ir i-date">이벤트 기간</span> 2018.01.19 ~ 2018.12.31</dd>
+          </div>
+        </a>
+      </li>
+      <li class="grid-item-2">
+        <a href="#none" class="grid-link">
+          <div class="grid-img-3">
+            <img src="../../images/@temp/@event.jpg" alt="" class="thumb" />
+            <span class="flag">
+              <span class="ico-txt-4">D-99</span><!-- 남은 날짜 -->
+            </span>
+          </div>
+          <div class="grid-txt-3">
+            <dt class="title">2018 April 가을 이벤트: 비나 쿠션 주인 찾기 대소동!</dt>
+            <dd class="date"><span class="ir i-date">이벤트 기간</span> 2018.01.19 ~ 2018.12.31</dd>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!------------------------------------ 페이징 ------------------------------------>
+  <h2 class="guide-title">페이징</h2>
+  <div class="guide-cont">
+    <ul class="guide-list-ty">
+      <li><strong>default</strong> : 20px (m:12px)</li>
+      <li><strong>cmgt</strong> : 60px (m:30px)</li>
+    </ul>
+    <!-- paging // -->
+    <div class="paging">
+      <a href="#none" class="pag-first"><span class="ir i-pag-first">first</span></a>
+      <a href="#none" class="pag-prev"><span class="ir i-pag-prev">prev</span></a>
+      <span class="num">
+        <span class="active" title="현재페이지">1</span><!-- 선택시 -->
+        <a href="#none">2</a>
+        <a href="#none">3</a>
+        <a href="#none">4</a>
+        <a href="#none">5</a>
+        <span class="pag-total">/ 16</span><!-- 모바일(767) 케이스만 총 페이지 수 -->
+      </span>
+      <a href="#none" class="pag-next"><span class="ir i-pag-next">next</span></a>
+      <a href="#none" class="pag-last"><span class="ir i-pag-last">last</span></a>
+    </div>
+    <!-- // paging -->
+  </div>
+
+  <!------------------------------------ 검색 ------------------------------------>
+  <h2 class="guide-title">컨텐츠 하단 검색</h2>
+  <div class="guide-cont">
+    <ul class="guide-list-ty">
+      <li><strong>default</strong> : 40px (m:25px)</li>
+    </ul>
+    <!-- 게시판 검색 // -->
+    <div class="board-sch">
+      <div class="sch-sel">
+        <label for="f-search-sel" class="blind">검색 카테고리</label>
+        <select id="f-search-sel" class="fm-sel-2">
+          <option value="">제목</option>
+          <option value="">제목+내용</option>
+          <option value="">내용</option>
+        </select>
+      </div>
+      <div class="sch-ipt">
+        <label for="f-search-ipt" class="blind">검색어 입력</label>
+        <input type="text" id="f-search-ipt" class="fm-ipt-2" placeholder="검색어를 입력해 주세요." />
+        <button type="button" class="btn-sch"><span class="ir i-sch">검색</span></button>
+      </div>
+    </div>
+    <!-- // 게시판 검색 -->
+
+    <!-- 게시판 검색 // -->
+    <div class="board-sch bs-col-3">
+      <div class="sch-sel">
+        <label for="f-search-sel-2" class="blind">검색 카테고리</label>
+        <select id="f-search-sel-2" class="fm-sel-2">
+          <option value="">전체</option>
+          <option value="">NOTICE</option>
+          <option value="">NEWS</option>
+        </select>
+      </div>
+      <div class="sch-sel">
+        <label for="f-search-sel-3" class="blind">검색 카테고리 2</label>
+        <select id="f-search-sel-3" class="fm-sel-2">
+          <option value="">제목</option>
+          <option value="">제목+내용</option>
+          <option value="">내용</option>
+        </select>
+      </div>
+      <div class="sch-ipt">
+        <label for="f-search-ipt" class="blind">검색어 입력</label>
+        <input type="text" id="f-search-ipt" class="fm-ipt-2" placeholder="검색어를 입력해 주세요." />
+        <button type="button" class="btn-sch"><span class="ir i-sch">검색</span></button>
+      </div>
+    </div>
+    <!-- // 게시판 검색 -->
+  </div>
+
+  <!------------------------------------ 아코디언 ------------------------------------>
+  <h2 class="guide-title">아코디언</h2>
+  <div class="guide-cont">
+    <ul class="guide-list-ty">
+      <li><strong>cmgt</strong> : 20px (m:18px)</li>
+      <li><strong>cmgt-2</strong> : 30px (m:12px)</li>
+    </ul>
+  </div>
+  <div class="guide-cont-3">
+    <div data-accordion='' class="accordion">
+      <div class="acc-item">
+        <a href="#none" data-act='title' class="acc-title">
+          <span class="cate">청담어학원</span>
+          <span class="cap">Q</span>
+          <span class="subj">[스마트러닝] 청담3.0, 왜 스마트러닝인가요?</span>
+        </a>
+        <div data-act='cont' class="acc-cont">
+          <div class="acc-cont-in">
+            <p>이제 영어는 말하고 쓰기 중심의 ‘표현’의 시대입니다.</p>
+            <p>표현어학원의 학습 콘텐츠는  개정된 중 · 고등학교 영어 교과과정에서 다루는 토픽으로 구성되어 있으며, 해당 토픽을 중심으로 말하기·쓰기·읽기·듣기를 전략적으로 훈련하여  영어 표현력과 정확성을 강화하는 학습 프로그램을 제공합니다. 해당 프로그램은 서술형 논술형 평가를 해결하는 데 있어 가장 중요한 ‘영어 어법에 맞는 논리적이고 완전한 문장’을 구성할 수 있도록 해줍니다.</p>
+          </div>
+        </div>
+      </div>
+      <div class="acc-item">
+        <a href="#none" data-act='title' class="acc-title">
+          <span class="cate">사이트이용</span>
+          <span class="cap">Q</span>
+          <span class="subj">[학습 관련 질문] 1. 표현어학원은 어떤 학원인가요?</span>
+        </a>
+        <div data-act='cont' class="acc-cont">
+          <div class="acc-cont-in">
+            <p><strong>이제 영어는 말하고 쓰기 중심의 ‘표현’의 시대입니다.</strong></p>
+            <p>표현어학원의 학습 콘텐츠는  개정된 중 · 고등학교 영어 교과과정에서 다루는 토픽으로 구성되어 있으며, 해당 토픽을 중심으로 말하기·쓰기·읽기·듣기를 전략적으로 훈련하여  영어 표현력과 정확성을 강화하는 학습 프로그램을 제공합니다. 해당 프로그램은 서술형 논술형 평가를 해결하는 데 있어 가장 중요한 ‘영어 어법에 맞는 논리적이고 완전한 문장’을 구성할 수 있도록 해줍니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!------------------------------------ 아이콘 ------------------------------------>
+  <h2 class="guide-title">아이콘</h2>
+  <div class="guide-cont">
+    <table class="guide-tb-data mgt-20">
+      <caption>아이콘</caption>
+      <colgroup><col style="width:15%" /><col /></colgroup>
+      <thead>
+      <tr>
+        <th scope="col">type</th>
+        <th scope="col">view</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>ir</td>
+        <td>
+          <strong>[global]</strong><br>
+          <span class="guide-ico"><span class="ir i-home"></span></span>
+          <span class="guide-ico"><span class="ir i-attach"></span></span>
+          <span class="guide-ico"><span class="ir i-pag-first"></span></span>
+          <span class="guide-ico"><span class="ir i-pag-prev"></span></span>
+          <span class="guide-ico"><span class="ir i-pag-next"></span></span>
+          <span class="guide-ico"><span class="ir i-pag-last"></span></span>
+          <span class="guide-ico"><span class="ir i-sch"></span></span>
+          <span class="guide-ico"><span class="ir i-sch-2"></span></span>
+          <span class="guide-ico"><span class="ir i-sch-3"></span></span>
+          <span class="guide-ico"><span class="ir i-sch-5"></span></span>
+          <span class="guide-ico"><span class="ir i-video"></span></span>
+          <span class="guide-ico"><span class="ir i-video-2"></span></span>
+          <span class="guide-ico"><span class="ir i-hit"></span></span>
+          <span class="guide-ico"><span class="ir i-date"></span></span>
+          <span class="guide-ico"><span class="ir i-hit-2"></span></span>
+          <span class="guide-ico"><span class="ir i-date-2"></span></span>
+          <span class="guide-ico"><span class="ir i-schedule"></span></span>
+          <span class="guide-ico"><span class="ir i-schedule ty-2"></span></span>
+          <span class="guide-ico"><span class="ir i-schedule ty-3"></span></span>
+          <span class="guide-ico"><span class="ir i-schedule ty-4"></span></span>
+          <span class="guide-ico"><span class="ir i-schedule ty-5"></span></span>
+          <span class="guide-ico"><span class="ir i-schedule ty-6"></span></span>
+          <span class="guide-ico"><span class="ir i-arr-3"></span></span>
+          <span class="guide-ico"><span class="ir i-arr-4"></span></span>
+          <span class="guide-ico"><span class="ir i-favorite"></span></span>
+          <span class="guide-ico"><span class="ir i-favorite-2"></span></span>
+          <span class="guide-ico"><span class="ir i-like"></span></span>
+          <span class="guide-ico"><span class="ir i-like-2"></span></span>
+          <span class="guide-ico"><span class="ir i-sort"></span></span>
+          <br><strong>[common]</strong><br>
+          <span class="guide-ico"><span class="ir i-answer-logo"></span></span>
+          <span class="guide-ico"><span class="ir i-help"></span></span>
+        </td>
+      </tr>
+      <tr>
+        <td>ir:before</td>
+        <td>
+          <strong>[global]</strong><br>
+          <span class="guide-ico"><span class="ir-b i-share-title"></span></span>
+          <span class="guide-ico"><span class="ir-b i-arr"></span></span>
+          <span class="guide-ico"><span class="ir-b i-arr-2"></span></span>
+          <span class="guide-ico"><span class="ir-b i-photo"></span></span>
+          <span class="guide-ico"><span class="ir-b i-ref"></span></span>
+          <span class="guide-ico"><span class="ir-b i-file"></span></span>
+          <span class="guide-ico"><span class="ir-b i-print"></span></span>
+          <span class="guide-ico"><span class="ir-b i-school"></span></span>
+          <span class="guide-ico"><span class="ir-b i-teacher"></span></span>
+          <span class="guide-ico"><span class="ir-b i-around-2"></span></span>
+          <span class="guide-ico"><span class="ir-b i-shuttle"></span></span>
+          <span class="guide-ico"><span class="ir-b i-sch-4"></span></span>
+          <br>
+          <span class="guide-ico"><span class="ir-b i-share"></span></span>
+          <span class="guide-ico"><span class="ir-b i-share-2"></span></span>
+          <span class="guide-ico"><span class="ir-b i-share-3"></span></span>
+          <span class="guide-ico"><span class="ir-b i-share-4"></span></span>
+          <span class="guide-ico"><span class="ir-b i-share-5"></span></span>
+          <span class="guide-ico"><span class="ir-b i-noshuttle"></span></span>
+          <span class="guide-ico"><span class="ir-b i-event"></span></span>
+          <span class="guide-ico"><span class="ir-b i-nobank"></span></span>
+          <span class="guide-ico"><span class="ir-b i-nodata"></span></span>
+          <span class="guide-ico"><span class="ir-b i-admission"></span></span>
+          <span class="guide-ico"><span class="ir-b i-findcdi"></span></span>
+          <br>
+          <span class="guide-ico"><span class="ir-b i-noapplication"></span></span>
+          <span class="guide-ico"><span class="ir-b i-nocalendar"></span></span>
+          <span class="guide-ico"><span class="ir-b i-safety"></span></span>
+          <span class="guide-ico"><span class="ir-b i-safety-2"></span></span>
+          <span class="guide-ico"><span class="ir-b i-safety-3"></span></span>
+          <span class="guide-ico"><span class="ir-b i-safety-4"></span></span>
+          <span class="guide-ico"><span class="ir-b i-safety-5"></span></span>
+          <br>
+          <span class="guide-ico"><span class="ir-b i-nodata-2"></span></span>
+          <span class="guide-ico"><span class="ir-b i-nodata-3"></span></span>
+          <br><strong>[common]</strong><br>
+          <span class="guide-ico"><span class="ir-b i-del"></span></span>
+          <span class="guide-ico"><span class="ir-b i-mystar"></span></span>
+          <br>
+          <span class="guide-ico"><span class="ir-b i-support"></span></span>
+          <span class="guide-ico"><span class="ir-b i-support-2"></span></span>
+          <span class="guide-ico"><span class="ir-b i-support-3"></span></span>
+          <span class="guide-ico"><span class="ir-b i-support-4"></span></span>
+          <span class="guide-ico"><span class="ir-b i-support-5"></span></span>
+          <span class="guide-ico"><span class="ir-b i-support-6"></span></span>
+          <span class="guide-ico"><span class="ir-b i-support-7"></span></span>
+          <span class="guide-ico"><span class="ir-b i-support-8"></span></span>
+        </td>
+      </tr>
+      <tr>
+        <td>ir:after</td>
+        <td>
+          <strong>[global]</strong><br>
+          <span class="guide-ico"><span class="ir-a i-down"></span></span>
+          <br><strong>[common]</strong><br>
+          <span class="guide-ico"><span class="ir-a i-myplus"></span></span>
+          <span class="guide-ico"><span class="ir-a i-myset"></span></span>
+          <span class="guide-ico"><span class="ir-a i-myadd"></span></span>
+          <span class="guide-ico"><span class="ir-a i-myadd-2"></span></span>
+          <span class="guide-ico"><span class="ir-a i-myadd-3"></span></span>
+          <span class="guide-ico"><span class="ir-a i-myadd-4"></span></span>
+          <span class="guide-ico"><span class="ir-a i-pay"></span></span>
+          <span class="guide-ico"><span class="ir-a i-pay-2"></span></span>
+          <span class="guide-ico"><span class="ir-a i-refund"></span></span>
+        </td>
+      </tr>
+      <tr>
+        <td>etc</td>
+        <td>
+          <strong>.ico-txt</strong>
+          <span class="guide-ico"><span class="ico-txt">txt</span></span>
+          <br><strong>.ico-txt-2</strong>
+          <span class="guide-ico"><span class="ico-txt-2">txt-2</span></span>
+          <span class="guide-ico"><span class="ico-txt-2 ty-2">ty-2</span></span>
+          <span class="guide-ico"><span class="ico-txt-2 ty-3">ty-3</span></span>
+          <span class="guide-ico"><span class="ico-txt-2 ty-4">ty-4</span></span>
+          <br><strong>.ico-txt-3</strong>
+          <span class="guide-ico"><span class="ico-txt-3">txt-3</span></span>
+          <span class="guide-ico"><span class="ico-txt-3 ty-2">ty-2</span></span>
+          <br><strong>.ico-txt-4</strong>
+          <span class="guide-ico"><span class="ico-txt-4">txt-4</span></span>
+          <span class="guide-ico"><span class="ico-txt-4 ty-2">ty-2</span></span>
+          <br><strong>.ico-txt-5</strong>
+          <span class="guide-ico"><span class="ico-txt-5">ico-txt-5</span></span>
+          <br><strong>.ico-txt-6</strong>
+          <span class="guide-ico"><span class="ico-txt-6">txt</span></span>
+          <span class="guide-ico"><span class="ico-txt-6 ty-2">txt</span> ty-2</span>
+          <span class="guide-ico"><span class="ico-txt-6 ty-3">txt</span> ty-3</span>
+          <span class="guide-ico"><span class="ico-txt-6 ty-4">txt</span> ty-4</span>
+          <br><strong>.ico-video</strong>
+          <span class="guide-ico"><span class="ico-video"><span class="ir i-video">동영상 컨텐츠</span></span></span>
+          <span class="guide-ico"><span class="ico-video"><span class="ir i-video">동영상 컨텐츠</span></span> ty-2</span>
+          <span class="guide-ico"><span class="ico-video"><span class="ir i-video">동영상 컨텐츠</span></span> ty-3</span>
+          <span class="guide-ico"><span class="ico-video"><span class="ir i-video">동영상 컨텐츠</span></span> ty-4</span>
+          <span class="guide-ico"><span class="ico-video large-2"><span class="ir i-video-2">동영상 컨텐츠</span></span></span>
+          <span class="guide-ico"><span class="ico-video large"><span class="ir i-video-2">동영상 컨텐츠</span></span> large</span>
+          <span class="guide-ico"><span class="ico-video large-2"><span class="ir i-video-2">동영상 컨텐츠</span></span> large-2</span>
+          <br><strong>.txt-link, txt-line</strong>
+          <span class="guide-ico"><span class="txt-link">txt-link</span></span>
+          <span class="guide-ico"><span class="txt-link-2">txt-link-2</span></span>
+          <span class="guide-ico"><span class="txt-line">txt-line</span></span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</body>
+</html>

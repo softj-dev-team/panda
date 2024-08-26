@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>크레버스</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" type="image/x-icon" href="../../images/common/favicon.ico" />
+  <link rel="apple-touch-icon-precomposed" href="../../images/common/apple-touch-icon.png" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <link rel="stylesheet" href="../../css/global.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/sub.css">
+  <script src="../../js/ui.vendor.js"></script>
+  <script src="../../js/ui.js?var=1"></script>
+</head>
+
+<body>
+    <div class="skip"><a href="#contents"><span>본문바로가기</span></a></div>
+    <div class="wrap">
+        <!-- header : /guide/gnb.html 최종 참고 // -->
+        <header class="header">
+            <div class="sc-wrap-mo">
+                <div class="sc-wrap">
+                    <div class="inner-top">
+                        <h1 class="gnb-logo"><a href="/"><span class="irg ig-logo">CHUNGDAHM</span></a></h1>
+                        <!-- 브랜드 선택 // -->
+                        <div class="global-brand">
+                          <div class="brand-select">
+                            <span class="home "><a href="/"class="mo-hide"><span class="ig-home">HOME</span></a></span>
+                            <span class="item cr-home"><a href="https://www.creverse.com/" target="_blank" class="mo-hide"><span class="">COMPANY</span></a></span>
+                            <span class="item"><button type="button" class="edu-case ty-1" data-dep="mdep1">사고력</button></span>
+                            <span class="item "><button type="button" class="edu-case ty-2" data-dep="mdep2">V-사고력</button></span>
+                            <span class="item "><button type="button" class="edu-case ty-3" data-dep="mdep3">융합사고력</button></span>
+                          </div>
+                          <div class="brand-select-depth pc">
+                            <ul class="brand-select-in select1" id="mdep1">
+                              <li><a href="/brand/cdi">청담어학원</a></li>
+                              <li><a href="/brand/april">April어학원</a></li>
+                              <li><a href="/brand/igarten">아이가르텐</a></li>
+                              <li><a href="/brand/page">Page By Page</a></li>
+                              <li><a href="/brand/mt">CMS 영재교육센터</a></li>
+                              <li><a href="/brand/mg">CMS 영재관</a></li>
+                              <li><a href="https://www.c3coding.com/" target="_blank" class="link-i">씨큐브코딩</a></li>
+                              <li class="location2"><a href="/branch-map"><span></span>학원찾기</a></li>
+                            </ul>
+                            <ul class="brand-select-in select2 " id="mdep2">
+                              <li><a href="https://vlc.chungdahm.com/brand/bouncy" target="_blank" class="link-i">BOUNCY</a></li>
+                              <li><a href="https://vlc.chungdahm.com/brand/noisy" target="_blank" class="link-i">NOISY</a></li>
+                              <li><a href="https://www.cmson.com/" target="_blank" class="link-i">EDGE</a></li>
+                              <li><a href="https://www.codealive.co.kr/" target="_blank" class="link-i">codeAlive</a></li>
+                            </ul>
+                            <ul class="brand-select-in select3 " id="mdep3">
+                              <li><a href="/i-garten/creversekids/curriculum/program/">크레버스 KIDS</a></li>
+                              <li><a href="/i-garten/creversekidsx/">크레버스 X</a></li>
+                              <li><a href="https://www.chungdahm.com/channel/news/detail?bdId=16105">크레버스 캠퍼스</a></li>
+                            </ul>
+                          </div>
+                          <div class="brand-select-pop">
+                            <div class="mo-bg"></div>
+                            <div class="mo-con">
+                              <div class="mo-close"><button class="close-i"></button></div>
+                              <div class="mo-select-tab">
+                                <ul>
+                                  <li data-id="mid1" class="active">사고력</li>
+                                  <li data-id="mid2">V-사고력</li>
+                                  <li data-id="mid3">융합사고력</li>
+                                </ul>
+                              </div>
+                              <ul class="brand-select-in select1 active" id="mid1">
+                                <li><a href="/brand/cdi" class="cdi-i">청담어학원</a></li>
+                                <li><a href="/brand/april" class="ap-i">April어학원</a></li>
+                                <li><a href="/brand/igarten" class="ig-i">아이가르텐</a></li>
+                                <li><a href="/brand/page" class="pbp-i">Page By Page</a></li>
+                                <li><a href="/brand/mt" class="cms-i">CMS 영재교육센터</a></li>
+                                <li><a href="/brand/mg" class="cms2-i">CMS 영재관</a></li>
+                                <li class="link-i"><a href="https://www.c3coding.com/"  class="c3-i" target="_blank">씨큐브코딩</a></li>
+                                <li class="location2"><a href="/branch-map?mb=Y"><span></span>내 주변 학원 보기</a></li>
+                              </ul>
+                              <ul class="brand-select-in select2 " id="mid2">
+                                <li class="link-i"><a href="https://vlc.chungdahm.com/brand/bouncy" class="bo-i" target="_blank" >BOUNCY</a></li>
+                                <li class="link-i"><a href="https://vlc.chungdahm.com/brand/noisy" class="no-i" target="_blank" >NOISY</a></li>
+                                <li class="link-i"><a href="https://www.cmson.com/" class="ed-i" target="_blank">EDGE</a></li>
+                                <li class="link-i"><a href="https://www.codealive.co.kr" class="al-i" target="_blank" >codeAlive</a></li>
+                              </ul>
+                              <ul class="brand-select-in select3 " id="mid3">
+                                <li><a href="/i-garten/creversekids/curriculum/program/" class="cr-i">크레버스 KIDS</a></li>
+                                <li><a href="/i-garten/creversekidsx/" class="crx-i">크레버스 X</a></li>
+                                <li><a href="/channel/news/detail?bdId=16105" class="cam-i">크레버스 캠퍼스</a></li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- // 브랜드 선택 -->
+                        <button type="button" class="gnb-all-btn"><span class="line"></span></button>
+                    </div>
+                    <div class="inner"></div>
+                    <div class="gnb-all-nav"></div>
+                    <div class="gnb-nav mo-hide">[gnb.html 참고]</div> <!-- 페이지 뎁스 명시 // -->
+                </div>
+            </div>
+        </header>
+        <!-- // header : /guide/gnb.html 최종 참고 -->
+
+        <!-- container // -->
+        <div id="container" class="container">
+
+            <!-- location // -->
+            <div class="lnb">
+                <div class="lnb-in">
+                    <ul class="nav">
+                        <li class="home"><a href="#none" class="home-in"><span class="ir i-home">홈</span></a></li>
+                        <li class="dep"><a href="#none" class="dep-in" data-act='title'>브랜드 소개</a></li>
+                        <li class="dep"><a href="#none" class="dep-in" data-act='title'>커리큘럼</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- // location -->
+
+            <!-- contents // -->
+            <div id="contents" class="contents">
+                <h3 class="tit-h36">통합로드맵</h3>
+                <div class="roadmap-sub-txt roadMargin">
+                    <div class="txt">
+                        ESL 창의사고 교육의 첫걸음에서 완성까지 청담어학원, April어학원과 아이가르텐의 통합로드맵입니다.
+                    </div>
+                    <div class="roadmap-btn">
+                        <span class="btn"><a href="#" class="btn-in">통합로드맵 표로 보기</a></span>
+                        <!-- <span class="btn"  onclick="app.open({ url: 'https://www.chungdahm.com/brand/curriculum/table', title: '통합 로드맵 표', spec: 'left=0, top=0, width=1302,height=700,scrollbars=yes, toolbars=no, resizable=no' }); return false;"><a href="#" class="btn-in">Page by Page 통합로드맵 표로 보기</a></span> -->
+                    </div>
+                </div>
+
+                <!-- Mobile // -->
+                <div class="roadmap-mo mo-show">
+                    <img src="../../images/sub/roadmap-mo.png" alt="다음 내용 참조." />
+                    <img src="../../images/sub/roadmap-mo-2.png" alt="다음 내용 참조." />
+                    <img src="../../images/sub/roadmap-mo-3.png" alt="다음 내용 참조." />
+                </div>
+                <!-- // Mobile -->
+
+                <!-- PC // -->
+                <div class="mo-blind">
+                    <!-- 커리큘럼 // -->
+                    <div class="curriculum-scroll" data-swipe='{"type":"case1"}'>
+                        <div id="curriculum" class="curriculum cc-active-default">
+                            <!-- i-garten select // -->
+                            <div class="cc-sel cc-ig">
+                                <button type="button" onclick='$jq("#curriculum").replaceClass("cc-active-[^ ]*","cc-active-ig","cc-active-default")' class="cc-sel-title">
+                                    <span class="ir-b i-cc-logo cc-logo"><span class="logo-txt">i-GARTEN</span></span>
+                                    <span class="cc-more"><span class="ir i-cc-more">더보기</span><span class="btn-in">사고영역</span></span>
+                                </button>
+                                <div class="cc-sel-cont cc-sel-col-3">
+                                    <div class="cc-sel-col-3-in">
+                                        <div class="cc-sel-item h-ty-7"><span class="item-in"></span></div>
+                                        <div class="cc-sel-item h-ty-2"><span class="item-in"></span></div>
+                                        <dl class="cc-sel-item h-ty-2">
+                                            <dt class="item-in ig-ty deco ty-2"><span class="in-txt">i9-1</span></dt>
+                                            <dt class="blind">언어영역 : ESL Skill[(스키밍 &amp; 스캐닝), (Five Ws 누가, 무엇을, 언제, 어디서, 왜)], Speaking[(주제 말하기), (스토리텔링 &amp; 의견 말하기)], Wiriting[(문단 쓰기), (이야기 쓰기 &amp; 편지 쓰기)]</dt>
+                                            <dd class="blind">사고영역 : Critical(분석적 사고), Creative(상상적 사고)</dd>
+                                        </dl>
+                                        <dl class="cc-sel-item h-ty-2">
+                                            <dt class="item-in ig-ty-2"><span class="in-txt">i8-1</span></dt>
+                                            <dd class="blind">언어영역 : ESL Skill(Five Ws 누가, 무엇을, 언제, 어디서, 왜), Speaking(스토리텔링 &amp; 의견 말하기), Wiriting(이야기 쓰기 &amp; 편지 쓰기)</dd>
+                                            <dd class="blind">사고영역 : Critical(분석적 사고), Creative(상상적 사고)</dd>
+                                        </dl>
+                                        <dl class="cc-sel-item h-ty-2">
+                                            <dt class="item-in ig-ty-3"><span class="">i7-1</span></dt>
+                                            <dd class="blind">ESL Skill(Five Ws 누가, 무엇을, 언제, 어디서, 왜), Speaking(대화문), Wiriting(문장 쓰기)</dd>
+                                            <dd class="blind">사고영역 : Critical(언어적 사고), Creative(감각적 사고)</dd>
+                                        </dl>
+                                    </div>
+                                    <div class="cc-sel-col-3-in">
+                                        <div class="cc-sel-item h-ty-7"><span class="item-in"></span></div>
+                                        <div class="cc-sel-item"><span class="item-in"></span></div>
+                                        <dl class="cc-sel-item h-ty-2">
+                                            <dt class="item-in ig-ty deco ty-3"><span class="in-txt">i9-2</span></dt>
+                                            <dd class="blind">언어영역 : ESL Skill(스키밍 &amp; 스캐닝), Speaking(주제 말하기), Wiriting(문단 쓰기)</dd>
+                                            <dd class="blind">사고영역 : Critical(종합적 사고, 분석적 사고), Creative(상상적 사고)</dd>
+                                        </dl>
+                                        <dl class="cc-sel-item h-ty-2">
+                                            <dt class="item-in ig-ty-2"><span class="in-txt">i8-2</span></dt>
+                                            <dd class="blind">언어영역 : ESL Skill(Five Ws 누가, 무엇을, 언제, 어디서, 왜), Speaking(스토리텔링 &amp; 의견 말하기), Wiriting(이야기 쓰기 &amp; 편지 쓰기)</dd>
+                                            <dd class="blind">사고영역 : Critical(분석적 사고), Creative(상상적 사고)</dd>
+                                        </dl>
+                                        <dl class="cc-sel-item h-ty-2">
+                                            <dt class="item-in ig-ty-3"><span class="in-txt">i7-2</span></dt>
+                                            <dd class="blind">언어영역 : ESL Skill(Five Ws 누가, 무엇을, 언제, 어디서, 왜), Speaking[(스토리텔링 &amp; 의견 말하기)(대화문)], Wiriting[(이야기 쓰기 &amp; 편지 쓰기)(문장 쓰기)]</dd>
+                                            <dd class="blind">사고영역 : Critical(분석적 사고, 언어적 사고), Creative(상상적 사고)</dd>
+                                        </dl>
+                                        <dl class="cc-sel-item h-ty-3">
+                                            <dt class="item-in ig-ty-4"><span class="in-txt">i6-1</span></dt>
+                                            <dd class="blind">언어영역 : ESL Skill(Five Ws 누가, 무엇을, 언제, 어디서, 왜), Speaking(대화문), Wiriting(문장 쓰기), ESL Skill, Speaking, Wiriting - 파닉스</dd>
+                                            <dd class="blind">사고영역 : Critical(언어적 사고), Creative(감각적 사고)</dd>
+                                        </dl>
+                                    </div>
+                                    <div class="cc-sel-col-3-in">
+                                        <div class="cc-sel-item h-ty-7"><span class="item-in"></span></div>
+                                        <dl class="cc-sel-item h-ty-2">
+                                            <dt class="item-in ig-ty deco ty-4"><span class="in-txt">i9-3</span></dt>
+                                            <dd class="blind">언어영역 : ESL Skill(스키밍 &amp; 스캐닝), Speaking(주제 말하기), Wiriting(문단 쓰기)</dd>
+                                            <dd class="blind">사고영역 : Critical(종합적 사고), Creative(상상적 사고)</dd>
+                                        </dl>
+                                        <dl class="cc-sel-item h-ty-2">
+                                            <dt class="item-in ig-ty-2"><span class="in-txt">i8-3</span></dt>
+                                            <dd class="blind">언어영역 : ESL Skill[(스키밍 &amp; 스캐닝)(Five Ws 누가, 무엇을, 언제, 어디서, 왜)], Speaking[(주제 말하기)(스토리텔링 &amp; 의견 말하기)], Wiriting[(문단 쓰기)(이야기 쓰기 &amp; 편지 쓰기)]</dd>
+                                            <dd class="blind">사고영역 : Critical(분석적 사고), Creative(상상적 사고)</dd>
+                                        </dl>
+                                        <dl class="cc-sel-item h-ty-2">
+                                            <dt class="item-in ig-ty-3"><span class="in-txt">i7-3</span></dt>
+                                            <dd class="blind">언어영역 : ESL Skill(Five Ws 누가, 무엇을, 언제, 어디서, 왜), Speaking(스토리텔링 &amp; 의견 말하기), Wiriting(이야기 쓰기 &amp; 편지 쓰기)</dd>
+                                            <dd class="blind">사고영역 : Critical(언어적 사고), Creative(상상적 사고)</dd>
+                                        </dl>
+                                        <dl class="cc-sel-item h-ty-3">
+                                            <dt class="item-in ig-ty-4"><span class="in-txt">i6-2</span></dt>
+                                            <dd class="blind">언어영역 : ESL Skill(Five Ws 누가, 무엇을, 언제, 어디서, 왜), Speaking(대화문), Wiriting(문장 쓰기), ESL Skill, Speaking, Wiriting - 파닉스</dd>
+                                            <dd class="blind">사고영역 : Critical(언어적 사고), Creative(상상적 사고, 감각적 사고)</dd>
+                                        </dl>
+                                        <dl class="cc-sel-item">
+                                            <dt class="item-in ig-ty-5"><span class="in-txt">i5</span></dt>
+                                            <dd class="blind">언어영역 : ESL Skill, Speaking, Wiriting - 파닉스</dd>
+                                            <dd class="blind">사고영역 : Critical(언어적 사고), Creative(감각적 사고)</dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- // i-garten select -->
+
+                            <!-- i-garten open // -->
+                            <div class="cc-cont cc-ig">
+                                <dl class="cc-cont-title">
+                                    <dt>사고영역</dt>
+                                    <dd>Critical</dd>
+                                    <dd>Creative</dd>
+                                </dl>
+                                <div class="cc-cont-cont">
+                                    <div class="cc-sel-col-2-in">
+                                        <div class="cc-sel-item h-ty-7"><span class="item-in"></span></div>
+                                        <div class="cc-sel-item h-ty-2">
+                                            <div class="item-in ig-ty-6"><span class="in-txt">종합적 사고</span></div>
+                                        </div>
+                                        <div class="cc-sel-item h-ty-4">
+                                            <div class="item-in ig-ty-7"><span class="in-txt">분석적 사고</span></div>
+                                        </div>
+                                        <div class="cc-sel-item h-ty-4">
+                                            <div class="item-in ig-ty-8"><span class="in-txt">언어적 사고</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="cc-sel-col-2-in">
+                                        <div class="cc-sel-item h-ty-7"><span class="item-in"></span></div>
+                                        <div class="cc-sel-item h-ty-7">
+                                            <div class="item-in ig-ty-7"><span class="in-txt">상상적 사고</span></div>
+                                        </div>
+                                        <div class="cc-sel-item h-ty-3">
+                                            <div class="item-in ig-ty-8"><span class="in-txt">감각적 사고</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- // i-garten open -->
+
+                            <!-- april select // -->
+                            <div class="cc-sel cc-april">
+                                <button type="button" onclick='$jq("#curriculum").replaceClass("cc-active-[^ ]*","cc-active-april","cc-active-default")' class="cc-sel-title">
+                                    <span class="ir-b i-cc-logo-2 cc-logo"><span class="logo-txt">April</span></span>
+                                    <span class="cc-more"><span class="ir i-cc-more">더보기</span><span class="btn-in">사고영역</span></span>
+                                </button>
+                                <div class="cc-sel-cont cc-april-cont">
+                                    <div class="cc-sel-item h-ty-5"><span class="item-in"></span></div>
+                                    <dl class="cc-sel-item">
+                                        <dt class="item-in april-ty deco ty"><span class="in-txt">Jr. Master 2</span></dt>
+                                        <dd class="blind">언어영역 : ESL Skill(개요 및 요약), Speaking(주제 말하기 &amp; 요약하여 말하기), Wiriting(에세이라이팅 &amp; 요약 글쓰기)</dd>
+                                        <dd class="blind">사고영역 : Critical(종합적 사고), Creative(대안적 사고)</dd>
+                                    </dl>
+                                    <dl class="cc-sel-item">
+                                        <dt class="item-in april-ty"><span class="in-txt">Jr. Master 1</span></dt>
+                                        <dd class="blind">언어영역 : ESL Skill(개요 및 요약), Speaking(주제 말하기 &amp; 요약하여 말하기), Wiriting(에세이라이팅 &amp; 요약 글쓰기)</dd>
+                                        <dd class="blind">사고영역 : Critical(종합적 사고), Creative(대안적 사고)</dd>
+                                    </dl>
+                                    <dl class="cc-sel-item">
+                                        <dt class="item-in april-ty"><span class="in-txt">Sapling 2</span></dt>
+                                        <dd class="blind">언어영역 : ESL Skill(스키밍 &amp; 스캐닝), Speaking(주제 말하기), Wiriting(문단 쓰기)</dd>
+                                        <dd class="blind">사고영역 : Critical(종합적 사고, 분석적 사고), Creative(대안적 사고)</dd>
+                                    </dl>
+                                    <dl class="cc-sel-item">
+                                        <dt class="item-in april-ty"><span class="in-txt">Sapling 1</span></dt>
+                                        <dd class="blind">언어영역 : ESL Skill(스키밍 &amp; 스캐닝), Speaking(주제 말하기), Wiriting(문단 쓰기)</dd>
+                                        <dd class="blind">사고영역 : Critical(종합적 사고, 분석적 사고), Creative(대안적 사고)</dd>
+                                    </dl>
+                                    <dl class="cc-sel-item">
+                                        <dt class="item-in april-ty-2"><span class="in-txt">Sprout 3</span></dt>
+                                        <dd class="blind">언어영역 : ESL Skill(스키밍 &amp; 스캐닝), Speaking(주제 말하기), Wiriting(문단 쓰기)</dd>
+                                        <dd class="blind">사고영역 : Critical(분석적 사고), Creative(상상적 사고)</dd>
+                                    </dl>
+                                    <dl class="cc-sel-item">
+                                        <dt class="item-in april-ty-2"><span class="in-txt">Sprout 2</span></dt>
+                                        <dd class="blind">언어영역 : ESL Skill(Five Ws 누가, 무엇을, 언제, 어디서, 왜), Speaking(스토리텔링 &amp; 의견 말하기), Wiriting(이야기 쓰기 &amp; 편지 쓰기)</dd>
+                                        <dd class="blind">사고영역 : Critical(분석적 사고), Creative(상상적 사고)</dd>
+                                    </dl>
+                                    <dl class="cc-sel-item">
+                                        <dt class="item-in april-ty-2"><span class="in-txt">Sprout 1</span></dt>
+                                        <dd class="blind">언어영역 : ESL Skill(Five Ws 누가, 무엇을, 언제, 어디서, 왜), Speaking(스토리텔링 &amp; 의견 말하기), Wiriting(이야기 쓰기 &amp; 편지 쓰기)</dd>
+                                        <dd class="blind">사고영역 : Critical(분석적 사고), Creative(상상적 사고)</dd>
+                                    </dl>
+                                    <dl class="cc-sel-item">
+                                        <dt class="item-in april-ty-2"><span class="in-txt">Seed 2</span></dt>
+                                        <dd class="blind">언어영역 : ESL Skill(Five Ws 누가, 무엇을, 언제, 어디서, 왜), Speaking(스토리텔링 &amp; 의견 말하기), Wiriting(이야기 쓰기 &amp; 편지 쓰기)</dd>
+                                        <dd class="blind">사고영역 : Critical(언어적 사고), Creative(상상적 사고)</dd>
+                                    </dl>
+                                    <dl class="cc-sel-item">
+                                        <dt class="item-in april-ty-2"><span class="in-txt">Seed 1</span></dt>
+                                        <dd class="blind">언어영역 : ESL Skill(Five Ws 누가, 무엇을, 언제, 어디서, 왜), Speaking(대화문), Wiriting(문장 쓰기)</dd>
+                                        <dd class="blind">사고영역 : Critical(언어적 사고), Creative(상상적 사고)</dd>
+                                    </dl>
+                                    <dl class="cc-sel-item">
+                                        <dt class="item-in april-ty-3"><span class="in-txt">Seedbed 2</span></dt>
+                                        <dd class="blind">언어영역 : ESL Skill(Five Ws 누가, 무엇을, 언제, 어디서, 왜), Speaking(대화문), Wiriting(문장 쓰기)</dd>
+                                        <dd class="blind">사고영역 : Critical(언어적 사고), Creative(상상적 사고)</dd>
+                                    </dl>
+                                    <dl class="cc-sel-item">
+                                        <dt class="item-in april-ty-3"><span class="in-txt">Seedbed 1</span></dt>
+                                        <dd class="blind">언어영역 : ESL Skill, Speaking, Wiriting - 파닉스</dd>
+                                        <dd class="blind">사고영역 : Critical(언어적 사고), Creative(감각적 사고)</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <!-- // april select -->
+
+                            <!-- april open // -->
+                            <div class="cc-cont cc-april">
+                                <dl class="cc-cont-title">
+                                    <dt>사고영역</dt>
+                                    <dd>Critical</dd>
+                                    <dd>Creative</dd>
+                                </dl>
+                                <div class="cc-cont-cont">
+                                    <div class="cc-sel-col-2-in">
+                                        <div class="cc-sel-item h-ty-5"><span class="item-in"></span></div>
+                                        <div class="cc-sel-item h-ty-2">
+                                            <div class="item-in april-ty-4"><span class="in-txt">종합적 사고</span></div>
+                                        </div>
+                                        <div class="cc-sel-item h-ty-5">
+                                            <div class="item-in april-ty-5"><span class="in-txt">분석적 사고</span></div>
+                                        </div>
+                                        <div class="cc-sel-item h-ty-4">
+                                            <div class="item-in april-ty-6"><span class="in-txt">언어적 사고</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="cc-sel-col-2-in">
+                                        <div class="cc-sel-item h-ty-5"><span class="item-in"></span></div>
+                                        <div class="cc-sel-item h-ty-4">
+                                            <div class="item-in april-ty-4"><span class="in-txt">대안적 사고</span></div>
+                                        </div>
+                                        <div class="cc-sel-item h-ty-5">
+                                            <div class="item-in april-ty-5"><span class="in-txt">상상적 사고</span></div>
+                                        </div>
+                                        <div class="cc-sel-item h-ty-2">
+                                            <div class="item-in april-ty-6"><span class="in-txt">감각적 사고</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- // april open -->
+
+                            <!-- i-cdi select // -->
+                            <div class="cc-sel cc-cdi">
+                                <button type="button" onclick='$jq("#curriculum").replaceClass("cc-active-[^ ]*","cc-active-cdi","cc-active-default")' class="cc-sel-title">
+                                    <span class="ir-b i-cc-logo-3 cc-logo"><span class="logo-txt">Chungdahm</span></span>
+                                    <span class="cc-more"><span class="ir i-cc-more">더보기</span><span class="btn-in">사고영역</span></span>
+                                </button>
+                                <div class="cc-sel-cont cc-cdi-cont">
+                                    <dl class="cc-sel-item">
+                                        <dt class="item-in cdi-ty"><span class="in-txt">Albatross +</span></dt>
+                                        <dd class="blind">언어영역 : ESL Skill(논리적 추론), Speaking(설득적 말하기), Wiriting(설득적 쓰기)</dd>
+                                        <dd class="blind">사고영역 : Critical(대안적 사고), Creative(대안적 사고)</dd>
+                                    </dl>
+                                    <dl class="cc-sel-item">
+                                        <dt class="item-in cdi-ty"><span class="in-txt">Albatross</span></dt>
+                                        <dd class="blind">언어영역 : ESL Skill(논리적 추론), Speaking(설득적 말하기), Wiriting(설득적 쓰기)</dd>
+                                        <dd class="blind">사고영역 : Critical(대안적 사고), Creative(대안적 사고)</dd>
+                                    </dl>
+                                    <dl class="cc-sel-item">
+                                        <dt class="item-in cdi-ty"><span class="in-txt">Eagle</span></dt>
+                                        <dd class="blind">언어영역 : ESL Skill(논리적 추론), Speaking(설득적 말하기), Wiriting(설득적 쓰기)</dd>
+                                        <dd class="blind">사고영역 : Critical(대안적 사고), Creative(대안적 사고)</dd>
+                                    </dl>
+                                    <dl class="cc-sel-item">
+                                        <dt class="item-in cdi-ty-2"><span class="in-txt">Birdie</span></dt>
+                                        <dd class="blind">언어영역 : ESL Skill(개요 및 요약), Speaking(주제 말하기 &amp; 요약하여 말하기), Wiriting(에세이라이팅 &amp; 요약 글쓰기)</dd>
+                                        <dd class="blind">사고영역 : Critical(종합적 사고), Creative(상상적 사고)</dd>
+                                    </dl>
+                                    <dl class="cc-sel-item">
+                                        <dt class="item-in cdi-ty-2"><span class="in-txt">Par</span></dt>
+                                        <dd class="blind">언어영역 : ESL Skill(개요 및 요약), Speaking(주제 말하기 &amp; 요약하여 말하기), Wiriting(에세이라이팅 &amp; 요약 글쓰기)</dd>
+                                        <dd class="blind">사고영역 : Critical(종합적 사고), Creative(상상적 사고)</dd>
+                                    </dl>
+                                    <dl class="cc-sel-item">
+                                        <dt class="item-in cdi-ty-2"><span class="in-txt">Bridge</span></dt>
+                                        <dd class="blind">언어영역 : ESL Skill(개요 및 요약), Speaking(주제 말하기 &amp; 요약하여 말하기), Wiriting(에세이라이팅 &amp; 요약 글쓰기)</dd>
+                                        <dd class="blind">사고영역 : Critical(종합적 사고), Creative(상상적 사고)</dd>
+                                    </dl>
+                                    <dl class="cc-sel-item">
+                                        <dt class="item-in cdi-ty-2"><span class="in-txt">Tera</span></dt>
+                                        <dd class="blind">언어영역 : ESL Skill(개요 및 요약), Speaking(주제 말하기 &amp; 요약하여 말하기), Wiriting(에세이라이팅 &amp; 요약 글쓰기)</dd>
+                                        <dd class="blind">사고영역 : Critical(종합적 사고), Creative(상상적 사고)</dd>
+                                    </dl>
+                                    <dl class="cc-sel-item">
+                                        <dt class="item-in cdi-ty-3"><span class="in-txt">Giga</span></dt>
+                                        <dd class="blind">언어영역 : ESL Skill(스키밍 &amp; 스캐닝), Speaking(주제 말하기), Wiriting(문단 쓰기)</dd>
+                                        <dd class="blind">사고영역 : Critical(분석적 사고), Creative(상상적 사고)</dd>
+                                    </dl>
+                                    <dl class="cc-sel-item">
+                                        <dt class="item-in cdi-ty-3"><span class="in-txt">Mega</span></dt>
+                                        <dd class="blind">언어영역 : ESL Skill(스키밍 &amp; 스캐닝), Speaking(주제 말하기), Wiriting(문단 쓰기)</dd>
+                                        <dd class="blind">사고영역 : Critical(분석적 사고), Creative(상상적 사고)</dd>
+                                    </dl>
+                                    <dl class="cc-sel-item">
+                                        <dt class="item-in cdi-ty-3"><span class="in-txt">EC 4</span></dt>
+                                        <dd class="blind">언어영역 : ESL Skill(스키밍 &amp; 스캐닝), Speaking(주제 말하기), Wiriting(문단 쓰기)</dd>
+                                        <dd class="blind">사고영역 : Critical(분석적 사고), Creative(상상적 사고)</dd>
+                                    </dl>
+                                    <dl class="cc-sel-item">
+                                        <dt class="item-in cdi-ty-4"><span class="in-txt">EC 3</span></dt>
+                                        <dd class="blind">언어영역 : ESL Skill(Five Ws 누가, 무엇을, 언제, 어디서, 왜), Speaking(스토리텔링 &amp; 의견 말하기), Wiriting(이야기 쓰기 &amp; 편지 쓰기)</dd>
+                                        <dd class="blind">사고영역 : Critical(분석적 사고)</dd>
+                                    </dl>
+                                    <dl class="cc-sel-item">
+                                        <dt class="item-in cdi-ty-4"><span class="in-txt">EC 2</span></dt>
+                                        <dd class="blind">언어영역 : ESL Skill(Five Ws 누가, 무엇을, 언제, 어디서, 왜), Speaking(스토리텔링 &amp; 의견 말하기), Wiriting(이야기 쓰기 &amp; 편지 쓰기)</dd>
+                                        <dd class="blind">사고영역 : Critical(분석적 사고)</dd>
+                                    </dl>
+                                    <dl class="cc-sel-item">
+                                        <dt class="item-in cdi-ty-4"><span class="in-txt">EC 1</span></dt>
+                                        <dd class="blind">언어영역 : ESL Skill(Five Ws 누가, 무엇을, 언제, 어디서, 왜), Speaking(스토리텔링 &amp; 의견 말하기), Wiriting(이야기 쓰기 &amp; 편지 쓰기)</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <!-- // i-cdi select -->
+
+                            <!-- i-cdi open // -->
+                            <div class="cc-cont cc-cdi">
+                                <dl class="cc-cont-title">
+                                    <dt>사고영역</dt>
+                                    <dd>Critical</dd>
+                                    <dd>Creative</dd>
+                                </dl>
+                                <div class="cc-cont-cont">
+                                    <div class="cc-sel-col-meg">
+                                        <div class="cc-sel-item h-ty-3">
+                                            <div class="item-in cdi-ty-5"><span class="in-txt">대안적 사고</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="cc-sel-col-2-in">
+                                        <div class="cc-sel-item h-ty-4">
+                                            <div class="item-in cdi-ty-6"><span class="in-txt">종합적 사고</span></div>
+                                        </div>
+                                        <div class="cc-sel-item h-ty-5">
+                                            <div class="item-in cdi-ty-7"><span class="in-txt">분석적 사고</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="cc-sel-col-2-in">
+                                        <div class="cc-sel-item h-ty-7">
+                                            <div class="item-in cdi-ty-6"><span class="in-txt">상상적 사고</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- // i-cdi open -->
+
+                            <!-- 분류 // -->
+                            <div class="curriculum-2">
+                                <dl class="cc-cont-title cc-cont-title-col-3">
+                                    <dt>언어영역</dt>
+                                    <dd>ESL Skill</dd>
+                                    <dd>Speaking</dd>
+                                    <dd>Writing</dd>
+                                </dl>
+                                <div class="cc-sel-cont-2 cc-sel-col-3">
+                                    <div class="cc-sel-col-3-in">
+                                        <div class="cc-sel-item h-ty-3"><span class="item-in"><span class="in-txt">논리적<br />추론</span></span></div>
+                                        <div class="cc-sel-item h-ty-4"><span class="item-in"><span class="in-txt">개요 및<br />요약</span></span></div>
+                                        <div class="cc-sel-item h-ty-3"><span class="item-in"><span class="in-txt">스키밍 <br />&<br />스캐닝</span></span></div>
+                                        <div class="cc-sel-item h-ty-5"><span class="item-in"><span class="in-txt">Five Ws<br />누가,<br />무엇을,<br />언제,<br />어디서,<br />왜</span></span></div>
+                                    </div>
+                                    <div class="cc-sel-col-3-in">
+                                        <div class="cc-sel-item h-ty-3"><span class="item-in"><span class="in-txt">설득적 말하기</span></span></div>
+                                        <div class="cc-sel-item h-ty-4"><span class="item-in"><span class="in-txt">주제<br />말하기<br />&<br />요약하여 말하기</span></span></div>
+                                        <div class="cc-sel-item h-ty-3"><span class="item-in"><span class="in-txt">주제<br />말하기</span></span></div>
+                                        <div class="cc-sel-item h-ty-3"><span class="item-in"><span class="in-txt">스토리<br />텔링 <br />& <br />의견 말하기</span></span></div>
+                                        <div class="cc-sel-item h-ty-2"><span class="item-in"><span class="in-txt">대화문</span></span></div>
+                                    </div>
+                                    <div class="cc-sel-col-3-in">
+                                        <div class="cc-sel-item h-ty-3"><span class="item-in"><span class="in-txt">설득적<br />쓰기</span></span></div>
+                                        <div class="cc-sel-item h-ty-4"><span class="item-in"><span class="in-txt">에세이<br />라이팅<br />&<br />요약<br />글쓰기</span></span></div>
+                                        <div class="cc-sel-item h-ty-3"><span class="item-in"><span class="in-txt">문단<br />쓰기</span></span></div>
+                                        <div class="cc-sel-item h-ty-3"><span class="item-in"><span class="in-txt">이야기<br />쓰기<br />& <br />편지<br />쓰기</span></span></div>
+                                        <div class="cc-sel-item h-ty-2"><span class="item-in"><span class="in-txt">문장 쓰기</span></span></div>
+                                    </div>
+                                    <div class="cc-sel-item-meg">
+                                        <div class="cc-sel-item h-ty-2"><span class="item-in"><span class="in-txt">파닉스</span></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- // 분류 -->
+                        </div>
+                    </div>
+                    <!-- // 커리큘럼 -->
+
+                    <!-- 특징 // -->
+                    <div class="curriculum-flow">
+                        <div class="cc-flow-subj">LANGUAGE</div>
+                        <div class="cc-flow-wrap">
+                            <div class="cc-flow">
+                                <h3 class="ir-b i-cc-logo-4"><span class="logo-txt">CULTURE</span></h3>
+                                <div class="cc-flow-in ig-flow">
+                                    <dl class="cc-flow-txt">
+                                        <dt>차별성</dt>
+                                        <dd>상상/몰입/통합을 통한 상상력/표현력 계발</dd>
+                                    </dl>
+                                </div>
+                                <div class="cc-flow-in ig-flow-2">
+                                    <dl class="cc-flow-txt">
+                                        <dt>프로젝트 기반 학습</dt>
+                                        <dd>월드플레이 이론을 접목한 프로젝트</dd>
+                                    </dl>
+                                </div>
+                                <div class="cc-flow-in ig-flow-3">
+                                    <dl class="cc-flow-txt">
+                                        <dt>핵심 가치</dt>
+                                        <dd>가상세계 창작 및 표현</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="cc-flow">
+                                <h3 class="ir-b i-cc-logo-5"><span class="logo-txt">ARTS</span></h3>
+                                <div class="cc-flow-in april-flow">
+                                    <dl class="cc-flow-txt">
+                                        <dt>차별성</dt>
+                                        <dd>자유로운 상상과 예술적 감성 및 표현</dd>
+                                    </dl>
+                                </div>
+                                <div class="cc-flow-in april-flow-2">
+                                    <dl class="cc-flow-txt">
+                                        <dt>프로젝트 기반 학습</dt>
+                                        <dd>사고도구를 적용한 프로젝트</dd>
+                                    </dl>
+                                </div>
+                                <div class="cc-flow-in april-flow-3">
+                                    <dl class="cc-flow-txt">
+                                        <dt>핵심 가치</dt>
+                                        <dd>다양한 미디어 창작 체험</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="cc-flow">
+                                <h3 class="ir-b i-cc-logo-6"><span class="logo-txt">KNOWLEDGE</span></h3>
+                                <div class="cc-flow-in cdi-flow">
+                                    <dl class="cc-flow-txt">
+                                        <dt>차별성</dt>
+                                        <dd>맥락화/개념화를 통한 지식관리</dd>
+                                    </dl>
+                                </div>
+                                <div class="cc-flow-in cdi-flow-2">
+                                    <dl class="cc-flow-txt">
+                                        <dt>프로젝트 기반 학습</dt>
+                                        <dd>디자인씽킹 방법을 활용한 프로젝트</dd>
+                                    </dl>
+                                </div>
+                                <div class="cc-flow-in cdi-flow-3">
+                                    <dl class="cc-flow-txt">
+                                        <dt>핵심 가치</dt>
+                                        <dd>인지적/감성적 창의성을 통한 문제해결</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cc-flow-subj">THINKING</div>
+                    </div>
+                    <!-- 특징 //  -->
+                </div>
+                <!-- // PC -->
+            </div>
+            <!-- // contents -->
+        </div>
+        <!-- // container -->
+
+        <!-- footer // -->
+        <footer class="footer">
+        </footer>
+        <!-- // footer -->
+    </div>
+</body>
+
+</html>

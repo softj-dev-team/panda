@@ -1,0 +1,179 @@
+.landing{background: #f9f9f9}
+.landing .inner{max-width: 1360px; width: 100%}
+
+.step01{height: 100vh; display: flex; position: relative; overflow: hidden; justify-content: center;
+    align-items: flex-start;
+    flex-direction: column; }
+.step01 .ld_bg{position: absolute; left: 0; top: 0; z-index: -1; width: 100%}
+.step01 .ld_bg svg{width: 100%}
+.step01 .ld_bg img{width: 100%}
+.step01 h2{font-size: 80px; font-weight: 900; color: #fff; line-height: 90px}
+.step01 p{margin-top: 20px; color: #fff; font-size: 30px; font-weight: 500}
+
+.step01 p + a{margin-top: 50px}
+
+a.ld_btn{border-radius: 50px; font-size: 20px; color: #4400E1; background: #fff; height: 48px; line-height: 48px; display: inline-block; padding: 0 30px; border: 1px solid #fff }
+a.ld_btn:hover{background: #3666CB; color: #fff; transition-duration: .5s; border: 1px solid #3666CB}
+
+a.ld_btn2{border-radius: 50px; font-size: 20px; color: #3666CB; background: #fff; height: 48px; line-height: 48px; display: inline-block; padding: 0 30px; border: 1px solid #fff }
+a.ld_btn2:hover{background: #4400E1; color: #fff; transition-duration: .5s; border: 1px solid #3666CB}
+
+
+.ld_service{max-width: 1360px; margin: 0 auto; padding: 100px 0}
+
+.ld_service.white{background: #fff; max-width: 100%}
+
+.ld_title{text-align: center}
+.ld_title h2{font-size: 50px; font-weight: 700}
+.ld_title p{font-size: 20px; font-weight: 500; margin-top: 10px}
+
+.ld_service ul{display: flex;margin-top: 50px; justify-content: center}
+.ld_service ul li{margin: 0 10px; justify-content: center; text-align: center; background: #fff; border: 1px solid #dfdfdf; border-radius: 100%; width: 250px; height: 250px;    display: flex;
+    flex-direction: column;
+    align-items: center; }
+.ld_service ul li:hover{background:#3666CB; transition-duration: .5s }
+.ld_service ul li:hover h2{color: #fff}
+.ld_service ul li:hover p{color: #fff}
+.ld_service ul li h2{font-size: 25px; font-weight: bold; margin: 0px 0 10px}
+.ld_service ul li p{font-size: 20px; font-weight: 400;}
+
+
+.landing_head{position: absolute; left: 0; top: 0; width: 100%; padding: 25px 0; z-index: 2}
+.landing_head .inner{display: flex; justify-content: space-between; align-items: center}
+
+.landing_head h2{color: #fff; font-size: 30px;}
+.landing_head .ld_menu{display: flex; justify-content: flex-end; align-items: center}
+.landing_head .ld_menu a{color: #fff; font-size: 18px; display: inline-block; margin-left: 25px}
+.landing_head .ld_menu a.menubtn{border-radius: 50px; font-size: 20px; color: #4400E1; background: #fff; height: 48px; line-height: 48px; display: inline-block; padding: 0 30px; border: 1px solid #fff }
+
+.step3{display: flex; justify-content: center;margin-top: 50px}
+.step3 .box{margin: 0 20px; text-align: center}
+.step3 .box .text{margin-top: 20px;}
+.step3 .box .text h3{font-size: 20px;}
+.step3 .box .text h2{font-size: 25px; margin-bottom: 10px}
+.step3 .box .text p{font-size: 18px; font-weight: normal}
+
+.landing_end{padding: 150px 15px; text-align: center; background: url(../images/landing/bg2.png); background-size: cover; background-position: center}
+.landing_end h2{font-size: 40px; color: #fff; font-weight: 400}
+.landing_end h2 b{color: #fff}
+.landing_end .ld_btn{margin-top: 30px}
+
+
+
+
+
+
+
+
+@media (max-width: 1200px) { 
+    
+    img{max-width: 100%}
+
+    
+    .inner{padding: 0 25px}
+    .step01 h2{font-size: 40px; line-height: 50px}
+    .step01 p{font-size: 16px; line-height: 25px}
+    .landing_end h2{font-size: 30px}
+    .ld_title h2{font-size: 30px}
+    .ld_title p{font-size: 16px}
+    a.ld_btn2, a.ld_btn, .landing_head .ld_menu a.menubtn{font-size: 16px; height: 40px; line-height: 40px}
+    
+    .step3 .box {
+    margin: 0;
+    text-align: center;
+    width: 33.33%;
+    padding: 0 10px;}
+    
+    .step3 .box .text p{font-size: 16px}
+    .step3 .box .text h2{font-size: 18px}
+    .step3 .box .text h3{font-size: 16px}
+
+
+
+}
+
+
+
+@media (max-width: 1024px) { 
+    
+    .landing_head h2{font-size: 20px}
+    .landing_head .ld_menu a{font-size: 17px}
+    
+     .step01{height: 85vh}
+    .step01 .ld_bg{height: 85vh}
+    .ld_service ul li{width: 200px; height: 200px}
+    .ld_service ul li h2{font-size: 18px}
+    .ld_service ul li p{font-size: 16px} 
+
+
+}
+
+
+
+
+
+@media (max-width: 800px) {
+ 
+     .step01{height: auto; padding: 150px 0 100px}
+    .step01 .ld_bg{height:100%; width: 100%; left: 0; top: 0; position: absolute; background: #4400E1}
+    .ld_service{padding: 100px 15px}
+    .ld_title p{word-break: keep-all}
+    .ld_title p br{display: none}
+    .ld_service ul{flex-wrap: wrap}
+    .ld_service ul li{width: calc(50% - 10px); height: auto; border-radius: 0; padding: 20px; margin: 5px}
+    .ld_service ul li h2{font-size: 18px}
+    .ld_service ul li p{font-size: 16px} 
+
+}
+
+
+
+@media (max-width: 640px) {
+    .step3 {flex-wrap: wrap}
+    .step3 .box{width: 100%; margin: 10px 0}
+    .step3 .box img{max-width: 300px}
+    .landing_end{padding: 100px 0}
+    .landing_end h2{font-size: 20px; word-break: keep-all}
+    footer .foot_link a{font-size: 14px; margin:0 10px}
+    footer p{font-size: 14px}
+    
+    .ld_bg img{display: none}
+    
+    .step01 h2{font-size: 30px; line-height: 40px}
+    a.ld_btn2, a.ld_btn, .landing_head .ld_menu a.menubtn{font-size: 14px; height: 35px; line-height: 35px}
+    
+    .landing .inner{text-align: center}
+    footer .foot_link{justify-content: center}
+    
+    .floating_nav a{max-width: 40px}
+    
+    .ld_title h2{font-size: 25px; line-height: 35px}
+    .landing_head .inner{display: block}
+    .landing_head h2{text-align: left}
+    .landing_head .ld_menu{display: none}
+
+ 
+}
+
+
+
+
+
+@media (max-width: 479px) {
+ 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

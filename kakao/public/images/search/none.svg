@@ -1,0 +1,29 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="24x24 Material Design">
+<path id="Vector 1558" d="M6 17L24 24L42 17L24 10L6 17Z" fill="url(#paint0_linear_2826_87968)"/>
+<path id="Rectangle 156185" d="M6 17L24 24V42L6 35V17Z" fill="url(#paint1_linear_2826_87968)"/>
+<path id="Rectangle 156186" d="M42 17L24 24V42L42 35V17Z" fill="url(#paint2_linear_2826_87968)"/>
+<path id="Vector 1559" d="M2 12L6 17L24 10L20 5L2 12Z" fill="#D7DEF7"/>
+<path id="Vector 1561" d="M46 12L42 17L24 10L28 5L46 12Z" fill="#D7DEF7"/>
+<path id="Vector 1560" d="M24 24L28 21L46 14L42 17L24 24Z" fill="url(#paint3_linear_2826_87968)"/>
+<path id="Vector 1562" d="M24 24L20 21L2 14L6 17L24 24Z" fill="#E4ECF6"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_2826_87968" x1="24" y1="10" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+<stop stop-color="#D7DEF7"/>
+<stop offset="1" stop-color="#BCC3DB"/>
+</linearGradient>
+<linearGradient id="paint1_linear_2826_87968" x1="15" y1="17" x2="15" y2="42" gradientUnits="userSpaceOnUse">
+<stop stop-color="#E4ECF6"/>
+<stop offset="1" stop-color="#D8DBE9"/>
+</linearGradient>
+<linearGradient id="paint2_linear_2826_87968" x1="24.5" y1="42.5" x2="41.5" y2="19.5" gradientUnits="userSpaceOnUse">
+<stop stop-color="#F4F8FD"/>
+<stop offset="1" stop-color="#EEF2FE"/>
+</linearGradient>
+<linearGradient id="paint3_linear_2826_87968" x1="43.5" y1="16" x2="25" y2="26" gradientUnits="userSpaceOnUse">
+<stop stop-color="#F4F8FD"/>
+<stop offset="1" stop-color="#EEF2FE"/>
+</linearGradient>
+</defs>
+</svg>
