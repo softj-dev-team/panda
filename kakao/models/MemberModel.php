@@ -6,7 +6,7 @@ class MemberModel {
 
     public function __construct() {
         try {
-            $database = new DatabaseAsis();
+            $database = new Database();
             $this->conn = $database->connect();
         } catch (PDOException $e) {
             echo 'Database Connection Error: ' . $e->getMessage();
