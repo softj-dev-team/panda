@@ -20,7 +20,7 @@
     <div class="tab_btn_are">
         <div class="input_tab">
             <input type="text" name="keyword" id="keyword" >
-            <a href="javascript:s_mem.submit();">
+            <a href="#" id="goSearch">
                 <img src="/images/search.png">
             </a>
         </div>
@@ -158,6 +158,11 @@
         e.preventDefault();
         var page = $(this).data('page');
         loadDataList(page);
+    });
+    // 페이지 링크 클릭 이벤트 핸들러 추가
+    $(document).on('click', '#goSearch', function(e) {
+        e.preventDefault();
+        loadDataList();
     });
 </script>
 <!--footer-->
