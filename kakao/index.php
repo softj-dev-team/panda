@@ -13,6 +13,10 @@ $route = isset($_GET['route']) ? $_GET['route'] : '';
 
 
 switch ($route) {
+    case 'userAlimTsendList':
+        $controller = new SendTranKKOController();
+        $controller->index();
+        break;
     case 'sendMessage':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $controller = new TemplateCategoryController();
