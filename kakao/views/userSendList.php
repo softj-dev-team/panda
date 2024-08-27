@@ -79,9 +79,10 @@
                     var table = $('#listTable tbody');
                     table.empty();
                     response.data.forEach(function(data) {
-                        var truncatedMessage = data.fmessage.length > 10 ? data.fmessage.substring(0, 10) + '...' : data.fmessage;
+                        var formattedDate = formatDate(data.fetc5);  // 함수 호출
+                        var truncatedMessage = data.fmessage.length > 25 ? data.fmessage.substring(0, 25) + '...' : data.fmessage;
                         var row = `<tr>
-                        <td>${data.fetc5}</td>
+                        <td>${formattedDate}</td>
                         <td>알림톡</td>
                         <td class="truncated-message" title="${data.fmessage}">
                             ${truncatedMessage}
