@@ -18,6 +18,10 @@ if (hash_equals($signature, $_SERVER['HTTP_X_HUB_SIGNATURE'])) {
         case 'push':
             // 예: 푸시 이벤트 처리
             file_put_contents('file/push_log.txt', print_r($data, true), FILE_APPEND);
+            // 'git pull origin develop' 명령을 실행하여 최신 코드를 가져옴
+            $output = shell_exec('cd /home/asssahcom9 && git pull origin develop 2>&1');
+            file_put_contents('git_pull_log.txt', $output, FILE_APPEND);
+
             break;
         case 'pull_request':
             // 예: 풀 리퀘스트 이벤트 처리
