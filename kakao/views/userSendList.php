@@ -28,10 +28,10 @@
             <table id="listTable">
                 <colgroup>
 
-                    <col style="width:12%;">
+                    <col style="width:20%;">
                     <col style="width:8%">
-                    <col style="width:70%">
-                    <col style="width:12%">
+                    <col style="width:52%">
+                    <col style="width:20%">
 
                 </colgroup>
                 <thead>
