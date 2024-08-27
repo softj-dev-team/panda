@@ -75,17 +75,16 @@
     };
 
     function loadDataList(page = 1) {
-        var keyword = $('#keyword').val(); // #keyword 요소의 값을 가져옴
+        var keyword = $('#keyword').val().trim(); // #keyword 요소의 값을 가져오고 공백 제거
 
-        // AJAX 요청 데이터 객체 구성
         var requestData = {
             page: page
         };
 
-        // keyword 값이 있으면 requestData 객체에 추가
         if (keyword) {
-            requestData.keyword = keyword;
+            requestData.keyword = keyword.replace(/[^0-9]/g, ''); // 특수문자 제거
         }
+
         $.ajax({
             url: '/kakao/index.php?route=getUserAlimTalkSendList',
             type: 'GET',
@@ -109,12 +108,11 @@
                         table.append(row);
                     });
 
-                    // 페이징 처리
-                    var pageSize = 10; // 한 페이지에 표시할 항목 수
-                    var totalRow = response.total; // 총 항목 수
-                    var totalPages = Math.ceil(totalRow / pageSize); // 총 페이지 수
-                    var currentPage = page; // 현재 페이지
-                    var pageSizeGroup = 10; // 페이지 그룹 크기
+                    var pageSize = 10;
+                    var totalRow = response.total;
+                    var totalPages = Math.ceil(totalRow / pageSize);
+                    var currentPage = page;
+                    var pageSizeGroup = 10;
 
                     var startPage = Math.floor((currentPage - 1) / pageSizeGroup) * pageSizeGroup + 1;
                     var endPage = startPage + pageSizeGroup - 1;
@@ -126,19 +124,16 @@
                     var pagination = $('#pagination');
                     pagination.empty();
 
-                    // 이전 페이지 링크
                     if (currentPage > 1) {
                         var prevPage = startPage - pageSizeGroup;
                         pagination.append(`<a href="#" class="page-link pre" data-page="${prevPage > 0 ? prevPage : 1}"> <img src="/images/pagenation/l.png"></a>`);
                     }
 
-                    // 페이지 번호 링크
                     for (var i = startPage; i <= endPage; i++) {
                         var pageLink = `<a href="#" class="page-link ${i === currentPage ? 'atv' : ''}" data-page="${i}">${i}</a>`;
                         pagination.append(pageLink);
                     }
 
-                    // 다음 페이지 링크
                     if (endPage < totalPages) {
                         var nextPage = endPage + 1;
                         pagination.append(`<a href="#" class="page-link next" data-page="${nextPage}"><img src="/images/pagenation/r.png"></a>`);
@@ -153,13 +148,13 @@
             }
         });
     }
-    // 페이지 링크 클릭 이벤트 핸들러 추가
+
     $(document).on('click', '.page-link', function(e) {
         e.preventDefault();
         var page = $(this).data('page');
         loadDataList(page);
     });
-    // 페이지 링크 클릭 이벤트 핸들러 추가
+
     $(document).on('click', '#goSearch', function(e) {
         e.preventDefault();
         loadDataList();
