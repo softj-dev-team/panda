@@ -1,5 +1,6 @@
 import pymysql
 import requests
+import json
 
 # 데이터베이스 연결 설정
 db_config = {
@@ -22,23 +23,25 @@ connection = pymysql.connect(**db_config)
 
 try:
     with connection.cursor(pymysql.cursors.DictCursor) as cursor:
-        # fetc1 컬럼에 값이 없는 행 중 하나를 선택
+        # fetc2 컬럼에 'AR' 값이 있는 행 중 하나를 선택
         sql = "SELECT * FROM TBL_SEND_TRAN_KKO WHERE fetc2 = 'AR' LIMIT 1"
         cursor.execute(sql)
         result = cursor.fetchone()
 
         if result:
             # API로 전송할 데이터 구성
-            payload = {
-                "custMsgSn": "F46CBA8E658BAC08965FD887B767CBC1",
-                "senderKey": result['fyellowid'],
-                "phoneNum": result['fdestine'],
-                "templateCode": result['ftemplatekey'],
-                "message": result['fmessage'],
-            }
+            payload = json.dumps([
+                {
+                    "custMsgSn": "F46CBA8E658BAC08965FD887B767CBC1",
+                    "senderKey": result['fyellowid'],
+                    "phoneNum": result['fdestine'],
+                    "templateCode": result['ftemplatekey'],
+                    "message": result['fmessage']
+                }
+            ])
 
             # API 요청 전송
-            response = requests.post(api_url, json=payload, headers=headers)
+            response = requests.post(api_url, headers=headers, data=payload)
 
             try:
                 response_data = response.json()
@@ -75,7 +78,7 @@ try:
             except ValueError:
                 print("응답 JSON 파싱에 실패했습니다:", response.text)
         else:
-            print("fetc1 컬럼이 NULL인 데이터를 찾을 수 없습니다.")
+            print("fetc2 컬럼이 'AR'인 데이터를 찾을 수 없습니다.")
 
 finally:
     connection.close()
