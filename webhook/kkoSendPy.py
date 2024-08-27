@@ -38,7 +38,7 @@ def get_current_point(cursor, member_idx):
         ORDER BY idx DESC LIMIT 1
     """, (member_idx, point_sect))
     result = cursor.fetchone()
-    return result['cur_mile'] if result else 0
+    return float(result['cur_mile']) if result and result['cur_mile'] is not None else 0.0
 
 def get_mb_kko_fee(cursor, member_info_idx):
     cursor.execute("""
@@ -46,11 +46,12 @@ def get_mb_kko_fee(cursor, member_info_idx):
         WHERE member_idx = %s
     """, (member_info_idx,))
     result = cursor.fetchone()
-    return result['mb_kko_fee'] if result else 0
+    return float(result['mb_kko_fee']) if result and result['mb_kko_fee'] is not None else 0.0
 
 def update_point(cursor, member_idx, chg_mile, mile_title):
     mile_pre = get_current_point(cursor, member_idx)
-    cur_mile = max(float(mile_pre) - float(chg_mile), 0.0)
+    chg_mile = float(chg_mile)  # 문자열로 전달될 수 있는 경우 대비하여 형 변환
+    cur_mile = max(float(mile_pre) - chg_mile, 0.0)
 
     sql = """
     INSERT INTO member_point
@@ -71,6 +72,8 @@ def process_data():
             results = cursor.fetchall()
 
             if results:
+                total_sent = 0  # 발송 성공 건수 누적
+
                 for result in results:
                     member_info_idx = result['fetc8']  # `member_info_idx`는 이제 `fetc8`에서 가져옵니다
                     mb_kko_fee = get_mb_kko_fee(cursor, member_info_idx)  # `member_info_sendinfotable`에서 `mb_kko_fee`를 가져옵니다
@@ -98,6 +101,10 @@ def process_data():
                         if response_data and isinstance(response_data, list) and len(response_data) > 0:
                             data = response_data[0]
 
+                            # 발송 성공 여부 확인 ("code"가 "AS"인 경우)
+                            if data.get("code") == "AS":
+                                total_sent += 1
+
                             # 데이터베이스 업데이트
                             update_sql = """
                             UPDATE TBL_SEND_TRAN_KKO
@@ -122,13 +129,17 @@ def process_data():
                                 result['fseq']
                             ))
 
-                            # 포인트 차감 로직 수행
-                            update_point(cursor, member_info_idx, mb_kko_fee, "알림톡 발송")
                         else:
                             print(f"응답 데이터가 유효하지 않습니다: {response_data}")
 
                     except requests.exceptions.RequestException as e:
                         print(f"API 요청 중 오류 발생: {e}")
+
+                # 발송 건수가 2건 이상이고, 발송 성공 건수가 있는 경우 포인트 차감
+                if total_sent >= 2:
+                    total_fee = total_sent * mb_kko_fee
+                    update_point(cursor, member_info_idx, total_fee, f"알림톡 발송({total_sent}건)")
+                    print(f"{total_sent}건의 발송 성공에 대해 포인트 {total_fee} 차감 완료")
 
                 connection.commit()
                 print(f"{batch_size}건의 API 요청 처리 및 데이터베이스 업데이트 완료")
