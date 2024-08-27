@@ -55,6 +55,7 @@ class TemplateCategoryModel
                         tc.name as category_name, 
                         kb.profile_key, 
                         kb.business_name, 
+                        kb.chananel_name, 
                         mi.user_id, 
                         mi.user_name
                      FROM template t

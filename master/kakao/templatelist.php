@@ -157,7 +157,7 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
                             <tr">
                                 <td>${template.id}</td>
                                 <td>${template.user_id}<br>${template.user_name}</td>
-                                <td>${template.profile_key}<br>${template.business_name}</td>
+                                <td>${template.profile_key}<br>${template.chananel_name}</td>
                                 <td>${template.template_name}</td>
                                 <td>${template.template_key}</td>
                                 <td class="truncated-message" title="${template.template_title}">
