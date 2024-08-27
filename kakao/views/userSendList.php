@@ -38,7 +38,7 @@
                     <tr>
 
                         <th>등록일시</th>
-                        <th>구분</th>
+                        <th>수신자 번호</th>
                         <th>내용</th>
                         <th>결과</th>
 
@@ -84,7 +84,7 @@
                         var truncatedMessage = data.fmessage.length > 25 ? data.fmessage.substring(0, 25) + '...' : data.fmessage;
                         var row = `<tr>
                         <td>${formattedDate}</td>
-                        <td>알림톡</td>
+                        <td>${data.fdestine}</td>
                         <td class="truncated-message" title="${data.fmessage}">
                             ${truncatedMessage}
                         </td>
