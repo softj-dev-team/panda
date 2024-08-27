@@ -1,5 +1,5 @@
 <?php
-// GitHub 웹훅에서 전송된 데이터를 가져옴 1
+// GitHub 웹훅에서 전송된 데이터를 가져옴 12
 $payload = file_get_contents('php://input');
 
 // 시크릿 키가 설정된 경우 서명 검증
