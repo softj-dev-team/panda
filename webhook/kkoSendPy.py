@@ -50,8 +50,7 @@ def get_mb_kko_fee(cursor, member_info_idx):
 
 def update_point(cursor, member_idx, chg_mile, mile_title):
     mile_pre = get_current_point(cursor, member_idx)
-    chg_mile = float(chg_mile)  # 문자열로 전달될 수 있는 경우 대비하여 형 변환
-    cur_mile = max(mile_pre - chg_mile, 0.0)
+    cur_mile = max(float(mile_pre) - float(chg_mile), 0.0)
 
     sql = """
     INSERT INTO member_point
