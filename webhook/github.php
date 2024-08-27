@@ -19,7 +19,7 @@ if (hash_equals($signature, $_SERVER['HTTP_X_HUB_SIGNATURE'])) {
             // 예: 푸시 이벤트 처리
             file_put_contents('file/push_log.txt', print_r($data, true), FILE_APPEND);
             // Shell 스크립트를 실행하여 git pull 수행
-            $output = shell_exec('/home/asssahcom9/webhook/git_shell.sh 2>&1');
+            $output = shell_exec('cd /home/asssahcom9/webhook/ && ./git_shell.sh 2>&1');
             file_put_contents('file/git_pull_log.txt', $output, FILE_APPEND);
 
             break;
