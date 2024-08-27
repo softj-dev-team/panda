@@ -1,43 +1,61 @@
 import pymysql
 import requests
 import json
+from dotenv import load_dotenv
+import os
+
+# .env 파일에서 환경 변수 로드
+load_dotenv()
 
 # 데이터베이스 연결 설정
 db_config = {
-    'host': 'localhost',
-    'user': 'asssahcom9',
-    'password': 'soulvocal7!!',
-    'database': 'asssahcom9',
-    'charset': 'utf8mb4'
+    'host': os.getenv('DB_HOST'),
+    'user': os.getenv('DB_USER'),
+    'password': os.getenv('DB_PASSWORD'),
+    'database': os.getenv('DB_NAME'),
+    'charset': os.getenv('DB_CHARSET')
 }
 
 # API 설정
-api_url = 'https://wt-api.carrym.com:8443/v3/A/leahue1/messages'
+api_base_url = os.getenv('API_BASE_URL')
+api_endpoint = '/v3/A/leahue1/messages'
+api_url = f"{api_base_url}{api_endpoint}"  # 베이스 URL과 엔드포인트 결합
 headers = {
     'Content-Type': 'application/json',
-    'Authorization': 'Bearer F46CBA8E658BAC08965FD887B767CBC1'
+    'Authorization': os.getenv('API_AUTHORIZATION')
 }
 
+# 포인트 섹션 설정
+point_sect = os.getenv('POINT_SECT')
+
 def get_current_point(cursor, member_idx):
-    cursor.execute("""
+    cursor.execute(f"""
         SELECT cur_mile FROM member_point
-        WHERE member_idx = %s AND point_sect = 'smspay'
+        WHERE member_idx = %s AND point_sect = %s
         ORDER BY idx DESC LIMIT 1
-    """, (member_idx,))
+    """, (member_idx, point_sect))
     result = cursor.fetchone()
     return result['cur_mile'] if result else 0
+
+def get_mb_kko_fee(cursor, member_info_idx):
+    cursor.execute("""
+        SELECT mb_kko_fee FROM member_info_sendinfo
+        WHERE member_idx = %s
+    """, (member_info_idx,))
+    result = cursor.fetchone()
+    return result['mb_kko_fee'] if result else 0
 
 def update_point(cursor, member_idx, chg_mile, mile_title):
     mile_pre = get_current_point(cursor, member_idx)
     cur_mile = max(mile_pre - chg_mile, 0)
 
-    sql = """
+    sql = f"""
     INSERT INTO member_point
     (order_num, member_idx, pay_price, mile_title, mile_sect, mile_pre, chg_mile, cur_mile, point_sect, wdate)
     VALUES
-    (NULL, %s, NULL, %s, 'M', %s, %s, %s, 'smspay', NOW())
+    (NULL, %s, NULL, %s, 'M', %s, %s, %s, %s, NOW())
     """
-    cursor.execute(sql, (member_idx, mile_title, mile_pre, chg_mile, cur_mile))
+    cursor.execute(sql, (member_idx, mile_title, mile_pre, chg_mile, cur_mile, point_sect))
 
 def process_data():
     connection = pymysql.connect(**db_config)
@@ -51,8 +69,8 @@ def process_data():
 
             if results:
                 for result in results:
-                    member_info_idx = result['member_info_idx']  # `member_info_idx` 가져오기
-                    mb_kko_fee = 10  # 가정: 알림톡 발송에 따른 포인트 차감 금액이 10포인트라고 가정
+                    member_info_idx = result['fetc8']  # `member_info_idx`는 이제 `fetc8`에서 가져옵니다
+                    mb_kko_fee = get_mb_kko_fee(cursor, member_info_idx)  # `member_info_sendinfotable`에서 `mb_kko_fee`를 가져옵니다
 
                     # API 전송을 위한 데이터 구성
                     payload = json.dumps([
@@ -71,7 +89,7 @@ def process_data():
                     if response_data and isinstance(response_data, list) and len(response_data) > 0:
                         data = response_data[0]
 
-                        # 데이터베이스 업데이트 (fetc8에 member_info_idx 저장)
+                        # 데이터베이스 업데이트
                         update_sql = """
                         UPDATE TBL_SEND_TRAN_KKO
                         SET
