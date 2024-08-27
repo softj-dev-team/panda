@@ -356,7 +356,7 @@ select {
 .board-list.ty-2 thead {display:none;}
 .board-list th {font-size:15px; color:#000;}
 .board-list tr {border-bottom:solid 1px #eee;}
-/*.board-list tr {height:80px;}*/
+.board-list tr {height:80px;}
 .board-list td {padding-top:20px; padding-bottom:18px; text-align:center;}
 .board-list .tb-subj {padding-left:40px; padding-right:10px; box-sizing:border-box; text-align:left;}
 .board-list .subj {font-size:16px; color:#000; font-weight:bold;}
@@ -577,4 +577,133 @@ select {
 }
 .modal-content th {
     background-color: #f2f2f2;
+}
+
+@media screen and (max-width: 767px) {
+    .board-list.cmgt {
+        margin-top: 11px;
+    }
+
+    .board-list tr {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        height: auto;
+        padding: 14px 0 12px;
+    }
+
+    .board-list thead {
+        display: none;
+    }
+
+    .board-list colgroup {
+        display: none;
+    }
+
+    .board-list td {
+        height: auto;
+        padding: 0 9px 0 0;
+    }
+
+    .board-list td {
+        display: block;
+    }
+
+    .board-list .mo-tb-hide {
+        display: none;
+    }
+
+    .board-list .mo-tb-1 {
+        -ms-flex-order: 1;
+        order: 1;
+        width: 100%;
+        padding-left: 0;
+        padding-bottom: 5px;
+    }
+
+    .board-list .mo-tb-1-1 {
+        -ms-flex-order: 1;
+        order: 1;
+        width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+        padding-bottom: 5px;
+    }
+
+    .board-list .mo-tb-2-1 {
+        -ms-flex-order: 2;
+        order: 2;
+    }
+
+    .board-list .mo-tb-2-2 {
+        -ms-flex-order: 3;
+        order: 3;
+    }
+
+    .board-list .subj {
+        font-size: 13px;
+        line-height: 1.37;
+    }
+
+    .board-list .subj.st {
+        font-size: 14px;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .board-list .subj-2 {
+        font-size: 13px;
+        line-height: 1.37;
+    }
+
+    .board-list .subj-2:before {
+        content: '';
+        display: inline-block;
+        width: 12px;
+        height: 14px;
+        margin: 3px 3px 0 0;
+        vertical-align: top;
+        background-position: -65px -217px;
+    }
+
+    .board-list .subj-tel {
+        display: block;
+        font-size: 14px;
+        text-align: left;
+    }
+
+    .board-list .subj-tel:before {
+        content: '';
+        display: inline-block;
+        width: 12px;
+        height: 14px;
+        margin: 4px 3px 0 0;
+        vertical-align: top;
+        background-position: -78px -217px;
+    }
+
+    .board-list .map-btn-2 {
+        display: block;
+        margin-top: 5px;
+    }
+
+    .board-list .no-data, .accordion .no-data, .board-accor .no-data {
+        width: 100%;
+        padding: 88px 0;
+        font-size: 13px;
+    }
+
+    .ios.mobile table.board-list {
+        table-layout: fixed;
+    }
+
+    .board-source + .board-attatch {
+        margin-top: 24px;
+    }
+
+    .board-source + .board-tag {
+        margin-top: 18px;
+    }
 }
