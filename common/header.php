@@ -162,7 +162,7 @@ if ($_SESSION['member_coinc_idx']) {
                         </a>
                     </li>
                     <li>
-                        <a href="/kakao/index.php?route=userAlimTsendList">
+                        <a href="/kakao/index.php?route=userAlimTalkSendList">
                             <!--단·장문 보내기-->
                             알림톡 발송내역
                         </a>
