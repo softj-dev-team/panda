@@ -48,7 +48,7 @@
                         <th>총건수</th>
                         <th>잔여</th>
                         <th>결과</th>
-                    <th>비고</th>
+
                     </tr>
                 </thead>
 
@@ -96,7 +96,7 @@
                         </td>
                         <td></td>
                         <td></td>
-                        <td>${data.fetc3}</td>
+                        <td>${data.fetc4}</td>
                         <td>${data.fetc3}</td>
 
 
