@@ -124,8 +124,9 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
                     profilesTable.empty();
                     response.profiles.forEach(function(profile) {
                         var row = `<tr>
-                            <td>${profile.user_id}/${profile.user_name}</td>
+
                             <td>${profile.id}</td>
+                            <td>${profile.user_id}/${profile.user_name}</td>
                             <td>${profile.chananel_name}</td>
                             <td>${profile.industry}</td>
                             <td>${profile.cs_phone_number}</td>
