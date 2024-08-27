@@ -93,7 +93,13 @@ class KakaoBusinessModel
     public function getProfilesForMaster($offset, $limit)
     {
         try {
-            $stmt = $this->conn->prepare("SELECT * FROM kakao_business order by id desc LIMIT :limit OFFSET :offset");
+            $stmt = $this->conn->prepare("
+             SELECT pr.*, mi.user_id, mi.user_name 
+                FROM kakao_business pr
+                JOIN member_info mi ON pr.user_idx = mi.idx
+                ORDER BY pr.id DESC 
+                LIMIT :limit OFFSET :offset
+            ");
             $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
             $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
             $stmt->execute();

@@ -76,6 +76,7 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
                         <thead>
                         <tr>
                             <th>NO</th>
+                            <th>신청자</th>
                             <th>채널명</th>
 <!--                            <th>사업자명</th>-->
 <!--                            <th>등록번호</th>-->
@@ -123,6 +124,7 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
                     profilesTable.empty();
                     response.profiles.forEach(function(profile) {
                         var row = `<tr>
+                            <td>${profile.user_id}/${profile.user_name}</td>
                             <td>${profile.id}</td>
                             <td>${profile.chananel_name}</td>
                             <td>${profile.industry}</td>
