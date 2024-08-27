@@ -332,7 +332,8 @@
             var regex = new RegExp('#{' + varName + '}', 'g');
             filledTemplate = filledTemplate.replace(regex, varValue);
         });
-        $('#previewHighlightTitle').text(filledTemplate);
+        $('#previewHighlightTitle').html(convertToHtml(filledTemplate));
+        // $('#previewHighlightTitle').text(filledTemplate);
         $('input[name="message"]').val(filledTemplate);
     }
     function loadTemplateDetails(templateId) {
