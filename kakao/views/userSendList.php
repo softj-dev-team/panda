@@ -18,7 +18,12 @@
 
 
     <div class="tab_btn_are">
-
+        <div class="input_tab">
+            <input type="text" name="keyword" id="keyword" value="<?= $keyword ?>">
+            <a href="javascript:s_mem.submit();">
+                <img src="/images/search.png">
+            </a>
+        </div>
 
     </div>
 
