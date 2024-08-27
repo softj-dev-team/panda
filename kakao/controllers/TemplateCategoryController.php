@@ -344,13 +344,14 @@ class TemplateCategoryController extends Controller
 
                     // Log the phone number for debugging
                     error_log("Processed phone number: $fdestine");
-
+                    $member_idx=$this->data['inc_member_row']['idx'];
                     $this->sendTransaction->saveMessageByList(
                         $fdestine, // fdestine
                         $callbackNumber, // fcallback
                         $message,
                         $profileKey,
-                        $templateKey
+                        $templateKey,
+                        $member_idx
                     );
                 }
                 // 성공한 경우

@@ -36,20 +36,23 @@ class SendTransaction
             throw new Exception('Failed to save message: ' . $e->getMessage());
         }
     }
-    public function saveMessageByList( $fdestine,$fcallback,$message,$profile_key,$template_key)
+    public function saveMessageByList( $fdestine,$fcallback,$message,$profile_key,$template_key,$member_idx)
     {
         try {
 
             $stmt = $this->conn->prepare("INSERT INTO TBL_SEND_TRAN_KKO
-                (fyellowid, ftemplatekey, fkkoresendtype, fmsgtype, fmessage, fsenddate, fdestine, fcallback)
+                (fyellowid, ftemplatekey, fkkoresendtype, fmsgtype, fmessage, fsenddate, fdestine, fcallback,fetc8)
                 VALUES
-                (:profile_key, :template_key, 'N', 4, :message, now(), :fdestine, :fcallback)");
-            $stmt->bindParam(':profile_key', $profile_key);
-            $stmt->bindParam(':template_key', $template_key);
-            $stmt->bindParam(':message', $message);
-            $stmt->bindParam(':fdestine', $fdestine);
-            $stmt->bindParam(':fcallback', $fcallback);
-            $stmt->execute();
+                (:profile_key, :template_key, 'N', 4, :message, now(), :fdestine, :fcallback,:fetc8)");
+
+                $stmt->bindParam(':profile_key', $profile_key);
+                $stmt->bindParam(':template_key', $template_key);
+                $stmt->bindParam(':message', $message);
+                $stmt->bindParam(':fdestine', $fdestine);
+                $stmt->bindParam(':fcallback', $fcallback);
+                $stmt->bindParam(':fetc8', $member_idx);
+                $stmt->execute();
+
         } catch (Exception $e) {
             error_log($e->getMessage());
             throw new Exception('Failed to save message: ' . $e->getMessage());
