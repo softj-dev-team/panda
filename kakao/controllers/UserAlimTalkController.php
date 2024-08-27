@@ -18,11 +18,16 @@ class UserAlimTalkController extends Controller
         try {
             $member_idx=$this->data['inc_member_row']['idx'];
             $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+            $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : null;
+            // 키워드에서 숫자 이외의 모든 문자를 제거
+            if ($keyword !== null) {
+                $keyword = preg_replace('/[^0-9]/', '', $keyword);
+            }
             $limit = 10;
             $offset = ($page - 1) * $limit;
 
-            $data = $this->UserAlimTalkModel->getKakaoSendList($member_idx,$offset, $limit);
-            $total = $this->UserAlimTalkModel->getTotalKakaoSendList($member_idx);
+            $data = $this->UserAlimTalkModel->getKakaoSendList($member_idx,$offset, $limit,$keyword);
+            $total = $this->UserAlimTalkModel->getTotalKakaoSendList($member_idx,$keyword);
             $this->sendJsonResponse(['success' => true, 'data' => $data, 'total' => $total]);
         } catch (Exception $e) {
             error_log($e->getMessage());

@@ -19,7 +19,7 @@
 
     <div class="tab_btn_are">
         <div class="input_tab">
-            <input type="text" name="keyword" id="keyword" value="<?= $keyword ?>">
+            <input type="text" name="keyword" id="keyword" >
             <a href="javascript:s_mem.submit();">
                 <img src="/images/search.png">
             </a>
@@ -75,10 +75,21 @@
     };
 
     function loadDataList(page = 1) {
+        var keyword = $('#keyword').val(); // #keyword 요소의 값을 가져옴
+
+        // AJAX 요청 데이터 객체 구성
+        var requestData = {
+            page: page
+        };
+
+        // keyword 값이 있으면 requestData 객체에 추가
+        if (keyword) {
+            requestData.keyword = keyword;
+        }
         $.ajax({
             url: '/kakao/index.php?route=getUserAlimTalkSendList',
             type: 'GET',
-            data: { page: page },
+            data: requestData,
             dataType: 'json',
             success: function(response) {
                 if (response.success) {
