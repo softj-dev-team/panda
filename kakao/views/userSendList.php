@@ -3,7 +3,7 @@
 <body>
 
 <!--header-->
-<div><? require_once $_SERVER["DOCUMENT_ROOT"] ."/common/header.php"; ?></div>
+<div><?php require_once $_SERVER["DOCUMENT_ROOT"] ."/common/header.php"; ?></div>
 
 <!--content-->
 
@@ -19,20 +19,6 @@
 
     <div class="tab_btn_are">
 
-<!--        <form name="s_mem" id="s_mem" method="post" action="send.php">-->
-<!--            <div class="input_tab">-->
-<!--                <input type="text" name="keyword" id="keyword" value="--><?php //= $keyword ?><!--">-->
-<!--                <a href="javascript:s_mem.submit();">-->
-<!--                    <img src="images/search.png">-->
-<!--                </a>-->
-<!--            </div>-->
-<!--        </form>-->
-
-<!--        <div class="btn">-->
-<!--            <a href="./send_success_down.php">성공내역 엑셀다운로드</a>-->
-<!--            <a href="./send_fail_down.php">실패내역 엑셀다운로드</a>-->
-<!--            <a href="javascript:go_tot_del();">내역삭제</a>-->
-<!--        </div>-->
 
     </div>
 
