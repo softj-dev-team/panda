@@ -13,7 +13,7 @@ class Controller {
         if (empty($_SESSION['member_coinc_idx'])) {
             // 로그인되지 않은 경우 알림창과 함께 리다이렉트
             echo '<script type="text/javascript">';
-            echo 'alert("먼저 로그인 해주세요.");';
+            echo 'alert(" * 먼저 로그인 해주세요.");';
             echo 'window.location.href = "/";'; // 로그인 페이지로 리다이렉트
             echo '</script>';
             exit(); // 이후 코드 실행 방지
