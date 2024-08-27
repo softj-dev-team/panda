@@ -16,12 +16,13 @@ class UserAlimTalkController extends Controller
     }
     public function getUserAlimTalkSendList(){
         try {
+            $member_idx=$this->data['inc_member_row']['idx'];
             $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
             $limit = 10;
             $offset = ($page - 1) * $limit;
 
-            $data = $this->UserAlimTalkModel->getKakaoSendList($offset, $limit);
-            $total = $this->UserAlimTalkModel->getTotalKakaoSendList();
+            $data = $this->UserAlimTalkModel->getKakaoSendList($member_idx,$offset, $limit);
+            $total = $this->UserAlimTalkModel->getTotalKakaoSendList($member_idx);
             $this->sendJsonResponse(['success' => true, 'data' => $data, 'total' => $total]);
         } catch (Exception $e) {
             error_log($e->getMessage());

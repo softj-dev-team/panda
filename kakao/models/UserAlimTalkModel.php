@@ -13,26 +13,27 @@ class UserAlimTalkModel
     }
 
 
-    public function getKakaoSendList($offset, $limit)
+    public function getKakaoSendList($member_idx,$offset, $limit)
     {
         $stmt = $this->conn->prepare(
             "SELECT * 
-                     FROM TBL_SEND_TRAN_KKO                     
+                     FROM TBL_SEND_TRAN_KKO where fetc8 = :member_idx                    
                      ORDER BY fseq DESC
                      LIMIT :limit OFFSET :offset"
         );
         $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
         $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $stmt->bindParam(':member_idx', $member_idx, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function getTotalKakaoSendList()
+    public function getTotalKakaoSendList($member_idx)
     {
         try {
             $stmt = $this->conn->prepare(
-                "SELECT COUNT(*) as total FROM TBL_SEND_TRAN_KKO"
+                "SELECT COUNT(*) as total FROM TBL_SEND_TRAN_KKO where fetc8 = :member_idx "
             );
-
+            $stmt->bindParam(':member_idx', $member_idx, PDO::PARAM_INT);
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             return $result['total'];
