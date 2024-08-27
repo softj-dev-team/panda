@@ -1,5 +1,5 @@
 <?php
-//12345678901234561
+//12
 $payload = file_get_contents('php://input');
 
 // 시크릿 키가 설정된 경우 서명 검증
