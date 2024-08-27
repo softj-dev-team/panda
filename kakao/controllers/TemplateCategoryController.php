@@ -425,14 +425,16 @@ class TemplateCategoryController extends Controller
                 } else {
                     throw new Exception('No response code received from the server.');
                 }
+                $member_idx=$this->data['inc_member_row']['idx'];
+
                 // 예를 들어, 템플릿이 성공적으로 저장되었을 경우
-               $this->sendTransaction->saveMessage($fdestine, $fcallback, $message, $profileKey, $templateKey,$responseData[0]['sn'],$responseData[0]['code'],$responseData[0]['altCode'],$responseData[0]['altMsg'],$responseData[0]['altSndDtm'],$responseData[0]['altRcptDtm']);
+               $this->sendTransaction->saveMessage($fdestine, $fcallback, $message, $profileKey, $templateKey,$responseData[0]['sn'],$responseData[0]['code'],$responseData[0]['altCode'],$responseData[0]['altMsg'],$responseData[0]['altSndDtm'],$responseData[0]['altRcptDtm'],$member_idx);
 
 
                 $point_sect = "smspay"; //
                 $mile_title = "알림톡 발송"; // 포인트 차감 내역
                 $mile_sect = "M"; // 포인트  종류 = A : 적립, P : 대기, M : 차감
-                $member_idx=$this->data['inc_member_row']['idx'];
+
                 $mb_kko_fee=$this->data['inc_member_row']['mb_kko_fee'];
                 $this->pointModel->coin_plus_minus($point_sect,$member_idx,$mile_sect,$mb_kko_fee,$mile_title,"","","");
                 // 성공한 경우

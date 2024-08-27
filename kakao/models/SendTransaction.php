@@ -11,14 +11,14 @@ class SendTransaction
         $this->conn = $database->connect();
     }
 
-    public function saveMessage( $fdestine,$fcallback,$message,$profile_key,$template_key,$sn,$code,$altCode,$altMsg,$altSndDtm,$altRcptDtm)
+    public function saveMessage( $fdestine,$fcallback,$message,$profile_key,$template_key,$sn,$code,$altCode,$altMsg,$altSndDtm,$altRcptDtm,$member_idx)
     {
         try {
 
             $stmt = $this->conn->prepare("INSERT INTO TBL_SEND_TRAN_KKO
-                (fyellowid, ftemplatekey, fkkoresendtype, fmsgtype, fmessage, fsenddate, fdestine, fcallback,fetc1,fetc2,fetc3,fetc4,fetc5,fetc6)
+                (fyellowid, ftemplatekey, fkkoresendtype, fmsgtype, fmessage, fsenddate, fdestine, fcallback,fetc1,fetc2,fetc3,fetc4,fetc5,fetc6,fetc8)
                 VALUES
-                (:profile_key, :template_key, 'N', 4, :message, now(), :fdestine, :fcallback, :fetc1, :fetc2, :fetc3, :fetc4, :fetc5, :fetc6)");
+                (:profile_key, :template_key, 'N', 4, :message, now(), :fdestine, :fcallback, :fetc1, :fetc2, :fetc3, :fetc4, :fetc5, :fetc6, :fetc8)");
             $stmt->bindParam(':profile_key', $profile_key);
             $stmt->bindParam(':template_key', $template_key);
             $stmt->bindParam(':message', $message);
@@ -30,6 +30,7 @@ class SendTransaction
             $stmt->bindParam(':fetc4', $altMsg);
             $stmt->bindParam(':fetc5', $altSndDtm);
             $stmt->bindParam(':fetc6', $altRcptDtm);
+            $stmt->bindParam(':fetc8', $member_idx);
             $stmt->execute();
         } catch (Exception $e) {
             error_log($e->getMessage());
