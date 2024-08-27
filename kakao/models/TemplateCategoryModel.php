@@ -51,10 +51,16 @@ class TemplateCategoryModel
     public function getTemplate($offset, $limit)
     {
         $stmt = $this->conn->prepare(
-            "SELECT t.*, tc.name as category_name, kb.profile_key, kb.business_name 
+            "SELECT t.*, 
+                        tc.name as category_name, 
+                        kb.profile_key, 
+                        kb.business_name, 
+                        mi.user_id, 
+                        mi.user_name
                      FROM template t
                      LEFT JOIN template_category tc ON t.category_id = tc.id
                      LEFT JOIN kakao_business kb ON t.profile_id = kb.id
+                     LEFT JOIN member_info mi ON kb.user_idx = mi.idx
                      ORDER BY t.id DESC
                      LIMIT :limit OFFSET :offset"
         );

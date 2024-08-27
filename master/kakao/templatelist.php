@@ -77,6 +77,7 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
                         <thead>
                         <tr>
                             <th>NO</th>
+                            <th>신청자</th>
                             <th>발신프로필</th>
                             <th>템플릿명</th>
                             <th>템플릿키</th>
@@ -155,6 +156,7 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
                         var row = `
                             <tr">
                                 <td>${template.id}</td>
+                                <td>${template.user_id}/${template.user_name}</td>
                                 <td>${template.profile_key}<br>${template.business_name}</td>
                                 <td>${template.template_name}</td>
                                 <td>${template.template_key}</td>
