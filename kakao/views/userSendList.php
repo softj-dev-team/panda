@@ -53,7 +53,7 @@
     </form>
 </section>
 
-<script src="/kakao/public/js/kakao.js"></script>
+
 <script>
     loadDataList();
     const statusMapping = {
