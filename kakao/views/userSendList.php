@@ -8,23 +8,21 @@
 <div class="container-kko">
     <div class="templatelist">
         <table class="board-list" id="userAlimSendList">
+            <thead>
+            <tr>
+                <th scope="col">No</th>
 
+                <th scope="col">템플릿명</th>
+                <th scope="col">유형</th>
+                <th scope="col">등록일</th>
+                <th scope="col">검수결과</th>
+                <th scope="col">상태</th>
+            </tr>
+            </thead>
+            <tbody>
 
-                        <thead>
-                        <tr>
-                            <th scope="col">No</th>
-                            <!--                            <th scope="col">검색용아이디</th>-->
-                            <th scope="col">템플릿명</th>
-                            <th scope="col">유형</th>
-                            <th scope="col">등록일</th>
-                            <th scope="col">검수결과</th>
-                            <th scope="col">상태</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        </tbody>
-                    </table>
+            </tbody>
+        </table>
     </div>
 </div>
 

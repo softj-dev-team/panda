@@ -79,7 +79,7 @@ button.coin{color: #fff; border-radius: 50px; font-size: 18px; font-weight: 500;
 
 .right_nav a.login{color: #222; font-size: 18px; font-weight: normal}
 
-.center_nav{border-top: 1px solid #dfdfdf; border-bottom: 1px solid #dfdfdf; background: #fff; position: relative; min-width: 1260px; display: flex; justify-content: space-between; padding: 0 20rem}
+.center_nav{border-top: 1px solid #dfdfdf; border-bottom: 1px solid #dfdfdf; background: #fff; position: relative; min-width: 1260px; display: flex; justify-content: space-between; padding: 0 16rem}
 
 
 .center_nav ul{display: flex; align-items: center; justify-content: flex-start; gap:30px}
