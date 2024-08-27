@@ -14,7 +14,7 @@ if (hash_equals($signature, $_SERVER['HTTP_X_HUB_SIGNATURE'])) {
     $event = $_SERVER['HTTP_X_GITHUB_EVENT'];
 
     // 이벤트에 따라 처리할 로직 작성
-    switch ($event) {
+    switch ($event) {_sT4Zhs94743
         case 'push':
             // 예: 푸시 이벤트 처리
             file_put_contents('file/push_log.txt', print_r($data, true), FILE_APPEND);
