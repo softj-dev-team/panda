@@ -23,7 +23,7 @@ connection = pymysql.connect(**db_config)
 try:
     with connection.cursor(pymysql.cursors.DictCursor) as cursor:
         # fetc1 컬럼에 값이 없는 행 중 하나를 선택
-        sql = "SELECT * FROM TBL_SEND_TRAN_KKO WHERE fetc1 IS NULL LIMIT 1"
+        sql = "SELECT * FROM TBL_SEND_TRAN_KKO WHERE fetc2 = 'AR' LIMIT 1"
         cursor.execute(sql)
         result = cursor.fetchone()
 
