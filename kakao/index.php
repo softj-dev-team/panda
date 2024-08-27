@@ -123,10 +123,10 @@ switch ($route) {
         $controller = new TemplateCategoryController();
         $controller->uploadTemplate();
         break;
-    case 'getUploadedList':
-        $controller = new TemplateCategoryController();
-        $controller->getUploadedList();
-        break;
+//    case 'getUploadedList':
+//        $controller = new TemplateCategoryController();
+//        $controller->getUploadedList();
+//        break;
     case 'sendMessages':
         $controller = new TemplateCategoryController();
         $controller->sendMessages();
