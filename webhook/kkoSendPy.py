@@ -38,44 +38,44 @@ try:
             }
 
             # API 요청 전송
-                        response = requests.post(api_url, json=payload, headers=headers)
+            response = requests.post(api_url, json=payload, headers=headers)
 
-                        try:
-                            response_data = response.json()
+            try:
+                response_data = response.json()
 
-                            # 응답 데이터 유효성 확인
-                            if response_data and isinstance(response_data, list) and len(response_data) > 0:
-                                data = response_data[0]
-                                # fetc1~fetc6 컬럼 업데이트
-                                update_sql = """
-                                UPDATE TBL_SEND_TRAN_KKO
-                                SET
-                                    fetc1 = %s,
-                                    fetc2 = %s,
-                                    fetc3 = %s,
-                                    fetc4 = %s,
-                                    fetc5 = %s,
-                                    fetc6 = %s
-                                WHERE id = %s
-                                """
-                                cursor.execute(update_sql, (
-                                    data.get("sn", None),
-                                    data.get("code", None),
-                                    data.get("altCode", None),
-                                    data.get("altMsg", None),
-                                    data.get("altSndDtm", None),
-                                    data.get("altRcptDtm", None),
-                                    result['id']
-                                ))
-                                connection.commit()
-                                print("API 요청 성공 및 데이터베이스 업데이트 완료")
-                            else:
-                                print("응답 데이터가 유효하지 않습니다:", response_data)
+                # 응답 데이터 유효성 확인
+                if response_data and isinstance(response_data, list) and len(response_data) > 0:
+                    data = response_data[0]
+                    # fetc1~fetc6 컬럼 업데이트
+                    update_sql = """
+                    UPDATE TBL_SEND_TRAN_KKO
+                    SET
+                        fetc1 = %s,
+                        fetc2 = %s,
+                        fetc3 = %s,
+                        fetc4 = %s,
+                        fetc5 = %s,
+                        fetc6 = %s
+                    WHERE id = %s
+                    """
+                    cursor.execute(update_sql, (
+                        data.get("sn", None),
+                        data.get("code", None),
+                        data.get("altCode", None),
+                        data.get("altMsg", None),
+                        data.get("altSndDtm", None),
+                        data.get("altRcptDtm", None),
+                        result['id']
+                    ))
+                    connection.commit()
+                    print("API 요청 성공 및 데이터베이스 업데이트 완료")
+                else:
+                    print("응답 데이터가 유효하지 않습니다:", response_data)
 
-                        except ValueError:
-                            print("응답 JSON 파싱에 실패했습니다:", response.text)
-                    else:
-                        print("fetc1 컬럼이 NULL인 데이터를 찾을 수 없습니다.")
+            except ValueError:
+                print("응답 JSON 파싱에 실패했습니다:", response.text)
+        else:
+            print("fetc1 컬럼이 NULL인 데이터를 찾을 수 없습니다.")
 
 finally:
     connection.close()
