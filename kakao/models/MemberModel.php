@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'].'/kakao/models/DatabaseAsis.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/kakao/models/Database.php';
 
 class MemberModel {
     private $conn;
