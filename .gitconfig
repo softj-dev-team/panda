@@ -1,3 +1,5 @@
 [user]
 	email = dev.softj@gmail.com
 	name = softj
+[safe]
+    directory = /home/asssahcom9
