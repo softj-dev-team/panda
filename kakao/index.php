@@ -3,6 +3,7 @@ ob_start(); // 출력 버퍼링 시작
 
 require_once $_SERVER['DOCUMENT_ROOT'].'/kakao/models/TemplateCategoryModel.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/kakao/models/SendTransaction.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/kakao/controllers/SendTranKKOController.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/kakao/controllers/TemplateCategoryController.php';
 //require_once $_SERVER['DOCUMENT_ROOT'].'/kakao/core/Controller.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/kakao/controllers/KakaoBusinessController.php';
