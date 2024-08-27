@@ -69,6 +69,21 @@ $(document).ready(function() {
     $('#goTamplate').on('click', function() {
         window.location.href = '/kakao/index.php?route=tamplate'; // 원하는 URL로 변경
     });
+
+    function formatDate(dateStr) {
+        if (!dateStr || dateStr.length !== 14) {
+            return 'Invalid Date';  // 기본적인 유효성 검사
+        }
+
+        var year = dateStr.substring(0, 4);
+        var month = dateStr.substring(4, 6);
+        var day = dateStr.substring(6, 8);
+        var hour = dateStr.substring(8, 10);
+        var minute = dateStr.substring(10, 12);
+        var second = dateStr.substring(12, 14);
+
+        return `${year}.${month}.${day} ${hour}:${minute}:${second}`;
+    }
 });
 
 $(document).ready(function() {
@@ -755,19 +770,5 @@ $(document).ready(function() {
     $('#goTemplateReg').on('click', function() {
         window.location.href = '/kakao/index.php?route=template'; // 이동할 URL을 여기에 입력하세요.
     });
+
 });
-
-function formatDate(dateStr) {
-    if (!dateStr || dateStr.length !== 14) {
-        return 'Invalid Date';  // 기본적인 유효성 검사
-    }
-
-    var year = dateStr.substring(0, 4);
-    var month = dateStr.substring(4, 6);
-    var day = dateStr.substring(6, 8);
-    var hour = dateStr.substring(8, 10);
-    var minute = dateStr.substring(10, 12);
-    var second = dateStr.substring(12, 14);
-
-    return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
-}
