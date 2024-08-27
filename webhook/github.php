@@ -1,5 +1,5 @@
 <?php
-//35
+//36
 $payload = file_get_contents('php://input');
 
 // 시크릿 키가 설정된 경우 서명 검증
@@ -14,7 +14,7 @@ if (hash_equals($signature, $_SERVER['HTTP_X_HUB_SIGNATURE'])) {
     $event = $_SERVER['HTTP_X_GITHUB_EVENT'];
 
     // 이벤트에 따라 처리할 로직 작성
-    switch ($event) {_sT4Zhs94743
+    switch ($event) {
         case 'push':
             // 예: 푸시 이벤트 처리
             file_put_contents('file/push_log.txt', print_r($data, true), FILE_APPEND);
