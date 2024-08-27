@@ -18,8 +18,8 @@ if (hash_equals($signature, $_SERVER['HTTP_X_HUB_SIGNATURE'])) {
         case 'push':
             // 예: 푸시 이벤트 처리
             file_put_contents('file/push_log.txt', print_r($data, true), FILE_APPEND);
-            // 'git pull origin develop' 명령을 실행하여 최신 코드를 가져옴
-            $output = shell_exec('cd /home/asssahcom9 && git pull origin develop 2>&1');
+            // Shell 스크립트를 실행하여 git pull 수행
+            $output = shell_exec('/home/asssahcom9/git_pull.sh 2>&1');
             file_put_contents('file/git_pull_log.txt', $output, FILE_APPEND);
 
             break;
