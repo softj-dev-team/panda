@@ -14,14 +14,14 @@ class UserAlimTalkController extends Controller
 
         $this->view('userSendList');
     }
-    public function getKakaoSendList(){
+    public function getUserAlimTalkSendList(){
         try {
             $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
             $limit = 10;
             $offset = ($page - 1) * $limit;
 
-            $data = $this->MasterModel->getKakaoSendList($offset, $limit);
-            $total = $this->MasterModel->getTotalKakaoSendList();
+            $data = $this->UserAlimTalkModel->getKakaoSendList($offset, $limit);
+            $total = $this->UserAlimTalkModel->getTotalKakaoSendList();
             $this->sendJsonResponse(['success' => true, 'data' => $data, 'total' => $total]);
         } catch (Exception $e) {
             error_log($e->getMessage());

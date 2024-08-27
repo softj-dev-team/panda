@@ -18,6 +18,12 @@ switch ($route) {
         $controller = new UserAlimTalkController();
         $controller->index();
         break;
+    case 'getUserAlimTalkSendList':
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $controller = new UserAlimTalkController();
+            $controller->getUserAlimTalkSendList();
+        }
+        break;
     case 'sendMessage':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $controller = new TemplateCategoryController();
