@@ -6,22 +6,8 @@
 <div><? require_once $_SERVER["DOCUMENT_ROOT"] ."/common/header.php"; ?></div>
 
 <div class="container-kko">
-    <div class="containerW wrap_pc">
-
-        <div class="kakao-box">
-
-
-            <div class="fm-wrap w-100">
-<!--                <div class="rezCon2">-->
-<!--                    <div class="guide ty2">-->
-<!--                        <p><i class="exclamationI"></i>등록된템플릿 목록을 확인하기위해 발신프로필 선택 후 템플릿 메세지 유형, 템플릿 강조 유형 을 선택하세요.</p>-->
-<!--                    </div>-->
-<!---->
-<!--                </div>-->
-
-
-                <div class="templatelist">
-                    <table class="board-list" id="userAlimSendList">
+    <div class="templatelist">
+        <table class="board-list" id="userAlimSendList">
 
 
                         <thead>
@@ -39,10 +25,6 @@
 
                         </tbody>
                     </table>
-
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 
