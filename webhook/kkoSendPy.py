@@ -28,8 +28,11 @@ headers = {
 # 포인트 섹션 설정
 point_sect = os.getenv('POINT_SECT')
 
+# CUST_MSG_SN 설정
+cust_msg_sn = os.getenv('CUST_MSG_SN')
+
 def get_current_point(cursor, member_idx):
-    cursor.execute(f"""
+    cursor.execute("""
         SELECT cur_mile FROM member_point
         WHERE member_idx = %s AND point_sect = %s
         ORDER BY idx DESC LIMIT 1
@@ -49,7 +52,7 @@ def update_point(cursor, member_idx, chg_mile, mile_title):
     mile_pre = get_current_point(cursor, member_idx)
     cur_mile = max(mile_pre - chg_mile, 0)
 
-    sql = f"""
+    sql = """
     INSERT INTO member_point
     (order_num, member_idx, pay_price, mile_title, mile_sect, mile_pre, chg_mile, cur_mile, point_sect, wdate)
     VALUES
@@ -63,8 +66,8 @@ def process_data():
         with connection.cursor(pymysql.cursors.DictCursor) as cursor:
             # fetc2 컬럼에 'AR' 값이 있는 행을 여러 개 선택 (예: 100개씩 배치 처리)
             batch_size = 100
-            sql = f"SELECT * FROM TBL_SEND_TRAN_KKO WHERE fetc2 = 'AR' LIMIT {batch_size}"
-            cursor.execute(sql)
+            sql = "SELECT * FROM TBL_SEND_TRAN_KKO WHERE fetc2 = 'AR' LIMIT %s"
+            cursor.execute(sql, (batch_size,))
             results = cursor.fetchall()
 
             if results:
@@ -72,10 +75,14 @@ def process_data():
                     member_info_idx = result['fetc8']  # `member_info_idx`는 이제 `fetc8`에서 가져옵니다
                     mb_kko_fee = get_mb_kko_fee(cursor, member_info_idx)  # `member_info_sendinfotable`에서 `mb_kko_fee`를 가져옵니다
 
+                    if mb_kko_fee is None:
+                        print(f"Member info not found or mb_kko_fee is missing for member_idx: {member_info_idx}")
+                        continue
+
                     # API 전송을 위한 데이터 구성
                     payload = json.dumps([
                         {
-                            "custMsgSn": "F46CBA8E658BAC08965FD887B767CBC1",
+                            "custMsgSn": cust_msg_sn,
                             "senderKey": result['fyellowid'],
                             "phoneNum": result['fdestine'],
                             "templateCode": result['ftemplatekey'],
@@ -83,45 +90,52 @@ def process_data():
                         }
                     ])
 
-                    response = requests.post(api_url, headers=headers, data=payload)
-                    response_data = response.json()
+                    try:
+                        response = requests.post(api_url, headers=headers, data=payload)
+                        response.raise_for_status()
+                        response_data = response.json()
 
-                    if response_data and isinstance(response_data, list) and len(response_data) > 0:
-                        data = response_data[0]
+                        if response_data and isinstance(response_data, list) and len(response_data) > 0:
+                            data = response_data[0]
 
-                        # 데이터베이스 업데이트
-                        update_sql = """
-                        UPDATE TBL_SEND_TRAN_KKO
-                        SET
-                            fetc1 = %s,
-                            fetc2 = %s,
-                            fetc3 = %s,
-                            fetc4 = %s,
-                            fetc5 = %s,
-                            fetc6 = %s,
-                            fetc8 = %s
-                        WHERE fseq = %s
-                        """
-                        cursor.execute(update_sql, (
-                            data.get("sn", None),
-                            data.get("code", None),
-                            data.get("altCode", None),
-                            data.get("altMsg", None),
-                            data.get("altSndDtm", None),
-                            data.get("altRcptDtm", None),
-                            member_info_idx,
-                            result['fseq']
-                        ))
+                            # 데이터베이스 업데이트
+                            update_sql = """
+                            UPDATE TBL_SEND_TRAN_KKO
+                            SET
+                                fetc1 = %s,
+                                fetc2 = %s,
+                                fetc3 = %s,
+                                fetc4 = %s,
+                                fetc5 = %s,
+                                fetc6 = %s,
+                                fetc8 = %s
+                            WHERE fseq = %s
+                            """
+                            cursor.execute(update_sql, (
+                                data.get("sn", None),
+                                data.get("code", None),
+                                data.get("altCode", None),
+                                data.get("altMsg", None),
+                                data.get("altSndDtm", None),
+                                data.get("altRcptDtm", None),
+                                member_info_idx,
+                                result['fseq']
+                            ))
 
-                        # 포인트 차감 로직 수행
-                        update_point(cursor, member_info_idx, mb_kko_fee, "알림톡 발송")
-                    else:
-                        print(f"응답 데이터가 유효하지 않습니다: {response_data}")
+                            # 포인트 차감 로직 수행
+                            update_point(cursor, member_info_idx, mb_kko_fee, "알림톡 발송")
+                        else:
+                            print(f"응답 데이터가 유효하지 않습니다: {response_data}")
+
+                    except requests.exceptions.RequestException as e:
+                        print(f"API 요청 중 오류 발생: {e}")
 
                 connection.commit()
                 print(f"{batch_size}건의 API 요청 처리 및 데이터베이스 업데이트 완료")
             else:
                 print("fetc2 컬럼이 'AR'인 데이터를 찾을 수 없습니다.")
+    except pymysql.MySQLError as e:
+        print(f"데이터베이스 작업 중 오류 발생: {e}")
     finally:
         connection.close()
 
