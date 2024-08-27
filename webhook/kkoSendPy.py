@@ -1,6 +1,7 @@
 import pymysql
 import requests
 import json
+import time
 from dotenv import load_dotenv
 import os
 
@@ -65,6 +66,14 @@ def process_data():
     connection = pymysql.connect(**db_config)
     try:
         with connection.cursor(pymysql.cursors.DictCursor) as cursor:
+            # 유휴 상태 확인을 위한 SQL 쿼리 (예: 특정 상태를 확인)
+            cursor.execute("SELECT COUNT(*) AS cnt FROM TBL_SEND_TRAN_KKO WHERE fetc2 = 'AR'")
+            result = cursor.fetchone()
+
+            if result and result['cnt'] == 0:
+                print("유휴 상태: 처리할 데이터가 없습니다.")
+                return
+
             # fetc2 컬럼에 'AR' 값이 있는 행을 여러 개 선택 (예: 100개씩 배치 처리)
             batch_size = 100
             sql = "SELECT * FROM TBL_SEND_TRAN_KKO WHERE fetc2 = 'AR' LIMIT %s"
@@ -75,8 +84,8 @@ def process_data():
                 total_sent = 0  # 발송 성공 건수 누적
 
                 for result in results:
-                    member_info_idx = result['fetc8']  # `member_info_idx`는 이제 `fetc8`에서 가져옵니다
-                    mb_kko_fee = get_mb_kko_fee(cursor, member_info_idx)  # `member_info_sendinfotable`에서 `mb_kko_fee`를 가져옵니다
+                    member_info_idx = result['fetc8']
+                    mb_kko_fee = get_mb_kko_fee(cursor, member_info_idx)
 
                     if mb_kko_fee is None:
                         print(f"Member info not found or mb_kko_fee is missing for member_idx: {member_info_idx}")
@@ -150,5 +159,11 @@ def process_data():
     finally:
         connection.close()
 
+def batch_worker():
+    while True:
+        process_data()
+        print("유휴 상태 확인 및 5초 대기 중...")
+        time.sleep(5)  # 5초 대기
+
 if __name__ == "__main__":
-    process_data()
+    batch_worker()
