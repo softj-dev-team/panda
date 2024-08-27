@@ -41,7 +41,7 @@
         <div class="tlb center border">
             <table id="listTable">
                 <colgroup>
-<!--                    <col style="width:4%;">-->
+
                     <col style="width:10%;">
                     <col style="width:6%">
                     <col style="width:20%">
@@ -54,16 +54,15 @@
                 </colgroup>
                 <thead>
                     <tr>
-                        <!--                    <th class="check"><input type="checkbox" onclick="javascript:CheckAll()"></th>-->
+
                         <th>등록일시</th>
                         <th>구분</th>
                         <th>제목</th>
-                        <!--                    <th>이미지</th>-->
                         <th>내용</th>
                         <th>총건수</th>
                         <th>잔여</th>
                         <th>결과</th>
-                    <th>비고</th>-->
+                    <th>비고</th>
                     </tr>
                 </thead>
 
