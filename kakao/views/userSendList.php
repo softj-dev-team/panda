@@ -49,7 +49,7 @@
 
                 </tbody>
             </table>
-            <div id="pagination"></div>
+            <div id="pagination" class="pagenation"></div>
         </div>
     </form>
 </section>
