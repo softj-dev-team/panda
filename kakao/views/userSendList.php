@@ -28,25 +28,18 @@
             <table id="listTable">
                 <colgroup>
 
-                    <col style="width:10%;">
-                    <col style="width:6%">
-                    <col style="width:20%">
-                    <col style="width:10%">
-                    <col style="width:25%">
-                    <col style="width:7%">
-                    <col style="width:6%">
-                    <col style="width:6%">
-                    <col style="width:6%">
+                    <col style="width:12%;">
+                    <col style="width:8%">
+                    <col style="width:70%">
+                    <col style="width:12%">
+
                 </colgroup>
                 <thead>
                     <tr>
 
                         <th>등록일시</th>
                         <th>구분</th>
-                        <th>제목</th>
                         <th>내용</th>
-                        <th>총건수</th>
-                        <th>잔여</th>
                         <th>결과</th>
 
                     </tr>
@@ -89,17 +82,11 @@
                         var truncatedMessage = data.fmessage.length > 10 ? data.fmessage.substring(0, 10) + '...' : data.fmessage;
                         var row = `<tr>
                         <td>${data.fetc5}</td>
-                        <td></td>
-                        <td>${statusMapping[data.fetc2]}</td>
+                        <td>알림톡</td>
                         <td class="truncated-message" title="${data.fmessage}">
                             ${truncatedMessage}
                         </td>
-                        <td></td>
-                        <td></td>
-                        <td>${data.fetc4}</td>
-                        <td>${data.fetc3}</td>
-
-
+                        <td>${statusMapping[data.fetc2]}</td>
                     </tr>`;
                         table.append(row);
                     });
