@@ -113,19 +113,19 @@
                     // 이전 페이지 링크
                     if (currentPage > 1) {
                         var prevPage = startPage - pageSizeGroup;
-                        pagination.append(`<a href="#" class="pre" data-page="${prevPage > 0 ? prevPage : 1}"> <img src="/images/pagenation/l.png"></a>`);
+                        pagination.append(`<a href="#" class="page-link pre" data-page="${prevPage > 0 ? prevPage : 1}"> <img src="/images/pagenation/l.png"></a>`);
                     }
 
                     // 페이지 번호 링크
                     for (var i = startPage; i <= endPage; i++) {
-                        var pageLink = `<a href="#" class="${i === currentPage ? 'atv' : ''}" data-page="${i}">${i}</a>`;
+                        var pageLink = `<a href="#" class="page-link ${i === currentPage ? 'atv' : ''}" data-page="${i}">${i}</a>`;
                         pagination.append(pageLink);
                     }
 
                     // 다음 페이지 링크
                     if (endPage < totalPages) {
                         var nextPage = endPage + 1;
-                        pagination.append(`<a href="#" class="next" data-page="${nextPage}"><img src="/images/pagenation/r.png"></a>`);
+                        pagination.append(`<a href="#" class="page-link next" data-page="${nextPage}"><img src="/images/pagenation/r.png"></a>`);
                     }
                 }
             },
