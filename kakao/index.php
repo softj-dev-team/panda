@@ -3,9 +3,8 @@ ob_start(); // 출력 버퍼링 시작
 
 require_once $_SERVER['DOCUMENT_ROOT'].'/kakao/models/TemplateCategoryModel.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/kakao/models/SendTransaction.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/kakao/controllers/SendTranKKOController.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/kakao/controllers/TemplateCategoryController.php';
-//require_once $_SERVER['DOCUMENT_ROOT'].'/kakao/core/Controller.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/kakao/controllers/UserAlimTalkController.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/kakao/controllers/KakaoBusinessController.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/kakao/controllers/MasterController.php';
 require_once 'controllers/Send.php';
@@ -14,8 +13,9 @@ $route = isset($_GET['route']) ? $_GET['route'] : '';
 
 
 switch ($route) {
-    case 'userAlimTsendList':
-        $controller = new SendTranKKOController();
+
+    case 'userAlimTalkSendList':
+        $controller = new UserAlimTalkController();
         $controller->index();
         break;
     case 'sendMessage':
