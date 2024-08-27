@@ -17,7 +17,7 @@ if (hash_equals($signature, $_SERVER['HTTP_X_HUB_SIGNATURE'])) {
     switch ($event) {
         case 'push':
             // 예: 푸시 이벤트 처리
-            file_put_contents('push_log.txt', print_r($data, true), FILE_APPEND);
+            file_put_contents('file/push_log.txt', print_r($data, true), FILE_APPEND);
             break;
         case 'pull_request':
             // 예: 풀 리퀘스트 이벤트 처리
