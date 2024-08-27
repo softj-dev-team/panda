@@ -59,7 +59,7 @@ try:
                         fetc4 = %s,
                         fetc5 = %s,
                         fetc6 = %s
-                    WHERE id = %s
+                    WHERE fseq = %s
                     """
                     cursor.execute(update_sql, (
                         data.get("sn", None),
@@ -68,7 +68,7 @@ try:
                         data.get("altMsg", None),
                         data.get("altSndDtm", None),
                         data.get("altRcptDtm", None),
-                        result['id']
+                        result['fseq']
                     ))
                     connection.commit()
                     print("API 요청 성공 및 데이터베이스 업데이트 완료")
