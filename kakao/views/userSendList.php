@@ -19,20 +19,20 @@
 
     <div class="tab_btn_are">
 
-        <form name="s_mem" id="s_mem" method="post" action="send.php">
-            <div class="input_tab">
-                <input type="text" name="keyword" id="keyword" value="<?= $keyword ?>">
-                <a href="javascript:s_mem.submit();">
-                    <img src="images/search.png">
-                </a>
-            </div>
-        </form>
+<!--        <form name="s_mem" id="s_mem" method="post" action="send.php">-->
+<!--            <div class="input_tab">-->
+<!--                <input type="text" name="keyword" id="keyword" value="--><?php //= $keyword ?><!--">-->
+<!--                <a href="javascript:s_mem.submit();">-->
+<!--                    <img src="images/search.png">-->
+<!--                </a>-->
+<!--            </div>-->
+<!--        </form>-->
 
-        <div class="btn">
+<!--        <div class="btn">-->
 <!--            <a href="./send_success_down.php">성공내역 엑셀다운로드</a>-->
 <!--            <a href="./send_fail_down.php">실패내역 엑셀다운로드</a>-->
 <!--            <a href="javascript:go_tot_del();">내역삭제</a>-->
-        </div>
+<!--        </div>-->
 
     </div>
 
@@ -52,20 +52,21 @@
                     <col style="width:6%">
                     <col style="width:6%">
                 </colgroup>
-                <tr>
-<!--                    <th class="check"><input type="checkbox" onclick="javascript:CheckAll()"></th>-->
-                    <th>등록일시</th>
-                    <th>구분</th>
-                    <th>제목</th>
-<!--                    <th>이미지</th>-->
-                    <th>내용</th>
-                    <th>총건수</th>
-                    <th>성공</th>
-                    <th>실패</th>
-                    <th>잔여</th>
-                    <!--<th>결과</th>
-                <th>비고</th>-->
-                </tr>
+                <thead>
+                    <tr>
+                        <!--                    <th class="check"><input type="checkbox" onclick="javascript:CheckAll()"></th>-->
+                        <th>등록일시</th>
+                        <th>구분</th>
+                        <th>제목</th>
+                        <!--                    <th>이미지</th>-->
+                        <th>내용</th>
+                        <th>총건수</th>
+                        <th>잔여</th>
+                        <th>결과</th>
+                    <th>비고</th>-->
+                    </tr>
+                </thead>
+
                 <tbody>
 
                 </tbody>
@@ -102,19 +103,18 @@
                     response.data.forEach(function(data) {
                         var truncatedMessage = data.fmessage.length > 10 ? data.fmessage.substring(0, 10) + '...' : data.fmessage;
                         var row = `<tr>
-                        <td>${data.fseq}</td>
-                        <td>${data.fyellowid}</td>
-                        <td>${data.ftemplatekey}</td>
-                        <td>${data.fdestine}</td>
+                        <td>${data.fetc5}</td>
+                        <td></td>
+                        <td>${statusMapping[data.fetc2]}</td>
                         <td class="truncated-message" title="${data.fmessage}">
                             ${truncatedMessage}
                         </td>
-                        <td>${data.fetc1}</td>
-                        <td>${statusMapping[data.fetc2]}</td>
+                        <td></td>
+                        <td></td>
                         <td>${data.fetc3}</td>
-                        <td>${data.fetc4}</td>
-                        <td>${data.fetc5}</td>
-                        <td>${data.fetc6}</td>
+                        <td>${data.fetc3}</td>
+
+
                     </tr>`;
                         table.append(row);
                     });
