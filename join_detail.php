@@ -348,7 +348,7 @@
 			}
 
 			if (res_cd != "0000") {
-				alert("인증에 실패 하였습니다. 1"+frm.elements);console.log(frm.elements)
+				alert("인증에 실패 하였습니다."+res_msg);
 				return;
 			} else {
 				alert("인증되었습니다.");
