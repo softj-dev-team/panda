@@ -3,7 +3,7 @@ import json
 
 
 # API 설정
-api_url = 'https://wt-api.carrym.com:8443/api/v1/leahue/template/request'
+api_url = 'https://wt-api.carrym.com:8445/api/v1/leahue/template/request'
 headers = {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer F46CBA8E658BAC08965FD887B767CBC1'

@@ -69,7 +69,7 @@
     //$g_conf_web_siteid   = "";
 	$g_conf_web_siteid   = "J23100409787";
 
-    $g_conf_ENC_KEY      = "E66DCEB95BFBD45DF9DFAEEBCB092B5DC2EB3BF0";
+    $g_conf_ENC_KEY      = "2204cc5c72a3090fd58c14c82ea4dfe2df36a6805fa77fe76c3ef5c1a20b037e";
 	    
     $g_conf_Ret_URL      = $inc_fdata_domain."/cert/kcpcert_proc_res.php";
     
