@@ -346,9 +346,25 @@
 					var user_ci = frm.elements[i].value; // 인증받은 인증코드
 				}
 			}
+            function isURLEncoded(str) {
+                // 정규식을 이용해 URL 인코딩 형식을 확인
+                return decodeURIComponent(str) !== str;
+            }
+
+            function decodeString(str) {
+                if (isURLEncoded(str)) {
+                    return decodeURIComponent(str.replace(/\+/g, ' '));
+                } else {
+                    return str;
+                }
+            }
+
+
 
 			if (res_cd != "0000") {
-				alert("인증에 실패 하였습니다."+res_msg[0]);console.log(res_msg)
+                var encodedStr = res_msg[0];
+                var result = decodeString(encodedStr);
+				alert("인증에 실패 하였습니다."+result[0]);
 				return;
 			} else {
 				alert("인증되었습니다.");
