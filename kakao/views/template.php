@@ -97,7 +97,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                     </div>
                 </div>
                 <div class="flex-c">
-                    <button class="btn-t btn-c">템플릿 등록 완료</button>
+                    <button class="btn-t btn-c" type="submit">템플릿 등록 완료</button>
                 </div>
             </form>
         </div>

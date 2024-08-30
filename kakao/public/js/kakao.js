@@ -73,7 +73,8 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
-    $('#requestTemplate').on('submit', function(event) {
+    // 기존 이벤트 리스너를 제거하고 새로 바인딩
+    $('#requestTemplate').off('submit').on('submit', function(event) {
         event.preventDefault();
 
         var formData = new FormData(this);
@@ -94,9 +95,8 @@ $(document).ready(function() {
             success: function(response) {
                 if (response.success) {
                     alert("템플릿이 성공적으로 등록되었습니다.");
-                    // location.reload();
+                    $('#requestTemplate')[0].reset();
                 } else {
-                    // 서버에서 정의된 오류 코드에 따른 메시지 처리
                     if (response.code === '505') {
                         alert("오류: " + response.message);
                     } else if (response.code === '404') {
