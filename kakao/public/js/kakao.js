@@ -552,7 +552,6 @@ function loadTemplate(page = 1, profile_id = null, template_type = null, templat
                     var statusText = statusMapping[template.status];
                     var templateText = templateTypeMapping[template.template_type]
                     var inspectionStatusText = inspectionStatusMapping[template.inspection_status]
-                    var reviewButton = template.status === 'R' ? '<button class="btn btn-t-3 btn-c-3">검수요청</button>' : '';
                     var row = `<tr>
                             <td>${template.id}</td>
                             <td><a href="#" id="templateSelect" data-id="${template.id}">${template.template_name}</a></td>
@@ -560,7 +559,7 @@ function loadTemplate(page = 1, profile_id = null, template_type = null, templat
                             <td>${template.created_at}</td>
                             <td>${inspectionStatusText}</td>
                             <td>${statusText}</td>
-                          
+                            <td><button type="button" class="btn-t-3 btn-c-3" onclick="window.location.href='index.php?route=downloadSample&template_id=${template.id}'"><i class="fa fa-file-excel"></i> 샘플다운로드</button></td>
                         </tr>`;
                     profilesTable.append(row);
                 });
