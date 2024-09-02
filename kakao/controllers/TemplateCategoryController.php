@@ -101,26 +101,7 @@ class TemplateCategoryController extends Controller
                 if (isset($responseData['code']) && $responseData['code'] == '505') {
                     throw new Exception($responseData['message']);
                 }
-                // 검수 처리
-                if (isset($responseData['code']) && $responseData['code'] == '200') {
-                    $requestUrl = 'https://wt-api.carrym.com:8445/api/v1/leahue/template/request';
-                    $requestMethod = 'POST';
-                    $requestData = [
-                        "senderKey" => $profile['profile_key'],
-                        "templateCode" => $template_key
-                    ];
-                    $requestHeaders = [
-                        'Content-Type: application/x-www-form-urlencoded',
-                    ];
 
-                    // 외부 API 호출
-                    $apiResponse = $this->sendCurlRequest($requestUrl, $requestMethod, $requestData, $requestHeaders);
-                    $requestResponseData = json_decode($apiResponse, true);
-                    // 응답 코드 505 처리
-                    if (isset($requestResponseData['code']) && $requestResponseData['code'] == '509') {
-                        throw new Exception($requestResponseData['message']);
-                    }
-                }
                 // 파일 업로드 처리
                 if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
                     $target_dir = $_SERVER['DOCUMENT_ROOT'].'/upload_file/kakao/';
@@ -150,7 +131,27 @@ class TemplateCategoryController extends Controller
                     'template_key' => $template_key,
                     'template_emphasize_type' => $template_emphasize_type,
                 ];
+                // 검수 처리
+                if (isset($responseData['code']) && $responseData['code'] == '200') {
+                    $requestUrl = 'https://wt-api.carrym.com:8445/api/v1/leahue/template/request';
+                    $requestMethod = 'POST';
+                    $requestData = [
+                        "senderKey" => $profile['profile_key'],
+                        "templateCode" => $template_key
+                    ];
+                    $requestHeaders = [
+                        'Content-Type: application/x-www-form-urlencoded',
+                    ];
 
+                    // 외부 API 호출
+                    $apiResponse = $this->sendCurlRequest($requestUrl, $requestMethod, $requestData, $requestHeaders);
+                    $requestResponseData = json_decode($apiResponse, true);
+                    // 응답 코드 505 처리
+                    if (isset($requestResponseData['code']) && $requestResponseData['code'] == '509') {
+                        throw new Exception($requestResponseData['message']);
+                    }
+                    $data['status'] = "REQ";  // $some_value는 val에 할당할 값
+                }
                 // 데이터베이스에 템플릿 저장
                 if ($this->templateCategory->saveTemplate($data)) {
                     $response['success'] = true;

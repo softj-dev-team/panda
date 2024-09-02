@@ -514,7 +514,7 @@ function loadTemplate(page = 1, profile_id, template_type,template_emphasize_typ
         // REG : 등록, REQ : 심사요청, APR : 승인,
         // REJ : 반려
         'REG': '등록',
-        'REQ': '심사요청',
+        'REQ': '검수요청',
         'APR': '승인',
         'REJ': '반려'
     };
