@@ -502,7 +502,14 @@ function loadTemplateDetails(templateId) {
         }
     });
 }
+var currentProfileId = null;
+var currentTemplateType = null;
+var currentTemplateEmphasizeType = null;
 function loadTemplate(page = 1, profile_id, template_type,template_emphasize_type) {
+    currentProfileId = profile_id !== null ? profile_id : currentProfileId;
+    currentTemplateType = template_type !== null ? template_type : currentTemplateType;
+    currentTemplateEmphasizeType = template_emphasize_type !== null ? template_emphasize_type : currentTemplateEmphasizeType;
+
     const statusMapping = {
         '01': '승인',
         '02': '승인대기',
