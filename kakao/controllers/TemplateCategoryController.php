@@ -154,9 +154,9 @@ class TemplateCategoryController extends Controller
                 }
                 error_log($category_id);
                 // 데이터베이스에 템플릿 저장
-//                if (!$this->templateCategory->saveTemplate($data)) {
-//                    throw new Exception('데이터베이스에 저장하는 중 오류가 발생했습니다.');
-//                }
+                if (!$this->templateCategory->saveTemplate($data)) {
+                    throw new Exception('데이터베이스에 저장하는 중 오류가 발생했습니다.');
+                }
 
                 $response['success'] = true;
                 $response['message'] = '템플릿이 성공적으로 등록되었습니다.';
