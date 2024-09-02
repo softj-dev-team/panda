@@ -505,7 +505,7 @@ function loadTemplateDetails(templateId) {
 var currentProfileId = null;
 var currentTemplateType = null;
 var currentTemplateEmphasizeType = null;
-function loadTemplate(page = 1, profile_id, template_type,template_emphasize_type) {
+function loadTemplate(page = 1, profile_id = null, template_type = null, template_emphasize_type = null) {
     currentProfileId = profile_id !== null ? profile_id : currentProfileId;
     currentTemplateType = template_type !== null ? template_type : currentTemplateType;
     currentTemplateEmphasizeType = template_emphasize_type !== null ? template_emphasize_type : currentTemplateEmphasizeType;
@@ -536,7 +536,12 @@ function loadTemplate(page = 1, profile_id, template_type,template_emphasize_typ
     $.ajax({
         url: '/kakao/index.php?route=getUserTemplate',
         type: 'GET',
-        data: { page: page, profile_id: profile_id, template_type: template_type,template_emphasize_type:template_emphasize_type },
+        data: {
+            page: page,
+            profile_id: currentProfileId,
+            template_type: currentTemplateType,
+            template_emphasize_type: currentTemplateEmphasizeType
+        },
         dataType: 'json',
         success: function(response) {
 
