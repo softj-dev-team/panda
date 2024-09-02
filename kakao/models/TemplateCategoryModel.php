@@ -161,9 +161,15 @@ class TemplateCategoryModel
 
             $stmt = $this->conn->prepare($sql);
 
-            // Bind parameters dynamically
+            // Bind parameters dynamically with string handling for category_id
             foreach ($data as $key => $value) {
-                $stmt->bindValue(':' . $key, $value);
+                if ($key === 'category_id') {
+                    // Ensure category_id is treated as a string
+                    $stmt->bindValue(':' . $key, $value, PDO::PARAM_STR);
+                } else {
+                    // Default binding
+                    $stmt->bindValue(':' . $key, $value);
+                }
             }
 
             return $stmt->execute();
