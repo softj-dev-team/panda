@@ -557,9 +557,19 @@ function loadTemplate(page = 1, profile_id, template_type,template_emphasize_typ
                 var totalPages = Math.ceil(response.total / 10);
                 var pagination = $('#pagination');
                 pagination.empty();
-                for (var i = 1; i <= totalPages; i++) {
-                    var pageLink = `<a href="#" class="page-link ${i === page ? 'on' : ''}" data-page="${i}">${i}</a>`;
+                if (currentPage > 1) {
+                    var prevPage = startPage - pageSizeGroup;
+                    pagination.append(`<a href="#" class="page-link pre" data-page="${prevPage > 0 ? prevPage : 1}"> <img src="/images/pagenation/l.png"></a>`);
+                }
+
+                for (var i = startPage; i <= endPage; i++) {
+                    var pageLink = `<a href="#" class="page-link ${i === currentPage ? 'atv' : ''}" data-page="${i}">${i}</a>`;
                     pagination.append(pageLink);
+                }
+
+                if (endPage < totalPages) {
+                    var nextPage = endPage + 1;
+                    pagination.append(`<a href="#" class="page-link next" data-page="${nextPage}"><img src="/images/pagenation/r.png"></a>`);
                 }
             } else {
                 var profilesTable = $('#templatelistTable tbody');

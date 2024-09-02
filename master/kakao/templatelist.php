@@ -101,7 +101,7 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
                     </table>
 
 				</div>
-                    <div id="pagination" class="pagination"></div>
+                <div id="pagination" class="pagination"></div>
 			</div>
 		</div>
 		<!-- content 종료 -->
