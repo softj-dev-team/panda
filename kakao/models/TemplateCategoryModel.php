@@ -32,12 +32,14 @@ class TemplateCategoryModel
     public function updateTemplate($id, $status,$templateContent,$inspection_status)
     {
         try {
-            $stmt = $this->conn->prepare("UPDATE template SET status = :status,template_title=:template_title,inspection_status=:inspection_status WHERE id = :id");
+            $sql = "UPDATE template SET status = :status,template_title=:template_title,inspection_status=:inspection_status WHERE id = :id");
+            $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':id', $id);
             $stmt->bindParam(':status', $status);
             $stmt->bindParam(':template_title', $templateContent);
             $stmt->bindParam(':inspection_status', $inspection_status);
             $stmt->execute();
+            error_log("Executing updateTemplate query: " . $sql);
         } catch (Exception $e) {
             throw new Exception('Failed to update status: ' . $e->getMessage());
         }
