@@ -90,9 +90,9 @@
 
                         </tbody>
                     </table>
-
+                    <div id="templatePagination" class="pagination"></div>
                 </div>
-                <div id="templatePagination" class="pagination"></div>
+
             </div>
         </div>
     </div>

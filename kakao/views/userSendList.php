@@ -53,9 +53,8 @@
                 <tbody>
 
                 </tbody>
-                <div id="pagination" class="pagenation"></div>
             </table>
-
+            <div id="pagination" class="pagenation"></div>
         </div>
     </form>
 </section>
