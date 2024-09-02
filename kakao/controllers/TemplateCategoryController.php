@@ -227,7 +227,7 @@ class TemplateCategoryController extends Controller
 
                 $apiResponse = $this->sendCurlRequest($url, $method, null, $headers);
                 $responseData = json_decode($apiResponse, true);
-                error_log("Executing update request: " . $responseData['data']['code'] ."/". $responseData['data']['status'] ."/". $responseData['data']['inspectionStatus']);
+                error_log("Executing update request: " . $responseData['code'] ."/". $responseData['data']['status'] ."/". $responseData['data']['inspectionStatus']);
                 // 외부 API 응답에서 상태 값 추출
                 if ($responseData['data']['code']=="200") {
                     $template['status'] = $responseData['data']['status'];
