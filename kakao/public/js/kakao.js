@@ -567,7 +567,7 @@ function loadTemplate(page = 1, profile_id, template_type,template_emphasize_typ
                     endPage = totalPages;
                 }
 
-                var pagination = $('#pagination');
+                var pagination = $('#templatePagination');
                 pagination.empty();
                 if (currentPage > 1) {
                     var prevPage = startPage - pageSizeGroup;
