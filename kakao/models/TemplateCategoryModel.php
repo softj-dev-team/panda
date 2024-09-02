@@ -32,7 +32,7 @@ class TemplateCategoryModel
     public function updateTemplate($id, $status,$templateContent,$inspection_status)
     {
         try {
-            $sql = "UPDATE template SET status = :status,template_title=:template_title,inspection_status=:inspection_status WHERE id = :id");
+            $sql = "UPDATE template SET status = :status,template_title=:template_title,inspection_status=:inspection_status WHERE id = :id";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':id', $id);
             $stmt->bindParam(':status', $status);

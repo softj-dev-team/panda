@@ -37,7 +37,7 @@ class MemberModel {
             $stmt->bindParam(':member_idx', $member_idx, PDO::PARAM_INT);
 
             // 쿼리 로그 출력
-            $this->logQuery($sql, [':member_idx' => $member_idx]);
+            //$this->logQuery($sql, [':member_idx' => $member_idx]);
 
             $stmt->execute();
             return $stmt->fetch();
