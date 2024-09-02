@@ -171,7 +171,12 @@ class TemplateCategoryModel
                     $stmt->bindValue(':' . $key, $value);
                 }
             }
-
+            // Generate the full query string with values for debugging
+            $boundSql = $sql;
+            foreach ($data as $key => $value) {
+                $boundSql = str_replace(':' . $key, $this->conn->quote($value), $boundSql);
+            }
+            error_log( 'saveTemplate exqute sql : ' .$boundSql);
             return $stmt->execute();
         } catch (PDOException $e) {
             throw new Exception('Failed to save template: ' . $e->getMessage());
