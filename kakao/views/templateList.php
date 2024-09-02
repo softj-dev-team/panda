@@ -157,23 +157,7 @@
 </div>
 <script src="/kakao/public/js/kakao.js"></script>
 <script>
-    $(document).ready(function() {
 
-        $('input[name="template_type"], input[name="template_emphasize_type"]').on('change', function (event) {
-            // event.preventDefault();
-            var selectedValue = $('#f-sel').val();
-
-            if (selectedValue === "") {
-                alert('발신 프로필 키 를 선택하세요');
-                $('#f-sel').focus();
-                $(this).prop('checked', false);
-            }else{
-                var templateType = $('input[name="template_type"]:checked').val();
-                var template_emphasize_type = $('input[name="template_emphasize_type"]:checked').val();
-                loadTemplate(page = 1,selectedValue,templateType,template_emphasize_type)
-            }
-        });
-    });
 </script>
 <!--footer-->
 <div>
