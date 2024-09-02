@@ -71,8 +71,8 @@
                         <!--                            <label for="list" class="fm-rad-i">리스트형</label>-->
                     </div>
                 </div>
-                <div class="templatelist">
-                    <table class="board-list" id="templatelistTable">
+                <div class="tlb center border">
+                    <table  id="templatelistTable">
 
 <!--                        <colgroup><col class="tb-col-1" /><col class="tb-col-2" /><col class="tb-col-3" /><col class="tb-col-4" /><col class="tb-col-5" /></colgroup>-->
                         <thead>
