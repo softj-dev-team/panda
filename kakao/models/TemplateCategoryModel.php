@@ -99,7 +99,7 @@ class TemplateCategoryModel
         $stmt->execute();
 
         // 쿼리 출력
-        error_log("Executing query: " . $sql);
+        //error_log("Executing getUserTemplate query: " . $sql);
         error_log("With parameters: profile_id = $profile_id, template_type = '$template_type', limit = $limit, offset = $offset");
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
