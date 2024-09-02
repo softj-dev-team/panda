@@ -91,8 +91,8 @@
                         <!--                            <label for="list" class="fm-rad-i">리스트형</label>-->
                     </div>
                 </div>
-                <div class="tamplatelist flex-c">
-                    <table class="board-list" id="templatelist">
+                <div class="tlb center border">
+                    <table id="templatelist">
 
 <!--                        <colgroup><col class="tb-col-1" /><col class="tb-col-2" /><col class="tb-col-3" /><col class="tb-col-4" /><col class="tb-col-5" /></colgroup>-->
                         <thead>
@@ -110,6 +110,7 @@
 
                         </tbody>
                     </table>
+                    <div id="templatePagination" class="pagenation"></div>
                 </div>
                 <form id="uploadTemplateForm" enctype="multipart/form-data" method="post" action="index.php?route=uploadTemplate" class="flex-between" style="margin-top:20px;margin-bottom:20px">
                     <input type="file" name="templateFile" id="templateFile">
@@ -272,7 +273,7 @@
             }else{
                 var templateType = $('input[name="template_type"]:checked').val();
                 var template_emphasize_type = $('input[name="template_emphasize_type"]:checked').val();
-                loadProfiles(page = 1,selectedValue,templateType,template_emphasize_type)
+                loadSendTemplateList(page = 1,selectedValue,templateType,template_emphasize_type)
                 // loadTemplate(page = 1,selectedValue,templateType,template_emphasize_type)
             }
         });
@@ -396,7 +397,13 @@
             }
         });
     }
-    function loadProfiles(page = 1,profile_id,template_type,template_emphasize_type) {
+    var currentProfileId = null;
+    var currentTemplateType = null;
+    var currentTemplateEmphasizeType = null;
+    function loadSendTemplateList(page = 1,profile_id = null, template_type = null, template_emphasize_type = null) {
+        currentProfileId = profile_id !== null ? profile_id : currentProfileId;
+        currentTemplateType = template_type !== null ? template_type : currentTemplateType;
+        currentTemplateEmphasizeType = template_emphasize_type !== null ? template_emphasize_type : currentTemplateEmphasizeType;
         const statusMapping = {
             '01': '승인',
             '02': '승인대기',
@@ -423,7 +430,12 @@
         $.ajax({
             url: '/kakao/index.php?route=getUserTemplate',
             type: 'GET',
-            data: { page: page,profile_id:profile_id,template_type:template_type,template_emphasize_type:template_emphasize_type},
+            data: {
+                page: page,
+                profile_id: currentProfileId,
+                template_type: currentTemplateType,
+                template_emphasize_type: currentTemplateEmphasizeType
+            },
             dataType: 'json',
             success: function(response) {
                 if (response.success) {
@@ -446,19 +458,41 @@
                     });
 
                     // 페이징 처리
-                    var totalPages = Math.ceil(response.total / 10);
-                    var pagination = $('#pagination');
+                    var pageSize = 10;
+                    var totalRow = response.total;
+                    var totalPages = Math.ceil(totalRow / pageSize);
+                    var currentPage = page;
+                    var pageSizeGroup = 10;
+
+                    var startPage = Math.floor((currentPage - 1) / pageSizeGroup) * pageSizeGroup + 1;
+                    var endPage = startPage + pageSizeGroup - 1;
+
+                    if (endPage > totalPages) {
+                        endPage = totalPages;
+                    }
+
+                    var pagination = $('#templatePagination');
                     pagination.empty();
-                    for (var i = 1; i <= totalPages; i++) {
-                        var pageLink = `<a href="#" class="page-link ${i === page ? 'on' : ''}" data-page="${i}">${i}</a>`;
+                    if (currentPage > 1) {
+                        var prevPage = startPage - pageSizeGroup;
+                        pagination.append(`<a href="#" class="page-link pre" data-page="${prevPage > 0 ? prevPage : 1}"> <img src="/images/pagenation/l.png"></a>`);
+                    }
+
+                    for (var i = startPage; i <= endPage; i++) {
+                        var pageLink = `<a href="#" class="page-link ${i === currentPage ? 'atv' : ''}" data-page="${i}">${i}</a>`;
                         pagination.append(pageLink);
                     }
+
+                    if (endPage < totalPages) {
+                        var nextPage = endPage + 1;
+                        pagination.append(`<a href="#" class="page-link next" data-page="${nextPage}"><img src="/images/pagenation/r.png"></a>`);
+                    }
                 }else{
-                    var profilesTable = $('#profilesTable tbody');
+                    var profilesTable = $('#templatelist tbody');
                     profilesTable.empty();
                     var row =' ' +
                         '<tr>'+
-                        '<td colspan="4" class="no-data"><span class="ir-b i-nodata">검색 결과가 없습니다.</span></td>'+
+                        '<td colspan="6" class="no-data"><span class="ir-b i-nodata">검색 결과가 없습니다.</span></td>'+
                         '</tr>'
 
                     profilesTable.append(row);
