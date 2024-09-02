@@ -92,6 +92,7 @@
                     </table>
 
                 </div>
+                <div id="pagination" class="pagination"></div>
             </div>
         </div>
     </div>
