@@ -92,7 +92,7 @@
                     </table>
 
                 </div>
-                <div id="pagination" class="pagination"></div>
+                <div id="templatePagination" class="pagination"></div>
             </div>
         </div>
     </div>

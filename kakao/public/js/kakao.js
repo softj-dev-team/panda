@@ -600,7 +600,11 @@ function loadTemplate(page = 1, profile_id, template_type,template_emphasize_typ
         }
     });
 }
-
+$(document).on('click', '#templatePagination .page-link', function(event) {
+    event.preventDefault();
+    var page = $(this).data('page');
+    loadTemplate(page);
+});
 function loadCategories() {
     $.getJSON('index.php?route=getCategories', function(categories) {
         const categorySelect = $('#category');
