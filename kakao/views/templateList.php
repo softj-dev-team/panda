@@ -54,8 +54,8 @@
                 <div class="fm-row">
                     <label class="fm-label">템플릿 메세지 유형</label>
                     <div class="fm-box-row">
-<!--                        <input type="radio" class="fm-rad" id="basic" name="template_type" value="BA">-->
-<!--                        <label for="basic" class="fm-rad-i">기본형</label>-->
+                        <input type="radio" class="fm-rad" id="basic" name="template_type" value="BA">
+                        <label for="basic" class="fm-rad-i">기본형</label>
                     </div>
                     <label class="fm-label">템플릿 강조 유형</label>
                     <div class="fm-box-row">
@@ -69,29 +69,6 @@
 
                         <!--                            <input type="radio" class="fm-rad" id="list" name="template_type" value="ITEM_LIST">-->
                         <!--                            <label for="list" class="fm-rad-i">리스트형</label>-->
-                    </div>
-                </div>
-                <div class="board-sch bs-col-3">
-                    <div class="sch-sel">
-
-                        <select id="f-search-sel-2" class="fm-sel-2">
-                            <option value="">전체</option>
-                            <option value="">NOTICE</option>
-                            <option value="">NEWS</option>
-                        </select>
-                    </div>
-                    <div class="sch-sel">
-
-                        <select id="f-search-sel-3" class="fm-sel-2">
-                            <option value="">제목</option>
-                            <option value="">제목+내용</option>
-                            <option value="">내용</option>
-                        </select>
-                    </div>
-                    <div class="sch-ipt">
-
-                        <input type="text" id="f-search-ipt" class="fm-ipt-2" placeholder="검색어를 입력해 주세요." />
-                        <button type="button" class="btn-sch"><span class="ir i-sch">검색</span></button>
                     </div>
                 </div>
                 <div class="tlb center border">
