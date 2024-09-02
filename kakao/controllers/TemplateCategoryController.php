@@ -150,7 +150,7 @@ class TemplateCategoryController extends Controller
                     if (isset($requestResponseData['code']) && $requestResponseData['code'] == '509') {
                         throw new Exception($requestResponseData['message']);
                     }
-                    $data['status'] = "REQ";  // $some_value는 val에 할당할 값
+                    $data['inspection_status'] = "REQ";
                 }
                 // 데이터베이스에 템플릿 저장
                 if ($this->templateCategory->saveTemplate($data)) {
