@@ -93,7 +93,10 @@ class TemplateCategoryController extends Controller
                 // 외부 API 호출
                 $apiResponse = $this->sendCurlRequest($url, $method, $data, $headers);
                 $responseData = json_decode($apiResponse, true);
-
+                // 응답 코드 405 처리
+                if (isset($responseData['code']) && $responseData['code'] == '405') {
+                    throw new Exception('카테고리코드가 존재하지않습니다. 관리자에게 문의하세요');
+                }
                 // 응답 코드 505 처리
                 if (isset($responseData['code']) && $responseData['code'] == '505') {
                     throw new Exception($responseData['message']);

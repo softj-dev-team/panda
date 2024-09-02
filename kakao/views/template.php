@@ -53,7 +53,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                     <div class="channel-link">
 
                         <select id="category" name="category_id" class="fm-sel">
-                            <option value="9999">기타 </option>
+                            <option value="999999">기타 </option>
                         </select>
                     </div>
                     <div class="template-type fm-row">
