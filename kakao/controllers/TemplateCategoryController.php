@@ -47,7 +47,7 @@ class TemplateCategoryController extends Controller
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // 입력 데이터 수집
             $profile_id = $_POST['profile_id'] ?? '';
-            $category_id = $_POST['category_id'] ?? '';
+            $category_id = strval($_POST['category_id'] ?? '');
             $template_type = $_POST['template_type'] ?? '';
             $template_name = $_POST['template_name'] ?? '';
             $template_title = $_POST['template_title'] ?? '';
