@@ -104,6 +104,7 @@
                             <th scope="col">등록일</th>
                             <th scope="col">검수결과</th>
                             <th scope="col">상태</th>
+                            <th scope="col">다운로드</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -221,7 +222,7 @@
                 <th>카테고리</th>
                 <th>고객센터 번호(발신번호)</th>
                 <th>상태</th>
-                <th>다운로드</th>
+
             </tr>
             </thead>
             <tbody>
