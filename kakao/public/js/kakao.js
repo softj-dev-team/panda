@@ -554,7 +554,19 @@ function loadTemplate(page = 1, profile_id, template_type,template_emphasize_typ
                 });
 
                 // 페이징 처리
-                var totalPages = Math.ceil(response.total / 10);
+                var pageSize = 10;
+                var totalRow = response.total;
+                var totalPages = Math.ceil(totalRow / pageSize);
+                var currentPage = page;
+                var pageSizeGroup = 10;
+
+                var startPage = Math.floor((currentPage - 1) / pageSizeGroup) * pageSizeGroup + 1;
+                var endPage = startPage + pageSizeGroup - 1;
+
+                if (endPage > totalPages) {
+                    endPage = totalPages;
+                }
+
                 var pagination = $('#pagination');
                 pagination.empty();
                 if (currentPage > 1) {
