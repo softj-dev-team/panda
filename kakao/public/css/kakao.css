@@ -604,3 +604,97 @@ select {
 .board-source + .board-attatch { margin-top:24px; }
 .board-source + .board-tag { margin-top:18px; }
 }
+
+/********************* ICON *********************/
+.ir, .ir-b:before, .ir-a:after { display:inline-block; vertical-align:middle; background-image:url("../images/common/sprite.png"); background-position:999px 999px; background-repeat:no-repeat; }
+.ir-b:before, .ir-a:after { content:''; }
+.ir { padding:0; margin:0; white-space:nowrap; font-size:1px; overflow:hidden; text-indent:-999px; color:transparent; line-height:0; }
+.i-home { background-position:-30px -86px; width:15px; height:14px; }
+.i-attach { background-position:-106px -86px; width:13px; height:14px; margin:-4px 1px 0 3px; }
+.i-pag-first { background-position:-129px -86px; width:12px; height:11px; margin:-6px 0 0 -2px; }
+.i-pag-prev { background-position:-151px -86px; width:7px; height:11px; margin:-6px 0 0 -2px; }
+.i-pag-next { background-position:-190px -86px; width:7px; height:11px; margin:-6px 0 0 1px; }
+.i-pag-last { background-position:-168px -86px; width:12px; height:11px; margin:-6px 0 0 0; }
+.i-sch { background-position:0 -86px; width:20px; height:20px; margin:-4px 0 0 -10px; }
+.i-sch-2 { background-position:0 -116px; width:36px; height:37px; }
+.i-sch-3 { background-position:-96px -58px; width:24px; height:24px; }
+.i-sch-5 { background-position:-297px -65px; width:14px; height:14px; }
+.i-video, .i-video-2 { content:''; display:inline-block; width:0; height:0; border-left:8px solid #303f50; border-top:5px solid transparent; border-bottom:5px solid transparent; margin:10px 0 0 2px; }
+.i-video-2 { border-left:14px solid #303f50; border-top:9px solid transparent; border-bottom:9px solid transparent; margin:13px 0 0 4px; }
+.i-hit { background-position:-225px -86px; width:7px; height:9px; margin:4px 0 0 0; vertical-align:top; }
+.i-date { background-position:-242px -86px; width:9px; height:9px; margin:4px 0 0 0; vertical-align:top; }
+.i-hit-2 { background-position:-225px -97px; width:7px; height:9px; margin:4px 0 0 0; vertical-align:top; }
+.i-date-2 { background-position:-242px -97px; width:9px; height:9px; margin:4px 0 0 0; vertical-align:top; }
+.ios .i-hit, .ios .i-date, .ios .i-hit-2, .ios .i-date-2 { margin:2px 0 0 0; }
+.i-schedule { display:inline-block; width:10px; height:10px; background-color:#303f50; padding:0; margin:0; white-space:nowrap; font-size:1px; overflow:hidden; text-indent:-999px; color:transparent; line-height:0; border-radius:100%; }
+.i-schedule.ty-2 { background:#ef3e42; }
+.i-schedule.ty-3 { width:12px; height:13px; margin-top:-2px; background-color:transparent; background-position:-396px -202px; }
+.i-schedule.ty-4 { background:#2c8f69; }
+.i-schedule.ty-5 { background:#ebaf0d; }
+.i-schedule.ty-6 { background:#d7383b; }
+.i-schedule + .i-schedule { margin-left:4px; }
+.i-arr-3 { width:13px; height:13px; border:1px solid transparent; margin-top:-2px; border-top-color:#000; border-right-color:#000; -webkit-transform:rotate(-135deg); transform:rotate(-135deg); }
+.i-arr-4 { width:13px; height:13px; border:1px solid transparent; margin-top:-2px; border-top-color:#000; border-right-color:#000; -webkit-transform:rotate(45deg); transform:rotate(45deg); }
+.i-favorite { background-position:-166px -58px; width:20px; height:18px; margin:-6px 0 0 0; }
+.i-favorite-2 { background-position:-220px -58px; width:24px; height:22px; margin:-6px 0 0 0; }
+.i-like { background-position:-462px -116px; width:10px; height:10px; margin:-2px 5px 0 0; }
+.btn-like.active .i-like { background-position:-482px -116px; }
+.i-like-2 { background-position:-462px -136px; width:15px; height:13px; margin:-2px 5px 0 0; }
+.btn-like.active .i-like-2 { background-position:-482px -136px; }
+.i-sort { width:0; display:inline-block; height:0; border-left:3px solid transparent; border-right:3px solid transparent; border-bottom:3px solid #666; } /* 오름차순 */
+.sort-desc .i-sort { -webkit-transform:rotate(-180deg); transform:rotate(-180deg); } /* 내림차순 */
+.i-app-down { background-position:-116px -248px; width:82px; height:24px; }
+.i-app-down-2 { background-position:-208px -248px; width:88px; height:24px; }
+.i-share-title::before { background-position:-83px -86px; width:13px; height:17px; margin:-2px 10px 0 0; }
+.i-arr::before { content:''; width:0; display:inline-block; height:0; border-left:4px solid transparent; border-right:4px solid transparent; border-top:4px solid #000; }
+.i-arr-2::before { content:''; width:0; display:inline-block; height:0; border-left:4px solid transparent; border-right:4px solid transparent; border-bottom:4px solid #878787; }
+.i-photo::before { background-position:-357px -182px; width:30px; height:32px; }
+.i-ref::before { background-position:-395px -182px; width:18px; height:20px; margin:0 7px 0 0; }
+.i-nocalendar::before { background-position:-247px -182px; width:51px; height:60px; }
+.i-event::before { display:block; background-position:-357px 0; width:60px; height:60px; }
+.i-file::before { background-position:-261px -86px; width:15px; height:14px; margin:-2px 8px 0 0; }
+.i-share::before { display:block; background-position:0 0; width:48px; height:48px; }
+.i-share-2::before { display:block; background-position:-58px 0; width:48px; height:48px; }
+.i-share-3::before { display:block; background-position:-116px 0; width:48px; height:48px; }
+.i-share-4::before { display:block; background-position:-174px 0; width:48px; height:48px; }
+.i-share-5::before { display:block; background-position:-232px 0; width:48px; height:48px; }
+.i-nodata::before { display:block; background-position:-297px 0; width:50px; height:60px; }
+.i-nodata-2::before { display:block; background-position:-400px -392px; width:100px; height:100px; }
+.i-nodata-3::before { display:block; background-position:0 -440px; width:100px; height:100px; }
+.i-nodata-4::before { display:block; background-position:-176px -440px; width:60px; height:54px; }
+.i-nodata-5::before { display:block; background-position:-246px -440px; width:48px; height:60px; }
+.i-nodata-6::before { display:block; background-position:-344px -224px; width:60px; height:60px; }
+.i-noshuttle::before { display:block; background-position:0 -370px; width:60px; height:60px; }
+.i-sch-4::before { background-position:-405px -70px; width:32px; height:32px; margin-right:9px; }
+.i-shuttle::before { background-position:-130px -58px; width:26px; height:24px; }
+.i-print::before { background-position:-196px -58px; width:14px; height:14px; margin:-4px 5px 0 0; }
+.i-safety::before { background-position:0 -292px; width:75px; height:69px; }
+.i-safety-2::before { background-position:-80px -292px; width:75px; height:69px; }
+.i-safety-3::before { background-position:-165px -292px; width:75px; height:69px; }
+.i-safety-4::before { background-position:-245px -292px; width:75px; height:69px; }
+.i-safety-5::before { background-position:-330px -292px; width:75px; height:69px; }
+.i-nobank::before { display:block; background-position:-427px 0; width:60px; height:60px; }
+.i-teacher::before { width:18px; height:13px; background-position:-316px -371px; }
+.i-school::before { width:18px; height:14px; background-position:-340px -371px; }
+.i-admission::before { display:block; background-position:-186px -371px; width:56px; height:57px; }
+.i-findcdi::before { display:block; background-position:-252px -371px; width:54px; height:50px; }
+.i-around-2::before { background-position:-353px -86px; width:16px; height:16px; margin:-4px 8px 0 0; }
+.i-noapplication::before { background-position:-110px -440px; width:56px; height:54px; }
+.i-app-buff::before { background-position:-110px -501px; width:39px; height:39px; margin:-11px 8px 0 0; }
+.i-app-allim::before { background-position:-159px -501px; width:39px; height:39px; margin:-11px 8px 0 0; }
+.i-app-e-Library::before { background-position:-44px -573px; width:39px; height:39px; margin:-11px 8px 0 0; }
+.i-app-CDI-LearningPortal::before { background-position:0px -573px; width:39px; height:39px; margin:-11px 8px 0 0; }
+.i-app-April-LearningPortal::before { background-position:-88px -573px; width:39px; height:39px; margin:-11px 8px 0 0; }
+.i-app-April-VinaTalk::before { background-position:-132px -573px; width:39px; height:39px; margin:-11px 8px 0 0; }
+.i-app-April-Buff::before { background-position:-176px -573px; width:39px; height:39px; margin:-11px 8px 0 0; }
+.i-app-Bouncy-Buff::before { background-position:-88px -620px; width:39px; height:39px; margin:-11px 8px 0 0; }
+.i-app-April-MeMe::before { background-position:-220px -573px; width:39px; height:39px; margin:-11px 8px 0 0; }
+.i-app-Bouncy-MeMe::before { background-position:-132px -620px; width:39px; height:39px; margin:-11px 8px 0 0; }
+.i-app-Thinking-MeMe::before { background-position:-398px -573px; width:39px; height:39px; margin:-11px 8px 0 0; }
+.i-app-ChunkToon::before {background-position:-445px -573px; width:39px; height:39px; margin:-11px 8px 0 0; }
+.i-app-PhonicsConcert::before { background-position:-264px -573px; width:39px; height:39px; margin:-11px 8px 0 0; }
+
+.i-examcomp::before { background-position:-304px -440px; width:62px; height:60px; }
+.i-down::after { background-position:-327px -86px; width:16px; height:14px; }
+.i-cs-banner::after { background-position:-208px -506px; width:68px; height:63px; }
+.i-cs-banner-2::after { background-position:-279px -506px; width:67px; height:60px; }

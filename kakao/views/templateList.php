@@ -73,7 +73,7 @@
                 </div>
                 <div class="board-sch bs-col-3">
                     <div class="sch-sel">
-                        <label for="f-search-sel-2" class="blind">검색 카테고리</label>
+
                         <select id="f-search-sel-2" class="fm-sel-2">
                             <option value="">전체</option>
                             <option value="">NOTICE</option>
@@ -81,7 +81,7 @@
                         </select>
                     </div>
                     <div class="sch-sel">
-                        <label for="f-search-sel-3" class="blind">검색 카테고리 2</label>
+
                         <select id="f-search-sel-3" class="fm-sel-2">
                             <option value="">제목</option>
                             <option value="">제목+내용</option>
@@ -89,7 +89,7 @@
                         </select>
                     </div>
                     <div class="sch-ipt">
-                        <label for="f-search-ipt" class="blind">검색어 입력</label>
+
                         <input type="text" id="f-search-ipt" class="fm-ipt-2" placeholder="검색어를 입력해 주세요." />
                         <button type="button" class="btn-sch"><span class="ir i-sch">검색</span></button>
                     </div>
