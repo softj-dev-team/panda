@@ -54,8 +54,8 @@
                 <div class="fm-row">
                     <label class="fm-label">템플릿 메세지 유형</label>
                     <div class="fm-box-row">
-                        <input type="radio" class="fm-rad" id="basic" name="template_type" value="BA">
-                        <label for="basic" class="fm-rad-i">기본형</label>
+<!--                        <input type="radio" class="fm-rad" id="basic" name="template_type" value="BA">-->
+<!--                        <label for="basic" class="fm-rad-i">기본형</label>-->
                     </div>
                     <label class="fm-label">템플릿 강조 유형</label>
                     <div class="fm-box-row">
@@ -70,6 +70,14 @@
                         <!--                            <input type="radio" class="fm-rad" id="list" name="template_type" value="ITEM_LIST">-->
                         <!--                            <label for="list" class="fm-rad-i">리스트형</label>-->
                     </div>
+                </div>
+                <div class="sch-sel">
+                    <label for="f-search-sel-3" class="blind">검색 카테고리 2</label>
+                    <select id="f-search-sel-3" class="fm-sel-2" name="template_type">
+                        <option value="">메세제 유형</option>
+                        <option value="BA">기본형</option>
+<!--                        <option value="">내용</option>-->
+                    </select>
                 </div>
                 <div class="tlb center border">
                     <table  id="templatelistTable">
