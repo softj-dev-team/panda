@@ -251,8 +251,13 @@ class TemplateCategoryController extends Controller
             $updatedTemplates = $this->templateCategory->getUserTemplate($profile_id, $template_type, $offset, $limit, $template_emphasize_type, $inspection_status, $status, $template_title);
             $total = $this->templateCategory->getUserTotalTemplate($profile_id, $template_type, $template_emphasize_type, $inspection_status, $status, $template_title);
 
-            // 결과 반환
-            $this->sendJsonResponse(['success' => true, 'template' => $updatedTemplates, 'total' => $total]);
+            if ($total > 0) {
+                // 결과 반환
+                $this->sendJsonResponse(['success' => true, 'template' => $updatedTemplates, 'total' => $total]);
+            } else {
+                // total이 0이거나 없을 때
+                $this->sendJsonResponse(['success' => false, 'message' => 'No templates found', 'total' => 0]);
+            }
         } catch (Exception $e) {
             error_log($e->getMessage());
             $this->sendJsonResponse(['error' => 'An error occurred']);

@@ -502,7 +502,15 @@ function loadTemplateDetails(templateId) {
         }
     });
 }
+function showLoadingSpinner() {
+    $('.spinner-background').show();
+    $('.loadingio-spinner-spin-2by998twmg8').show();
+}
 
+function hideLoadingSpinner() {
+    $('.spinner-background').hide();
+    $('.loadingio-spinner-spin-2by998twmg8').hide();
+}
 function loadTemplate(page = 1) {
     const profile_id = $('#f-sel').val();
     const template_type = $('select[name="template_type"]').val();
@@ -534,6 +542,7 @@ function loadTemplate(page = 1) {
         'ITEM_LIST': '아이템리스트형',
         'TEXT': '강조표기형'
     };
+    showLoadingSpinner(); // 스피너 표시
     $.ajax({
         url: '/kakao/index.php?route=getUserTemplate',
         type: 'GET',
@@ -548,7 +557,7 @@ function loadTemplate(page = 1) {
         },
         dataType: 'json',
         success: function(response) {
-
+            hideLoadingSpinner(); // 스피너 숨기기
             if (response.success) {
                 var profilesTable = $('#templatelistTable tbody');
                 profilesTable.empty();
@@ -608,6 +617,7 @@ function loadTemplate(page = 1) {
             }
         },
         error: function(xhr, status, error) {
+            hideLoadingSpinner(); // 스피너 숨기기
             alert('신청 목록을 불러오는 데 실패했습니다. 다시 시도해 주세요.');
             console.error('Error: ' + error);
             console.error('Status: ' + status);
