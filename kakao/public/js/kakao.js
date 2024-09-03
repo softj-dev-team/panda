@@ -502,13 +502,14 @@ function loadTemplateDetails(templateId) {
         }
     });
 }
-var currentProfileId = null;
-var currentTemplateType = null;
-var currentTemplateEmphasizeType = null;
-function loadTemplate(page = 1, profile_id = null, template_type = null, template_emphasize_type = null) {
-    currentProfileId = profile_id !== null ? profile_id : currentProfileId;
-    currentTemplateType = template_type !== null ? template_type : currentTemplateType;
-    currentTemplateEmphasizeType = template_emphasize_type !== null ? template_emphasize_type : currentTemplateEmphasizeType;
+
+function loadTemplate(page = 1) {
+    const profile_id = $('#f-sel').val();
+    const template_type = $('select[name="template_type"]').val();
+    const template_emphasize_type = $('select[name="template_emphasize_type"]').val();
+    const inspection_status = $('select[name="inspection_status"]').val();
+    const status = $('select[name="status"]').val();
+    const template_title = $('input[name="template_title"]').val();
 
     const statusMapping = {
         '01': '승인',
@@ -538,9 +539,12 @@ function loadTemplate(page = 1, profile_id = null, template_type = null, templat
         type: 'GET',
         data: {
             page: page,
-            profile_id: currentProfileId,
-            template_type: currentTemplateType,
-            template_emphasize_type: currentTemplateEmphasizeType
+            profile_id: profile_id,
+            template_type: template_type,
+            template_emphasize_type: template_emphasize_type,
+            inspection_status: inspection_status,
+            status: status,
+            template_title: template_title
         },
         dataType: 'json',
         success: function(response) {
@@ -598,7 +602,7 @@ function loadTemplate(page = 1, profile_id = null, template_type = null, templat
                 var profilesTable = $('#templatelistTable tbody');
                 profilesTable.empty();
                 var row = '<tr>'+
-                    '<td colspan="4" class="no-data"><span class="ir-b i-nodata">검색 결과가 없습니다.</span></td>'+
+                    '<td colspan="7" class="no-data"><span class="ir-b i-nodata">검색 결과가 없습니다.</span></td>'+
                     '</tr>';
                 profilesTable.append(row);
             }
@@ -616,20 +620,19 @@ $(document).on('click', '#templatePagination .page-link', function(event) {
     var page = $(this).data('page');
     loadTemplate(page);
 });
+// 검색 버튼 클릭 이벤트 핸들러 추가
+
 $(document).ready(function() {
 
-    $('input[name="template_type"], input[name="template_emphasize_type"]').on('change', function (event) {
-        // event.preventDefault();
+    // 검색 버튼 클릭 이벤트 처리
+    $('#searchB').on('click', function () {
         var selectedValue = $('#f-sel').val();
 
         if (selectedValue === "") {
-            alert('발신 프로필 키 를 선택하세요');
+            alert('1 발신 프로필 키를 선택하세요');
             $('#f-sel').focus();
-            $(this).prop('checked', false);
-        }else{
-            var templateType = $('input[name="template_type"]:checked').val();
-            var template_emphasize_type = $('input[name="template_emphasize_type"]:checked').val();
-            loadTemplate(page = 1,selectedValue,templateType,template_emphasize_type)
+        } else {
+            loadTemplate(1);
         }
     });
 });

@@ -10,23 +10,7 @@
 
 <div class="wrap">
     <div class="containerW wrap_pc">
-        <div class="examREZ">
-            <div class="rez_tit">
-                <h3 class="hTIt"><i class="guide_i"></i>알림톡</h3>
-            </div>
-            <div class="rezCon2">
-                <div class="guide ty2">
-                    <p><i class="exclamationI"></i>발송페이지에서는 현재 <span class="textB2">이용가능한</span> 발신프로필만 보여집니다.</p>
-<!--                    <p><i class="exclamationI"></i>학원을 선택한 후 입학시험 일정을 <span class="textB2">예약하거나 전화로 문의</span> 바랍니다.</p>-->
-<!--                    <p><i class="exclamationI"></i>입학을 원하는 브랜드 선택 후 자세한 <span class="textB2">입학절차를 확인</span> 하실 수 있습니다.</p>-->
-                </div>
-<!--                <div class="guide_tab">-->
-<!--                    <div class="step_guide">-->
-<!--                        <p>Grand Slam은 대치, 목동, 마포, 관악, 중계, 평촌, 송도, 일산, 분당, 서초, 잠실에서 운영하고 있습니다. </p>-->
-<!--                    </div>-->
-<!--                </div>-->
-            </div>
-        </div>
+
 
         <div class="kakao-box">
             <div class="preview-section">
@@ -55,7 +39,12 @@
                 <p class="preview-note">미리보기는 실제 단말기와 차이가 있을 수 있습니다.</p>
             </div>
             <div class="fm-wrap w-100">
+                <div class="rezCon2">
+                    <div class="guide ty2">
+                        <p><i class="exclamationI"></i>등록된템플릿 목록을 확인하기위해 발신프로필 선택 후 신청유형, 템플릿 강조 유형 을 선택하세요.</p>
+                    </div>
 
+                </div>
                 <div class="fm-row flex">
                     <div class="fm-box w-100">
                         <select id="f-sel" class="fm-sel">
@@ -65,32 +54,51 @@
                     </div>
                     <button class="addChild"><i class="plusI"></i>발신프로필등록</button><button id="goTemplateReg" class="btn-t-5 btn-c-5" style="margin-left: 5px" type="button">템플릿등록</button>
                 </div>
-                <div class="rezCon2">
-                    <div class="guide ty2">
-                        <p><i class="exclamationI"></i>등록된템플릿 목록을 확인하기위해 발신프로필 선택 후 신청유형, 템플릿 강조 유형 을 선택하세요.</p>
-                    </div>
 
-                </div>
-                <div class="fm-row">
-                    <label class="fm-label">템플릿 메세지 유형</label>
-                    <div class="fm-box-row">
-                        <input type="radio" class="fm-rad" id="basic" name="template_type" value="BA">
-                        <label for="basic" class="fm-rad-i">기본형</label>
+                <form name="searchForm">
+                    <div class="board-sch bs-col-3 flex-just-end">
+                        <div class="sch-sel">
+                            <label for="f-search-sel-2" class="blind">검색 카테고리</label>
+                            <select id="f-search-sel-2" class="fm-sel-2" name="template_type">
+                                <option value="">메세지 유형</option>
+                                <option value="BA">기본형</option>
+                                <!--                            <option value="">NEWS</option>-->
+                            </select>
+                        </div>
+                        <div class="sch-sel">
+                            <label for="f-search-sel-3" class="blind">검색 카테고리 2</label>
+                            <select id="f-search-sel-3" class="fm-sel-2" name="template_emphasize_type">
+                                <option value="">강조 유형</option>
+                                <option value="NONE">선택안함</option>
+                                <option value="TEXT">강조표기형</option>
+                            </select>
+                        </div>
+                        <div class="sch-sel">
+                            <label for="f-search-sel-3" class="blind">검수상태</label>
+                            <select id="f-search-sel-3" class="fm-sel-2" name="inspection_status">
+                                <option value="">검수상태</option>
+                                <option value="REG">등록</option>
+                                <option value="REQ">검수요청</option>
+                                <option value="APR">승인</option>
+                                <option value="REJ">반려</option>
+                            </select>
+                        </div>
+                        <div class="sch-sel">
+                            <label for="f-search-sel-3" class="blind">승인상태</label>
+                            <select id="f-search-sel-3" class="fm-sel-2" name="status">
+                                <option value="">사용상태</option>
+                                <option value="R">승인대기</option>
+                                <option value="A">정상</option>
+                                <option value="S">중단</option>
+                            </select>
+                        </div>
+                        <div class="sch-ipt">
+                            <label for="f-search-ipt" class="blind">검색어 입력</label>
+                            <input type="text" name="template_title" id="f-search-ipt" class="fm-ipt-2" placeholder="검색어를 입력해 주세요." />
+                            <button type="button" class="btn-sch" id="searchB"><span class="ir i-sch">검색</span></button>
+                        </div>
                     </div>
-                    <label class="fm-label">템플릿 강조 유형</label>
-                    <div class="fm-box-row">
-                        <input type="radio" class="fm-rad" id="NONE" name="template_emphasize_type" value="NONE" checked>
-                        <label for="NONE" class="fm-rad-i">선택안함</label>
-                        <input type="radio" class="fm-rad" id="TEXT" name="template_emphasize_type" value="TEXT">
-                        <label for="TEXT" class="fm-rad-i">강조표기형</label>
-
-                        <!--                            <input type="radio" class="fm-rad" id="image" name="template_type" value="03">-->
-                        <!--                            <label for="image" class="fm-rad-i">이미지첨부형</label>-->
-
-                        <!--                            <input type="radio" class="fm-rad" id="list" name="template_type" value="ITEM_LIST">-->
-                        <!--                            <label for="list" class="fm-rad-i">리스트형</label>-->
-                    </div>
-                </div>
+                </form>
                 <div class="tlb center border">
                     <table id="templatelistTable">
 

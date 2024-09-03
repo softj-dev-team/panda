@@ -206,10 +206,14 @@ class TemplateCategoryController extends Controller
             $limit = 10;
             $offset = ($page - 1) * $limit;
             $profile_id = $_GET['profile_id'];
-            $template_type = $_GET['template_type'];
-            $template_emphasize_type = $_GET['template_emphasize_type'];
+            $template_type = isset($_GET['template_type']) ? $_GET['template_type'] : null;
+            $template_emphasize_type = isset($_GET['template_emphasize_type']) ? $_GET['template_emphasize_type'] : null;
+            $inspection_status = isset($_GET['inspection_status']) ? $_GET['inspection_status'] : null;
+            $status = isset($_GET['status']) ? $_GET['status'] : null;
+            $template_title = isset($_GET['template_title']) ? $_GET['template_title'] : null;
+
             // 사용자 템플릿 가져오기
-            $templates = $this->templateCategory->getUserTemplate($profile_id, $template_type, $offset, $limit,$template_emphasize_type);
+            $templates = $this->templateCategory->getUserTemplate($profile_id, $template_type, $offset, $limit, $template_emphasize_type, $inspection_status, $status, $template_title);
             // KakaoBusinessModel 인스턴스 생성 및 ISP 코드 조회
             $profile = $this->templateCategory->getIspCodeByProfileKey($profile_id);
             // 각 템플릿에 대해 상태 업데이트
@@ -244,8 +248,8 @@ class TemplateCategoryController extends Controller
             }
 
             // 최신 상태로 다시 템플릿 데이터 가져오기
-            $updatedTemplates = $this->templateCategory->getUserTemplate($profile_id, $template_type, $offset, $limit,$template_emphasize_type);
-            $total = $this->templateCategory->getUserTotalTemplate($profile_id, $template_type);
+            $updatedTemplates = $this->templateCategory->getUserTemplate($profile_id, $template_type, $offset, $limit, $template_emphasize_type, $inspection_status, $status, $template_title);
+            $total = $this->templateCategory->getUserTotalTemplate($profile_id, $template_type, $template_emphasize_type, $inspection_status, $status, $template_title);
 
             // 결과 반환
             $this->sendJsonResponse(['success' => true, 'template' => $updatedTemplates, 'total' => $total]);

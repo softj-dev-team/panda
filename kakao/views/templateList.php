@@ -51,26 +51,51 @@
                     </div>
                     <button class="addChild" type="button"><i class="plusI"></i>발신프로필등록</button> <button id="goTemplateReg" class="btn-t-5 btn-c-5" style="margin-left: 5px" type="button">템플릿등록</button>
                 </div>
-                <div class="fm-row">
-                    <label class="fm-label">템플릿 메세지 유형</label>
-                    <div class="fm-box-row">
-                        <input type="radio" class="fm-rad" id="basic" name="template_type" value="BA">
-                        <label for="basic" class="fm-rad-i">기본형</label>
+                <form name="searchForm">
+                    <div class="board-sch bs-col-3 flex-just-end">
+                        <div class="sch-sel">
+                            <label for="f-search-sel-2" class="blind">검색 카테고리</label>
+                            <select id="f-search-sel-2" class="fm-sel-2" name="template_type">
+                                <option value="">메세지 유형</option>
+                                <option value="BA">기본형</option>
+                                <!--                            <option value="">NEWS</option>-->
+                            </select>
+                        </div>
+                        <div class="sch-sel">
+                            <label for="f-search-sel-3" class="blind">검색 카테고리 2</label>
+                            <select id="f-search-sel-3" class="fm-sel-2" name="template_emphasize_type">
+                                <option value="">강조 유형</option>
+                                <option value="NONE">선택안함</option>
+                                <option value="TEXT">강조표기형</option>
+                            </select>
+                        </div>
+                        <div class="sch-sel">
+                            <label for="f-search-sel-3" class="blind">검수상태</label>
+                            <select id="f-search-sel-3" class="fm-sel-2" name="inspection_status">
+                                <option value="">검수상태</option>
+                                <option value="REG">등록</option>
+                                <option value="REQ">검수요청</option>
+                                <option value="APR">승인</option>
+                                <option value="REJ">반려</option>
+                            </select>
+                        </div>
+                        <div class="sch-sel">
+                            <label for="f-search-sel-3" class="blind">승인상태</label>
+                            <select id="f-search-sel-3" class="fm-sel-2" name="status">
+                                <option value="">사용상태</option>
+                                <option value="R">승인대기</option>
+                                <option value="A">정상</option>
+                                <option value="S">중단</option>
+                            </select>
+                        </div>
+                        <div class="sch-ipt">
+                            <label for="f-search-ipt" class="blind">검색어 입력</label>
+                            <input type="text" name="template_title" id="f-search-ipt" class="fm-ipt-2" placeholder="검색어를 입력해 주세요." />
+                            <button type="button" class="btn-sch" id="searchB"><span class="ir i-sch">검색</span></button>
+                        </div>
                     </div>
-                    <label class="fm-label">템플릿 강조 유형</label>
-                    <div class="fm-box-row">
-                        <input type="radio" class="fm-rad" id="NONE" name="template_emphasize_type" value="NONE" checked>
-                        <label for="NONE" class="fm-rad-i">선택안함</label>
-                        <input type="radio" class="fm-rad" id="TEXT" name="template_emphasize_type" value="TEXT">
-                        <label for="TEXT" class="fm-rad-i">강조표기형</label>
+                </form>
 
-                        <!--                            <input type="radio" class="fm-rad" id="image" name="template_type" value="03">-->
-                        <!--                            <label for="image" class="fm-rad-i">이미지첨부형</label>-->
-
-                        <!--                            <input type="radio" class="fm-rad" id="list" name="template_type" value="ITEM_LIST">-->
-                        <!--                            <label for="list" class="fm-rad-i">리스트형</label>-->
-                    </div>
-                </div>
                 <div class="tlb center border">
                     <table  id="templatelistTable">
 
