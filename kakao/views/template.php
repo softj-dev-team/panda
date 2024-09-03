@@ -135,18 +135,18 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                 </div>
                 <br>
                 <label for="chananel_name" class="fm-label flex">카테고리 </label>
-                <div class="board-sch bs-col-3 flex-between">
-                    <div class="sch-sel">
+                <div class="fm-col-3">
+                    <div class="fm-box fm-col-in-full">
                         <select id="category1" class="fm-sel-2">
                             <option value="">대분류 선택</option>
                         </select>
                     </div>
-                    <div class="sch-sel">
+                    <div class="fm-box fm-col-in-half">
                         <select id="category2" class="fm-sel-2">
                             <option value="">중분류 선택</option>
                         </select>
                     </div>
-                    <div class="sch-sel">
+                    <div class="fm-box fm-col-in-half">
                         <select id="category3" class="fm-sel-2">
                             <option value="">소분류 선택</option>
                         </select>

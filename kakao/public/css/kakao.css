@@ -452,6 +452,7 @@ select {
     justify-content: space-between;
     gap: 10px;
     align-items: center;
+    margin-bottom: 10px;
 }
 .flex-space-around{
     display: flex;
