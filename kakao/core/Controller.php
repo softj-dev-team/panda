@@ -72,7 +72,8 @@ class Controller {
 
         $this->data['inc_notice_query'] = $crud->selectWithOrderAndLimit($where, $order, $limit);
     }
-    public function view($view) {
+    public function view($view, $data = []) {
+        $data = array_merge($this->data, $data);
         extract($this->data);
         require_once $_SERVER['DOCUMENT_ROOT']."/kakao/views/$view.php";
         require_once $_SERVER['DOCUMENT_ROOT'] . "/common/footer.php";

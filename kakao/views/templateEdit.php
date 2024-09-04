@@ -8,9 +8,10 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
 <body>
 <!--header-->
 <div><?php include $_SERVER["DOCUMENT_ROOT"] ."/common/header.php"; ?></div>
+
     <div class="container-kko">
         <div class="preview-section">
-            <h2>템플릿 등록</h2>
+            <h2>템플릿 수정</h2>
             <h2>&nbsp;</h2>
             <div id="preview">
                 <div id="previewDate">2024년 07월 11일</div>
@@ -23,12 +24,16 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                         </div>
                         <div class="highlight-body">
                             <div class="image-wrapper">
-                                <img id="uploadedImage" src="" alt="Uploaded Logo">
+                                <img id="uploadedImage" style="display: <?=$data['image_path']?'block':'none'?>" src="<?=$data['image_path']?>" alt="Uploaded Logo">
                             </div>
-                            <div id="previewStrongSubTitle" class="previewStrongSubTitle"></div>
-                            <div id="previewStrongTitle" class="previewStrongTitle"></div>
-                            <div id="previewHighlightTitle"></div>
-                            <div id="previewHighlightSubtitle"></div>
+                            <div id="previewStrongSubTitle" class="previewStrongSubTitle"><?=$data['strong_sub_title']?></div>
+                            <div id="previewStrongTitle" class="previewStrongTitle"><?=$data['strong_title']?></div>
+                            <div id="previewHighlightTitle" <?=$data['strong_title']?' style="border-top:1px solid #bbb"':''?>><?=$data['template_title']?></div>
+                            <div id="previewHighlightSubtitle"><?=$data['template_subtitle']?></div>
+
+                            <?php foreach ($data['apiResponeData']['buttons'] as $buttons): ?>
+                            <?php if($buttons['name']){?> <button class="generated-button jss2034"><?=$buttons['name']?></button><?php } ?>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                     <div class="previewFooter">오전 12:02</div>
@@ -38,23 +43,26 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
         </div>
 
         <div class="form-section">
-            <form id="requestTemplate" enctype="multipart/form-data" >
+            <form id="requestUpdateTemplate" enctype="multipart/form-data" >
+                <input type="hidden" name="template_id" value="<?=$_GET["id"]?>">
                 <div class="fm-wrap w-100">
                     <div class="fm-row flex">
                         <div class="fm-box w-100">
 
                             <select id="f-sel" class="fm-sel" name="profile_id">
-                                <option value="">발신프로필 선택 *</option>
+
+                                <option value="<?=$data['profile_id']?>"><?=$data['chananel_name']?></option>
                             </select>
                             <span class="fm-error-txt">* 항목을 선택 또는 작성 해 주세요.</span>
                         </div>
-                        <button class="addChild" type="button"><i class="plusI"></i>발신프로필등록</button>
+                        <button class="addChild" type="button"><i class="plusI"></i>발신프로필등록</button><button id="goTemplateReg" class="btn-t-5 btn-c-5" style="margin-left: 5px" type="button">템플릿등록</button>
                     </div>
 
                     <div class="channel-link">
 
                         <select id="category" name="category_id" class="fm-sel">
                             <option value="">카테고리 * </option>
+                            <option value="<?=$data['category_id']?>" selected><?=$data['category_name']?> </option>
                         </select>
                         <span class="fm-error-txt">* 항목을 선택 또는 작성 해 주세요.</span>
                     </div>
@@ -64,17 +72,17 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                         <div class="fm-box w-fm-title">
                             <select id="template_type" class="fm-sel" name="template_type">
                                 <option value="">메세지 유형</option>
-                                <option value="BA">기본형</option>
-                                <option value="EX">부가정보형</option>
-                                <option value="AD">채널추가형</option>
-                                <option value="MI">복합형</option>
+                                <option value="BA" <?=$data['template_type']=='BA'?'selected':''?>>기본형</option>
+                                <option value="EX" <?=$data['template_type']=='EX'?'selected':''?>>부가정보형</option>
+                                <option value="AD" <?=$data['template_type']=='AD'?'selected':''?>>채널추가형</option>
+                                <option value="MI" <?=$data['template_type']=='MI'?'selected':''?>>복합형</option>
                                 <!--                            <option value="">NEWS</option>-->
                             </select>
                             <span class="fm-error-txt">* 항목을 선택 또는 작성 해 주세요.</span>
                         </div>
                         <div class="fm-box custom-input-container mgl-5">
                             <label for="templateName" class="custom-label">템플릿 이름 *</label>
-                            <input type="text" id="templateName" name="template_name" class="fm-ipt custom-input" placeholder="템플릿 명 *">
+                            <input type="text" id="templateName" name="template_name" class="fm-ipt custom-input" placeholder="템플릿 명 *" value="<?=$data['template_name']?>">
                             <span class="fm-error-txt">* 항목을 선택 또는 작성 해 주세요.</span>
                         </div>
 
@@ -83,26 +91,26 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                         <div class="fm-box w-fm-title"">
                             <select id="f-search-sel-3" class="fm-sel" name="template_emphasize_type">
                                 <option value="">강조 유형</option>
-                                <option value="NONE">선택안함</option>
-                                <option value="TEXT">강조표기형</option>
-                                <option value="IMAGE">이미지형</option>
+                                <option value="NONE" <?=$data['template_emphasize_type']=='NONE'?'selected':''?>>선택안함</option>
+                                <option value="TEXT" <?=$data['template_emphasize_type']=='TEXT'?'selected':''?>>강조표기형</option>
+                                <option value="IMAGE" <?=$data['template_emphasize_type']=='IMAGE'?'selected':''?>>이미지형</option>
                             </select>
                             <span class="fm-error-txt">* 항목을 선택 또는 작성 해 주세요.</span>
                         </div>
-                        <div id="viewStrongMessage" class="blind flex w-100">
+                        <div id="viewStrongMessage" class="<?=$data['strong_title']?'':'blind'?> flex w-100">
                             <div class="fm-box custom-input-container mgl-5">
                                 <label for="strong_title" class="custom-label">강조 타이틀 *</label>
-                                <input type="text" id="strong_title" name="strong_title" class="fm-ipt custom-input" placeholder="강조 타이틀">
+                                <input type="text" id="strong_title" name="strong_title" class="fm-ipt custom-input" placeholder="강조 타이틀" value="<?=$data['strong_title']?>">
                                 <span class="fm-error-txt ">* 항목을 선택 또는 작성 해 주세요.</span>
                             </div>
                             <div class="fm-box custom-input-container mgl-5">
                                 <label for="strong_sub_title" class="custom-label">강조 보조 문구 *</label>
-                                <input type="text" id="strong_sub_title" name="strong_sub_title" class="fm-ipt custom-input" placeholder="강조 보조 문구 *">
+                                <input type="text" id="strong_sub_title" name="strong_sub_title" class="fm-ipt custom-input" placeholder="강조 보조 문구 *" value="<?=$data['strong_sub_title']?>">
                                 <span class="fm-error-txt ">* 항목을 선택 또는 작성 해 주세요.</span>
                             </div>
                         </div>
 
-                        <div class="fm-box mgl-5 w-100 blind" id="templateImageUploadForm" >
+                        <div class="fm-box mgl-5 w-100 <?=$data['image_path']?'':'blind'?>" id="templateImageUploadForm" >
                             <input name="file" type="file" id="f-attach" data-fakefile="file" />
                             <label for="f-attach" class="fm-file-btn ">파일첨부</label>
 <!--                            <input type="hidden" name="selectedImage" id="selectedImage">-->
@@ -112,7 +120,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
 
                     </div>
                     <div class="fm-box-row">
-                        <input type="checkbox" id="f-chk-all" class="fm-chk" checked="checked" name="securityFlag">
+                        <input type="checkbox" id="f-chk-all" class="fm-chk" <?=$data['apiResponeData']['securityFlag']?'checked=checked':''?> name="securityFlag">
                         <label for="f-chk-all" class="fm-chk-i"><strong>보안 템플릿 설정</strong> 체크 시, 메인 디바이스 모바일 외 모든 서브 디바이스에서는 메시지 내용이 노출되지 않습니다</label>
                     </div>
                     <div class="fm-row">
@@ -120,7 +128,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                         </div>
                         <div class="custom-input-container">
                             <label for="template_title" class="fm-label custom-label">메세지 내용 *<span class="blind">필수항목</span></label>
-                            <textarea name="template_title" id="highlightTitle" class="fm-ta"></textarea>
+                            <textarea name="template_title" id="highlightTitle" class="fm-ta"><?=$data['template_title']?></textarea>
                             <span class="fm-error-txt">* 항목을 선택 또는 작성 해 주세요.</span>
                         </div>
                         <div class="flex-just-start">
@@ -129,7 +137,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                         </div>
                     </div>
                     <div class="fm-row">
-                        <div id="typeEX" class="blind custom-input-container">
+                        <div id="typeEX" class="<?=$data['template_subtitle']?'':'blind'?> custom-input-container">
                             <label for="f-title" class="fm-label custom-label">부가정보 </label>
                             <textarea name="template_subtitle" id="highlightSubtitle" class="fm-ta"></textarea>
                             <span class="fm-error-txt">* 항목을 선택 또는 작성 해 주세요.</span>
@@ -139,6 +147,38 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                         <!-- 버튼 목록 -->
                         <div id="buttonList">
                             <!-- 버튼이 추가될 영역 -->
+                            <?php foreach ($data['apiResponeData']['buttons'] as $buttons): ?>
+                                <div class="button-item">
+                                    <div>
+                                        <strong><?=$buttons['name']?></strong>
+                                        <span><?=$buttons['linkTypeName']?></span>
+                                        <input type="hidden" name="name[]" value="<?=$buttons['name']?>">
+                                        <input type="hidden" name="postLinkType[]" value="<?=$buttons['linkType']?>">
+                                        <input type="hidden" name="ordering[]" value="<?=$buttons['ordering']?>">
+                                        <?php if(isset($buttons['linkMo']) && !empty($buttons['linkMo'])) { ?>
+                                            <input type="hidden" name="linkMo[]" value="<?= htmlspecialchars($buttons['linkMo'], ENT_QUOTES) ?>">
+                                        <?php } ?>
+
+                                        <?php if(isset($buttons['linkAnd']) && !empty($buttons['linkAnd'])) { ?>
+                                            <input type="hidden" name="linkAnd[]" value="<?= htmlspecialchars($buttons['linkAnd'], ENT_QUOTES) ?>">
+                                        <?php } ?>
+                                        <?php if(isset($buttons['linkIos']) && !empty($buttons['linkIos'])) { ?>
+                                            <input type="hidden" name="linkIos[]" value="<?= htmlspecialchars($buttons['linkIos'], ENT_QUOTES) ?>">
+                                        <?php } ?>
+                                        <?php if(isset($buttons['pluginId']) && !empty($buttons['pluginId'])) { ?>
+                                            <input type="hidden" name="pluginId[]" value="<?= htmlspecialchars($buttons['pluginId'], ENT_QUOTES) ?>">
+                                        <?php } ?>
+                                        <?php if(isset($buttons['bizFormId']) && !empty($buttons['bizFormId'])) { ?>
+                                            <input type="hidden" name="bizFormId[]" value="<?= htmlspecialchars($buttons['bizFormId'], ENT_QUOTES) ?>">
+                                        <?php } ?>
+
+                                    </div>
+                                    <div class="button-actions">
+                                        <button class="editButton" type="button" data-index="<?=$buttons['ordering']?>">수정</button>
+                                        <button class="deleteButton" type="button" data-index="<?=$buttons['ordering']?>">삭제</button>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
                         </div>
 
                     </div>
@@ -204,7 +244,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                     </div>
                 </div>
                 <div class="flex-c">
-                    <button class="btn-t btn-c" type="submit">템플릿 등록 완료</button>
+                    <button class="btn-t btn-c" type="submit">저장</button>
                 </div>
             </form>
         </div>
@@ -330,7 +370,47 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
          * */
         $(document).ready(function() {
             let buttons = [];
+            <!-- 버튼이 추가될 영역 -->
+            let  newButton={};
+            <?php
+            if($data['apiResponeData']['buttons']){
+            foreach ($data['apiResponeData']['buttons'] as $button):
+            ?>
+            newButton = {};
+            newButton['name'] = "<?=$button['name']?>";
+            newButton['linkType'] = "<?=$button['linkType']?>";
+            newButton['ordering'] = "<?=$button['ordering']?>";
+
+            <?php if($button['linkMo']) { ?>
+            newButton['linkMo'] = "<?=$button['linkMo']?>";
+            <?php } ?>
+            <?php if($button['linkPc']) { ?>
+            newButton['linkPc'] = "<?=$button['linkPc']?>";
+            <?php } ?>
+            <?php if($button['linkAnd']) { ?>
+            newButton['linkAnd'] = "<?=$button['linkAnd']?>";
+            <?php } ?>
+            <?php if($button['linkIos']) { ?>
+            newButton['linkIos'] = "<?=$button['linkIos']?>";
+            <?php } ?>
+            <?php if($button['pluginId']) { ?>
+            newButton['pluginId'] = "<?=$button['pluginId']?>";
+            <?php } ?>
+            <?php if($button['bizFormId']) { ?>
+            newButton['bizFormId'] = "<?=$button['bizFormId']?>";
+            <?php } ?>
+
+            buttons.push(newButton);
+
+            <?php
+            endforeach;
+            } else {
+            // No buttons found, handle as necessary
+        }
+            ?>
             const maxButtons = 5;
+
+            updateButtonList();
 
             $('#addButton').on('click', function() {
                 if (buttons.length >= maxButtons) {
@@ -451,12 +531,13 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
             function updateButtonList() {
                 const buttonList = $('#buttonList');
                 buttonList.empty();
-                const linkType = {
+                const buttonTypeMapping = {
                     'WL': '웹링크',
                     'AL': '앱링크',
                     'MD': '메시지전달',
                     'DS': '배송조회',
                     'BT': '봇전환',
+                    'BK': '봇키워드',
                     'BC': '상담톡전환',
                     'AC': '채널 추가',
                     'P1': '이미지 보안 전송 플러그인',
@@ -475,10 +556,8 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                                             <input type="hidden" name="name[]" value="${button.name}">
                                             <input type="hidden" name="postLinkType[]" value="${button.linkType}">
                                             <input type="hidden" name="ordering[]" value="${index}">
-
                                             <input type="hidden" name="linkMo[]" value="${button.linkMo}">
                                             <input type="hidden" name="linkPc[]" value="${button.linkPc}">
-
                                         `;
                             break;
                         case 'AL':
@@ -486,7 +565,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                                             <input type="hidden" name="name[]" value="${button.name}">
                                             <input type="hidden" name="postLinkType[]" value="${button.linkType}">
                                             <input type="hidden" name="ordering[]" value="${index}">
-                                             <input type="hidden" name="linkAnd[]" value="${button.linkAnd}">
+                                            <input type="hidden" name="linkAnd[]" value="${button.linkAnd}">
                                             <input type="hidden" name="linkIos[]" value="${button.linkIos}">
                                         `;
                             break;
@@ -502,7 +581,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                                             <input type="hidden" name="name[]" value="${button.name}">
                                             <input type="hidden" name="postLinkType[]" value="${button.linkType}">
                                             <input type="hidden" name="ordering[]" value="${index}">
-                                           <input type="hidden" name="bizFormId[]" value="${button.bizFormId}">
+                                            <input type="hidden" name="bizFormId[]" value="${button.bizFormId}">
                                         `;
                             break;
                         case 'P1':
@@ -510,7 +589,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                                             <input type="hidden" name="name[]" value="${button.name}">
                                             <input type="hidden" name="postLinkType[]" value="${button.linkType}">
                                             <input type="hidden" name="ordering[]" value="${index}">
-                                           <input type="hidden" name="pluginId[]" value="${button.pluginId}">
+                                            <input type="hidden" name="pluginId[]" value="${button.pluginId}">
                                         `;
                             break;
                         case 'P2':
@@ -518,7 +597,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                                             <input type="hidden" name="name[]" value="${button.name}">
                                             <input type="hidden" name="postLinkType[]" value="${button.linkType}">
                                             <input type="hidden" name="ordering[]" value="${index}">
-                                            <input type="hidden" name="pluginId[]" value="${button.pluginId}">
+                                             <input type="hidden" name="pluginId[]" value="${button.pluginId}">
                                         `;
                             break;
                         // Add more cases as needed
@@ -535,7 +614,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                                             <div class="button-item">
                                                 <div>
                                                     <strong>${button.name}</strong>
-                                                    <span>${linkType[button.linkType]}</span>
+                                                    <span>${buttonTypeMapping[button.linkType]}</span>
                                                     ${inputFields}
                                                 </div>
                                                 <div class="button-actions">
@@ -564,6 +643,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                 $('#linkIos').val(button.linkIos);
                 $('#bizFormId').val(button.bizFormId);
                 $('#pluginId').val(button.pluginId);
+
                 showPopup(index);
             });
 

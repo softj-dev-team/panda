@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    var initialOption = $('#f-sel option:selected').val();
     // 서버에서 사용자 프로필 가져오기
     $.ajax({
         url: 'index.php?route=getUserProfiles',
@@ -6,12 +7,12 @@ $(document).ready(function() {
         dataType: 'json',
         success: function(response) {
             var select = $('#f-sel');
-            select.empty(); // 기존 옵션 제거
-            select.append('<option value="">발신프로필 선택 *</option>');
 
             if (response.success && response.data.length > 0) {
                 $.each(response.data, function(index, profile) {
-                    select.append('<option value="' + profile.id + '">' + profile.chananel_name + '(' + profile.profile_key + ')</option>');
+                    // 기존에 선택된 옵션과 일치하는 경우 selected 속성 추가
+                    var selected = profile.id == initialOption ? 'selected' : '';
+                    select.append('<option value="' + profile.id + '" ' + selected + '>' + profile.chananel_name + '</option>');
                 });
             } else {
                 alert('발신프로필이 없습니다.');
@@ -40,8 +41,7 @@ $(document).ready(function() {
     // $('#highlightTitle').on('input', updatePreview);
     $('#highlightSubtitle').on('input', updatePreview);
 
-    $('#previewHighlightTitle').text('');
-    $('#previewHighlightSubtitle').text('');
+
     function updatePreview() {
         var titleContent = $('#highlightTitle').val().replace(/\n/g, '<br>');
         var subtitleContent = $('#highlightSubtitle').val().replace(/\n/g, '<br>');
@@ -71,22 +71,96 @@ $(document).ready(function() {
     });
 
 });
+function validateForm(form) {
+    var isValid = true; // 폼이 유효한지 여부를 저장하는 변수
+    var form = form
 
+    // fm-error-txt 클래스가 있는 모든 span 요소를 찾음
+    var errorTexts = form.querySelectorAll('.fm-error-txt');
+
+    errorTexts.forEach(function(errorText) {
+        // span 요소의 상위 요소에 blind 클래스가 없는지 확인
+        var hasBlindClass = errorText.closest('.blind') !== null;
+
+        if (!hasBlindClass) { // blind 클래스가 없는 경우에만 검증
+            // span 요소의 이전 형제 요소를 찾음 (input, select 등)
+            var inputField = errorText.previousElementSibling;
+
+            // inputField가 select나 input인지 확인
+            if (inputField && (inputField.tagName === 'SELECT' || inputField.tagName === 'INPUT' || inputField.tagName === 'TEXTAREA')) {
+                // 필수 입력 필드가 비어 있는지 확인
+                if (inputField.value.trim() === "") {
+                    // 오류 상태 표시
+                    inputField.classList.add('fm-error');
+                    errorText.classList.add('active');
+                    errorText.textContent = "항목을 입력해 주세요."; // 에러 메시지 설정
+                    isValid = false; // 유효하지 않은 상태로 설정
+                } else {
+                    // 오류 상태 제거
+                    inputField.classList.remove('fm-error');
+                    errorText.classList.remove('active');
+                    errorText.textContent = ""; // 에러 메시지 초기화
+                }
+            }
+        }
+    });
+
+    return isValid; // 폼이 유효하면 true, 아니면 false를 반환
+}
 $(document).ready(function() {
+
     // 기존 이벤트 리스너를 제거하고 새로 바인딩
     $('#requestTemplate').off('submit').on('submit', function(event) {
         event.preventDefault();
 
         var formData = new FormData(this);
 
-        // 기본 검증
-        if (formData.get('profile_id') === "") {
-            alert("발신프로필을 선택해 주세요.");
-            return;
+        // 폼 검증이 실패하면 제출 중단
+        if (!validateForm(this)) {
+            return; // 폼 제출을 중단하고 함수 종료
         }
 
         $.ajax({
             url: 'index.php?route=saveTemplate',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    alert("템플릿이 성공적으로 등록되었습니다.");
+                    $('#requestTemplate')[0].reset();
+                } else {
+                    if (response.code === '505') {
+                        alert("오류: " + response.message);
+                    } else if (response.code === '404') {
+                        alert("오류: 요청한 리소스를 찾을 수 없습니다.");
+                    } else {
+                        alert("템플릿 등록에 실패했습니다: " + response.message);
+                    }
+                }
+            },
+            error: function(xhr, status, error) {
+                alert("템플릿 등록에 실패했습니다. 다시 시도해 주세요.");
+                console.error('Error: ' + error);
+                console.error('Status: ' + status);
+                console.dir(xhr);
+            }
+        });
+    });
+    $('#requestUpdateTemplate').off('submit').on('submit', function(event) {
+        event.preventDefault();
+
+        var formData = new FormData(this);
+
+        // 폼 검증이 실패하면 제출 중단
+        if (!validateForm(this)) {
+            return; // 폼 제출을 중단하고 함수 종료
+        }
+
+        $.ajax({
+            url: 'index.php?route=requestUpdateTemplate',
             type: 'POST',
             data: formData,
             processData: false,
@@ -444,6 +518,7 @@ $(document).on('click', '#templateSelect', function(event) {
     loadTemplateDetails(templateId);
 });
 function loadTemplateDetails(templateId) {
+    const imgElement = $('#uploadedImage');
     $.ajax({
         url: '/kakao/index.php?route=getTemplateDetails',
         type: 'GET',
@@ -459,17 +534,35 @@ function loadTemplateDetails(templateId) {
                 var strongSubTitle = template.strong_sub_title;
                 var profile_key = template.profile_key;
                 var template_key = template.template_key;
+                var template_emphasize_type = template.template_emphasize_type;
                 var template_id = template.id;
+                var img_path = template.image_path;
                 if (strongTitle) {
                     $('#previewHighlightTitle').css('border-top', '1px solid #bbb');
                 } else {
                     $('#previewHighlightTitle').css('border-top', 'none');
                 }
 
+                $('.generated-button').remove();
+
+                // 버튼 배열을 순회하여 각 버튼을 생성하고 추가
+                $.each(template.apiRespone.buttons, function(index, button) {
+                    // 각 버튼의 이름을 사용하여 버튼을 생성
+                    const generatedButton = $(`<button class="generated-button jss2034">${button.name}</button>`);
+
+                    // #previewHighlightSubtitle 이전에 버튼 추가
+                    $('#previewHighlightSubtitle').before(generatedButton);
+                });
+
                 $('#previewHighlightTitle').html(convertToHtml(templateTitle));
                 $('#previewHighlightSubtitle').text(templateSubTitle);
                 $('#previewStrongTitle').text(strongTitle);
                 $('#previewStrongSubTitle').text(strongSubTitle);
+                imgElement.hide();
+                if(template_emphasize_type == "IMAGE"){
+                    imgElement.attr('src', img_path);
+                    imgElement.show();
+                }
 
                 // template_title의 변수를 추출하여 동적으로 input 생성
                 var regex = /#\{(.*?)\}/g;
@@ -530,7 +623,7 @@ function loadTemplate(page = 1) {
         // REG : 등록, REQ : 심사요청, APR : 승인,
         // REJ : 반려
         'REG': '등록',
-        'REQ': '검수요청',
+        'REQ': '검수결과대기',
         'APR': '승인',
         'REJ': '반려'
     };
@@ -565,14 +658,23 @@ function loadTemplate(page = 1) {
                     var statusText = statusMapping[template.status];
                     var templateText = templateTypeMapping[template.template_type]
                     var inspectionStatusText = inspectionStatusMapping[template.inspection_status]
+
+                    // 검수요청 버튼 조건에 따라 추가
+                    var inspectionRequestButton = '';
+                    var editButton = '';
+                    if (template.inspection_status === 'REG' || template.inspection_status === 'R') {
+                        inspectionStatusText = `<button type="button" class="btn-t-3 btn-c-3" onclick="requestInspection(${template.id})">검수요청</button>`;
+                        editButton = `<button class="fa fa-edit" onclick="window.location.href='index.php?route=editTemplate&id=${template.id}'"></button>`;
+                    }
                     var row = `<tr>
                             <td>${template.id}</td>
                             <td><a href="#" id="templateSelect" data-id="${template.id}">${template.template_name}</a></td>
                             <td>${templateText}</td>
-                            <td>${template.created_at}</td>
-                            <td>${inspectionStatusText}</td>
+                            <td>${formatDate(template.created_at)}</td>
+                            <td>${inspectionStatusText} ${inspectionRequestButton}</td>
                             <td>${statusText}</td>
-                            <td><button type="button" class="btn-t-3 btn-c-3" onclick="window.location.href='index.php?route=downloadSample&template_id=${template.id}'"><i class="fa fa-file-excel"></i> 샘플다운로드</button></td>
+                            
+                            <td>${editButton}&nbsp;<button class="fa fa-file-excel" onclick="window.location.href='index.php?route=downloadSample&template_id=${template.id}'"></button></td>
                         </tr>`;
                     profilesTable.append(row);
                 });
@@ -624,6 +726,29 @@ function loadTemplate(page = 1) {
             console.dir(xhr);
         }
     });
+
+}
+function requestInspection(template_id){
+    $.ajax({
+        url: 'index.php?route=apiRequestTemplate',
+        type: 'POST',
+        data: {id:template_id},
+
+        dataType: 'json',
+        success: function(response) {
+            alert(response.message);
+            loadTemplate(1)
+        },
+        error: function(xhr, status, error) {
+            alert('요청에 실패했습니다. 다시 시도해 주세요.');
+            console.error('Error: ' + error);
+            console.error('Status: ' + status);
+            console.dir(xhr);
+        }
+    });
+}
+function editTemplate(template_id){
+    window.location.href=="index.php?route=editTemplate&id="+template_id;
 }
 $(document).on('click', '#templatePagination .page-link', function(event) {
     event.preventDefault();
@@ -722,7 +847,7 @@ function showGuide() {
             // 여기서 폼 데이터를 서버로 전송하는 코드를 추가할 수 있습니다.
         });
 
-        $('#imageInput').on('change', function(event) {
+        $('#f-attach').on('change', function(event) {
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
@@ -817,7 +942,10 @@ $(document).ready(function() {
     });
 });
 function convertToHtml(text) {
-    return text.replace(/\n/g, '<br>');
+    if (typeof text === 'string') {
+        return text.replace(/\n/g, '<br>');
+    }
+    return '';
 }
 $(document).ready(function() {
     $('#goTemplateReg').on('click', function() {
@@ -826,17 +954,16 @@ $(document).ready(function() {
 
 });
 
-function formatDate(dateStr) {
-    if (!dateStr || dateStr.length !== 14) {
-        return 'Invalid Date';  // 기본적인 유효성 검사
-    }
+function formatDate(dateString) {
+    // 원래 날짜 형식: 2024-09-03 06:47:05
+    var date = new Date(dateString);
 
-    var year = dateStr.substring(0, 4);
-    var month = dateStr.substring(4, 6);
-    var day = dateStr.substring(6, 8);
-    var hour = dateStr.substring(8, 10);
-    var minute = dateStr.substring(10, 12);
-    var second = dateStr.substring(12, 14);
+    var year = date.getFullYear().toString().slice(-2); // 연도에서 뒤 두 자리를 가져옴
+    var month = ('0' + (date.getMonth() + 1)).slice(-2); // 월을 2자리로 맞춤
+    var day = ('0' + date.getDate()).slice(-2); // 일을 2자리로 맞춤
+    var hours = ('0' + date.getHours()).slice(-2); // 시를 2자리로 맞춤
+    var minutes = ('0' + date.getMinutes()).slice(-2); // 분을 2자리로 맞춤
 
-    return `${year}.${month}.${day} ${hour}:${minute}:${second}`;
+    return `${year}.${month}.${day} ${hours}:${minutes}`;
 }
+

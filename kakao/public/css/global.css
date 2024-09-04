@@ -2155,7 +2155,7 @@ ul.def.i-ref::before { position:absolute; left:0; top:3px; }
   .portal.mainH{margin-top: -50px;}
   .header.head_n + .portal.mainH{margin-top: 0px;}
   .weblink {display:inline-block;}
-  .mobilelink {display:none;}
+  .linkMo {display:none;}
 
   @media all and (max-width:640px){
     .weblink {display:none !important;}

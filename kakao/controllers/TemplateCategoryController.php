@@ -26,6 +26,41 @@ class TemplateCategoryController extends Controller
         $this->pointModel = new PointModel();
 
     }
+
+    public function apiRequestTemplate()
+    {
+        $id = $_POST['id'];
+        try {
+            $template = $this->templateCategory->getTemplateById($id);
+            $requestUrl = 'https://wt-api.carrym.com:8445/api/v1/leahue/template/request';
+            $requestMethod = 'POST';
+            $requestData = [
+                "senderKey" => $template['profile_key'],
+                "templateCode" => $template['template_key'],
+            ];
+            $requestHeaders = [
+                'Content-Type: application/x-www-form-urlencoded',
+            ];
+
+            // 외부 API 호출
+            $apiResponse = $this->sendCurlRequest($requestUrl, $requestMethod, $requestData, $requestHeaders);
+            $requestResponseData = json_decode($apiResponse, true);
+            // 응답 코드 505 처리
+            if (isset($requestResponseData['code']) && $requestResponseData['code'] == '509') {
+                throw new Exception($requestResponseData['message']);
+            }
+            // 응답 코드 505 처리
+            if (isset($requestResponseData['code']) && $requestResponseData['code'] == '405') {
+                throw new Exception($requestResponseData['message']);
+            }
+            $data['inspection_status'] = "REQ";
+
+            $this->sendJsonResponse(['success' => true, 'message' => '검수요청 이 성공적으로 등록되었습니다.']);
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+            $this->sendJsonResponse(['success' => false, 'message' => '검수요청에 실패했습니다: ' . $e->getMessage()]);
+        }
+    }
     public function updateTemplateStatus()
     {
         try {
@@ -53,12 +88,48 @@ class TemplateCategoryController extends Controller
             $template_title = $_POST['template_title'] ?? '';
             $strong_title = $_POST['strong_title'] ?? '';
             $strong_sub_title = $_POST['strong_sub_title'] ?? '';
-            $template_subtitle = $_POST['template_subtitle'] ?? '';
+            $template_subtitle = $_POST['template_subtitle'] ?? '';//부가정보
             $template_emphasize_type =  $_POST['template_emphasize_type'] ?? '';
+            $template_strong_title = $_POST['strong_title'] ?? '';
+            $template_strong_sub_title = $_POST['strong_sub_title'] ?? '';
+            $securityFlag = isset($_POST['securityFlag']) ? 'true' : 'false';
             $image_path = null;
             $item_list = null;
+            $templateImageName = null;
+            $templateImageUrl = null;
             $created_at = date('Y-m-d H:i:s');
 
+            // 버튼 데이터가 있을 경우 처리
+            $buttons = [];
+            if (isset($_POST['postLinkType']) && is_array($_POST['postLinkType'])) {
+                foreach ($_POST['postLinkType'] as $index => $postLinkType) {
+                    $button = [
+                        'ordering' => $_POST['ordering'][$index] ,
+                        'linkType' => $postLinkType,
+                        'name' => $_POST['name'][$index] ?? ''
+                    ];
+                    // 버튼 종류에 따라 추가 필드를 설정
+                    if (!empty($_POST['linkMo'][$index])) {
+                        $button['linkMo'] = $_POST['linkMo'][$index];              // 모바일 링크
+                    }
+                    if (!empty($_POST['linkPc'][$index])) {
+                        $button['linkPc'] = $_POST['linkPc'][$index];
+                    }
+                    if (!empty($_POST['linkAnd'][$index])) {
+                        $button['linkAnd'] = $_POST['linkAnd'][$index];
+                    }
+                    if (!empty($_POST['linkIos'][$index])) {
+                        $button['linkIos'] = $_POST['linkIos'][$index];
+                    }
+                    if (!empty($_POST['bizFormId'][$index])) {
+                        $button['bizFormId'] = $_POST['bizFormId'][$index];
+                    }
+                    if (!empty($_POST['pluginId'][$index])) {
+                        $button['pluginId'] = $_POST['pluginId'][$index];
+                    }
+                    $buttons[] = $button;  // 버튼 추가
+                }
+            }
             // 필수 항목 검증
             if (empty($profile_id) || empty($category_id) || empty($template_type)) {
                 $response['message'] = '필수 항목이 누락되었습니다.';
@@ -67,6 +138,41 @@ class TemplateCategoryController extends Controller
             }
 
             try {
+                // 파일 업로드 처리
+                if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
+                    $target_dir = $_SERVER['DOCUMENT_ROOT'].'/upload_file/kakao/';
+                    $fileName = basename($_FILES["file"]["name"]);
+                    $filePath = $target_dir . $fileName;
+
+                    if (!move_uploaded_file($_FILES["file"]["tmp_name"], $filePath)) {
+                        throw new Exception('파일 업로드에 실패했습니다.');
+                    }
+
+                    $cfile = new CURLFile($filePath, $_FILES['file']['type'], $fileName);
+
+                    $imgUploadurl = 'https://wt-api.carrym.com:8445/api/v1/leahue/image/alimtalk/template';
+
+                    $data = [
+                        'image' => $cfile,
+                        'otherField' => 'some value' // 추가로 전송할 데이터가 있으면 여기에 포함
+                    ];
+                    $headers = [
+                        'Content-Type: multipart/form-data'
+                    ];
+                    // 파일 전송 요청
+                    $responseImagePost = $this->sendCurlRequest($imgUploadurl, 'POST', $data, $headers);
+                    $responseImagePostDecoded = json_decode($responseImagePost, true);
+                    // 성공
+                    if (isset($responseImagePostDecoded['code']) && $responseImagePostDecoded['code'] == '0000' && $responseImagePostDecoded['image']) {
+                        $image_path =$responseImagePostDecoded['image'];
+                        $templateImageName=$fileName;
+                        $templateImageUrl=$image_path;
+                    }
+                    // 200
+                    if (isset($responseImagePost['code']) && $responseImagePost['code'] == '200' && $responseImagePost['message']) {
+                        throw new Exception($responseImagePost['message']);
+                    }
+                }
                 // KakaoBusinessModel 인스턴스 생성 및 ISP 코드 조회
                 $profile = $this->templateCategory->getIspCodeByProfileKey($profile_id);
 
@@ -76,6 +182,7 @@ class TemplateCategoryController extends Controller
                 $template_key = 'CPS_TML_' . date('YmdHis');
                 $url = 'https://wt-api.carrym.com:8445/api/v1/leahue/template/create';
                 $method = 'POST';
+
                 $data = [
                     "senderKey" => $profile['profile_key'],
 //                    "senderKeyType" => "S",
@@ -85,7 +192,28 @@ class TemplateCategoryController extends Controller
                     "templateEmphasizeType" => $template_emphasize_type,
                     "categoryCode" => $category_id,
                     "templateContent" => $template_title,
+                    "securityFlag" => $securityFlag,
                 ];
+
+                if($template_emphasize_type == "TEXT"){
+                    $data['templateTitle'] = $template_strong_title;
+                    $data['templateSubtitle'] = $template_strong_sub_title;
+                }
+                if($template_emphasize_type == "IMAGE"){
+                    $data['templateImageName'] = $templateImageName;
+                    $data['templateImageUrl'] = $templateImageUrl;
+                }
+                if($template_type == "EX"){
+                    $data['templateExtra'] = $template_subtitle;
+                }
+                // 버튼이 있는 경우, API 요청에 버튼 데이터 추가
+                if (!empty($buttons)) {
+                    foreach ($buttons as $index => $button) {
+                        foreach ($button as $key => $value) {
+                            $data["buttons[$index].$key"] = $value; // API 요청 포맷에 맞게 배열을 구성
+                        }
+                    }
+                }
                 $headers = [
                     'Content-Type: application/x-www-form-urlencoded',
                 ];
@@ -95,25 +223,20 @@ class TemplateCategoryController extends Controller
                 $responseData = json_decode($apiResponse, true);
                 // 응답 코드 405 처리
                 if (isset($responseData['code']) && $responseData['code'] == '405') {
-                    throw new Exception('카테고리코드가 존재하지않습니다. 관리자에게 문의하세요');
+                    throw new Exception($responseData['message']);
                 }
                 // 응답 코드 505 처리
                 if (isset($responseData['code']) && $responseData['code'] == '505') {
                     throw new Exception($responseData['message']);
                 }
-
-                // 파일 업로드 처리
-                if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
-                    $target_dir = $_SERVER['DOCUMENT_ROOT'].'/upload_file/kakao/';
-                    $image_path = $target_dir . basename($_FILES["file"]["name"]);
-
-                    if (!move_uploaded_file($_FILES["file"]["tmp_name"], $image_path)) {
-                        throw new Exception('파일 업로드에 실패했습니다.');
-                    }
-
-                    $image_path = "/upload_file/kakao/" . basename($_FILES["file"]["name"]);
+                // 응답 코드 511 처리
+                if (isset($responseData['code']) && $responseData['code'] == '511') {
+                    throw new Exception($responseData['message']);
                 }
-
+                // 응답 코드
+                if (isset($responseData['code']) && $responseData['code'] != '200') {
+                    throw new Exception($responseData['message']);
+                }
                 // 데이터베이스에 저장할 데이터 준비
                 $data = [
                     'code' => uniqid('tpl_'),
@@ -131,30 +254,206 @@ class TemplateCategoryController extends Controller
                     'template_key' => $template_key,
                     'template_emphasize_type' => $template_emphasize_type,
                 ];
-                // 검수 처리
-                if (isset($responseData['code']) && $responseData['code'] == '200') {
-                    $requestUrl = 'https://wt-api.carrym.com:8445/api/v1/leahue/template/request';
-                    $requestMethod = 'POST';
-                    $requestData = [
-                        "senderKey" => $profile['profile_key'],
-                        "templateCode" => $template_key
-                    ];
-                    $requestHeaders = [
-                        'Content-Type: application/x-www-form-urlencoded',
-                    ];
 
-                    // 외부 API 호출
-                    $apiResponse = $this->sendCurlRequest($requestUrl, $requestMethod, $requestData, $requestHeaders);
-                    $requestResponseData = json_decode($apiResponse, true);
-                    // 응답 코드 505 처리
-                    if (isset($requestResponseData['code']) && $requestResponseData['code'] == '509') {
-                        throw new Exception($requestResponseData['message']);
-                    }
-                    $data['inspection_status'] = "REQ";
-                }
-                error_log($category_id);
                 // 데이터베이스에 템플릿 저장
                 if (!$this->templateCategory->saveTemplate($data)) {
+                    throw new Exception('데이터베이스에 저장하는 중 오류가 발생했습니다.');
+                }
+
+                $response['success'] = true;
+                $response['message'] = '템플릿이 성공적으로 등록되었습니다.';
+            } catch (Exception $e) {
+                $response['message'] = '오류: ' . $e->getMessage();
+            }
+
+            echo json_encode($response);
+        }
+    }
+    public function requestUpdateTemplate()
+    {
+        $response = ['success' => false, 'message' => ''];
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // 입력 데이터 수집
+            $profile_id = $_POST['profile_id'] ?? '';
+            $category_id = $_POST['category_id'] ?? '';
+            $template_type = $_POST['template_type'] ?? '';
+            $template_name = $_POST['template_name'] ?? '';
+            $template_title = $_POST['template_title'] ?? '';
+            $strong_title = $_POST['strong_title'] ?? '';
+            $strong_sub_title = $_POST['strong_sub_title'] ?? '';
+            $template_subtitle = $_POST['template_subtitle'] ?? '';//부가정보
+            $template_emphasize_type =  $_POST['template_emphasize_type'] ?? '';
+            $template_strong_title = $_POST['strong_title'] ?? '';
+            $template_strong_sub_title = $_POST['strong_sub_title'] ?? '';
+            $securityFlag = isset($_POST['securityFlag']) ? 'true' : 'false';
+            $template_id = $_POST['template_id'] ?? '';
+            $image_path = null;
+            $item_list = null;
+            $templateImageName = null;
+            $templateImageUrl = null;
+            $created_at = date('Y-m-d H:i:s');
+            $template = $this->templateCategory->getTemplateById($template_id);
+            // 버튼 데이터가 있을 경우 처리
+            $buttons = [];
+            if (isset($_POST['postLinkType']) && is_array($_POST['postLinkType'])) {
+                foreach ($_POST['postLinkType'] as $index => $postLinkType) {
+                    $button = [
+                        'ordering' => $_POST['ordering'][$index] ,
+                        'linkType' => $postLinkType,
+                        'name' => $_POST['name'][$index] ?? ''
+                    ];
+                    // 버튼 종류에 따라 추가 필드를 설정
+                    if (!empty($_POST['linkMo'][$index])) {
+                        $button['linkMo'] = $_POST['linkMo'][$index];              // 모바일 링크
+                    }
+                    if (!empty($_POST['linkPc'][$index])) {
+                        $button['linkPc'] = $_POST['linkPc'][$index];
+                    }
+                    if (!empty($_POST['linkAnd'][$index])) {
+                        $button['linkAnd'] = $_POST['linkAnd'][$index];
+                    }
+                    if (!empty($_POST['linkIos'][$index])) {
+                        $button['linkIos'] = $_POST['linkIos'][$index];
+                    }
+                    if (!empty($_POST['bizFormId'][$index])) {
+                        $button['bizFormId'] = $_POST['bizFormId'][$index];
+                    }
+                    if (!empty($_POST['pluginId'][$index])) {
+                        $button['pluginId'] = $_POST['pluginId'][$index];
+                    }
+                    $buttons[] = $button;  // 버튼 추가
+                }
+            }
+            // 필수 항목 검증
+            if (empty($profile_id) || empty($category_id) || empty($template_type)) {
+                $response['message'] = '필수 항목이 누락되었습니다.';
+                echo json_encode($response);
+                exit();
+            }
+
+            try {
+                // 파일 업로드 처리
+                if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
+                    $target_dir = $_SERVER['DOCUMENT_ROOT'].'/upload_file/kakao/';
+                    $fileName = basename($_FILES["file"]["name"]);
+                    $filePath = $target_dir . $fileName;
+
+                    if (!move_uploaded_file($_FILES["file"]["tmp_name"], $filePath)) {
+                        throw new Exception('파일 업로드에 실패했습니다.');
+                    }
+
+                    $cfile = new CURLFile($filePath, $_FILES['file']['type'], $fileName);
+
+                    $imgUploadurl = 'https://wt-api.carrym.com:8445/api/v1/leahue/image/alimtalk/template';
+
+                    $data = [
+                        'image' => $cfile,
+                        'otherField' => 'some value' // 추가로 전송할 데이터가 있으면 여기에 포함
+                    ];
+                    $headers = [
+                        'Content-Type: multipart/form-data'
+                    ];
+                    // 파일 전송 요청
+                    $responseImagePost = $this->sendCurlRequest($imgUploadurl, 'POST', $data, $headers);
+                    $responseImagePostDecoded = json_decode($responseImagePost, true);
+                    // 성공
+                    if (isset($responseImagePostDecoded['code']) && $responseImagePostDecoded['code'] == '0000' && $responseImagePostDecoded['image']) {
+                        $image_path =$responseImagePostDecoded['image'];
+                        $templateImageName=$fileName;
+                        $templateImageUrl=$image_path;
+                    }
+                    // 200
+                    if (isset($responseImagePost['code']) && $responseImagePost['code'] == '200' && $responseImagePost['message']) {
+                        throw new Exception($responseImagePost['message']);
+                    }
+                }
+                // KakaoBusinessModel 인스턴스 생성 및 ISP 코드 조회
+                $profile = $this->templateCategory->getIspCodeByProfileKey($profile_id);
+
+
+                $template_key = $template["template_key"];
+                $new_template_key = 'CPS_TML_' . date('YmdHis');
+                $url = 'https://wt-api.carrym.com:8445/api/v1/leahue/template/update';
+                $method = 'POST';
+
+                $data = [
+                    "senderKey" => $profile['profile_key'],
+//                    "senderKeyType" => "S",
+                    "templateCode" => $template_key,
+                    "newSenderKey" => $profile['profile_key'],
+                    "newTemplateCode" => $new_template_key,
+                    "newTemplateName" => $template_name,
+                    "newTemplateMessageType" => $template_type,
+                    "newTemplateEmphasizeType" => $template_emphasize_type,
+                    "newCategoryCode" => $category_id,
+                    "newTemplateContent" => $template_title,
+                    "securityFlag" => $securityFlag,
+                ];
+
+                if($template_emphasize_type == "TEXT"){
+                    $data['newTemplateTitle'] = $template_strong_title;
+                    $data['newTemplateSubtitle'] = $template_strong_sub_title;
+                }
+                if($template_emphasize_type == "IMAGE"){
+                    $data['newTemplateImageName'] = $templateImageName;
+                    $data['newTemplateImageUrl'] = $templateImageUrl;
+                }
+                if($template_type == "EX"){
+                    $data['newTemplateExtra'] = $template_subtitle;
+                }
+                // 버튼이 있는 경우, API 요청에 버튼 데이터 추가
+                if (!empty($buttons)) {
+                    foreach ($buttons as $index => $button) {
+                        foreach ($button as $key => $value) {
+                            $data["buttons[$index].$key"] = $value; // API 요청 포맷에 맞게 배열을 구성
+                        }
+                    }
+                }
+                $headers = [
+                    'Content-Type: application/x-www-form-urlencoded',
+                ];
+
+                // 외부 API 호출
+                $apiResponse = $this->sendCurlRequest($url, $method, $data, $headers);
+                $responseData = json_decode($apiResponse, true);
+                // 응답 코드 405 처리
+                if (isset($responseData['code']) && $responseData['code'] == '405') {
+                    throw new Exception($responseData['message']);
+                }
+                // 응답 코드 505 처리
+                if (isset($responseData['code']) && $responseData['code'] == '505') {
+                    throw new Exception($responseData['message']);
+                }
+                // 응답 코드 511 처리
+                if (isset($responseData['code']) && $responseData['code'] == '511') {
+                    throw new Exception($responseData['message']);
+                }
+                if (isset($responseData['code']) && $responseData['code'] == '508') {
+                    throw new Exception($responseData['message']);
+                }
+                if (isset($responseData['code']) && $responseData['code'] != '200') {
+                    throw new Exception($responseData['message']);
+                }
+                // 데이터베이스에 저장할 데이터 준비
+                $data = [
+                    'code' => uniqid('tpl_'),
+                    'template_name' => $template_name,
+                    'category_id' => $category_id,
+                    'template_type' => $template_type,
+                    'template_title' => $template_title,
+                    'template_subtitle' => $template_subtitle,
+                    'image_path' => $image_path,
+                    'item_list' => $item_list,
+                    'created_at' => $created_at,
+                    'strong_title' => $strong_title,
+                    'strong_sub_title' => $strong_sub_title,
+                    'profile_id' => $profile_id,
+                    'template_key' => $new_template_key,
+                    'template_emphasize_type' => $template_emphasize_type,
+                ];
+
+                if (!$this->templateCategory->updateRequestTemplate($data,$template_id)) {
                     throw new Exception('데이터베이스에 저장하는 중 오류가 발생했습니다.');
                 }
 
@@ -269,6 +568,19 @@ class TemplateCategoryController extends Controller
             $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
             if ($id > 0) {
                 $template = $this->templateCategory->getTemplateById($id);
+                $url = 'https://wt-api.carrym.com:8445/api/v1/leahue/template';
+
+                $data = [
+                    'senderKey' => $template["profile_key"],
+                    'templateCode' => $template["template_key"]
+                ];
+                $headers = [
+                    'Content-Type: application/json'
+                ];
+                // 파일 전송 요청
+                $response = $this->sendCurlRequest($url, 'GET', $data, $headers);
+                $responseDecoded = json_decode($response, true);
+                $template['apiRespone']=$responseDecoded['data'];
                 $this->sendJsonResponse(['success' => true, 'template' => $template]);
             } else {
                 throw new Exception('Invalid template ID');
@@ -470,6 +782,27 @@ class TemplateCategoryController extends Controller
 
 //        $data['user'] =$this->memberModel->getMemberData($_SESSION['member_coinc_idx']);;
         $this->view('template');
+    }
+    public function editForm()
+    {
+        $id = $_GET["id"] ??  '';
+        $template = $this->templateCategory->getTemplateById($id);
+        $url = 'https://wt-api.carrym.com:8445/api/v1/leahue/template';
+
+        $data = [
+            'senderKey' => $template["profile_key"],
+            'templateCode' => $template["template_key"]
+        ];
+        $headers = [
+            'Content-Type: application/json'
+        ];
+        // 파일 전송 요청
+        $response = $this->sendCurlRequest($url, 'GET', $data, $headers);
+        $responseDecoded = json_decode($response, true);
+
+
+        $template["apiResponeData"]=$responseDecoded["data"];
+        $this->view('templateEdit',$template);
     }
     public function templateList()
     {

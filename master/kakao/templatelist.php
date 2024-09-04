@@ -120,7 +120,7 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
         // REG : 등록, REQ : 심사요청, APR : 승인,
         // REJ : 반려
         'REG': '등록',
-        'REQ': '검수요청',
+        'REQ': '검수결과대기',
         'APR': '승인',
         'REJ': '반려'
     };

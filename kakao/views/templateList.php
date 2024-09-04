@@ -10,6 +10,8 @@
 
         <div class="kakao-box">
             <div class="preview-section">
+                <h2>템플릿 목록</h2>
+                <h2>&nbsp;</h2>
                 <div id="preview">
                     <div id="previewDate">2024년 07월 11일</div>
                     <div id="previewChannelName">채널명</div>
@@ -99,7 +101,7 @@
                 <div class="tlb center border">
                     <table  id="templatelistTable">
 
-<!--                        <colgroup><col class="tb-col-1" /><col class="tb-col-2" /><col class="tb-col-3" /><col class="tb-col-4" /><col class="tb-col-5" /></colgroup>-->
+                        <colgroup><col class="tb-col-1" /><col class="tb-col-3" /><col class="tb-col-1" /><col class="tb-col-3" /><col class="tb-col-3" /></colgroup>
                         <thead>
                         <tr>
                             <th scope="col">No</th>
@@ -125,7 +127,6 @@
 </div>
 
 
-<script src="/kakao/public/js/kakao.js"></script>
 <script>
 
 </script>

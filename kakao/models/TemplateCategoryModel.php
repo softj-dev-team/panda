@@ -185,9 +185,9 @@ class TemplateCategoryModel
     {
         $sql =
         $stmt = $this->conn->prepare(
-            "SELECT t.*, tc.name as category_name, kb.profile_key, kb.business_name, kb.cs_phone_number,kb.profile_key 
+            "SELECT t.*, tc.name as category_name, kb.profile_key, kb.business_name, kb.cs_phone_number,kb.profile_key,kb.chananel_name
          FROM template t
-         LEFT JOIN template_category tc ON t.category_id = tc.id
+         LEFT JOIN template_category tc ON tc.code = t.category_id
          LEFT JOIN kakao_business kb ON t.profile_id = kb.id
          WHERE t.id = :id"
         );
@@ -243,6 +243,39 @@ class TemplateCategoryModel
             return $stmt->execute();
         } catch (PDOException $e) {
             throw new Exception('Failed to save template: ' . $e->getMessage());
+        }
+    }
+    public function updateRequestTemplate($data, $id)
+    {
+        try {
+            // Prepare the SQL query for update with placeholders
+            $updateColumns = [];
+            foreach ($data as $key => $value) {
+                $updateColumns[] = "$key = :$key";
+            }
+            $updateString = implode(", ", $updateColumns);
+            $sql = "UPDATE template SET $updateString WHERE id = :id";
+
+            $stmt = $this->conn->prepare($sql);
+
+            // Bind parameters dynamically
+            foreach ($data as $key => $value) {
+                $stmt->bindValue(':' . $key, $value);
+            }
+
+            // Bind the ID
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+
+            // Generate the full query string with values for debugging
+            $boundSql = $sql;
+            foreach ($data as $key => $value) {
+                $boundSql = str_replace(':' . $key, $this->conn->quote($value), $boundSql);
+            }
+            error_log('updateTemplate execute sql: ' . $boundSql);
+
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception('Failed to update template: ' . $e->getMessage());
         }
     }
 }

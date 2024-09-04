@@ -14,6 +14,8 @@
 
         <div class="kakao-box">
             <div class="preview-section">
+                <h2>알림톡 발송</h2>
+                <h2>&nbsp;</h2>
                 <div id="preview">
                     <div id="previewDate">2024년 07월 11일</div>
                     <div id="previewChannelName">채널명</div>
@@ -182,7 +184,6 @@
     </div>
 </div>
 
-<script src="/kakao/public/js/kakao.js"></script>
 <script>
     $(document).ready(function() {
         $('#sendMessagesButton').click(function () {
@@ -274,66 +275,7 @@
         // $('#previewHighlightTitle').text(filledTemplate);
         $('input[name="message"]').val(filledTemplate);
     }
-    function loadTemplateDetails(templateId) {
-        $.ajax({
-            url: '/kakao/index.php?route=getTemplateDetails',
-            type: 'GET',
-            data: { id: templateId },
-            dataType: 'json',
-            success: function(response) {
-                if (response.success) {
-                    var template = response.template;
-                    var fcallback = template.cs_phone_number;
-                    var templateTitle = template.template_title;
-                    var templateSubTitle = template.template_subtitle;
-                    var strongTitle = template.strong_title;
-                    var strongSubTitle = template.strong_sub_title;
-                    var profile_key = template.profile_key;
-                    var template_key = template.template_key;
-                    var template_id = template.id;
-                    if (strongTitle) {
-                        $('#previewHighlightTitle').css('border-top', '1px solid #bbb');
-                    } else {
-                        $('#previewHighlightTitle').css('border-top', 'none');
-                    }
 
-                    $('#previewHighlightTitle').html(convertToHtml(templateTitle));
-                    $('#previewHighlightSubtitle').text(templateSubTitle);
-                    $('#previewStrongTitle').text(strongTitle);
-                    $('#previewStrongSubTitle').text(strongSubTitle);
-
-                    // template_title의 변수를 추출하여 동적으로 input 생성
-                    var regex = /#\{(.*?)\}/g;
-                    var matches;
-                    var inputFields = '' +
-                        '<input type="hidden" name="template_id" value="' + template_id + '">' +
-                        '<input type="hidden" name="template_key" value="' + template_key + '">' +
-                        '<input type="hidden" name="profile_key" value="' + profile_key + '">' +
-                        '<input type="hidden" name="fcallback" value="' + fcallback + '">' +
-                        '<input type="text" name="fdestine" placeholder="수신자번호">' +
-                        '<input type="hidden" name="ori_message" value="' + templateTitle + '">' +
-                        '<input name="message" type="hidden" >';
-                    while ((matches = regex.exec(templateTitle)) !== null) {
-                        inputFields += '<input type="text" name="variables[]" placeholder="' + matches[1] + '" data-varname="' + matches[1] + '">';
-                    }
-                    $('#template-send-form .fm-box.flex-c').html(inputFields);
-
-                    // 각 변수 필드에 이벤트 리스너 추가
-                    $('input[name="variables[]"]').on('input', function() {
-                        updatePreview(templateTitle);
-                    });
-                } else {
-                    alert('템플릿 정보를 불러오는 데 실패했습니다.');
-                }
-            },
-            error: function(xhr, status, error) {
-                alert('템플릿 정보를 불러오는 데 실패했습니다.');
-                console.error('Error: ' + error);
-                console.error('Status: ' + status);
-                console.dir(xhr);
-            }
-        });
-    }
 
     function drawTable(data) {
         var tableHead = $('#uploadedDataTable thead tr');

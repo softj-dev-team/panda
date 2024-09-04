@@ -14,6 +14,10 @@ $route = isset($_GET['route']) ? $_GET['route'] : '';
 
 switch ($route) {
 
+    case 'apiRequestTemplate':
+        $controller = new TemplateCategoryController();
+        $controller->apiRequestTemplate();
+        break;
     case 'userAlimTalkSendList':
         $controller = new UserAlimTalkController();
         $controller->index();
@@ -37,6 +41,10 @@ switch ($route) {
     case 'template':
         $controller = new TemplateCategoryController();
         $controller->showForm();
+        break;
+    case 'editTemplate':
+        $controller = new TemplateCategoryController();
+        $controller->editForm();
         break;
     case 'templateList':
         $controller = new TemplateCategoryController();
@@ -118,6 +126,12 @@ switch ($route) {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $controller = new TemplateCategoryController();
             $controller->saveTemplate();
+        }
+        break;
+    case 'requestUpdateTemplate':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $controller = new TemplateCategoryController();
+            $controller->requestUpdateTemplate();
         }
         break;
     case 'authenticationRequest':

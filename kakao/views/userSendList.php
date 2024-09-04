@@ -9,7 +9,7 @@
 
 <section class="sub">
     <div class="sub_title">
-        <h2>전송결과</h2>
+        <h2>알림톡 전송결과</h2>
 
     </div>
 
