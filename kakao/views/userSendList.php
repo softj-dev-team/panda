@@ -95,7 +95,7 @@
                     var table = $('#listTable tbody');
                     table.empty();
                     response.data.forEach(function(data) {
-                        var formattedDate = formatDate(data.fetc5);  // 함수 호출
+                        var formattedDate = formatDate14(data.fetc5);  // 함수 호출
                         var truncatedMessage = data.fmessage.length > 25 ? data.fmessage.substring(0, 25) + '...' : data.fmessage;
                         var row = `<tr>
                         <td>${formattedDate}</td>

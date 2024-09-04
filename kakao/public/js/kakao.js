@@ -966,4 +966,17 @@ function formatDate(dateString) {
 
     return `${year}.${month}.${day} ${hours}:${minutes}`;
 }
+function formatDate14(dateStr) {
+    if (!dateStr || dateStr.length !== 14) {
+        return 'Invalid Date';  // 기본적인 유효성 검사
+    }
 
+    var year = dateStr.substring(0, 4);
+    var month = dateStr.substring(4, 6);
+    var day = dateStr.substring(6, 8);
+    var hour = dateStr.substring(8, 10);
+    var minute = dateStr.substring(10, 12);
+    var second = dateStr.substring(12, 14);
+
+    return `${year}.${month}.${day} ${hour}:${minute}`;
+}
