@@ -46,6 +46,10 @@ switch ($route) {
         $controller = new TemplateCategoryController();
         $controller->editForm();
         break;
+    case 'deleteTemplate':
+        $controller = new TemplateCategoryController();
+        $controller->deleteTemplate();
+        break;
     case 'templateList':
         $controller = new TemplateCategoryController();
         $controller->templateList();

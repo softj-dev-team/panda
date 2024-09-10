@@ -778,6 +778,13 @@ class TemplateCategoryController extends Controller
         $template["apiResponeData"]=$responseDecoded["data"];
         $this->view('templateEdit',$template);
     }
+    public function deleteTemplate()
+    {
+        $id = $_POST["id"] ??  '';
+        $status = "D";
+        $this->templateCategory->deleteTemplateStatus($id, $status);
+        $this->sendJsonResponse(['success' => true, 'message' => '상태가 성공적으로 업데이트되었습니다.']);
+    }
     public function templateList()
     {
 

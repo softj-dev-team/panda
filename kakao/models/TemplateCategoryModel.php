@@ -29,6 +29,17 @@ class TemplateCategoryModel
             throw new Exception('Failed to update status: ' . $e->getMessage());
         }
     }
+    public function deleteTemplateStatus($id, $status)
+    {
+        try {
+            $stmt = $this->conn->prepare("UPDATE template SET status = :status WHERE id = :id");
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':status', $status);
+            $stmt->execute();
+        } catch (Exception $e) {
+            throw new Exception('Failed to update status: ' . $e->getMessage());
+        }
+    }
     public function updateTemplate($id, $status,$templateContent,$inspection_status)
     {
         try {
@@ -79,11 +90,12 @@ class TemplateCategoryModel
     }
     public function getUserTemplate($profile_id, $template_type = null, $offset, $limit, $template_emphasize_type = null, $inspection_status = null, $status = null, $template_title = null)
     {
+        $status_d ="D";
         $sql = "SELECT t.*, tc.name as category_name, kb.profile_key, kb.business_name, kb.cs_phone_number, kb.profile_key, kb.isp_code
             FROM template t
             LEFT JOIN template_category tc ON tc.code = t.category_id
             LEFT JOIN kakao_business kb ON t.profile_id = kb.id
-            WHERE t.profile_id = :profile_id";
+            WHERE t.profile_id = :profile_id and t.status != :status_d ";
 
         if (!empty($template_type)) {
             $sql .= " AND t.template_type = :template_type";
@@ -107,7 +119,7 @@ class TemplateCategoryModel
         $stmt = $this->conn->prepare($sql);
 
         $stmt->bindParam(':profile_id', $profile_id, PDO::PARAM_INT);
-
+        $stmt->bindParam(':status_d', $status_d);
         if (!empty($template_type)) {
             $stmt->bindParam(':template_type', $template_type, PDO::PARAM_STR);
         }
@@ -135,8 +147,9 @@ class TemplateCategoryModel
     }
     public function getUserTotalTemplate($profile_id, $template_type = null, $template_emphasize_type = null, $inspection_status = null, $status = null, $template_title = null)
     {
+        $status_d ="D";
         // 기본 SQL 쿼리
-        $sql = 'SELECT count(*) FROM template WHERE profile_id = :profile_id';
+        $sql = 'SELECT count(*) FROM template WHERE profile_id = :profile_id and status != :status_d';
 
         // 동적 조건 추가
         if (!empty($template_type)) {
@@ -159,7 +172,7 @@ class TemplateCategoryModel
 
         // 필수 파라미터 바인딩
         $stmt->bindParam(':profile_id', $profile_id, PDO::PARAM_INT);
-
+        $stmt->bindParam(':status_d', $status_d);
         // 선택적 파라미터 바인딩
         if (!empty($template_type)) {
             $stmt->bindParam(':template_type', $template_type, PDO::PARAM_STR);

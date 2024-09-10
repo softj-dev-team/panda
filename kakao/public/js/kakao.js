@@ -662,9 +662,11 @@ function loadTemplate(page = 1) {
                     // 검수요청 버튼 조건에 따라 추가
                     var inspectionRequestButton = '';
                     var editButton = '';
+                    var deleteButton='';
                     if (template.inspection_status === 'REG' || template.inspection_status === 'R') {
                         inspectionStatusText = `<button type="button" class="btn-t-3 btn-c-3" onclick="requestInspection(${template.id})">검수요청</button>`;
-                        editButton = `<button class="fa fa-edit" onclick="window.location.href='index.php?route=editTemplate&id=${template.id}'"></button>`;
+                        editButton = `<button class="fa fa-edit tooltip" onclick="window.location.href='index.php?route=editTemplate&id=${template.id}'">  <span class="tooltiptext">수정</span></button>`;
+                        deleteButton = `<button class="fa fa-trash-can tooltip" onclick="deleteTemplate('${template.id}')"> <span class="tooltiptext">삭제</span></button>`;
                     }
                     var row = `<tr>
                             <td>${template.id}</td>
@@ -674,7 +676,7 @@ function loadTemplate(page = 1) {
                             <td>${inspectionStatusText} ${inspectionRequestButton}</td>
                             <td>${statusText}</td>
                             
-                            <td>${editButton}&nbsp;<button class="fa fa-file-excel" onclick="window.location.href='index.php?route=downloadSample&template_id=${template.id}'"></button></td>
+                            <td>${editButton}&nbsp;${deleteButton}&nbsp;<button class="fa fa-file-excel tooltip" onclick="window.location.href='index.php?route=downloadSample&template_id=${template.id}'"> <span class="tooltiptext">엑셀셈플 다운로드</span></button></td>
                         </tr>`;
                     profilesTable.append(row);
                 });
@@ -727,6 +729,27 @@ function loadTemplate(page = 1) {
         }
     });
 
+}
+function deleteTemplate(template_id){
+    var id = template_id;
+    $.ajax({
+        url: '/kakao/index.php?route=deleteTemplate',
+        type: 'POST',
+        data: { id: id},
+        dataType: 'json',
+        success: function(response) {
+            alert(response.message);
+            if (!response.success) {
+                loadTemplate(page = 1)
+            }
+        },
+        error: function(xhr, status, error) {
+            alert('상태 업데이트에 실패했습니다. 다시 시도해 주세요.');
+            console.error('Error: ' + error);
+            console.error('Status: ' + status);
+            console.dir(xhr);
+        }
+    });
 }
 function requestInspection(template_id){
     $.ajax({
