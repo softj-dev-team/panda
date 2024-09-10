@@ -119,9 +119,10 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                         <div id="guide">
                         </div>
                         <div class="custom-input-container">
-                            <label for="template_title" class="fm-label custom-label">메세지 내용 *<span class="blind">필수항목</span></label>
-                            <textarea name="template_title" id="highlightTitle" class="fm-ta"></textarea>
-                            <span class="fm-error-txt">* 항목을 선택 또는 작성 해 주세요.</span>
+                            <label for="template_title" class="fm-label custom-label">메세지 내용 * (<span id="charCount">0/1000</span>)</label>
+                            <textarea name="template_title" id="highlightTitle" class="fm-ta" placeholder="템플릿내용은 한/영 구분없이 1,000자까지 입력 가능합니다. 변수에 들어갈 내용의 최대 길이를 감안하여 작성해 주세요."></textarea>
+
+                            <span id="errorMsg" class="fm-error-txt blind" >* 1000자를 초과할 수 없습니다.</span>
                         </div>
                         <div class="flex-just-start">
                             <button type="button" class="btn-c-4 btn-t" id="addVariableBtn">변수추가</button>
@@ -229,7 +230,18 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
             showGuide();
         });
         $(document).ready(function() {
+            $('#highlightTitle').on('input', function() {
+                var currentLength = $(this).val().length;
+                $('#charCount').text(currentLength + "/1000");
 
+                if (currentLength > 1000) {
+                    $('#errorMsg').removeClass("blind");
+                    $('#errorMsg').addClass("active");
+                    $(this).val($(this).val().substring(0, 1000));  // 글자수 제한
+                } else {
+                    $('#errorMsg').addClass("blind");
+                }
+            });
             $('#f-attach').on('change', function(event) {
                 const file = event.target.files[0];
                 const inputForm = $('#templateImageUploadForm');

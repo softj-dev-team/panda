@@ -688,34 +688,8 @@ class TemplateCategoryController extends Controller
                 $fdestine = $_POST['fdestine'];
                 $fcallback = $_POST['fcallback'];
                 $message = $_POST['message'];
-                $ori_message = $_POST['ori_message'];
                 $profileKey = $_POST['profile_key'];
                 $templateKey = $_POST['template_key'];
-
-                // KakaoBusinessModel 인스턴스 생성 및 ISP 코드 조회
-                $profile = $this->templateCategory->getProfileByProfileKey($profileKey);
-
-
-//                if ($profile['isp_code'] == "KT") {
-//                    preg_match_all('/\#\{([^}]+)\}/', $ori_message, $matches);
-//                    $methods = $matches[1];
-//                    $variables = $_POST['variables'];
-//
-//                    if (count($methods) !== count($variables)) {
-//                        throw new Exception('메서드의 개수와 변수의 개수가 일치하지 않습니다.');
-//                    }
-//
-//                    $param = [];
-//                    foreach ($methods as $index => $method) {
-//                        $param[$method] = $variables[$index];
-//                    }
-//
-//                    $responseData = $this->sendAlimtalkRequest($message,$fdestine, $fcallback, $profileKey, $templateKey,$param);
-//                    // $responseData['data']['code']가 있을 경우 예외 처리
-//                    if (isset($responseData['data']['code'])) {
-//                        throw new Exception('Error Code: ' . $responseData['data']['code'] . ' - ' . $responseData['data']['message']);
-//                    }
-//                }
                 $responseData = $this->sendAlimtalkRequest($message,$fdestine, $fcallback, $profileKey, $templateKey,null);
 
                 if (isset($responseData[0]['code'])) {
