@@ -133,8 +133,8 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                         <div id="guide">
                         </div>
                         <div class="custom-input-container">
-                            <label for="template_title" class="fm-label custom-label">메세지 내용 *<span class="blind">필수항목</span></label>
-                            <textarea name="template_title" id="highlightTitle" class="fm-ta"><?=$data['template_title']?></textarea>
+                            <label for="template_title" class="fm-label custom-label">메세지 내용 * (<span id="charCount">0/1000</span>)</label>
+                            <textarea name="template_title" id="highlightTitle" class="fm-ta" placeholder="템플릿내용은 한/영 구분없이 1,000자까지 입력 가능합니다. 변수에 들어갈 내용의 최대 길이를 감안하여 작성해 주세요."><?=$data['template_title']?></textarea>
                             <span class="fm-error-txt">* 항목을 선택 또는 작성 해 주세요.</span>
                         </div>
                         <div class="flex-just-start">
@@ -248,8 +248,9 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                                 </select>
                             </div>
                             <div class="fm-box custom-input-container">
-                                <label for="buttonName" class="custom-label">버튼명</label>
+                                <label for="buttonName" class="custom-label">버튼명(<span>0/14</span>)</label>
                                 <input type="text" id="buttonName" placeholder="버튼명을 입력하세요" class="fm-ipt custom-input">
+                                <span class="fm-error-txt blind" >* 14자를 초과할 수 없습니다.</span>
                             </div>
 
                             <div class="fm-box custom-input-container blind" data-id="AL">
@@ -326,7 +327,33 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
             showGuide();
         });
         $(document).ready(function() {
+            $('#highlightTitle').on('input', function() {
+                var currentLength = $(this).val().length;
 
+                if(currentLength <= 1000){
+                    $('#charCount').text(currentLength + "/1000");
+                }
+                if (currentLength > 1000) {
+                    $('#errorMsg').removeClass("blind");
+                    $('#errorMsg').addClass("active");
+                    $(this).val($(this).val().substring(0, 1000));  // 글자수 제한
+                } else {
+                    $('#errorMsg').addClass("blind");
+                }
+            });
+            $('#buttonName').on('input', function() {
+                var currentLength = $(this).val().length;
+                if(currentLength <= 14){
+                    $(this).prev('label').find('span').text(currentLength + "/14");
+                }
+                if (currentLength > 14) {
+                    $(this).next('span').removeClass("blind");
+                    $(this).next('span').addClass("active");
+                    $(this).val($(this).val().substring(0, 14));  // 글자수 제한
+                } else {
+                    $(this).next('span').addClass("blind");
+                }
+            });
             $('#f-attach').on('change', function(event) {
                 const file = event.target.files[0];
                 const inputForm = $('#templateImageUploadForm');

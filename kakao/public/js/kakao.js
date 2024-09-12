@@ -39,13 +39,36 @@ $(document).ready(function() {
         var addContent='';
         // Enter 키가 눌렸을 때만 <br> 태그 추가
         if (e.key === 'Enter') {
-
-            addContent= '<br>';
-        }else{
-            addContent = e.key
+            addContent = '<br>';
         }
-        console.log(addContent);
-        updatePreview(addContent);
+
+        if (e.ctrlKey && e.key === 'c') {
+            return;  // Ctrl+V 처리 시 일반 키 입력 방지
+        }
+        // Ctrl+V는 일반 입력으로 처리하지 않고, paste 이벤트에서 처리
+        if (e.ctrlKey && e.key === 'v') {
+            return;  // Ctrl+V 처리 시 일반 키 입력 방지
+        }
+        // 백스페이스 키 처리
+        else if (e.key === 'Backspace') {
+            // #previewHighlightTitle에서 마지막 글자 삭제
+            var content = $('#previewHighlightTitle').html();  // 현재 콘텐츠 가져오기
+            if (content.length > 0) {
+                content = content.slice(0, -1);  // 마지막 글자 삭제
+            }
+            $('#previewHighlightTitle').html(content);  // 업데이트된 콘텐츠 적용
+            return;  // 백스페이스 처리 후 함수 종료
+        }
+        // 키 입력을 감지
+        else if (e.key.length === 1) {
+            addContent = e.key;  // 입력된 키 값
+        }
+
+        // 입력된 내용이 있으면 업데이트
+        if (addContent) {
+            console.log(addContent);
+            updatePreview(addContent);
+        }
         // showGuide();
     });
     // $('#highlightTitle').on('input', updatePreview);
@@ -54,16 +77,65 @@ $(document).ready(function() {
         var addContent='';
         // Enter 키가 눌렸을 때만 <br> 태그 추가
         if (e.key === 'Enter') {
-
-            addContent= '<br>';
-        }else{
-            addContent = e.key
+            addContent = '<br>';
+        }
+        if (e.ctrlKey && e.key === 'c') {
+            return;  // Ctrl+V 처리 시 일반 키 입력 방지
+        }
+        // Ctrl+V는 일반 입력으로 처리하지 않고, paste 이벤트에서 처리
+        if (e.ctrlKey && e.key === 'v') {
+            return;  // Ctrl+V 처리 시 일반 키 입력 방지
+        }
+        // 백스페이스 키 처리
+        else if (e.key === 'Backspace') {
+            // #previewHighlightTitle에서 마지막 글자 삭제
+            var content = $('#previewHighlightSubtitle').html();  // 현재 콘텐츠 가져오기
+            if (content.length > 0) {
+                content = content.slice(0, -1);  // 마지막 글자 삭제
+            }
+            $('#previewHighlightSubtitle').html(content);  // 업데이트된 콘텐츠 적용
+            return;  // 백스페이스 처리 후 함수 종료
+        }
+        // 키 입력을 감지
+        else if (e.key.length === 1) {
+            addContent = e.key;  // 입력된 키 값
         }
 
-        var subContent = $('#previewHighlightSubtitle').html();
-        $('#previewHighlightSubtitle').html(subContent + addContent);
+        // 입력된 내용이 있으면 업데이트
+        if (addContent) {
+            var subContent = $('#previewHighlightSubtitle').html();
+            $('#previewHighlightSubtitle').html(subContent + addContent);
+        }
+
+
     });
 
+    $('#highlightTitle').on('input', function() {
+        var inputValue = $(this).val();
+        if (inputValue === '') {
+            $('#previewHighlightTitle').html('');  // 미리보기 영역 비움
+
+        }
+    });
+    $('#highlightSubtitle').on('input', function() {
+        var inputValue = $(this).val();
+        if (inputValue === '') {
+            $('#previewHighlightSubtitle').html('');  // 미리보기 영역 비움
+
+        }
+    });
+    $('#highlightTitle').on('paste', function(e) {
+        // 붙여넣기 데이터 가져오기
+        var pastedData = (e.originalEvent || e).clipboardData.getData('text');
+        // 미리보기 업데이트
+        updatePreview(pastedData);
+    });
+    $('#highlightSubtitle').on('paste', function(e) {
+        // 붙여넣기 데이터 가져오기
+        var pastedData = (e.originalEvent || e).clipboardData.getData('text');
+        // 미리보기 업데이트
+        updatePreview(pastedData);
+    });
     function updatePreview(inputValue=null) {
         var content = $('#previewHighlightTitle').html();
 
