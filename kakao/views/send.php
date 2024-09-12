@@ -33,6 +33,9 @@
                                 <div id="previewStrongTitle" class="previewStrongTitle"></div>
                                 <div id="previewHighlightTitle"></div>
                                 <div id="previewHighlightSubtitle"></div>
+                                <div id="previewChButtonList">
+                                </div>
+                                <div id="previeButtonList"></div>
                             </div>
                         </div>
 
@@ -216,11 +219,11 @@
             });
         });
 
-        $(document).on('click', '#templateSelect', function(event) {
-            event.preventDefault();
-            var templateId = $(this).data('id');
-            loadTemplateDetails(templateId);
-        });
+        // $(document).on('click', '#templateSelect', function(event) {
+        //     event.preventDefault();
+        //     var templateId = $(this).data('id');
+        //     loadTemplateDetails(templateId);
+        // });
 
         $('#uploadTemplateForm').on('submit', function(event) {
             event.preventDefault();

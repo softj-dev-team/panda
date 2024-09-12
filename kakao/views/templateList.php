@@ -29,6 +29,9 @@
                                 <div id="previewStrongTitle" class="previewStrongTitle"></div>
                                 <div id="previewHighlightTitle"></div>
                                 <div id="previewHighlightSubtitle"></div>
+                                <div id="previewChButtonList">
+                                </div>
+                                <div id="previeButtonList"></div>
                             </div>
                         </div>
 

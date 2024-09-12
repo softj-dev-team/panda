@@ -832,7 +832,15 @@ input[data-fakefile="file"] { position:absolute; width:1px; height:16px; padding
     justify-content: space-between;
     align-items: center;
 }
-
+.buttonList .button-item-ch {
+    background-color: #fde81f;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 .buttonList .button-item .button-actions {
     display: flex;
     gap: 10px;
@@ -887,9 +895,26 @@ input[data-fakefile="file"] { position:absolute; width:1px; height:16px; padding
     padding: 3px 9px;
     font-size: 0.8125rem;
 }
+
 .jss288 {
     transform: scale(0.8);
     margin-right: 4px;
+}
+.kko-sub-text{
+    font-size: 14px;
+    color: #666;
+}
+.addCh {
+    width: 100%;
+    border: 1px solid #eee;
+    cursor: default;
+    outline: none;
+    font-size: .8rem;
+    padding-top: 7px;
+    border-radius: 3px;
+    margin-bottom: 4px;
+    padding-bottom: 7px;
+    background-color: #fde81f;
 }
 .MuiButton-label {
     width: 100%;

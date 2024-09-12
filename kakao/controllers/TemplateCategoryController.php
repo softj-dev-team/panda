@@ -231,6 +231,9 @@ class TemplateCategoryController extends Controller
                 if($template_type == "EX"){
                     $data['templateExtra'] = $template_subtitle;
                 }
+                if($template_type == "MI"){
+                    $data['templateExtra'] = $template_subtitle;
+                }
                 // 버튼이 있는 경우, API 요청에 버튼 데이터 추가
                 if (!empty($buttons)) {
                     foreach ($buttons as $index => $button) {
@@ -431,7 +434,7 @@ class TemplateCategoryController extends Controller
                     $data['newTemplateImageName'] = $templateImageName;
                     $data['newTemplateImageUrl'] = $templateImageUrl;
                 }
-                if($template_type == "EX"){
+                if($template_type == "EX" || $template_type == "MI" ){
                     $data['newTemplateExtra'] = $template_subtitle;
                 }
                 // 버튼이 있는 경우, API 요청에 버튼 데이터 추가
@@ -612,6 +615,16 @@ class TemplateCategoryController extends Controller
                 // 파일 전송 요청
                 $response = $this->sendCurlRequest($url, 'GET', $data, $headers);
                 $responseDecoded = json_decode($response, true);
+                // JSON 파일 경로 지정
+                $filePath = $_SERVER["DOCUMENT_ROOT"] .'/kakao/public/kko_icon.json';
+                if (file_exists($filePath)) {
+                    $jsonData = file_get_contents($filePath);
+                    // JSON 데이터를 PHP 배열로 디코딩
+                    $iconData = json_decode($jsonData, true);
+                }
+                $templateContent = $responseDecoded["data"]["templateContent"];
+                $updatedContent = $this->replaceIconsWithImages($templateContent, $iconData);
+                $responseDecoded["data"]["convContent"] = $updatedContent;
                 $template['apiRespone']=$responseDecoded['data'];
                 $this->sendJsonResponse(['success' => true, 'template' => $template]);
             } else {
@@ -805,10 +818,43 @@ class TemplateCategoryController extends Controller
         // 파일 전송 요청
         $response = $this->sendCurlRequest($url, 'GET', $data, $headers);
         $responseDecoded = json_decode($response, true);
+        // JSON 파일 경로 지정
+        $filePath = $_SERVER["DOCUMENT_ROOT"] .'/kakao/public/kko_icon.json'; // 실제 JSON 파일 경로로 변경하세요.
 
-
+        // JSON 파일을 읽어서 문자열로 가져오기
+        if (file_exists($filePath)) {
+            $jsonData = file_get_contents($filePath);
+            // JSON 데이터를 PHP 배열로 디코딩
+            $iconData = json_decode($jsonData, true);
+        }
+        $templateContent = $responseDecoded["data"]["templateContent"];
+        // templateContent에서 아이콘을 이미지 태그로 치환
+        $updatedContent = $this->replaceIconsWithImages($templateContent, $iconData);
+        // $updatedContent 값을 $responseDecoded["data"]["convContent"]에 주입
+        $responseDecoded["data"]["convContent"] = $updatedContent;
         $template["apiResponeData"]=$responseDecoded["data"];
         $this->view('templateEdit',$template);
+    }
+    // 텍스트에서 (아이콘명) 형식을 찾아 이미지 태그로 치환하고, 줄바꿈을 <br>로 변환하는 함수
+    function replaceIconsWithImages($content, $iconData) {
+        // 먼저, 정규식을 사용하여 (아이콘명) 패턴을 찾아 치환
+        $contentWithIcons = preg_replace_callback('/\(([^)]+)\)/', function($matches) use ($iconData) {
+            $iconName = $matches[1]; // (아이콘명)에서 아이콘명을 추출
+
+            // 아이콘 데이터에서 해당 아이콘명을 찾아서 이미지 태그로 변환
+            foreach ($iconData as $icon) {
+                if ($icon['name'] === $iconName) {
+                    // 이미지 태그로 변환하여 반환
+                    return '<img class="view-icon" src="' . $icon['image'] . '" alt="' . $iconName . '">';
+                }
+            }
+
+            // 해당 아이콘이 없는 경우, 원래 텍스트 반환
+            return $matches[0];
+        }, $content);
+
+        // 줄바꿈 (\n)을 <br> 태그로 변환하여 반환
+        return nl2br($contentWithIcons);
     }
     public function deleteTemplate()
     {
