@@ -17,7 +17,7 @@
                 <h2>알림톡 발송</h2>
                 <h2>&nbsp;</h2>
                 <div id="preview">
-                    <div id="previewDate">2024년 07월 11일</div>
+
                     <div id="previewChannelName">채널명</div>
                     <div id="previewTemplate">
                         <div class="highlight-container">
@@ -35,7 +35,7 @@
                                 <div id="previewHighlightSubtitle"></div>
                             </div>
                         </div>
-                        <div class="previewFooter">오전 12:02</div>
+
                     </div>
                 </div>
                 <p class="preview-note">미리보기는 실제 단말기와 차이가 있을 수 있습니다.</p>

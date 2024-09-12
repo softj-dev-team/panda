@@ -114,6 +114,7 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
         '02': '승인대기',
         'R': '승인대기',
         'A': '정상',
+        'D': '삭제',
         'S': '중단'
     };
     const inspectionStatusMapping = {

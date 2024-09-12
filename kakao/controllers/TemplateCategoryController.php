@@ -101,6 +101,7 @@ class TemplateCategoryController extends Controller
 
             // 버튼 데이터가 있을 경우 처리
             $buttons = [];
+            $quickReplies =[];
             if (isset($_POST['postLinkType']) && is_array($_POST['postLinkType'])) {
                 foreach ($_POST['postLinkType'] as $index => $postLinkType) {
                     $button = [
@@ -128,6 +129,30 @@ class TemplateCategoryController extends Controller
                         $button['pluginId'] = $_POST['pluginId'][$index];
                     }
                     $buttons[] = $button;  // 버튼 추가
+                }
+            }
+            if (isset($_POST['quickReplies_linkType']) && is_array($_POST['quickReplies_linkType'])) {
+                foreach ($_POST['quickReplies_linkType'] as $index => $postLinkType) {
+                    $quickReplie = [
+                        'ordering' => $_POST['quickReplies_ordering'][$index] ,
+                        'linkType' => $postLinkType,
+                        'name' => $_POST['quickReplies_name'][$index] ?? ''
+                    ];
+                    // 버튼 종류에 따라 추가 필드를 설정
+                    if (!empty($_POST['quickReplies_linkMo'][$index])) {
+                        $button['linkMo'] = $_POST['quickReplies_linkMo'][$index];              // 모바일 링크
+                    }
+                    if (!empty($_POST['quickReplies_linkPc'][$index])) {
+                        $button['linkPc'] = $_POST['quickReplies_linkPc'][$index];
+                    }
+                    if (!empty($_POST['quickReplies_linkAnd'][$index])) {
+                        $button['linkAnd'] = $_POST['quickReplies_linkAnd'][$index];
+                    }
+                    if (!empty($_POST['quickReplies_linkIos'][$index])) {
+                        $button['linkIos'] = $_POST['quickReplies_linkIos'][$index];
+                    }
+
+                    $quickReplies[] = $quickReplie;  // 버튼 추가
                 }
             }
             // 필수 항목 검증
@@ -211,6 +236,13 @@ class TemplateCategoryController extends Controller
                     foreach ($buttons as $index => $button) {
                         foreach ($button as $key => $value) {
                             $data["buttons[$index].$key"] = $value; // API 요청 포맷에 맞게 배열을 구성
+                        }
+                    }
+                }
+                if (!empty($quickReplies)) {
+                    foreach ($quickReplies as $index => $quickReplies) {
+                        foreach ($quickReplie as $key => $value) {
+                            $data["quickReplies[$index].$key"] = $value; // API 요청 포맷에 맞게 배열을 구성
                         }
                     }
                 }
@@ -892,6 +924,31 @@ class TemplateCategoryController extends Controller
             }
 
             echo json_encode(["success" => true, "message" => "메시지가 성공적으로 발송되었습니다."]);
+        }
+    }
+    public function getKakaoIcon()
+    {
+        try {
+
+            // JSON 파일 경로 지정
+            $filePath = $_SERVER["DOCUMENT_ROOT"] .'/kakao/public/kko_icon.json'; // 실제 JSON 파일 경로로 변경하세요.
+
+            // JSON 파일을 읽어서 문자열로 가져오기
+            if (file_exists($filePath)) {
+                $jsonData = file_get_contents($filePath);
+
+                // JSON 데이터를 PHP 배열로 디코딩
+                $iconData = json_decode($jsonData, true);
+
+                // 성공적으로 JSON 파일을 불러왔을 때 응답
+                $this->sendJsonResponse(['success' => true, 'data' => $iconData]);
+            } else {
+                // 파일이 존재하지 않을 경우
+                $this->sendJsonResponse(['success' => false, 'message' => 'JSON 파일을 찾을 수 없습니다.']);
+            }
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+            $this->sendJsonResponse(['success' => false, 'message' => '실패: ' . $e->getMessage()]);
         }
     }
 }

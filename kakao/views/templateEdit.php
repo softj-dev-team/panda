@@ -14,7 +14,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
             <h2>템플릿 수정</h2>
             <h2>&nbsp;</h2>
             <div id="preview">
-                <div id="previewDate">2024년 07월 11일</div>
+
                 <div id="previewChannelName">채널명</div>
                 <div id="previewTemplate">
                     <div class="highlight-container">
@@ -30,13 +30,19 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                             <div id="previewStrongTitle" class="previewStrongTitle"><?=$data['strong_title']?></div>
                             <div id="previewHighlightTitle" <?=$data['strong_title']?' style="border-top:1px solid #bbb"':''?>><?=$data['template_title']?></div>
                             <div id="previewHighlightSubtitle"><?=$data['template_subtitle']?></div>
+                            <div>
+                                <?php foreach ($data['apiResponeData']['buttons'] as  $buttons): ?>
+                                    <?php if($buttons['name']){?> <button class="generated-button jss2034"><?=$buttons['name']?></button><?php } ?>
+                                <?php endforeach; ?>
+                            </div>
 
-                            <?php foreach ($data['apiResponeData']['buttons'] as $buttons): ?>
-                            <?php if($buttons['name']){?> <button class="generated-button jss2034"><?=$buttons['name']?></button><?php } ?>
-                            <?php endforeach; ?>
                         </div>
                     </div>
-                    <div class="previewFooter">오전 12:02</div>
+                    <div class="quickLinkList">
+                        <?php foreach ($data['apiResponeData']['quickReplies'] as $quickReplies): ?>
+                            <?php if($quickReplies['name']){?> <button class="generated-button jss2034"><?=$quickReplies['name']?></button><?php } ?>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
             </div>
             <p class="preview-note">미리보기는 실제 단말기와 차이가 있을 수 있습니다.</p>
@@ -132,8 +138,11 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                             <span class="fm-error-txt">* 항목을 선택 또는 작성 해 주세요.</span>
                         </div>
                         <div class="flex-just-start">
-                            <button type="button" class="btn-c-4 btn-t" id="addVariableBtn">변수추가</button>
-                            <button type="button" class="btn-c-4 btn-t" id="addButton">버튼추가 (0/5)</button>
+                            <button type="button" class="btn-t-3 btn-c-4" id="addVariableBtn">변수추가</button>
+                            <button type="button" class="btn-t-3 btn-c-4" id="openSpecialCharPopup">특수문자</button>
+                            <button type="button" class="btn-t-3 btn-c-4" id="openKkoIconPopup">이모티콘</button>
+                            <button type="button" class="btn-t-3 btn-c-4 addButton" data-id="buttons">버튼추가 (0/5)</button>
+                            <button type="button" class="btn-t-3 btn-c-4 addButton" data-id="quickReplies">바로연결 추가 (0/5)</button>
                         </div>
                     </div>
                     <div class="fm-row">
@@ -145,7 +154,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                     </div>
                     <div id="buttonListContainer">
                         <!-- 버튼 목록 -->
-                        <div id="buttonList">
+                        <div id="buttonList" class="buttonList">
                             <!-- 버튼이 추가될 영역 -->
                             <?php foreach ($data['apiResponeData']['buttons'] as $buttons): ?>
                                 <div class="button-item">
@@ -180,7 +189,41 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                                 </div>
                             <?php endforeach; ?>
                         </div>
+                        <div id="quickList" class="buttonList">
+                            <!-- 버튼이 추가될 영역 -->
+                            <?php foreach ($data['apiResponeData']['quickReplies'] as $quickReplies): ?>
+                                <div class="button-item">
+                                    <div>
+                                        <strong><?=$quickReplies['name']?></strong>
+                                        <span><?=$quickReplies['linkTypeName']?></span>
+                                        <input type="hidden" name="name[]" value="<?=$quickReplies['name']?>">
+                                        <input type="hidden" name="postLinkType[]" value="<?=$quickReplies['linkType']?>">
+                                        <input type="hidden" name="ordering[]" value="<?=$quickReplies['ordering']?>">
+                                        <?php if(isset($quickReplies['linkMo']) && !empty($quickReplies['linkMo'])) { ?>
+                                            <input type="hidden" name="linkMo[]" value="<?= htmlspecialchars($quickReplies['linkMo'], ENT_QUOTES) ?>">
+                                        <?php } ?>
 
+                                        <?php if(isset($quickReplies['linkAnd']) && !empty($quickReplies['linkAnd'])) { ?>
+                                            <input type="hidden" name="linkAnd[]" value="<?= htmlspecialchars($quickReplies['linkAnd'], ENT_QUOTES) ?>">
+                                        <?php } ?>
+                                        <?php if(isset($quickReplies['linkIos']) && !empty($quickReplies['linkIos'])) { ?>
+                                            <input type="hidden" name="linkIos[]" value="<?= htmlspecialchars($buttons['linkIos'], ENT_QUOTES) ?>">
+                                        <?php } ?>
+                                        <?php if(isset($quickReplies['pluginId']) && !empty($quickReplies['pluginId'])) { ?>
+                                            <input type="hidden" name="pluginId[]" value="<?= htmlspecialchars($buttons['pluginId'], ENT_QUOTES) ?>">
+                                        <?php } ?>
+                                        <?php if(isset($quickReplies['bizFormId']) && !empty($quickReplies['bizFormId'])) { ?>
+                                            <input type="hidden" name="bizFormId[]" value="<?= htmlspecialchars($quickReplies['bizFormId'], ENT_QUOTES) ?>">
+                                        <?php } ?>
+
+                                    </div>
+                                    <div class="button-actions">
+                                        <button class="editButton" type="button" data-index="<?=$buttons['ordering']?>">수정</button>
+                                        <button class="deleteButton" type="button" data-index="<?=$buttons['ordering']?>">삭제</button>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
 
                     <!-- 버튼 추가 레이어 팝업 -->
@@ -255,11 +298,25 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
     <div id="variableModal" class="modal" style="display: none;">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <label for="variableName">변수명:</label>
-            <input type="text" id="variableName">
+            <label for="variableName" class="fm-label">변수명:</label>
+
+            <input type="text" id="variableName" class="fm-ipt">
+            <p>&nbsp;</p>
             <div class="flex-c">
-                <button type="button" id="insertVariableBtn" class="btn-t btn-c">변수추가</button>
+                <button type="button" id="insertVariableBtn" class="btn-t-2 btn-c-4">변수추가</button>
             </div>
+        </div>
+    </div>
+    <div id="specialCharPopup" class="templatePopup" style="display: none;">
+        <div class="popup-content">
+            <span class="close closePopup">&times;</span>
+            <div id="specialCharList"></div>
+        </div>
+    </div>
+    <div id="kkoIconPopup" class="templatePopup" style="display: none;">
+        <div class="popup-content">
+            <span class="close closePopup">&times;</span>
+            <div id="kko_icon_list"></div>
         </div>
     </div>
 
@@ -369,9 +426,33 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
          * 버튼 추가
          * */
         $(document).ready(function() {
+            const buttonLinkTypes = {
+                'WL': '웹링크',
+                'AL': '앱링크',
+                'MD': '메시지전달',
+                'DS': '배송조회',
+                'BT': '봇전환',
+                'BC': '상담톡전환',
+                'AC': '채널 추가',
+                'P1': '이미지 보안 전송 플러그인',
+                'P2': '개인정보이용 플러그인',
+                'P3': '원클릭결제 플러그인',
+            };
+
+            const quickReplyLinkTypes = {
+                'WL': '웹링크',
+                'AL': '앱링크',
+                'MD': '메시지전달',
+                'BT': '봇전환',
+                'BK': '봇키워드',
+            };
             let buttons = [];
+            let quickReplies = [];
+            const maxButtons = 5;
+            const maxQuickReplies = 5;
             <!-- 버튼이 추가될 영역 -->
             let  newButton={};
+            let  newQuickReplies={};
             <?php
             if($data['apiResponeData']['buttons']){
             foreach ($data['apiResponeData']['buttons'] as $button):
@@ -401,260 +482,508 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
             <?php } ?>
 
             buttons.push(newButton);
-
+            updateButtonList('buttons');
             <?php
             endforeach;
             } else {
             // No buttons found, handle as necessary
         }
             ?>
-            const maxButtons = 5;
+            <?php
+            if($data['apiResponeData']['quickReplies']){
+            foreach ($data['apiResponeData']['quickReplies'] as $quickReplies):
+            ?>
+            newQuickReplies = {};
+            newQuickReplies['name'] = "<?=$quickReplies['name']?>";
+            newQuickReplies['linkType'] = "<?=$quickReplies['linkType']?>";
+            newQuickReplies['ordering'] = "<?=$quickReplies['ordering']?>";
 
-            updateButtonList();
+            <?php if($quickReplies['linkMo']) { ?>
+            newButton['linkMo'] = "<?=$quickReplies['linkMo']?>";
+            <?php } ?>
+            <?php if($quickReplies['linkPc']) { ?>
+            newButton['linkPc'] = "<?=$quickReplies['linkPc']?>";
+            <?php } ?>
+            <?php if($quickReplies['linkAnd']) { ?>
+            newButton['linkAnd'] = "<?=$quickReplies['linkAnd']?>";
+            <?php } ?>
+            <?php if($quickReplies['linkIos']) { ?>
+            newButton['linkIos'] = "<?=$quickReplies['linkIos']?>";
+            <?php } ?>
+            <?php if($quickReplies['pluginId']) { ?>
+            newButton['pluginId'] = "<?=$quickReplies['pluginId']?>";
+            <?php } ?>
+            <?php if($quickReplies['bizFormId']) { ?>
+            newButton['bizFormId'] = "<?=$quickReplies['bizFormId']?>";
+            <?php } ?>
 
-            $('#addButton').on('click', function() {
-                if (buttons.length >= maxButtons) {
-                    alert('최대 5개의 버튼만 추가할 수 있습니다.');
-                    return;
+            quickReplies.push(newButton);
+            updateButtonList('quickReplies');
+            <?php
+            endforeach;
+            } else {
+            // No buttons found, handle as necessary
+        }
+            ?>
+
+
+
+            // 버튼 추가 클릭 이벤트 (linkType, quickReplies 구분)
+            $('.addButton').on('click', function () {
+                const targetType = $(this).data('id'); // linkType 또는 quickReplies 구분
+                if (targetType === 'buttons') {
+                    if (buttons.length >= maxButtons) {
+                        alert('최대 5개의 버튼만 추가할 수 있습니다.');
+                        return;
+                    }
+                    showPopup(targetType); // 버튼 추가 팝업
+                } else if (targetType === 'quickReplies') {
+                    if (quickReplies.length >= maxQuickReplies) {
+                        alert('최대 5개의 바로연결만 추가할 수 있습니다.');
+                        return;
+                    }
+                    showPopup(targetType); // 바로연결 추가 팝업
                 }
-                showPopup();
-            });
-            $('#linkType').on('change', function() {
-                var linkType = $(this).val();
-                // 모든 요소에 대해 반복 처리
-                $('[data-id]').each(function() {
-                    var dataId = $(this).data('id');
-                    // linkType이 "P1" 또는 "P2"일 때 data-id="P1"인 요소를 표시
-                    if ((linkType === "P1" || linkType === "P2") && dataId === "P1") {
-                        $(this).removeClass('blind');
-                        $(this).addClass('custom-input-container');
-                    } else if (dataId === linkType) {
-                        $(this).removeClass('blind');
-                        $(this).addClass('custom-input-container');
-                    } else {
-                        $(this).addClass('blind');
-                        $(this).removeClass('custom-input-container');
-                    }
-                });
             });
 
-            function showPopup(index = null) {
+            // 팝업을 열 때 resetPopupFields()로 필드 초기화
+            function showPopup(type, index = null, update = false, linkType= null) {
                 const popup = $('#buttonPopup');
+                let statusText='';
+                if(update){
+                    statusText='수정';
+                }else{
+                    statusText='추가';
+                }
+                if(type==='buttons'){
+                    $('.popup-content h3').html('버튼 '+statusText);
+                }else{
+                    $('.popup-content h3').html('바로가기 '+statusText);
+                }
+                if(!update){
+                    resetPopupFields();  // 필드 초기화
+                }
+
+                populateLinkTypeOptions(type,linkType); // 셀렉트박스 옵션 설정
                 popup.show();
-                var linkType = $("#linkType option:selected").val();
-                $('[data-id]').each(function() {
-                    var dataId = $(this).data('id');
-                    // linkType이 "P1" 또는 "P2"일 때 data-id="P1"인 요소를 표시
-                    if ((linkType === "P1" || linkType === "P2") && dataId === "P1") {
-                        $(this).removeClass('blind');
-                        $(this).addClass('custom-input-container');
-                    } else if (dataId === linkType) {
-                        $(this).removeClass('blind');
-                        $(this).addClass('custom-input-container');
-                    } else {
-                        $(this).addClass('blind');
-                        $(this).removeClass('custom-input-container');
-                    }
-                });
-                // 기존의 'saveButton' 클릭 이벤트 리스너 제거 후 새로 바인딩
-                $('#saveButton').off('click').on('click', function() {
 
-                    const linkType = $('#linkType').val();
-                    const buttonName = $('#buttonName').val();
-                    const linkMo = $('#linkMo').val();
-                    const linkPc = $('#linkPc').val();
-                    const linkAnd = $('#linkAnd').val();
-                    const linkIos = $('#linkIos').val();
-                    const bizFormId = $('#bizFormId').val();
-                    const pluginId = $('#pluginId').val();
-                    if (!buttonName) {
-                        alert('버튼명은 필수 입력 항목입니다.');
-                        return;
+                // 저장 버튼 클릭 이벤트 처리
+                $('#saveButton').off('click').on('click', function () {
+                    if (type === 'buttons') {
+                        saveButton(index);  // 버튼 저장
+                    } else if (type === 'quickReplies') {
+                        saveQuickReply(index);  // 바로연결 저장
                     }
-                    // Android URL 검증
-                    if (linkAnd && !/^market:\/\/|^https:\/\//.test(linkAnd)) {
-                        alert('Android 링크는 https:// 또는 market:// 로 시작해야 합니다.');
-                        return;
-                    }
-
-                    // iOS URL 검증
-                    if (linkIos && !/^itms-apps:\/\/|^https:\/\//.test(linkIos)) {
-                        alert('iOS 링크는 https:// 또는 itms-apps:// 로 시작해야 합니다.');
-                        return;
-                    }
-
-                    // 모바일 링크 검증 (https:// 형식이어야 함)
-                    if (linkMo && !/^https:\/\//.test(linkMo)) {
-                        alert('링크는 https:// 로 시작해야 합니다.');
-                        return;
-                    }
-                    // 모바일 링크 검증 (https:// 형식이어야 함)
-                    if (linkPc && !/^https:\/\//.test(linkPc)) {
-                        alert('링크는 https:// 로 시작해야 합니다.');
-                        return;
-                    }
-                    if (index !== null) {
-                        // 기존 버튼 수정
-                        buttons[index].name = buttonName;
-                        buttons[index].linkType = linkType;
-                        buttons[index].linkMo = linkMo;
-                        buttons[index].linkPc = linkPc;
-                        buttons[index].linkAnd = linkAnd;
-                        buttons[index].linkIos = linkIos;
-                        buttons[index].bizFormId = bizFormId;
-                        buttons[index].pluginId = pluginId;
-                    } else {
-                        // 새 버튼 추가
-                        const newButton = {
-                            name: buttonName,
-                            linkType: linkType,
-                            linkMo: linkMo,
-                            linkPc: linkPc,
-                            linkAnd: linkAnd,
-                            linkIos: linkIos,
-                            bizFormId:bizFormId,
-                            pluginId:pluginId,
-                            ordering: buttons.length + 1,
-                        };
-                        buttons.push(newButton);
-                    }
-
-                    updateButtonList();
-                    hidePopup();
                 });
             }
 
+            // linkType 셀렉트 박스에 옵션을 동적으로 채우는 함수
+            function populateLinkTypeOptions(type,linkType=null) {
+                const linkTypeSelect = $('#linkType');
+                linkTypeSelect.empty();  // 기존 옵션 제거
+
+                const linkTypes = type === 'buttons' ? buttonLinkTypes : quickReplyLinkTypes;
+
+                linkTypeSelect.append('<option value="">버튼종류선택 *</option>');  // 기본 선택 옵션 추가
+                $.each(linkTypes, function (value, label) {
+                    linkTypeSelect.append(`<option value="${value}">${label}</option>`);
+                });
+                if(linkType){
+                    $('#linkType').val(linkType).trigger('change');
+                }
+            }
+
+            // 팝업 초기화 시 입력 필드를 기본값으로 설정
+            function resetPopupFields() {
+                // $('#linkType').val('');  // linkType 초기화
+                $('#buttonName').val('');  // 버튼명 초기화
+                $('#linkMo').val('');  // 모바일링크 초기화
+                $('#linkPc').val('');  // PC링크 초기화
+                $('#linkAnd').val('');  // Android 링크 초기화
+                $('#linkIos').val('');  // iOS 링크 초기화
+                $('#bizFormId').val('');  // 비즈니스폼ID 초기화
+                $('#pluginId').val('');  // 플러그인ID 초기화
+
+                var linkType = $("#linkType option:selected").val();
+                $('.popup-content [data-id]').each(function() {
+                    var dataId = $(this).data('id');
+                    // linkType이 "P1" 또는 "P2"일 때 data-id="P1"인 요소를 표시
+                    if ((linkType === "P1" || linkType === "P2") && dataId === "P1") {
+                        $(this).removeClass('blind');
+                        $(this).addClass('custom-input-container');
+                    } else if (dataId === linkType) {
+                        $(this).removeClass('blind');
+                        $(this).addClass('custom-input-container');
+                    } else {
+                        $(this).addClass('blind');
+                        $(this).removeClass('custom-input-container');
+                    }
+                });
+            }
+
+            // linkType 셀렉트 박스 변경 시 동적으로 입력 필드를 변경
+            $('#linkType').on('change', function () {
+                var linkType = $("#linkType option:selected").val();
+                $('.popup-content [data-id]').each(function() {
+                    var dataId = $(this).data('id');
+                    // linkType이 "P1" 또는 "P2"일 때 data-id="P1"인 요소를 표시
+                    if ((linkType === "P1" || linkType === "P2") && dataId === "P1") {
+                        $(this).removeClass('blind');
+                        $(this).addClass('custom-input-container');
+                    } else if (dataId === linkType) {
+                        $(this).removeClass('blind');
+                        $(this).addClass('custom-input-container');
+                    } else {
+                        $(this).addClass('blind');
+                        $(this).removeClass('custom-input-container');
+                    }
+                });
+            });
+
+            // 버튼 저장 함수
+            function saveButton(index = null) {
+                const buttonData = getFormData();
+                if (!buttonData.name) {
+                    alert('버튼명을 입력해주세요.');
+                    return;
+                }
+
+                if (index !== null) {
+                    // 기존 버튼 수정
+                    buttons[index] = buttonData;
+                } else {
+                    // 새 버튼 추가
+                    buttons.push(buttonData);
+                }
+
+                updateButtonList('buttons');
+                hidePopup();
+            }
+
+            // 바로연결 저장 함수
+            function saveQuickReply(index = null) {
+                const quickReplyData = getFormData();
+                if (!quickReplyData.name) {
+                    alert('바로연결명을 입력해주세요.');
+                    return;
+                }
+
+                if (index !== null) {
+                    quickReplies[index] = quickReplyData;
+                } else {
+                    quickReplies.push(quickReplyData);
+                }
+
+                updateButtonList('quickReplies');
+                hidePopup();
+            }
+
+            // 폼 데이터를 가져오는 함수
+            function getFormData() {
+                return {
+                    name: $('#buttonName').val(),
+                    linkType: $('#linkType').val(),
+                    linkMo: $('#linkMo').val(),
+                    linkPc: $('#linkPc').val(),
+                    linkAnd: $('#linkAnd').val(),
+                    linkIos: $('#linkIos').val(),
+                    bizFormId: $('#bizFormId').val(),
+                    pluginId: $('#pluginId').val()
+                };
+            }
+
+            // 버튼 리스트 업데이트 함수 (linkType, quickReplies 구분)
+            function updateButtonList(type) {
+                const buttonList = $('#buttonList');
+                const quickList = $('#quickList');
+                buttonList.empty(); // 기존 리스트 초기화
+
+                const isQuickReply = type === 'quickReplies';
+
+                $('.generated-button').remove();
+                $('.button-item').remove();
+                $.each(buttons, function (index, item) {
+                    let inputFields = generateInputFields(item, index, false);
+
+                    const buttonItem = $(`
+                        <div class="button-item">
+                            <div>
+                                <strong>[버튼]${item.name}</strong>
+                                <span>${buttonLinkTypes[item.linkType]}</span>
+                                ${inputFields}
+                            </div>
+                            <div class="button-actions">
+                                <button class="editButton" type="button" data-index="${index}" data-type="buttons">수정</button>
+                                <button class="deleteButton" type="button" data-index="${index}" data-type="buttons">삭제</button>
+                            </div>
+                        </div>
+                    `);
+
+                    $('#previewHighlightSubtitle').after($(`<button class="generated-button jss2034">${item.name}</button>`));
+                    buttonList.append(buttonItem);
+
+                });
+                $.each(quickReplies, function (index, item) {
+                    let inputFields = generateInputFields(item, index, true);
+
+                    const buttonItem = $(`
+                        <div class="button-item">
+                            <div>
+                                <strong>[바로연결]${item.name}</strong>
+                                <span>${quickReplyLinkTypes[item.linkType]}</span>
+                                ${inputFields}
+                            </div>
+                            <div class="button-actions">
+                                <button class="editButton" type="button" data-index="${index}" data-type="quickReplies">수정</button>
+                                <button class="deleteButton" type="button" data-index="${index}" data-type="quickReplies">삭제</button>
+                            </div>
+                        </div>
+                    `);
+
+                    $('.quickLinkList').append($(`<button class="generated-button jss877">${item.name}</button>`));
+                    quickList.append(buttonItem);
+
+                });
+                // 버튼 추가 상태 업데이트
+                console.log(buttons.length)
+                $('.addButton[data-id="buttons"]').text(`+ 버튼추가 (${buttons.length}/${maxButtons})`);
+                $('.addButton[data-id="quickReplies"]').text(`+ 바로연결 추가 (${quickReplies.length}/${maxQuickReplies})`);
+            }
+
+            // 버튼 입력 필드 생성 함수
+            function generateInputFields(item, index, isQuickReply) {
+                if (isQuickReply) {
+                    switch (item.linkType) {
+                        case 'WL':  // 웹링크
+                            return `
+                                  <input type="hidden" name="quickReplies_name[]" value="${item.name}">
+                                <input type="hidden" name="quickReplies_linkType[]" value="${item.linkType}">
+                                <input type="hidden" name="quickReplies_ordering[]" value="${index}">
+                                <input type="hidden" name="quickReplies_linkMo[]" value="${item.linkMo}">
+                                <input type="hidden" name="quickReplies_linkPc[]" value="${item.linkPc}">
+                            `;
+                        case 'AL':  // 앱링크
+                            return `
+                                <input type="hidden" name="quickReplies_name[]" value="${item.name}">
+                                <input type="hidden" name="quickReplies_linkType[]" value="${item.linkType}">
+                                <input type="hidden" name="quickReplies_ordering[]" value="${index}">
+                                <input type="hidden" name="quickReplies_linkAnd[]" value="${item.linkAnd}">
+                                <input type="hidden" name="quickReplies_linkIos[]" value="${item.linkIos}">
+                            `;
+                        default:
+                            return `
+                               <input type="hidden" name="quickReplies_name[]" value="${item.name}">
+                                <input type="hidden" name="quickReplies_linkType[]" value="${item.linkType}">
+                                <input type="hidden" name="quickReplies_ordering[]" value="${index}">
+                            `;
+                    }
+                } else {
+                    switch (item.linkType) {
+                        case 'WL':  // 웹링크
+                            return `
+                                <input type="hidden" name="name[]" value="${item.name}">
+                                <input type="hidden" name="postLinkType[]" value="${item.linkType}">
+                                <input type="hidden" name="ordering[]" value="${index}">
+                                <input type="hidden" name="linkMo[]" value="${item.linkMo}">
+                                <input type="hidden" name="linkPc[]" value="${item.linkPc}">
+                            `;
+                        case 'AL':  // 앱링크
+                            return `
+                                <input type="hidden" name="name[]" value="${item.name}">
+                                <input type="hidden" name="postLinkType[]" value="${item.linkType}">
+                                <input type="hidden" name="ordering[]" value="${index}">
+                                <input type="hidden" name="linkAnd[]" value="${item.linkAnd}">
+                                <input type="hidden" name="linkIos[]" value="${item.linkIos}">
+                            `;
+                        case 'MD':
+                            return `
+                                    <input type="hidden" name="name[]" value="${item.name}">
+                                    <input type="hidden" name="postLinkType[]" value="${item.linkType}">
+                                    <input type="hidden" name="ordering[]" value="${index}">
+                                `;
+                        case 'BF':
+                            return `
+                                    <input type="hidden" name="name[]" value="${item.name}">
+                                    <input type="hidden" name="postLinkType[]" value="${item.linkType}">
+                                    <input type="hidden" name="ordering[]" value="${index}">
+                                   <input type="hidden" name="bizFormId[]" value="${item.bizFormId}">
+                                `;
+                        case 'P1':
+                            return `
+                                    <input type="hidden" name="name[]" value="${item.name}">
+                                    <input type="hidden" name="postLinkType[]" value="${item.linkType}">
+                                    <input type="hidden" name="ordering[]" value="${index}">
+                                   <input type="hidden" name="pluginId[]" value="${item.bizFormId}">
+                                `;
+                        case 'P2':
+                            return `
+                                    <input type="hidden" name="name[]" value="${item.name}">
+                                    <input type="hidden" name="postLinkType[]" value="${item.linkType}">
+                                    <input type="hidden" name="ordering[]" value="${index}">
+                                   <input type="hidden" name="pluginId[]" value="${item.bizFormId}">
+                                `;
+                        default:
+
+                            return `
+                                <input type="hidden" name="name[]" value="${item.name}">
+                                <input type="hidden" name="postLinkType[]" value="${item.linkType}">
+                                <input type="hidden" name="ordering[]" value="${index}">
+                            `;
+                    }
+                }
+            }
+
+            // 수정 버튼 클릭 시 처리
+            $(document).on('click', '.editButton', function () {
+                const index = $(this).data('index');
+                const type = $(this).data('type');
+                const item = type === 'buttons' ? buttons[index] : quickReplies[index];
+                console.log(item)
+                // $('#linkType').val(item.linkType).trigger('change');
+                // $('#linkType').val(item.linkType);
+                $('#buttonName').val(item.name);
+                $('#linkMo').val(item.linkMo);
+                $('#linkPc').val(item.linkPc);
+                $('#linkAnd').val(item.linkAnd);
+                $('#linkIos').val(item.linkIos);
+                $('#bizFormId').val(item.bizFormId);
+                $('#pluginId').val(item.pluginId);
+
+                showPopup(type, index, true, item.linkType ); // 수정 팝업 열기
+            });
+
+            // 삭제 버튼 클릭 시 처리
+            $(document).on('click', '.deleteButton', function () {
+                const index = $(this).data('index');
+                const type = $(this).data('type');
+
+                if (type === 'buttons') {
+                    buttons.splice(index, 1); // 버튼 삭제
+                } else {
+                    quickReplies.splice(index, 1); // 바로연결 삭제
+                }
+                updateButtonList(type); // 리스트 업데이트
+            });
+
+            // 팝업 취소 버튼 처리
+            $(document).on('click', '#cancelButton', function () {
+                hidePopup();
+            });
+
+            // 팝업 숨기기 함수
             function hidePopup() {
                 $('#buttonPopup').hide();
             }
+        });
+        $(document).ready(function() {
+            var specialChars = [
+                "~", "!", "@", "#", "$", "%", "^", "&", "*", "\\", "\"", "'", "+", "=", "`", "|", "(", ")", "[", "]", "{", "}", ":", ";", "-", "_", "＃", "＆", "＠",
+                "§", "※", "☆", "★", "○", "●", "◎", "◇", "◆", "□", "■", "△", "▲", "▽", "▼", "→", "←", "↑", "↓", "↔", "〓", "◁", "◀", "▷", "▶", "♤", "♠", "♡",
+                "♥", "♧", "♣", "⊙", "◈", "▣", "◐", "◑", "▒", "▤", "▥", "▨", "▧", "▦", "▩", "♨", "☏", "☎", "☜", "☞", "¶", "†", "‡", "↕", "↗", "↙", "↖",
+                "↘", "♭", "♩", "♪", "♬", "㉿", "㈜", "№", "㏇", "™", "㏂", "㏘", "℡", "®", "ª", "º", "─", "│", "┌", "┐", "┘", "└", "├", "┬", "┤", "┴", "┼",
+                "━", "┃", "┏", "┓", "┛", "┗", "┣", "┳", "┫", "┻", "╋", "┠", "┯", "┨", "┷", "┿", "┝", "┰", "┥", "┸", "╂", "┒", "┑", "┚", "┙", "┖", "┕", "┎",
+                "┍", "┞", "┟", "┡", "┢", "┦", "┧", "┩", "┪", "┭", "┮", "┱", "┲", "┵", "┶", "┹", "┺", "┽", "┾", "╀", "╁", "╃", "╄", "╅", "╆", "╇", "╈", "╉",
+                "╊", "＋", "－", "＜", "＝", "＞", "±", "×", "÷", "≠", "≤", "≥", "∞", "∴", "♂", "♀", "∠", "⊥", "⌒", "∂", "∇", "≡", "≒", "≪", "≫", "√", "∽",
+                "∝", "∵", "∫", "∬", "∈", "∋", "⊆", "⊇", "⊂", "⊃", "∪", "∩", "∧", "∨", "￢", "⇒", "⇔", "∀", "∃", "∮", "∑", "∏", "！", "＇", "，", "．", "／",
+                "：", "；", "？", "＾", "＿", "｀", "｜", "￣", "、", "。", "·", "‥", "…", "¨", "〃", "‐", "―", "∥", "＼", "∼", "´", "～", "ˇ", "˘", "˝", "˚",
+                "˙", "¸", "˛", "¡", "¿", "ː", "＂", "”", "〔", "〕", "｛", "｝", "‘", "’", "“", "”", "〔", "〕", "〈", "〉", "《", "》", "「", "」", "『", "』",
+                "【", "】", "㉠", "㉡", "㉢", "㉣", "㉤", "㉥", "㉦", "㉧", "㉨", "㉩", "㉪", "㉫", "㉬", "㉭", "㉮", "㉯", "㉰", "㉱", "㉲", "㉳", "㉴", "㉵",
+                "㉶", "㉷", "㉸", "㉹", "㉺", "㉻", "㈀", "㈁", "㈂", "㈃", "㈄", "㈅", "㈆", "㈇", "㈈", "㈉", "㈊", "㈋", "㈌", "㈍", "㈎", "㈏", "㈐", "㈑",
+                "㈒", "㈓", "㈔", "㈕", "㈖", "㈗", "㈘", "㈙", "㈚", "㈛", "ⓐ", "ⓑ", "ⓒ", "ⓓ", "ⓔ", "ⓕ", "ⓖ", "ⓗ", "ⓘ", "ⓙ", "ⓚ", "ⓛ", "ⓜ", "ⓝ", "ⓞ",
+                "ⓟ", "ⓠ", "ⓡ", "ⓢ", "ⓣ", "ⓤ", "ⓥ", "ⓦ", "ⓧ", "ⓨ", "ⓩ", "⒜", "⒝", "⒞", "⒟", "⒠", "⒡", "⒢", "⒣", "⒤", "⒥", "⒦", "⒧", "⒨", "⒩",
+                "⒪", "⒫", "⒬", "⒭", "⒮", "⒯", "⒰", "⒱", "⒲", "⒳", "⒴", "⒵", "①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨", "⑩", "⑪", "⑫", "⑬",
+                "⑭", "⑮", "＄", "％", "￦", "Ｆ", "′", "″", "℃", "Å", "￠", "￡", "￥", "¤", "℉", "‰", "€", "㎕", "㎖", "㎗", "ℓ", "㎘", "㏄", "㎣", "㎤", "㎥",
+                "㎦", "㎙", "㎚", "㎛", "㎜", "㎝", "㎞", "㎟", "㎠", "㎡", "㎢", "㏊", "㎍", "㎎", "㎏", "㏏", "㎈", "㎉", "㏈", "㎧", "㎨", "㎰", "㎱", "㎲",
+                "㎳", "㎴", "㎵", "㎶", "㎷", "㎸", "㎹", "㎀", "㎁", "㎂", "㎃", "㎄", "㎺", "㎻", "㎼", "㎽", "㎾", "㎿", "㎐", "㎑", "㎒", "㎓", "㎔", "Ω",
+                "㏀", "㏁", "㎊", "㎋", "㎌", "㏖", "㏅", "㎭", "㎮", "㎯", "㏛", "㎩", "㎪", "㎫", "㎬", "㏝", "㏐", "㏓", "㏃", "㏉", "㏜", "㏆", "ㆍ", "½",
+                "⅓", "⅔", "¼", "¾", "⅛", "⅜", "⅝", "⅞", "¹", "²", "³", "⁴", "ⁿ", "₁", "₂", "₃", "₄", "║", "╒", "╓", "╔", "╕", "╖", "╗", "╘", "╙", "╚", "╛",
+                "╜", "╝", "╞", "╟", "╠", "╡", "╢", "╣", "╤", "╥", "╦", "╧", "╨", "╩", "╪", "╫", "╬", "←", "↑", "→", "↓", "↔", "↕", "↖", "↗", "↘", "↙", "▣",
+                "▤", "▥", "▦", "▧", "▨", "▩", "♩", "♪", "♫", "♬", "♭", "ꁇ", "܀", "܊", "܋", "܌", "܍", "¤", "፨", "₪", "ꂇ", "◘", "◙", "⌂", "☺", "☻", "♀",
+                "♂", "ꋭ", "ꋯ", "ާ", "ި", "ީ", "ު", "ޫ", "ެ", "ޭ", "ޮ", "ᚗ", "ᚘ", "፡", "።", "፣", "፤", "፥", "፦", "፧", "‘", "’", "‚", "‛", "“", "”", "„",
+                "‥", "…", "‧", "′", "″", "〝", "〞", "〟"
+            ];
 
-            function updateButtonList() {
-                const buttonList = $('#buttonList');
-                buttonList.empty();
-                const buttonTypeMapping = {
-                    'WL': '웹링크',
-                    'AL': '앱링크',
-                    'MD': '메시지전달',
-                    'DS': '배송조회',
-                    'BT': '봇전환',
-                    'BK': '봇키워드',
-                    'BC': '상담톡전환',
-                    'AC': '채널 추가',
-                    'P1': '이미지 보안 전송 플러그인',
-                    'P2': '개인정보이용 플러그인',
-                    'P3': '원클릭결제 플러그인',
+            // 특수문자 목록 생성
+            var $specialCharList = $('#specialCharList');
+            specialChars.forEach(function(char) {
+                $specialCharList.append('<span class="special-char btn-t-4 btn-c-4">' + char + '</span>');
+            });
 
-                };
-                $// #previewHighlightSubtitle 다음에 있는 기존 버튼 제거
-                $('.generated-button').remove();
-                $.each(buttons, function (index, button) {
-                    let inputFields = '';
+            // 팝업 열기
+            $('#openSpecialCharPopup').on('click', function() {
+                $('#specialCharPopup').show();
+            });
 
-                    switch(button.linkType) {
-                        case 'WL':
-                            inputFields = `
-                                            <input type="hidden" name="name[]" value="${button.name}">
-                                            <input type="hidden" name="postLinkType[]" value="${button.linkType}">
-                                            <input type="hidden" name="ordering[]" value="${index}">
-                                            <input type="hidden" name="linkMo[]" value="${button.linkMo}">
-                                            <input type="hidden" name="linkPc[]" value="${button.linkPc}">
-                                        `;
-                            break;
-                        case 'AL':
-                            inputFields = `
-                                            <input type="hidden" name="name[]" value="${button.name}">
-                                            <input type="hidden" name="postLinkType[]" value="${button.linkType}">
-                                            <input type="hidden" name="ordering[]" value="${index}">
-                                            <input type="hidden" name="linkAnd[]" value="${button.linkAnd}">
-                                            <input type="hidden" name="linkIos[]" value="${button.linkIos}">
-                                        `;
-                            break;
-                        case 'MD':
-                            inputFields = `
-                                            <input type="hidden" name="name[]" value="${button.name}">
-                                            <input type="hidden" name="postLinkType[]" value="${button.linkType}">
-                                            <input type="hidden" name="ordering[]" value="${index}">
-                                        `;
-                            break;
-                        case 'BF':
-                            inputFields = `
-                                            <input type="hidden" name="name[]" value="${button.name}">
-                                            <input type="hidden" name="postLinkType[]" value="${button.linkType}">
-                                            <input type="hidden" name="ordering[]" value="${index}">
-                                            <input type="hidden" name="bizFormId[]" value="${button.bizFormId}">
-                                        `;
-                            break;
-                        case 'P1':
-                            inputFields = `
-                                            <input type="hidden" name="name[]" value="${button.name}">
-                                            <input type="hidden" name="postLinkType[]" value="${button.linkType}">
-                                            <input type="hidden" name="ordering[]" value="${index}">
-                                            <input type="hidden" name="pluginId[]" value="${button.pluginId}">
-                                        `;
-                            break;
-                        case 'P2':
-                            inputFields = `
-                                            <input type="hidden" name="name[]" value="${button.name}">
-                                            <input type="hidden" name="postLinkType[]" value="${button.linkType}">
-                                            <input type="hidden" name="ordering[]" value="${index}">
-                                             <input type="hidden" name="pluginId[]" value="${button.pluginId}">
-                                        `;
-                            break;
-                        // Add more cases as needed
-                        default:
-                            inputFields = `
-                                            <input type="hidden" name="name[]" value="${button.name}">
-                                            <input type="hidden" name="postLinkType[]" value="${button.linkType}">
-                                            <input type="hidden" name="ordering[]" value="${index}">
-                                        `;
-                            break;
+            // 팝업 닫기
+            $('.closePopup').on('click', function() {
+                $('#specialCharPopup').hide();
+                $('#kkoIconPopup').hide();
+            });
+            // 이모티콘 열기
+            $('#openKkoIconPopup').on('click', function() {
+                $('#kkoIconPopup').show();
+                // JSON 파일 로드
+
+                $.ajax({
+                    url: '/kakao/index.php?route=getKakaoIcon',
+                    type: 'GET',
+
+                    dataType: 'json',
+                    success: function(response) {
+                        // 응답이 성공적으로 반환되었을 때
+                        if (response.success) {
+
+                            $('#kko_icon_list').empty();
+                            // 데이터를 순회하며 아이콘을 HTML로 변환
+                            response.data.forEach(function(icon) {
+                                var htmlContent = `
+                                    <button class="btn-t-4 btn-c-4 kko_icon_button" type="button" data-id="${icon.name}">
+                                        <i class="kko_icon" style="background-image: url('${icon.image}');">&nbsp;</i>
+                                        ${icon.name}
+                                    </button>`;
+                                // 아이콘을 '#iconList' 안에 추가
+                                $('#kko_icon_list').append(htmlContent);
+                            });
+                        } else {
+                            // 성공 상태지만 오류 메시지가 있는 경우 처리
+                            alert(response.message || '데이터를 가져오지 못했습니다.');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        alert('실패했습니다. 다시 시도해 주세요.');
+                        console.error('Error: ' + error);
+                        console.error('Status: ' + status);
+                        console.dir(xhr);
                     }
-
-                    const buttonItem = $(`
-                                            <div class="button-item">
-                                                <div>
-                                                    <strong>${button.name}</strong>
-                                                    <span>${buttonTypeMapping[button.linkType]}</span>
-                                                    ${inputFields}
-                                                </div>
-                                                <div class="button-actions">
-                                                    <button class="editButton" type="button" data-index="${index}">수정</button>
-                                                    <button class="deleteButton" type="button" data-index="${index}">삭제</button>
-                                                </div>
-                                            </div>
-                                        `);
-                    const generatedButton = $(`<button class="generated-button jss2034">${button.name}</button>`);
-                    // #previewHighlightSubtitle 다음에 버튼 추가
-                    $('#previewHighlightSubtitle').before(generatedButton);
-                    buttonList.append(buttonItem);
                 });
-
-                $('#addButton').text(`+ 버튼추가 (${buttons.length}/${maxButtons})`);
-            }
-
-            $(document).on('click', '.editButton', function() {
-                const index = $(this).data('index');
-                const button = buttons[index];
-                $('#linkType').val(button.linkType);
-                $('#buttonName').val(button.name);
-                $('#linkMo').val(button.linkMo);
-                $('#linkPc').val(button.linkPc);
-                $('#linkAnd').val(button.linkAnd);
-                $('#linkIos').val(button.linkIos);
-                $('#bizFormId').val(button.bizFormId);
-                $('#pluginId').val(button.pluginId);
-
-                showPopup(index);
             });
 
-            $(document).on('click', '.deleteButton', function() {
-                const index = $(this).data('index');
-                buttons.splice(index, 1);
-                updateButtonList();
+            // 특수문자 클릭 시 입력 필드에 삽입
+            $(document).on('click', '.special-char', function() {
+                var selectedChar = $(this).text();
+                var currentText = $('#highlightTitle').val();
+                $('#highlightTitle').val(currentText + selectedChar);
+                var content = $('#previewHighlightTitle').html();
+                $('#previewHighlightTitle').html(content+selectedChar);
+                $('#specialCharPopup').hide(); // 선택 후 팝업 닫기
             });
-            // 팝업 숨기기
-            $(document).on('click', '#cancelButton', function() {
-                hidePopup();
+
+            $(document).on('click', '.kko_icon_button', function() {
+                // 버튼에서 아이콘 이름과 URL 가져오기
+                var iconName = $(this).data("id");
+                var url = $(this).find('i').css('background-image');
+                // background-image가 'url("...")' 형태로 반환되므로, 이를 추출
+                url = url.replace(/^url\(["']?([^"']*)["']?\)$/, '$1');
+                // 현재 highlightTitle의 텍스트 업데이트
+                var currentText = $('#highlightTitle').val();
+                $('#highlightTitle').val(currentText + ' (' + iconName + ')');
+                var content = $('#previewHighlightTitle').html();
+                var img = `<img class="view-icon" src="${url}" alt="${iconName}" />`;
+                // 업데이트된 내용을 previewHighlightTitle에 다시 설정
+                $('#previewHighlightTitle').html(content+img);
+
+                // 팝업 닫기
+                $('#kkoIconPopup').hide();
             });
         });
 

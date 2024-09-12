@@ -494,11 +494,17 @@ input:checked[type='checkbox'] {
     width: 100%;
     height: 100%;
 }
-.highlight-body img {
+#uploadedImage {
     max-width: 100%;
     max-height: 100%;
     display: none;
 }
+.highlight-body img.view-icon{
+
+    max-height: 15px;
+
+}
+
 .guide_tab{
     display: flex;
     justify-content: space-between;
@@ -565,6 +571,7 @@ button { cursor:pointer; width:auto; overflow:visible; color:inherit; font-size:
     overflow: auto;
     background-color: rgba(0,0,0,0.4); /* 어두운 배경 */
     display: flex;
+    border-radius: 8px;
     align-items: center;
     justify-content: center;
 }
@@ -816,7 +823,7 @@ input[data-fakefile="file"] { position:absolute; width:1px; height:16px; padding
     margin-top: 20px;
 }
 
-#buttonList .button-item {
+.buttonList .button-item {
     background-color: #f0f0f0;
     padding: 10px;
     margin-bottom: 5px;
@@ -826,11 +833,70 @@ input[data-fakefile="file"] { position:absolute; width:1px; height:16px; padding
     align-items: center;
 }
 
-#buttonList .button-item .button-actions {
+.buttonList .button-item .button-actions {
     display: flex;
     gap: 10px;
 }
+.templatePopup{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 8px;
+    width: 80%;      /* 화면 크기에 비례하여 유연한 크기 설정 */
+    max-width: 800px; /* 최대 폭을 설정 */
+    max-height: 90vh; /* 화면 높이에 비례하여 유연한 높이 설정 */
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    z-index: 1000;
+    overflow-y: auto; /* 필요 시 스크롤 추가 */
 
+}
+
+.templatePopup .popup-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+
+}
+.templatePopup .popup-content #specialCharList {
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: auto;
+    max-height: 400px; /* 컨텐츠 영역에 스크롤 추가 */
+}
+.templatePopup .popup-content #kko_icon_list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.templatePopup .popup-content #kko_icon_list button {
+    min-width: 105px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.templatePopup .popup-content #specialCharList span {
+    padding: 10px;
+    min-width: 45px;
+    cursor: pointer;
+    text-align: center;
+}
+.MuiButton-outlinedSizeSmall {
+    padding: 3px 9px;
+    font-size: 0.8125rem;
+}
+.jss288 {
+    transform: scale(0.8);
+    margin-right: 4px;
+}
+.MuiButton-label {
+    width: 100%;
+    display: inherit;
+    align-items: inherit;
+    justify-content: inherit;
+}
 #buttonPopup {
     position: fixed; /* 화면에 고정 */
     top: 50%;
@@ -854,7 +920,14 @@ input[data-fakefile="file"] { position:absolute; width:1px; height:16px; padding
 .popup-content h3 {
     margin-top: 0;
 }
-
+.kko_icon {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+}
 .jss2034 {
     width: 100%;
     border: 1px solid #eee;
@@ -866,6 +939,18 @@ input[data-fakefile="file"] { position:absolute; width:1px; height:16px; padding
     margin-bottom: 4px;
     padding-bottom: 7px;
     background-color: #f7f7f7;
+}
+.jss877 {
+    border: 1px solid #e2e2e2;
+    cursor: pointer;
+    padding: 4px;
+    padding-left: 10px;
+    border-radius: 20px;
+    padding-right: 10px;
+    background-color: #fff;
+}
+.quickLinkList{
+    margin-top: 5px;
 }
 /********************* BOARD *********************/
 .tb-col-1 { width:9.15%; }

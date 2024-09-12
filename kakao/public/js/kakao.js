@@ -34,20 +34,45 @@ $(document).ready(function() {
     });
 
 
-    $('#highlightTitle').on('input', function() {
-        updatePreview();
+    $('#highlightTitle').on('keydown', function(e) {
+
+        var addContent='';
+        // Enter 키가 눌렸을 때만 <br> 태그 추가
+        if (e.key === 'Enter') {
+
+            addContent= '<br>';
+        }else{
+            addContent = e.key
+        }
+        console.log(addContent);
+        updatePreview(addContent);
         // showGuide();
     });
     // $('#highlightTitle').on('input', updatePreview);
-    $('#highlightSubtitle').on('input', updatePreview);
+    $('#highlightSubtitle').on('keydown', function (e){
 
+        var addContent='';
+        // Enter 키가 눌렸을 때만 <br> 태그 추가
+        if (e.key === 'Enter') {
 
-    function updatePreview() {
+            addContent= '<br>';
+        }else{
+            addContent = e.key
+        }
+
+        var subContent = $('#previewHighlightSubtitle').html();
+        $('#previewHighlightSubtitle').html(subContent + addContent);
+    });
+
+    function updatePreview(inputValue=null) {
+        var content = $('#previewHighlightTitle').html();
+
         var titleContent = $('#highlightTitle').val().replace(/\n/g, '<br>');
         var subtitleContent = $('#highlightSubtitle').val().replace(/\n/g, '<br>');
-        $('#previewHighlightTitle').html(titleContent);
-        $('#previewHighlightSubtitle').html(subtitleContent);
+        $('#previewHighlightTitle').html(content + inputValue);
+
     }
+
     $('#formSubmit').on('click', function(event) {
         event.preventDefault(); // 기본 동작을 막습니다.
 
@@ -551,7 +576,7 @@ function loadTemplateDetails(templateId) {
                     const generatedButton = $(`<button class="generated-button jss2034">${button.name}</button>`);
 
                     // #previewHighlightSubtitle 이전에 버튼 추가
-                    $('#previewHighlightSubtitle').before(generatedButton);
+                    $('#previewHighlightSubtitle').after(generatedButton);
                 });
 
                 $('#previewHighlightTitle').html(convertToHtml(templateTitle));
@@ -617,7 +642,8 @@ function loadTemplate(page = 1) {
         '02': '승인대기',
         'R': '승인대기',
         'A': '정상',
-        'S': '중단'
+        'S': '중단',
+        'D': '삭제'
     };
     const inspectionStatusMapping = {
         // REG : 등록, REQ : 심사요청, APR : 승인,
@@ -953,10 +979,11 @@ $(document).ready(function() {
     // 변수 추가
     $('#insertVariableBtn').on('click', function() {
         var variableName = $('#variableName').val().trim();
+        var content = $('#previewHighlightTitle').html();
         if (variableName) {
             var currentContent = $('#highlightTitle').val();
             $('#highlightTitle').val(currentContent + ' #{' + variableName + '}');
-            $('#previewHighlightTitle').text(currentContent + ' #{' + variableName + '}');
+            $('#previewHighlightTitle').html(content + ' #{' + variableName + '}');
 
             modal.hide();
         } else {
