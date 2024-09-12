@@ -89,6 +89,14 @@ function showPopup(type, index = null, update = false, linkType= null) {
 
     populateLinkTypeOptions(type,linkType); // 셀렉트박스 옵션 설정
     popup.show();
+    // 저장 버튼 클릭 이벤트 처리
+    $('#saveButton').off('click').on('click', function () {
+        if (type === 'buttons') {
+            saveButton(index);  // 버튼 저장
+        } else if (type === 'quickReplies') {
+            saveQuickReply(index);  // 바로연결 저장
+        }
+    });
 }
 // linkType 셀렉트 박스에 옵션을 동적으로 채우는 함수
 function populateLinkTypeOptions(type,linkType=null) {
@@ -872,14 +880,7 @@ function convertToHtml(text) {
     return '';
 }
 $(document).ready(function() {
-    // 저장 버튼 클릭 이벤트 처리
-    $('#saveButton').off('click').on('click', function () {
-        if (type === 'buttons') {
-            saveButton(index);  // 버튼 저장
-        } else if (type === 'quickReplies') {
-            saveQuickReply(index);  // 바로연결 저장
-        }
-    });
+
     $('#highlightTitle').on('input', function() {
         var currentLength = $(this).val().length;
 
