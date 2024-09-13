@@ -573,6 +573,7 @@ function loadTemplateDetails(templateId) {
                 var template = response.template;
                 var fcallback = template.cs_phone_number;
                 var templateTitle = template.apiRespone.convContent;
+                var templateContent = template.apiRespone.templateContent;
                 var templateSubTitle = template.template_subtitle;
                 var strongTitle = template.strong_title;
                 var strongSubTitle = template.strong_sub_title;
@@ -584,6 +585,7 @@ function loadTemplateDetails(templateId) {
                 var tempalteItem = template.apiRespone.templateItem;
                 var templateHeader = template.apiRespone.templateHeader;
                 var templateItemHighlight = template.apiRespone.templateItemHighlight;
+
 
                 if (strongTitle) {
                     $('#previewHighlightTitle').css('border-top', '1px solid #bbb');
@@ -651,16 +653,24 @@ function loadTemplateDetails(templateId) {
                     '<input type="hidden" name="template_key" value="' + template_key + '">' +
                     '<input type="hidden" name="profile_key" value="' + profile_key + '">' +
                     '<input type="hidden" name="fcallback" value="' + fcallback + '">' +
-                    '<input type="text" name="fdestine" placeholder="수신자번호">' +
-                    '<input name="message" type="hidden" >';
+                    '<div class="fm-box custom-input-container mgl-5">' +
+                        '<label for="strong_title" class="custom-label">수신자번호 *</label>' +
+                        '<input type="text" class="fm-ipt custom-input" name="fdestine" placeholder="수신자번호">' +
+                    '</div>' +
+
+                    '<input name="message" type="hidden" value="'+templateContent+'">';
                 while ((matches = regex.exec(templateTitle)) !== null) {
-                    inputFields += '<input type="text" name="variables[]" placeholder="' + matches[1] + '" data-varname="' + matches[1] + '">';
+                    inputFields += '' +
+                        '<div class="fm-box custom-input-container mgl-5">\n' +
+                        '<label for="strong_title" class="custom-label">' + matches[1] + '*</label>' +
+                        '<input class="fm-ipt" type="text" name="variables[]" placeholder="' + matches[1] + '" data-varname="' + matches[1] + '">' +
+                        '</div>';
                 }
                 $('#template-send-form .fm-box.flex-c').html(inputFields);
 
                 // 각 변수 필드에 이벤트 리스너 추가
                 $('input[name="variables[]"]').on('input', function() {
-                    updatePreview(templateTitle);
+                    updateSendPreview(templateTitle,templateContent);
                 });
             } else {
                 alert('템플릿 정보를 불러오는 데 실패했습니다.');
@@ -1233,12 +1243,6 @@ $(document).ready(function() {
     $('#highlightSubtitle').on('input', function() {
         var inputValue = $(this).val();
         $('#previewHighlightSubtitle').html(inputValue);  // 미리보기 영역 비움
-    });
-    $('#highlightTitle').on('paste', function(e) {
-        // 붙여넣기 데이터 가져오기
-        var pastedData = (e.originalEvent || e).clipboardData.getData('text');
-        // 미리보기 업데이트
-        updatePreview(pastedData);
     });
 
     $('#formSubmit').on('click', function(event) {

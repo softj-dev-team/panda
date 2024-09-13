@@ -144,7 +144,8 @@
                     <button type="submit" id="uploadTemplateButton" class="btn-t-3 btn-c-3 ">파일업로드</button>
                 </form>
 
-                <form id="template-send-form" method="post" action="index.php?route=sendMessage">
+                <form id="template-send-form" method="post">
+
                     <div class="fm-row">
                         <h2>단일 건 발송</h2>
                         <div class="rezCon2">
@@ -279,17 +280,18 @@
         });
     });
 
-    function updatePreview(templateTitle) {
+    function updateSendPreview(templateTitle,templateContent) {
         var filledTemplate = templateTitle;
         $('input[name="variables[]"]').each(function() {
             var varName = $(this).data('varname');
             var varValue = $(this).val();
             var regex = new RegExp('#{' + varName + '}', 'g');
             filledTemplate = filledTemplate.replace(regex, varValue);
+            templateContent = templateContent.replace(regex, varValue);
         });
-        $('#previewHighlightTitle').html(convertToHtml(filledTemplate));
+        $('#previewHighlightTitle').html(filledTemplate);
         // $('#previewHighlightTitle').text(filledTemplate);
-        $('input[name="message"]').val(filledTemplate);
+        $('input[name="message"]').val(templateContent);
     }
 
 
