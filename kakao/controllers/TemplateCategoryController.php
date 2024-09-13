@@ -762,12 +762,14 @@ class TemplateCategoryController extends Controller
             $this->sendJsonResponse(['error' => 'An error occurred']);
         }
     }
+
     public function getTemplateDetails()
     {
         try {
             $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
             if ($id > 0) {
                 $template = $this->templateCategory->getTemplateById($id);
+//                $profile = $this->getSender($template["profile_key"]);
                 $url = 'https://wt-api.carrym.com:8445/api/v1/leahue/template';
 
                 $data = [
@@ -791,6 +793,8 @@ class TemplateCategoryController extends Controller
                 $updatedContent = $this->replaceIconsWithImages($templateContent, $iconData);
                 $responseDecoded["data"]["convContent"] = $updatedContent;
                 $template['apiRespone']=$responseDecoded['data'];
+//                $template['kakao_ch_id']=$profile['data']['uuid'];
+//                $template['kakao_ch_name']=$profile['data']['name'];
                 $this->sendJsonResponse(['success' => true, 'template' => $template]);
             } else {
                 throw new Exception('Invalid template ID');

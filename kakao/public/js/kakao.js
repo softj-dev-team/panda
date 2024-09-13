@@ -585,8 +585,9 @@ function loadTemplateDetails(templateId) {
                 var tempalteItem = template.apiRespone.templateItem;
                 var templateHeader = template.apiRespone.templateHeader;
                 var templateItemHighlight = template.apiRespone.templateItemHighlight;
-
-
+                var kakao_ch_id = template.kakao_ch_id;
+                var kakao_ch_name = template.kakao_ch_name;
+                $('#previewChannelName').text(kakao_ch_name);
                 if (strongTitle) {
                     $('#previewHighlightTitle').css('border-top', '1px solid #bbb');
                 } else {
@@ -1197,8 +1198,11 @@ $(document).ready(function() {
                 $.each(response.data, function(index, profile) {
                     // 기존에 선택된 옵션과 일치하는 경우 selected 속성 추가
                     var selected = profile.id == initialOption ? 'selected' : '';
-                    select.append('<option value="' + profile.id + '" ' + selected + '>' + profile.chananel_name + '</option>');
+                    select.append('<option value="' + profile.id + '" ' + selected + ' data-id="'+profile.kakao_ch_name+'">' + profile.chananel_name + '</option>');
                 });
+                select.on('change',function (){
+                    $('#previewChannelName').text($(this).find('option:selected').data('id'));
+                })
             } else {
                 alert('발신프로필이 없습니다.');
             }

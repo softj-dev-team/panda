@@ -152,6 +152,37 @@ class KakaoBusinessController extends Controller
             $this->sendJsonResponse(['success' => false, 'message' => '인증요청에 실패했습니다: ' . $e->getMessage()]);
         }
     }
+    public function getSender($profile_key=null)
+    {
+        try {
+
+            $url = 'https://wt-api.carrym.com:8445/api/v3/leahue/sender';
+            $method = 'GET';
+
+            $headers = [
+                'Content-Type: application/json',
+            ];
+            $data = [
+                "senderKey" => $profile_key,
+            ];
+            // 외부 API 호출
+            $apiResponse = $this->sendCurlRequest($url, $method, $data, $headers);
+            $responseData = json_decode($apiResponse, true);
+
+            // 응답 코드 처리
+            if (isset($responseData['code']) && $responseData['code'] != '200') {
+                throw new Exception($responseData['code'].$responseData['message']);
+            }
+            if (isset($responseData['code']) && $responseData['code'] == '200') {
+                $profile = $responseData['data'];
+            }
+            return $profile;
+//            $this->sendJsonResponse(['success' => true, 'profile' => $profile]);
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+//            $this->sendJsonResponse(['success' => false, 'message' => '요청에 실패했습니다: ' . $e->getMessage()]);
+        }
+    }
     public function getUserProfiles()
     {
 
@@ -163,6 +194,12 @@ class KakaoBusinessController extends Controller
 
         try {
             $profiles = $this->kakaoBusinessModel->getUserProfiles($user_idx);
+
+            foreach ($profiles as $key=>$val) {
+                $getSender = $this->getSender($profiles[$key]['profile_key']);
+                $profiles[$key]['kakao_ch_name']=$getSender['name'];
+            }
+
             echo json_encode(['success' => true, 'data' => $profiles]);
         } catch (Exception $e) {
             echo json_encode(['success' => false, 'message' => $e->getMessage()]);

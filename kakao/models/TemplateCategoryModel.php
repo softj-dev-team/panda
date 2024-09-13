@@ -252,7 +252,7 @@ class TemplateCategoryModel
     }
     public function getTemplateById($id)
     {
-        $sql =
+
         $stmt = $this->conn->prepare(
             "SELECT t.*, tc.name as category_name, kb.profile_key, kb.business_name, kb.cs_phone_number,kb.profile_key,kb.chananel_name
          FROM template t
