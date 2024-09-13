@@ -581,6 +581,10 @@ function loadTemplateDetails(templateId) {
                 var template_emphasize_type = template.template_emphasize_type;
                 var template_id = template.id;
                 var img_path = template.image_path;
+                var tempalteItem = template.apiRespone.templateItem;
+                var templateHeader = template.apiRespone.templateHeader;
+                var templateItemHighlight = template.apiRespone.templateItemHighlight;
+
                 if (strongTitle) {
                     $('#previewHighlightTitle').css('border-top', '1px solid #bbb');
                 } else {
@@ -588,11 +592,42 @@ function loadTemplateDetails(templateId) {
                 }
 
                 $('.generated-button').remove();
+                $('.item-list-box').empty();
+                if(tempalteItem){
+                    $('.item-list-box').removeClass('blind')
+                    $.each(tempalteItem.list, function(index, item) {
+                        var itemHtml = '<div class="item-list">' +
+                            '<div class="item-list-title">' + item.title + '</div>' +
+                            '<div class="item-list-description">' + item.description + '</div>' +
+                            '</div>';
 
+                        $('.item-list-box').append(itemHtml);
+                    });
+                }else {
+                    $('.item-list-box').addClass('blind')
+                }
+                if(templateHeader){
+                    $('.template-header').removeClass('blind')
+                    $('.template-header').text(templateHeader)
+                }else{
+                    $('.template-header').addClass('blind')
+                }
+                if(templateItemHighlight){
+                    $('.highlight-box').removeClass('blind')
+                    $('.highlight-title-view').removeClass('blind')
+                    $('.highlight-description-view').removeClass('blind')
+                    $('.highlight-title-view').text(templateItemHighlight.title)
+                    $('.highlight-description-view').text(templateItemHighlight.description)
+                    $('#HighlightThumbnailImg').attr('src', templateItemHighlight.imageUrl);
+                }else{
+                    $('.highlight-box').addClass('blind')
+                    $('.highlight-title-view').removeClass('blind')
+                    $('.highlight-description-view').removeClass('blind')
+                }
                 // 버튼 배열을 순회하여 각 버튼을 생성하고 추가
                 $.each(template.apiRespone.buttons, function(index, button) {
                     // 각 버튼의 이름을 사용하여 버튼을 생성
-                    const generatedButton = $(`<button class="generated-button jss2034">${button.name}</button>`);
+                    const generatedButton = $(`<button class="generated-button ${button.linkType=='AC'?'addCh':'jss2034'}">${button.name}</button>`);
 
                     // #previewHighlightSubtitle 이전에 버튼 추가
                     $('#previewHighlightSubtitle').after(generatedButton);
@@ -957,37 +992,81 @@ $(document).ready(function() {
             reader.readAsDataURL(file);
         }
     });
+    $('#f-attach-highlight').on('change', function(event) {
+        const file = event.target.files[0];
+        const inputForm = $('#templateHighlightThumbnailUploadForm');
+        if (file) {
+            // 이미지 형식 확인
+            if (file.type !== 'image/png' && file.type !== 'image/jpeg') {
+                alert('이미지는 png 또는 jpg 형식이어야 합니다.');
+                    inputForm.placeholder.text('이미지는 png 또는 jpg 형식이어야 합니다.')
+                $('#HighlightThumbnailImg').hide();
+                $('#f-attach-highlight').val(''); // 파일 입력 필드 초기화
+                return; // 이미지 처리를 중단합니다.
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imgElement = $('#HighlightThumbnailImg');
+
+                // 이미지 조건 확인
+                const img = new Image();
+                img.onload = function() {
+                    if (img.width >= 108) {
+                        imgElement.attr('src', e.target.result);
+                        imgElement.show();
+                    } else {
+                        alert('이미지 너비는 108px 이상이여야 합니다.');
+                        imgElement.hide();
+                        $('#f-attach-highlight').val(''); // 파일 입력 필드 초기화
+
+                    }
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
     $('select[name=template_emphasize_type]').on('change', function() {
         var emphasizeType = $(this).val();
-        var $viewStrongMessage = $('#viewStrongMessage');
-        var $strongTitle = $('#strong_title');
-        var $strongSubTitle = $('#strong_sub_title');
-        var $templateImageUploadForm = $('#templateImageUploadForm');
+        var viewStrongMessage = $('#viewStrongMessage');
+        var strongTitle = $('#strong_title');
+        var strongSubTitle = $('#strong_sub_title');
+        var templateImageUploadForm = $('#templateImageUploadForm');
         var imgElement = $('#uploadedImage');
+        var itemListSetting = $('#itemListSetting');
         switch(emphasizeType) {
+            case "ITEM_LIST":
+                // Show strong message elements and hide image upload form
+                itemListSetting.removeClass("blind");
+                templateImageUploadForm.removeClass("blind");
+                viewStrongMessage.addClass("blind");
+                strongTitle.addClass("blind");
+                strongSubTitle.addClass("blind");
+                break;
             case "TEXT":
                 // Show strong message elements and hide image upload form
-                $viewStrongMessage.removeClass("blind");
-                $strongTitle.removeClass("blind");
-                $strongSubTitle.removeClass("blind");
-                $templateImageUploadForm.addClass("blind");
+                viewStrongMessage.removeClass("blind");
+                strongTitle.removeClass("blind");
+                strongSubTitle.removeClass("blind");
+                templateImageUploadForm.addClass("blind");
                 imgElement.hide();
                 break;
 
             case "IMAGE":
                 // Show image upload form and hide strong message elements
-                $templateImageUploadForm.removeClass("blind");
-                $viewStrongMessage.addClass("blind");
-                $strongTitle.addClass("blind");
-                $strongSubTitle.addClass("blind");
+                templateImageUploadForm.removeClass("blind");
+                viewStrongMessage.addClass("blind");
+                strongTitle.addClass("blind");
+                strongSubTitle.addClass("blind");
                 break;
 
             default:
                 // Hide all elements
-                $viewStrongMessage.addClass("blind");
-                $strongTitle.addClass("blind");
-                $strongSubTitle.addClass("blind");
-                $templateImageUploadForm.addClass("blind");
+                viewStrongMessage.addClass("blind");
+                strongTitle.addClass("blind");
+                strongSubTitle.addClass("blind");
+                templateImageUploadForm.addClass("blind");
                 break;
         }
     });
@@ -1132,43 +1211,7 @@ $(document).ready(function() {
         event.preventDefault();
         // 폼 제출 처리 로직
     });
-    $('#highlightSubtitle').on('keydown', function (e){
 
-        var addContent='';
-        // Enter 키가 눌렸을 때만 <br> 태그 추가
-        if (e.key === 'Enter') {
-            addContent = '<br>';
-        }
-        if (e.ctrlKey && e.key === 'c') {
-            return;  // Ctrl+V 처리 시 일반 키 입력 방지
-        }
-        // Ctrl+V는 일반 입력으로 처리하지 않고, paste 이벤트에서 처리
-        if (e.ctrlKey && e.key === 'v') {
-            return;  // Ctrl+V 처리 시 일반 키 입력 방지
-        }
-        // 백스페이스 키 처리
-        else if (e.key === 'Backspace') {
-            // #previewHighlightTitle에서 마지막 글자 삭제
-            var content = $('#previewHighlightSubtitle').html();  // 현재 콘텐츠 가져오기
-            if (content.length > 0) {
-                content = content.slice(0, -1);  // 마지막 글자 삭제
-            }
-            $('#previewHighlightSubtitle').html(content);  // 업데이트된 콘텐츠 적용
-            return;  // 백스페이스 처리 후 함수 종료
-        }
-        // 키 입력을 감지
-        else if (e.key.length === 1) {
-            addContent = e.key;  // 입력된 키 값
-        }
-
-        // 입력된 내용이 있으면 업데이트
-        if (addContent) {
-            var subContent = $('#previewHighlightSubtitle').html();
-            $('#previewHighlightSubtitle').html(subContent + addContent);
-        }
-
-
-    });
     // 텍스트 입력된 값을 iconMap을 참고하여 이미지로 변환
     $('#highlightTitle').on('input', function() {
         var inputValue = $(this).val();  // 입력된 전체 텍스트 가져오기
@@ -1189,10 +1232,7 @@ $(document).ready(function() {
     });
     $('#highlightSubtitle').on('input', function() {
         var inputValue = $(this).val();
-        if (inputValue === '') {
-            $('#previewHighlightSubtitle').html('');  // 미리보기 영역 비움
-
-        }
+        $('#previewHighlightSubtitle').html(inputValue);  // 미리보기 영역 비움
     });
     $('#highlightTitle').on('paste', function(e) {
         // 붙여넣기 데이터 가져오기
@@ -1200,12 +1240,7 @@ $(document).ready(function() {
         // 미리보기 업데이트
         updatePreview(pastedData);
     });
-    $('#highlightSubtitle').on('paste', function(e) {
-        // 붙여넣기 데이터 가져오기
-        var pastedData = (e.originalEvent || e).clipboardData.getData('text');
-        // 미리보기 업데이트
-        updatePreview(pastedData);
-    });
+
     $('#formSubmit').on('click', function(event) {
         event.preventDefault(); // 기본 동작을 막습니다.
 
@@ -1609,5 +1644,143 @@ $(document).ready(function() {
         $('#previewHighlightTitle').html(content+selectedChar);
         $('#specialCharPopup').hide(); // 선택 후 팝업 닫기
     });
+    // 새로운 input 필드 세트 추가
+    $(document).ready(function() {
+        let maxFields = 10;  // 최대 추가할 수 있는 필드 수
+        let currentFieldCount = $('#input-container .templateItem_list').length;  // 현재 필드 수
 
+        // 새로운 input 필드 세트 추가
+        $('#add-input').on('click', function() {
+            if (currentFieldCount >= maxFields) {
+                alert('더 이상 필드를 추가할 수 없습니다. 최대 10개까지 가능합니다.');
+                return;
+            }
+
+            let inputIndex = currentFieldCount;  // 현재 필드 수를 인덱스로 사용
+            let newInputFields = `
+            <div class="flex-c templateItem_list" id="input-set-${inputIndex}">
+                <div class="fm-box custom-input-container">
+                    <label for="templateItem_list_title_${inputIndex}" class="custom-label">아이템 리스트 제목 </label>
+                    <input id="templateItem_list_title_${inputIndex}" type="text" class="fm-ipt custom-input list-title" name="title[]" maxlength="6" placeholder="6자 이내">
+                </div>
+                <div class="fm-box custom-input-container">
+                    <label for="templateItem_list_description_${inputIndex}" class="custom-label">아이템 리스트 설명 </label>
+                    <input id="templateItem_list_description_${inputIndex}" type="text" class="fm-ipt custom-input list-description" name="description[]" maxlength="23" placeholder="23자 이내">
+                </div>
+                <button type="button" class="delete-button btn-c-3 btn-t-ipt" data-index="${inputIndex}">삭제</button>
+            </div>
+        `;
+
+            // 새로운 필드를 input-container 아래로 추가
+            $('#input-container').append(newInputFields);
+            currentFieldCount++;  // 필드 수 증가
+
+            if (currentFieldCount >= maxFields) {
+                $('#add-input').prop('disabled', true);  // 최대 개수에 도달하면 추가 버튼 비활성화
+            }
+        });
+
+        // 삭제 버튼 클릭 시 해당 필드 세트 삭제
+        $('#input-container').on('click', '.delete-button', function() {
+            let index = $(this).data('index');
+            $('#input-set-' + index).remove();
+            currentFieldCount--;  // 필드 수 감소
+
+            if (currentFieldCount < maxFields) {
+                $('#add-input').prop('disabled', false);  // 필드가 10개 미만이면 추가 버튼 활성화
+            }
+            $('.item-list-box').empty();
+
+            // 입력된 title[]과 description[] 배열 값 가져오기
+            var titles = $('input[name="title[]"]').map(function() {
+                return $(this).val();
+            }).get();
+
+            var descriptions = $('input[name="description[]"]').map(function() {
+                return $(this).val();
+            }).get();
+            var hasValues = false;
+            // title과 description을 목록 형태로 추가
+            for (var i = 0; i < titles.length; i++) {
+                if (titles[i] || descriptions[i]) { // 둘 중 하나라도 값이 있으면 목록 생성
+                    var itemHtml = '<div class="item-list">' +
+                        '<div class="item-list-title">' + titles[i] + '</div>' +
+                        '<div class="item-list-description">' + descriptions[i] + '</div>' +
+                        '</div>';
+                    $('.item-list-box').append(itemHtml);
+                    hasValues = true; // 값이 하나라도 있으면 true로 설정
+                }
+            }
+            // 값이 하나라도 있으면 'blind' 클래스를 제거, 없으면 추가
+            if (hasValues) {
+                $('.item-list-box').removeClass('blind');
+            } else {
+                $('.item-list-box').addClass('blind');
+            }
+        });
+        $('#templateHeader').on('input',function() {
+            if($(this).val()){
+                $('.template-header').removeClass('blind');
+                $('.template-header').text($(this).val());
+            }else{
+                $('.template-header').addClass('blind');
+            }
+        });
+        $('#itemHighlightTitle').on('input',function() {
+            if($(this).val()){
+                $('.highlight-box').removeClass('blind');
+                $('.highlight-title-view').removeClass('blind');
+                $('.highlight-title-view').text($(this).val());
+            }else{
+                if(!$('#itemHlightDescription').val()){
+                    $('.highlight-box').addClass('blind');
+                }
+                $('.highlight-title-view').addClass('blind');
+            }
+        });
+        $('#itemHlightDescription').on('input',function() {
+            if($(this).val()){
+                $('.highlight-box').removeClass('blind');
+                $('.highlight-description-view').removeClass('blind');
+                $('.highlight-description-view').text($(this).val());
+            }else{
+                if(!$('#itemHighlightTitle').val()){
+                    $('.highlight-box').addClass('blind');
+                }
+                $('.highlight-description-view').addClass('blind');
+            }
+        });
+        // 입력된 값이 변경되면 트리거
+        $('#input-container').on('input', '.list-title, .list-description', function() {
+            // 기존 목록 초기화
+            $('.item-list-box').empty();
+
+            // 입력된 title[]과 description[] 배열 값 가져오기
+            var titles = $('input[name="title[]"]').map(function() {
+                return $(this).val();
+            }).get();
+
+            var descriptions = $('input[name="description[]"]').map(function() {
+                return $(this).val();
+            }).get();
+            var hasValues = false;
+            // title과 description을 목록 형태로 추가
+            for (var i = 0; i < titles.length; i++) {
+                if (titles[i] || descriptions[i]) { // 둘 중 하나라도 값이 있으면 목록 생성
+                    var itemHtml = '<div class="item-list">' +
+                        '<div class="item-list-title">' + titles[i] + '</div>' +
+                        '<div class="item-list-description">' + descriptions[i] + '</div>' +
+                        '</div>';
+                    $('.item-list-box').append(itemHtml);
+                    hasValues = true; // 값이 하나라도 있으면 true로 설정
+                }
+            }
+            // 값이 하나라도 있으면 'blind' 클래스를 제거, 없으면 추가
+            if (hasValues) {
+                $('.item-list-box').removeClass('blind');
+            } else {
+                $('.item-list-box').addClass('blind');
+            }
+        });
+    });
 });

@@ -25,6 +25,19 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                             <div class="image-wrapper">
                                 <img id="uploadedImage" src="" alt="Uploaded Logo">
                             </div>
+                            <div class="template-header blind">템플릿 헤더</div>
+                            <div class="highlight-box blind">
+                                <div>
+                                    <div class="highlight-title-view blind" >하이라이트 타이틀</div>
+                                    <div class="highlight-description-view blind">하이라이트 설명</div>
+                                </div>
+                                <div class="highlight-thumbnail">
+                                    <img id="HighlightThumbnailImg" src="">
+                                </div>
+                            </div>
+                            <div class="item-list-box blind">
+
+                            </div>
                             <div id="previewStrongSubTitle" class="previewStrongSubTitle"></div>
                             <div id="previewStrongTitle" class="previewStrongTitle"></div>
                             <div id="previewHighlightTitle"></div>
@@ -90,6 +103,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                                 <option value="NONE">선택안함</option>
                                 <option value="TEXT">강조표기형</option>
                                 <option value="IMAGE">이미지형</option>
+                                <option value="ITEM_LIST">아이템리스트</option>
                             </select>
                             <span class="fm-error-txt">* 항목을 선택 또는 작성 해 주세요.</span>
                         </div>
@@ -111,9 +125,47 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                             <label for="f-attach" class="fm-file-btn ">파일첨부</label>
 <!--                            <input type="hidden" name="selectedImage" id="selectedImage">-->
                             <input type="text" data-fakefile="text" readonly="readonly" placeholder="파일 사이즈 최대 500KB" class="fm-ipt fm-file" />
-
+                        </div>
+                    </div>
+                    <div id="itemListSetting" class="blind">
+                        <div class="fm-row">
+                            <h3 >아이템 리스트 설정</h3>
+                        </div>
+                        <div class="flex-row fm-row">
+                            <div class="fm-box custom-input-container">
+                                <label for="templateHeader" class="custom-label">헤더 사용 </label>
+                                <input id="templateHeader" type="text" class="fm-ipt custom-input" name="templateHeader" maxlength="16" placeholder="헤더 내용">
+                            </div>
+                            <div class="fm-box custom-input-container">
+                                <label for="itemHighlightTitle" class="custom-label">하이라이트 제목 </label>
+                                <input id="itemHighlightTitle" type="text" class="fm-ipt custom-input" name="itemHighlightTitle" maxlength="16" placeholder="하이라이트 제목">
+                            </div>
+                            <div class="fm-box custom-input-container">
+                                <label for="itemHlightDescription" class="custom-label">하이라이트 설명  </label>
+                                <input id="itemHlightDescription" type="text" class="fm-ipt custom-input" name="itemHlightDescription" maxlength="16" placeholder="하이라이트 제목">
+                            </div>
+                            <div class="fm-box " id="templateHighlightThumbnailUploadForm" >
+                                <input name="highlightFile" type="file" id="f-attach-highlight" data-fakefile="file" />
+                                <label for="f-attach-highlight" class="fm-file-btn ">파일첨부</label>
+                                <input type="text" data-fakefile="text" readonly="readonly" placeholder="하이라이트 썸네일" class="fm-ipt fm-file" />
+                            </div>
                         </div>
 
+                        <div class="fm-row"></div>
+                        <div id="input-container" class="flex-row">
+                            <!-- 추가 버튼 -->
+                            <div class="flex-c templateItem_list">
+                                <div class="fm-box custom-input-container">
+                                    <label for="templateItem_list_title" class="custom-label">아이템 리스트 제목 </label>
+                                    <input id="templateItem_list_title" type="text" class="fm-ipt custom-input list-title" name="title[]" maxlength="6" placeholder="6자 이내">
+                                </div>
+                                <div class="fm-box custom-input-container">
+                                    <label for="templateItem_list_description" class="custom-label">아이템 리스트 설명 </label>
+                                    <input id="templateItem_list_description" type="text" class="fm-ipt custom-input list-description" name="description[]" maxlength="23" placeholder="23자 이내">
+                                </div>
+                                <div><button id="add-input" type="button" class="btn-c-3 btn-t-ipt">+ 추가</button></div>
+                            </div>
+                        </div>
                     </div>
                     <div class="fm-box-row">
                         <input type="checkbox" id="f-chk-all" class="fm-chk" checked="checked" name="securityFlag">

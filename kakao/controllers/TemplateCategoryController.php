@@ -78,7 +78,7 @@ class TemplateCategoryController extends Controller
     public function saveTemplate()
     {
         $response = ['success' => false, 'message' => ''];
-
+        $templateItemList=[];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // 입력 데이터 수집
             $profile_id = $_POST['profile_id'] ?? '';
@@ -93,15 +93,30 @@ class TemplateCategoryController extends Controller
             $template_strong_title = $_POST['strong_title'] ?? '';
             $template_strong_sub_title = $_POST['strong_sub_title'] ?? '';
             $securityFlag = isset($_POST['securityFlag']) ? 'true' : 'false';
+            $templateHeader= $_POST['templateHeader'] ?? '';
+            $templateItemHighlight_title = $_POST['itemHighlightTitle'] ?? '';
+            $templateItemHighlight_description = $_POST['itemHlightDescription'] ?? '';
             $image_path = null;
             $item_list = null;
             $templateImageName = null;
             $templateImageUrl = null;
+            $thumbnailImageUrl = null;
             $created_at = date('Y-m-d H:i:s');
 
             // 버튼 데이터가 있을 경우 처리
             $buttons = [];
             $quickReplies =[];
+
+            if (isset($_POST['title']) && is_array($_POST['title'])) {
+                foreach ($_POST['title'] as $index => $postLinkType) {
+                    $itemList = [
+                        'title' => $_POST['title'][$index] ?? '',
+                        'description' => $_POST['description'][$index] ?? ''
+                    ];
+
+                    $templateItemList[] = $itemList;  // 버튼 추가
+                }
+            }
             if (isset($_POST['postLinkType']) && is_array($_POST['postLinkType'])) {
                 foreach ($_POST['postLinkType'] as $index => $postLinkType) {
                     $button = [
@@ -198,6 +213,39 @@ class TemplateCategoryController extends Controller
                         throw new Exception($responseImagePost['message']);
                     }
                 }
+                // 하이라이트 썸내일
+                if (isset($_FILES['highlightFile']) && $_FILES['highlightFile']['error'] == 0) {
+                    $target_dir = $_SERVER['DOCUMENT_ROOT'].'/upload_file/kakao/';
+                    $highlightThumbnailFileName = basename($_FILES["highlightFile"]["name"]);
+                    $highlightThumbnailPath = $target_dir . $highlightThumbnailFileName;
+
+                    if (!move_uploaded_file($_FILES["highlightFile"]["tmp_name"], $highlightThumbnailPath)) {
+                        throw new Exception('파일 업로드에 실패했습니다.');
+                    }
+
+                    $cfile = new CURLFile($highlightThumbnailPath, $_FILES['highlightFile']['type'], $highlightThumbnailFileName);
+
+                    $imgUploadurl = 'https://wt-api.carrym.com:8445/api/v1/leahue/image/alimtalk/itemHighlight';
+
+                    $data = [
+                        'image' => $cfile,
+                        'otherField' => 'some value' // 추가로 전송할 데이터가 있으면 여기에 포함
+                    ];
+                    $headers = [
+                        'Content-Type: multipart/form-data'
+                    ];
+                    // 파일 전송 요청
+                    $responseImagePost = $this->sendCurlRequest($imgUploadurl, 'POST', $data, $headers);
+                    $responseImagePostDecoded = json_decode($responseImagePost, true);
+                    // 성공
+                    if (isset($responseImagePostDecoded['code']) && $responseImagePostDecoded['code'] == '0000' && $responseImagePostDecoded['image']) {
+                        $thumbnailImageUrl = $responseImagePostDecoded['image'];
+                    }
+                    // 200
+                    if (isset($responseImagePost['code']) && $responseImagePost['code'] == '200' && $responseImagePost['message']) {
+                        throw new Exception($responseImagePost['message']);
+                    }
+                }
                 // KakaoBusinessModel 인스턴스 생성 및 ISP 코드 조회
                 $profile = $this->templateCategory->getIspCodeByProfileKey($profile_id);
 
@@ -219,7 +267,20 @@ class TemplateCategoryController extends Controller
                     "templateContent" => $template_title,
                     "securityFlag" => $securityFlag,
                 ];
+                if($template_emphasize_type == "ITEM_LIST"){
+                    $data['templateHeader'] = $templateHeader;
+                    $data['templateItemHighlight.title'] = $templateItemHighlight_title;
+                    $data['templateItemHighlight.description'] = $templateItemHighlight_description;
+                    $data['templateItemHighlight.imageUrl'] = $thumbnailImageUrl;
 
+                    if (!empty($templateItemList)) {
+                        foreach ($templateItemList as $index => $item) {
+                            foreach ($item as $key => $value) {
+                                $data["templateItem.list[$index].$key"] = $value;
+                            }
+                        }
+                    }
+                }
                 if($template_emphasize_type == "TEXT"){
                     $data['templateTitle'] = $template_strong_title;
                     $data['templateSubtitle'] = $template_strong_sub_title;
@@ -228,6 +289,7 @@ class TemplateCategoryController extends Controller
                     $data['templateImageName'] = $templateImageName;
                     $data['templateImageUrl'] = $templateImageUrl;
                 }
+
                 if($template_type == "EX"){
                     $data['templateExtra'] = $template_subtitle;
                 }
@@ -307,7 +369,7 @@ class TemplateCategoryController extends Controller
     public function requestUpdateTemplate()
     {
         $response = ['success' => false, 'message' => ''];
-
+        $templateItemList=[];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // 입력 데이터 수집
             $profile_id = $_POST['profile_id'] ?? '';
@@ -323,14 +385,29 @@ class TemplateCategoryController extends Controller
             $template_strong_sub_title = $_POST['strong_sub_title'] ?? '';
             $securityFlag = isset($_POST['securityFlag']) ? 'true' : 'false';
             $template_id = $_POST['template_id'] ?? '';
+            $templateHeader= $_POST['templateHeader'] ?? '';
+            $templateItemHighlight_title = $_POST['itemHighlightTitle'] ?? '';
+            $templateItemHighlight_description = $_POST['itemHlightDescription'] ?? '';
             $image_path = null;
             $item_list = null;
             $templateImageName = null;
             $templateImageUrl = null;
+            $thumbnailImageUrl = null;
             $created_at = date('Y-m-d H:i:s');
             $template = $this->templateCategory->getTemplateById($template_id);
             // 버튼 데이터가 있을 경우 처리
             $buttons = [];
+            $quickReplies =[];
+            if (isset($_POST['title']) && is_array($_POST['title'])) {
+                foreach ($_POST['title'] as $index => $postLinkType) {
+                    $itemList = [
+                        'title' => $_POST['title'][$index] ?? '',
+                        'description' => $_POST['description'][$index] ?? ''
+                    ];
+
+                    $templateItemList[] = $itemList;  // 버튼 추가
+                }
+            }
             if (isset($_POST['postLinkType']) && is_array($_POST['postLinkType'])) {
                 foreach ($_POST['postLinkType'] as $index => $postLinkType) {
                     $button = [
@@ -358,6 +435,30 @@ class TemplateCategoryController extends Controller
                         $button['pluginId'] = $_POST['pluginId'][$index];
                     }
                     $buttons[] = $button;  // 버튼 추가
+                }
+            }
+            if (isset($_POST['quickReplies_linkType']) && is_array($_POST['quickReplies_linkType'])) {
+                foreach ($_POST['quickReplies_linkType'] as $index => $postLinkType) {
+                    $quickReplie = [
+                        'ordering' => $_POST['quickReplies_ordering'][$index] ,
+                        'linkType' => $postLinkType,
+                        'name' => $_POST['quickReplies_name'][$index] ?? ''
+                    ];
+                    // 버튼 종류에 따라 추가 필드를 설정
+                    if (!empty($_POST['quickReplies_linkMo'][$index])) {
+                        $button['linkMo'] = $_POST['quickReplies_linkMo'][$index];              // 모바일 링크
+                    }
+                    if (!empty($_POST['quickReplies_linkPc'][$index])) {
+                        $button['linkPc'] = $_POST['quickReplies_linkPc'][$index];
+                    }
+                    if (!empty($_POST['quickReplies_linkAnd'][$index])) {
+                        $button['linkAnd'] = $_POST['quickReplies_linkAnd'][$index];
+                    }
+                    if (!empty($_POST['quickReplies_linkIos'][$index])) {
+                        $button['linkIos'] = $_POST['quickReplies_linkIos'][$index];
+                    }
+
+                    $quickReplies[] = $quickReplie;  // 버튼 추가
                 }
             }
             // 필수 항목 검증
@@ -403,6 +504,39 @@ class TemplateCategoryController extends Controller
                         throw new Exception($responseImagePost['message']);
                     }
                 }
+                // 하이라이트 썸내일
+                if (isset($_FILES['highlightFile']) && $_FILES['highlightFile']['error'] == 0) {
+                    $target_dir = $_SERVER['DOCUMENT_ROOT'].'/upload_file/kakao/';
+                    $highlightThumbnailFileName = basename($_FILES["highlightFile"]["name"]);
+                    $highlightThumbnailPath = $target_dir . $highlightThumbnailFileName;
+
+                    if (!move_uploaded_file($_FILES["highlightFile"]["tmp_name"], $highlightThumbnailPath)) {
+                        throw new Exception('파일 업로드에 실패했습니다.');
+                    }
+
+                    $cfile = new CURLFile($highlightThumbnailPath, $_FILES['highlightFile']['type'], $highlightThumbnailFileName);
+
+                    $imgUploadurl = 'https://wt-api.carrym.com:8445/api/v1/leahue/image/alimtalk/itemHighlight';
+
+                    $data = [
+                        'image' => $cfile,
+                        'otherField' => 'some value' // 추가로 전송할 데이터가 있으면 여기에 포함
+                    ];
+                    $headers = [
+                        'Content-Type: multipart/form-data'
+                    ];
+                    // 파일 전송 요청
+                    $responseImagePost = $this->sendCurlRequest($imgUploadurl, 'POST', $data, $headers);
+                    $responseImagePostDecoded = json_decode($responseImagePost, true);
+                    // 성공
+                    if (isset($responseImagePostDecoded['code']) && $responseImagePostDecoded['code'] == '0000' && $responseImagePostDecoded['image']) {
+                        $thumbnailImageUrl = $responseImagePostDecoded['image'];
+                    }
+                    // 200
+                    if (isset($responseImagePost['code']) && $responseImagePost['code'] == '200' && $responseImagePost['message']) {
+                        throw new Exception($responseImagePost['message']);
+                    }
+                }
                 // KakaoBusinessModel 인스턴스 생성 및 ISP 코드 조회
                 $profile = $this->templateCategory->getIspCodeByProfileKey($profile_id);
 
@@ -425,7 +559,20 @@ class TemplateCategoryController extends Controller
                     "newTemplateContent" => $template_title,
                     "securityFlag" => $securityFlag,
                 ];
+                if($template_emphasize_type == "ITEM_LIST"){
+                    $data['newTemplateHeader'] = $templateHeader;
+                    $data['newTemplateItemHighlight.title'] = $templateItemHighlight_title;
+                    $data['newTemplateItemHighlight.description'] = $templateItemHighlight_description;
+                    $data['newTemplateItemHighlight.imageUrl'] = $thumbnailImageUrl;
 
+                    if (!empty($templateItemList)) {
+                        foreach ($templateItemList as $index => $item) {
+                            foreach ($item as $key => $value) {
+                                $data["newTemplateItem.list[$index].$key"] = $value;
+                            }
+                        }
+                    }
+                }
                 if($template_emphasize_type == "TEXT"){
                     $data['newTemplateTitle'] = $template_strong_title;
                     $data['newTemplateSubtitle'] = $template_strong_sub_title;
@@ -757,29 +904,29 @@ class TemplateCategoryController extends Controller
 
                 if (isset($responseData[0]['code'])) {
                     $code = $responseData[0]['code'];
-                    $responseMessage = isset($responseData['message']) ? $responseData['message'] : 'No message provided';
+                    $responseMessage = isset($responseData[0]['altMsg']) ? $responseData[0]['altMsg'] : 'No message provided';
 
                     switch ($code) {
                         case 'AS':
                             // 알림톡/친구톡 발송 성공
                             break;
                         case 'AF':
-                            throw new Exception('알림톡/친구톡 발송 실패: ' . $message);
+                            throw new Exception('알림톡/친구톡 발송 실패: ' . $responseMessage);
                         case 'SS':
                             // 문자 발송 성공
                             break;
                         case 'SF':
-                            throw new Exception('문자 발송 실패: ' . $message);
+                            throw new Exception('문자 발송 실패: ' . $responseMessage);
                         case 'EW':
-                            throw new Exception('문자 발송 중, 내부 처리 중: ' . $message);
+                            throw new Exception('문자 발송 중, 내부 처리 중: ' . $responseMessage);
                         case 'EL':
-                            throw new Exception('발송결과 조회 데이터 없음: ' . $message);
+                            throw new Exception('발송결과 조회 데이터 없음: ' . $responseMessage);
                         case 'EF':
-                            throw new Exception('시스템 실패 처리: ' . $message);
+                            throw new Exception('시스템 실패 처리: ' . $responseMessage);
                         case 'EE':
-                            throw new Exception('시스템 오류: ' . $message);
+                            throw new Exception('시스템 오류: ' . $responseMessage);
                         case 'EO':
-                            throw new Exception('시스템 타임아웃: ' . $message);
+                            throw new Exception('시스템 타임아웃: ' . $responseMessage);
                         default:
                             throw new Exception('Unknown error code: ' . $code . ' - ' . $responseMessage);
                     }

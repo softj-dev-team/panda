@@ -26,6 +26,29 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                             <div class="image-wrapper">
                                 <img id="uploadedImage" style="display: <?=$data['image_path']?'block':'none'?>" src="<?=$data['image_path']?>" alt="Uploaded Logo">
                             </div>
+                            <div class="template-header <?= $data['apiResponeData']['templateHeader'] ?'':'blind'?>"><?= $data['apiResponeData']['templateHeader'] ?></div>
+                            <div class="highlight-box <?= $data['apiResponeData']['templateItemHighlight']?'':'blind'?>">
+                                <div>
+                                    <div class="highlight-title-view <?= $data['apiResponeData']['templateItemHighlight']['title']?'':'blind' ?>" ><?= $data['apiResponeData']['templateItemHighlight']['title'] ?></div>
+                                    <div class="highlight-description-view <?= $data['apiResponeData']['templateItemHighlight']['description']?'':'blind' ?>"><?= $data['apiResponeData']['templateItemHighlight']['description'] ?></div>
+                                </div>
+                                <div class="highlight-thumbnail">
+                                    <img id="HighlightThumbnailImg" src="<?= $data['apiResponeData']['templateItemHighlight']['imageUrl'] ?>">
+                                </div>
+                            </div>
+
+                            <div class="item-list-box <?=!empty($data['apiResponeData']['templateItem']['list'])?'':'blind'?>">
+                                <?php if (!empty($data['apiResponeData']['templateItem']['list'])): ?>
+                                    <?php foreach ($data['apiResponeData']['templateItem']['list'] as $templateItem): ?>
+                                        <div class="item-list">
+                                            <div class="item-list-title"><?= htmlspecialchars($templateItem['title'], ENT_QUOTES, 'UTF-8') ?></div>
+                                            <div class="item-list-description"><?= htmlspecialchars($templateItem['description'], ENT_QUOTES, 'UTF-8') ?></div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <div>리스트가 비어 있습니다.</div>
+                                <?php endif; ?>
+                            </div>
                             <div id="previewStrongSubTitle" class="previewStrongSubTitle"><?=$data['strong_sub_title']?></div>
                             <div id="previewStrongTitle" class="previewStrongTitle"><?=$data['strong_title']?></div>
                             <div id="previewHighlightTitle" <?=$data['strong_title']?' style="border-top:1px solid #bbb"':''?>> <?= $data['apiResponeData']['convContent'] ?></div>
@@ -99,9 +122,10 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                         <div class="fm-box w-fm-title"">
                             <select id="f-search-sel-3" class="fm-sel" name="template_emphasize_type">
                                 <option value="">강조 유형</option>
-                                <option value="NONE" <?=$data['template_emphasize_type']=='NONE'?'selected':''?>>선택안함</option>
-                                <option value="TEXT" <?=$data['template_emphasize_type']=='TEXT'?'selected':''?>>강조표기형</option>
-                                <option value="IMAGE" <?=$data['template_emphasize_type']=='IMAGE'?'selected':''?>>이미지형</option>
+                                <option value="NONE" <?=$data['apiResponeData']['templateEmphasizeType']=='NONE'?'selected':''?>>선택안함</option>
+                                <option value="TEXT" <?=$data['apiResponeData']['templateEmphasizeType']=='TEXT'?'selected':''?>>강조표기형</option>
+                                <option value="IMAGE" <?=$data['apiResponeData']['templateEmphasizeType']=='IMAGE'?'selected':''?>>이미지형</option>
+                                <option value="ITEM_LIST" <?=$data['apiResponeData']['templateEmphasizeType']=='ITEM_LIST'?'selected':''?>>아이템리스트</option>
                             </select>
                             <span class="fm-error-txt">* 항목을 선택 또는 작성 해 주세요.</span>
                         </div>
@@ -127,6 +151,65 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                         </div>
 
                     </div>
+                    <div id="itemListSetting" class="<?=$data['apiResponeData']['templateEmphasizeType']=='ITEM_LIST'?'':'blind'?>">
+                        <div class="fm-row">
+                            <h3 >아이템 리스트 설정</h3>
+                        </div>
+                        <div class="flex-row fm-row">
+                            <div class="fm-box custom-input-container">
+                                <label for="templateHeader" class="custom-label">헤더 사용 </label>
+                                <input id="templateHeader" type="text" class="fm-ipt custom-input" name="templateHeader" maxlength="16" placeholder="헤더 내용" value="<?=$data['apiResponeData']['templateHeader']?>">
+                            </div>
+                            <div class="fm-box custom-input-container">
+                                <label for="itemHighlightTitle" class="custom-label">하이라이트 제목 </label>
+                                <input id="itemHighlightTitle" type="text" class="fm-ipt custom-input" name="itemHighlightTitle" maxlength="16" placeholder="하이라이트 제목" value="<?=$data['apiResponeData']['templateItemHighlight']['title']?>">
+                            </div>
+                            <div class="fm-box custom-input-container">
+                                <label for="itemHlightDescription" class="custom-label">하이라이트 설명  </label>
+                                <input id="itemHlightDescription" type="text" class="fm-ipt custom-input" name="itemHlightDescription" maxlength="16" placeholder="하이라이트 설명" value="<?=$data['apiResponeData']['templateItemHighlight']['description']?>">
+                            </div>
+                            <div class="fm-box " id="templateHighlightThumbnailUploadForm" >
+                                <input name="highlightFile" type="file" id="f-attach-highlight" data-fakefile="file" />
+                                <label for="f-attach-highlight" class="fm-file-btn ">파일첨부</label>
+                                <input type="text" data-fakefile="text" readonly="readonly" placeholder="하이라이트 썸네일" class="fm-ipt fm-file" />
+                            </div>
+                        </div>
+
+                        <div class="fm-row"></div>
+                        <div id="input-container" class="flex-row">
+                            <?php if (!empty($data['apiResponeData']['templateItem']['list'])): ?>
+                                <?php foreach ($data['apiResponeData']['templateItem']['list'] as $key => $templateItem): ?>
+                                    <div class="flex-c templateItem_list" <?=$key==0?'':'id="input-set-'.($key-1)?>">
+
+                                        <div class="fm-box custom-input-container">
+                                            <label for="templateItem_list_title<?=$key==0?'':'_'.($key-1)?>" class="custom-label">아이템 리스트 제목 </label>
+                                            <input id="templateItem_list_title<?=$key==0?'':'_'.($key-1)?>" type="text" class="fm-ipt custom-input list-title" name="title[]" maxlength="6" placeholder="6자 이내" value="<?=$templateItem['title']?>">
+                                        </div>
+                                        <div class="fm-box custom-input-container">
+                                            <label for="templateItem_list_description<?=$key==0?'':'_'.($key-1)?>" class="custom-label">아이템 리스트 설명 </label>
+                                            <input id="templateItem_list_description<?=$key==0?'':'_'.($key-1)?>" type="text" class="fm-ipt custom-input list-description" name="description[]" maxlength="23" placeholder="23자 이내" value="<?=$templateItem['description']?>">
+                                        </div>
+                                        <?=$key==0?'<div><button id="add-input" type="button" class="btn-c-3 btn-t-ipt">+ 추가</button></div>':'<button type="button" class="delete-button btn-c-3 btn-t-ipt" data-index="'.($key-1).'">삭제</button>'?>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <div class="flex-c templateItem_list">
+
+                                    <div class="fm-box custom-input-container">
+                                        <label for="templateItem_list_title" class="custom-label">아이템 리스트 제목 </label>
+                                        <input id="templateItem_list_title" type="text" class="fm-ipt custom-input list-title" name="title[]" maxlength="6" placeholder="6자 이내">
+                                    </div>
+                                    <div class="fm-box custom-input-container">
+                                        <label for="templateItem_list_description" class="custom-label">아이템 리스트 설명 </label>
+                                        <input id="templateItem_list_description" type="text" class="fm-ipt custom-input list-description" name="description[]" maxlength="23" placeholder="23자 이내">
+                                    </div>
+                                    <div><button id="add-input" type="button" class="btn-c-3 btn-t-ipt">+ 추가</button></div>
+                                </div>
+                            <?php endif; ?>
+                            <!-- 추가 버튼 -->
+
+                        </div>
+                    </div>
                     <div class="fm-box-row">
                         <input type="checkbox" id="f-chk-all" class="fm-chk" <?=$data['apiResponeData']['securityFlag']?'checked=checked':''?> name="securityFlag">
                         <label for="f-chk-all" class="fm-chk-i"><strong>보안 템플릿 설정</strong> 체크 시, 메인 디바이스 모바일 외 모든 서브 디바이스에서는 메시지 내용이 노출되지 않습니다</label>
@@ -150,7 +233,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                     <div class="fm-row">
                         <div id="typeEX" class="<?=$data['template_subtitle']?'':'blind'?> custom-input-container">
                             <label for="f-title" class="fm-label custom-label">부가정보 </label>
-                            <textarea name="template_subtitle" id="highlightSubtitle" class="fm-ta"></textarea>
+                            <textarea name="template_subtitle" id="highlightSubtitle" class="fm-ta"><?= nl2br(htmlspecialchars($data['apiResponeData']['templateExtra'])) ?></textarea>
                             <span class="fm-error-txt">* 항목을 선택 또는 작성 해 주세요.</span>
                         </div>
                     </div>

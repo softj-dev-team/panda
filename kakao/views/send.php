@@ -29,6 +29,19 @@
                                 <div class="image-wrapper">
                                     <img id="uploadedImage" src="" alt="Uploaded Logo">
                                 </div>
+                                <div class="template-header blind">템플릿 헤더</div>
+                                <div class="highlight-box blind">
+                                    <div>
+                                        <div class="highlight-title-view blind" >하이라이트 타이틀</div>
+                                        <div class="highlight-description-view blind">하이라이트 설명</div>
+                                    </div>
+                                    <div class="highlight-thumbnail">
+                                        <img id="HighlightThumbnailImg" src="">
+                                    </div>
+                                </div>
+                                <div class="item-list-box blind">
+
+                                </div>
                                 <div id="previewStrongSubTitle" class="previewStrongSubTitle"></div>
                                 <div id="previewStrongTitle" class="previewStrongTitle"></div>
                                 <div id="previewHighlightTitle"></div>
