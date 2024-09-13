@@ -1045,38 +1045,34 @@ $(document).ready(function() {
         var templateImageUploadForm = $('#templateImageUploadForm');
         var imgElement = $('#uploadedImage');
         var itemListSetting = $('#itemListSetting');
+        viewStrongMessage.addClass("blind");
+        strongTitle.addClass("blind");
+        strongSubTitle.addClass("blind");
+        imgElement.hide();
+        viewStrongMessage.addClass("blind");
+        strongTitle.addClass("blind");
+        strongSubTitle.addClass("blind");
+        itemListSetting.addClass("blind");
         switch(emphasizeType) {
             case "ITEM_LIST":
                 // Show strong message elements and hide image upload form
                 itemListSetting.removeClass("blind");
-                templateImageUploadForm.removeClass("blind");
-                viewStrongMessage.addClass("blind");
-                strongTitle.addClass("blind");
-                strongSubTitle.addClass("blind");
+                templateImageUploadForm.removeClass("blind");;
                 break;
             case "TEXT":
                 // Show strong message elements and hide image upload form
                 viewStrongMessage.removeClass("blind");
                 strongTitle.removeClass("blind");
                 strongSubTitle.removeClass("blind");
-                templateImageUploadForm.addClass("blind");
-                imgElement.hide();
                 break;
 
             case "IMAGE":
                 // Show image upload form and hide strong message elements
                 templateImageUploadForm.removeClass("blind");
-                viewStrongMessage.addClass("blind");
-                strongTitle.addClass("blind");
-                strongSubTitle.addClass("blind");
                 break;
 
             default:
                 // Hide all elements
-                viewStrongMessage.addClass("blind");
-                strongTitle.addClass("blind");
-                strongSubTitle.addClass("blind");
-                templateImageUploadForm.addClass("blind");
                 break;
         }
     });
@@ -1124,7 +1120,6 @@ $(document).ready(function() {
 
     $('select[name=template_type]').on('change', function() {
         const selectedValue = $(this).val();
-
 
         // AC 버튼이 이미 존재하는지 확인
         const isACExists = buttons.some(button => button.linkType === 'AC');

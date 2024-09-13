@@ -142,7 +142,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                             </div>
                         </div>
 
-                        <div class="fm-box mgl-5 w-100 <?=$data['image_path']?'':'blind'?>" id="templateImageUploadForm" >
+                        <div class="fm-box mgl-5 w-100 <?=$data['apiResponeData']['templateEmphasizeType']=='ITEM_LIST' || $data['apiResponeData']['templateEmphasizeType']=='IMAGE' ?'':'blind'?>" id="templateImageUploadForm" >
                             <input name="file" type="file" id="f-attach" data-fakefile="file" />
                             <label for="f-attach" class="fm-file-btn ">파일첨부</label>
 <!--                            <input type="hidden" name="selectedImage" id="selectedImage">-->
