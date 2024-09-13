@@ -198,48 +198,53 @@ function updateButtonList(type) {
     $('.generated-button').remove();
     $('.button-item').remove();
     $('.kko-sub-text').remove();
+    // 채널 추가 버튼을 저장할 변수
+    let channelButtonItem = null;
+    let nonChannelIndex = 1; // 채널 추가 버튼 이후의 인덱스는 1부터 시작
     $.each(buttons, function (index, item) {
-        let inputFields = generateInputFields(item, index, false);
+        let inputFields;
+
+        // 채널 추가 버튼의 input index를 0으로 설정하고, 나머지는 순서대로 설정
+        if (item.linkType === 'AC') {
+            inputFields = generateInputFields(item, 0, false);  // 채널 추가 버튼의 인덱스는 0
+        } else {
+            inputFields = generateInputFields(item, nonChannelIndex, false);  // 나머지 버튼의 인덱스는 1부터 시작
+            nonChannelIndex++;  // 다음 버튼의 인덱스를 증가시킴
+        }
 
         const buttonItem = $(`
-                        <div class=" ${item.linkType === 'AC' ? 'button-item-ch' : 'button-item'}">
-                            <div>
-                                <strong>[버튼]${item.name}</strong>
-                                <span>${buttonLinkTypes[item.linkType]}</span>
-                                ${inputFields}
-                            </div>
-                            <div class="button-actions">
-                                <button class="deleteButton" type="button" data-index="${index}" data-type="buttons">삭제</button>
-                            </div>
-                        </div>
-                    `);
+            <div class=" ${item.linkType === 'AC' ? 'button-item-ch' : 'button-item'}">
+                <div>
+                    <strong>[버튼]${item.name}</strong>
+                    <span>${buttonLinkTypes[item.linkType]}</span>
+                    ${inputFields}
+                </div>
+                <div class="button-actions">
+                    ${item.linkType === 'AC' ? '' : '<button class="editButton" type="button" data-index="${index}" data-type="buttons">수정</button>'}
+                    <button class="deleteButton" type="button" data-index="${index}" data-type="buttons">삭제</button>
+                </div>
+            </div>
+        `);
 
-        // 버튼 생성 (조건에 따라 <span> 추가)
+        // 채널 추가 버튼일 경우 맨 위에 추가
         if (item.linkType === 'AC') {
+            channelButtonItem = $(`
+                <span class="kko-sub-text">채널 추가하고 이 채널의 광고와 마케팅 메시지를 카카오톡으로 받기</span>
+                <button class="generated-button addCh">${item.name}</button>
+            `);
 
-            $('#previeButtonList').prepend(
-                $(`
-                                <span class="kko-sub-text">채널 추가하고 이 채널의 광고와 마케팅 메시지를 카카오톡으로 받기</span>
-                                <button class="generated-button addCh">${item.name}</button>
-                            `)
-            )
-            buttonList.prepend(buttonItem);
+            buttonList.prepend(buttonItem); // 채널 추가 버튼 맨 위로
         } else {
-            $('#previeButtonList').append(
-                $(`
-                                <button class="generated-button jss2034">${item.name}</button>
-                            `)
-            )
+            // 일반 버튼은 순서대로 추가
+            $('#previeButtonList').append(`
+                <button class="generated-button jss2034">${item.name}</button>
+            `);
             buttonList.append(buttonItem);
         }
 
-        // AC인 경우 버튼을 리스트 맨 앞에 추가, 아니면 뒤에 추가
-        if (item.linkType === 'AC') {
-            $('#previeButtonList').prepend(generatedButton); // AC인 경우 리스트 맨 앞에 추가
-            buttonList.prepend(buttonItem); // AC인 경우 buttonItem도 맨 앞에 추가
-        } else {
-            $('#previeButtonList').append(generatedButton); // 일반 버튼은 뒤에 추가
-            buttonList.append(buttonItem); // 일반 buttonItem도 뒤에 추가
+        // 채널 추가 버튼을 맨 위로 배치
+        if (channelButtonItem !== null) {
+            $('#previeButtonList').prepend(channelButtonItem);
         }
 
     });
@@ -654,7 +659,7 @@ function loadTemplate(page = 1) {
     const statusMapping = {
         '01': '승인',
         '02': '승인대기',
-        'R': '승인대기',
+        'R': '대기',
         'A': '정상',
         'S': '중단',
         'D': '삭제'
@@ -698,25 +703,30 @@ function loadTemplate(page = 1) {
                     var statusText = statusMapping[template.status];
                     var templateText = templateTypeMapping[template.template_type]
                     var inspectionStatusText = inspectionStatusMapping[template.inspection_status]
+                    var comments = template.inspection_comments;
 
+                    console.log(comments)
                     // 검수요청 버튼 조건에 따라 추가
                     var inspectionRequestButton = '';
                     var editButton = '';
                     var deleteButton='';
-                    if (template.inspection_status === 'REG' || template.inspection_status === 'R') {
-                        inspectionStatusText = `<button type="button" class="btn-t-3 btn-c-3" onclick="requestInspection(${template.id})">검수요청</button>`;
+                    var inspectionsComment='';
+                    if (template.inspection_status === 'REG' || template.inspection_status === 'REJ' || template.inspection_status === 'R') {
+                        inspectionRequestButton = `<button type="button" class="fa-solid fa-file-import tooltip" onclick="requestInspection(${template.id})"><span class="tooltiptext">검수요청</span></button>`;
                         editButton = `<button class="fa fa-edit tooltip" onclick="window.location.href='index.php?route=editTemplate&id=${template.id}'">  <span class="tooltiptext">수정</span></button>`;
                         deleteButton = `<button class="fa fa-trash-can tooltip" onclick="deleteTemplate('${template.id}')"> <span class="tooltiptext">삭제</span></button>`;
+                        inspectionsComment =comments ? '<button type="button" class="fa fa-comment tooltip"><span class="tooltiptext ">${comments}</span></button>': '';
                     }
+
                     var row = `<tr>
                             <td>${template.id}</td>
                             <td><a href="#" id="templateSelect" data-id="${template.id}">${template.template_name}</a></td>
                             <td>${templateText}</td>
                             <td>${formatDate(template.created_at)}</td>
-                            <td>${inspectionStatusText} ${inspectionRequestButton}</td>
+                            <td ${comments ? 'class=tooltip' :''}>${inspectionStatusText}&nbsp;${comments ? '<span class="tooltiptext tooltiptext-w">'+comments+'</span>' :''}</td>
                             <td>${statusText}</td>
                             
-                            <td>${editButton}&nbsp;${deleteButton}&nbsp;<button class="fa fa-file-excel tooltip" onclick="window.location.href='index.php?route=downloadSample&template_id=${template.id}'"> <span class="tooltiptext">엑셀셈플 다운로드</span></button></td>
+                            <td>${inspectionRequestButton}&nbsp;${editButton}&nbsp;${deleteButton}&nbsp;<button class="fa fa-file-excel tooltip" onclick="window.location.href='index.php?route=downloadSample&template_id=${template.id}'"> <span class="tooltiptext">엑셀셈플 다운로드</span></button></td>
                         </tr>`;
                     profilesTable.append(row);
                 });

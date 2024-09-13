@@ -551,6 +551,7 @@ class TemplateCategoryController extends Controller
             // KakaoBusinessModel 인스턴스 생성 및 ISP 코드 조회
             $profile = $this->templateCategory->getIspCodeByProfileKey($profile_id);
             // 각 템플릿에 대해 상태 업데이트
+
             foreach ($templates as &$template) {
                 $template_id = $template['id'];
                 $template_key = $template['template_key'];
@@ -567,13 +568,30 @@ class TemplateCategoryController extends Controller
                 $responseData = json_decode($apiResponse, true);
                 error_log("Executing update request: " . $responseData['code'] ."/". $responseData['data']['status'] ."/". $responseData['data']['inspectionStatus']);
                 // 외부 API 응답에서 상태 값 추출
+                $template=[];
                 if ($responseData['code']=="200") {
                     $template['status'] = $responseData['data']['status'];
-                    $template['templateContent'] = $responseData['data']['templateContent'];
+                    $template['template_title'] = $responseData['data']['templateContent'];
                     $template['inspection_status'] = $responseData['data']['inspectionStatus'];
+                    $template['template_name'] = $responseData['data']['templateName'];
+                    $template['template_type'] = $responseData['data']['templateMessageType'];
+                    $template['strong_sub_title'] = $responseData['data']['templateTitle'];
+                    $template['template_emphasize_type'] = $responseData['data']['templateSubtitle'];
+                    $template['category_id'] = $responseData['data']['categoryCode'];
+                    // modifiedAt 값이 있는 경우에만 update_at에 할당
+                    if (!empty($templateData['modifiedAt'])) {
+                        $template['update_at'] = $responseData['data']['modifiedAt'];
+                    }
+                    if (!empty($responseData['data']['comments'])) {
+                        $template['inspection_comments'] = $responseData['data']['comments'][0]['content'];
+                    }
+                    if (!empty($templateData['templateImageUrl'])) {
+                        $template['image_path'] = $responseData['data']['modifiedAt'];
+                    }
                     try {
                         // 데이터베이스에서 템플릿 상태 업데이트
-                        $this->templateCategory->updateTemplate($template_id, $template['status'], $template['templateContent'],$template['inspection_status']);
+//                        $this->templateCategory->updateTemplate($template_id, $template['status'], $template['templateContent'],$template['inspection_status'],$template['comments'],$template['update_at']);
+                        $this->templateCategory->updateTemplateByArray($template_id, $template);
                     } catch (Exception $e) {
                         // 업데이트 실패 시 예외 처리
                         error_log("Failed to update template ID $template_id: " . $e->getMessage());

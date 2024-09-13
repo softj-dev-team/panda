@@ -40,19 +40,75 @@ class TemplateCategoryModel
             throw new Exception('Failed to update status: ' . $e->getMessage());
         }
     }
-    public function updateTemplate($id, $status,$templateContent,$inspection_status)
+    public function updateTemplate($id, $status,$templateContent,$inspection_status,$comments,$update_at)
     {
         try {
-            $sql = "UPDATE template SET status = :status,template_title=:template_title,inspection_status=:inspection_status WHERE id = :id";
+            // 기본 SQL 쿼리
+            $sql = "UPDATE template SET status = :status, template_title = :template_title, inspection_status = :inspection_status, inspection_comments = :inspection_comments";
+
+            // update_at 값이 있으면 SQL에 추가
+            if ($update_at !== null) {
+                $sql .= ", update_at = :update_at";
+            }
+            $sql .= " WHERE id = :id";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':id', $id);
             $stmt->bindParam(':status', $status);
             $stmt->bindParam(':template_title', $templateContent);
             $stmt->bindParam(':inspection_status', $inspection_status);
+            $stmt->bindParam(':inspection_comments', $comments);
+
+            // update_at 값이 있는 경우에만 바인딩
+            if ($update_at !== null) {
+                $stmt->bindParam(':update_at', $update_at);
+            };
+
             $stmt->execute();
             error_log("Executing updateTemplate query: " . $sql);
         } catch (Exception $e) {
             throw new Exception('Failed to update status: ' . $e->getMessage());
+        }
+    }
+    public function updateTemplateByArray($id, $template)
+    {
+        try {
+            // 기본 SQL 쿼리의 시작 부분
+            $sql = "UPDATE template SET ";
+
+            // 쿼리에서 사용할 필드와 값의 바인딩 배열
+            $fields = [];
+            $params = [];
+
+            // $template 배열을 순회하며 동적으로 쿼리 생성
+            foreach ($template as $key => $value) {
+                $fields[] = "$key = :$key";  // 필드명을 동적으로 추가
+                $params[":$key"] = $value;  // 값을 동적으로 바인딩
+            }
+
+            // 필드를 콤마로 연결하여 SQL 쿼리에 추가
+            $sql .= implode(", ", $fields);
+
+            // WHERE 조건 추가
+            $sql .= " WHERE id = :id";
+
+            // ID 바인딩
+            $params[':id'] = $id;
+
+            // SQL 준비 및 실행
+            $stmt = $this->conn->prepare($sql);
+
+            // 동적 바인딩된 파라미터를 설정
+            foreach ($params as $param => $value) {
+                $stmt->bindValue($param, $value);
+            }
+
+            // 쿼리 실행
+            $stmt->execute();
+
+            // 로그에 쿼리 남기기
+            error_log("Executing dynamic updateTemplate query: " . $sql);
+        } catch (Exception $e) {
+            throw new Exception('Failed to updateTemplateByArray: ' . $e->getMessage());
         }
     }
     public function getTemplateTitleById($templateId)
@@ -288,7 +344,7 @@ class TemplateCategoryModel
 
             return $stmt->execute();
         } catch (PDOException $e) {
-            throw new Exception('Failed to update template: ' . $e->getMessage());
+            throw new Exception('Failed to requestUpdateTemplate: ' . $e->getMessage());
         }
     }
 }
