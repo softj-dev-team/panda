@@ -141,12 +141,25 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                                 <span class="fm-error-txt ">* 항목을 선택 또는 작성 해 주세요.</span>
                             </div>
                         </div>
-
+                        <?php
+                        $imageUrl = $data['apiResponeData']['templateImageUrl'] ?? ''; // 이미지 URL이 존재하는지 확인
+                        $imageName = $data['apiResponeData']['templateImageName'] ?? '';
+                        ?>
                         <div class="fm-box mgl-5 w-100 <?=$data['apiResponeData']['templateEmphasizeType']=='ITEM_LIST' || $data['apiResponeData']['templateEmphasizeType']=='IMAGE' ?'':'blind'?>" id="templateImageUploadForm" >
-                            <input name="file" type="file" id="f-attach" data-fakefile="file" />
-                            <label for="f-attach" class="fm-file-btn ">파일첨부</label>
-<!--                            <input type="hidden" name="selectedImage" id="selectedImage">-->
-                            <input type="text" data-fakefile="text" readonly="readonly" placeholder="파일 사이즈 최대 500KB" class="fm-ipt fm-file" />
+                            <?php if ($imageUrl): ?>
+                                <!-- 이미지가 이미 첨부된 경우, 파일 업로드 필드를 숨기고 이미지 미리보기 표시 -->
+                            <div class="flex-c image-preview ">
+                                <div class="fm-ipt">
+                                    첨부된 이미지: <?=$imageName?>
+                                </div>
+                                <button type="button" id="removeImage" class="btn-t-ipt btn-c-4">삭제</button>
+                            </div>
+                            <?php else: ?>
+                                <!-- 이미지가 없을 경우 파일 첨부 필드를 표시 -->
+                                <input name="file" type="file" id="f-attach" data-fakefile="file" />
+                                <label for="f-attach" class="fm-file-btn">파일첨부</label>
+                                <input type="text" data-fakefile="text" readonly="readonly" placeholder="파일 사이즈 최대 500KB" class="fm-ipt fm-file" />
+                            <?php endif; ?>
 
                         </div>
 
@@ -217,8 +230,12 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                     <div class="fm-row">
                         <div id="guide">
                         </div>
+                        <?php
+                        $templateExtra = htmlspecialchars($data['apiResponeData']['templateContent']);
+                        $charCount = mb_strlen($templateExtra); // 다국어 지원을 위해 mb_strlen 사용
+                        ?>
                         <div class="custom-input-container">
-                            <label for="template_title" class="fm-label custom-label">메세지 내용 * (<span id="charCount">0/1000</span>)</label>
+                            <label for="template_title" class="fm-label custom-label">메세지 내용 * (<span id="charCount"><?= $charCount ?>/1000</span>)</label>
                             <textarea name="template_title" id="highlightTitle" class="fm-ta" placeholder="템플릿내용은 한/영 구분없이 1,000자까지 입력 가능합니다. 변수에 들어갈 내용의 최대 길이를 감안하여 작성해 주세요."><?=$data['template_title']?></textarea>
                             <span class="fm-error-txt">* 항목을 선택 또는 작성 해 주세요.</span>
                         </div>
@@ -230,11 +247,15 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                             <button type="button" class="btn-t-3 btn-c-4 addButton" data-id="quickReplies">바로연결 추가 (0/5)</button>
                         </div>
                     </div>
+                    <?php
+                    $templateExtra = htmlspecialchars($data['apiResponeData']['templateExtra']);
+                    $charCount = mb_strlen($templateExtra); // 다국어 지원을 위해 mb_strlen 사용
+                    ?>
                     <div class="fm-row">
                         <div id="typeEX" class="<?=$data['template_subtitle']?'':'blind'?> custom-input-container">
-                            <label for="f-title" class="fm-label custom-label">부가정보 </label>
+                            <label for="f-title" class="fm-label custom-label">부가정보 (<span class="charCount"><?= $charCount ?>/1000</span>)</label>
                             <textarea name="template_subtitle" id="highlightSubtitle" class="fm-ta"><?= nl2br(htmlspecialchars($data['apiResponeData']['templateExtra'])) ?></textarea>
-                            <span class="fm-error-txt">* 항목을 선택 또는 작성 해 주세요.</span>
+                            <span class="fm-error-txt errorMsg">* 항목을 선택 또는 작성 해 주세요.</span>
                         </div>
                     </div>
                     <div id="buttonListContainer">
@@ -408,7 +429,6 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
 
 <!--    <script src="/kakao/public/js/kakao.js"></script>-->
     <script>
-
 
         /**
          * 버튼 추가

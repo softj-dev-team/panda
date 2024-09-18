@@ -190,7 +190,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                     </div>
                     <div class="fm-row">
                         <div id="typeEX" class="blind custom-input-container">
-                            <label for="f-title" class="fm-label custom-label">부가정보 </label>
+                            <label for="f-title" class="fm-label custom-label">부가정보 (<span class="charCount">0/1000</span>)</label>
                             <textarea name="template_subtitle" id="highlightSubtitle" class="fm-ta"></textarea>
                             <span class="fm-error-txt">* 항목을 선택 또는 작성 해 주세요.</span>
                         </div>

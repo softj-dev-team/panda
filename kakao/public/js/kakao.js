@@ -236,16 +236,17 @@ function updateButtonList(type) {
                     ${inputFields}
                 </div>
                 <div class="button-actions">
-                    ${item.linkType === 'AC' ? '' : '<button class="editButton" type="button" data-index="${index}" data-type="buttons">수정</button>'}
+                    ${item.linkType === 'AC' ? '' : '<button class="editButton" type="button" data-index="'+ index +'" data-type="buttons">수정</button>'}
                     <button class="deleteButton" type="button" data-index="${index}" data-type="buttons">삭제</button>
                 </div>
             </div>
         `);
 
+
         // 채널 추가 버튼일 경우 맨 위에 추가
         if (item.linkType === 'AC') {
             channelButtonItem = $(`
-                <span class="kko-sub-text">채널 추가하고 이 채널의 광고와 마케팅 메시지를 카카오톡으로 받기</span>
+                <span class="kko-sub-text">채널 추가하고 이 채널의 마케팅 메시지 등을 카카오톡으로 받기</span>
                 <button class="generated-button addCh">${item.name}</button>
             `);
 
@@ -597,7 +598,7 @@ function loadTemplateDetails(templateId) {
                 var template_key = template.template_key;
                 var template_emphasize_type = template.template_emphasize_type;
                 var template_id = template.id;
-                var img_path = template.image_path;
+                var img_path = template.apiRespone.templateImageUrl;
                 var tempalteItem = template.apiRespone.templateItem;
                 var templateHeader = template.apiRespone.templateHeader;
                 var templateItemHighlight = template.apiRespone.templateItemHighlight;
@@ -657,7 +658,7 @@ function loadTemplateDetails(templateId) {
                 $('#previewStrongTitle').text(strongTitle);
                 $('#previewStrongSubTitle').text(strongSubTitle);
                 imgElement.hide();
-                if(template_emphasize_type == "IMAGE"){
+                if(img_path){
                     imgElement.attr('src', img_path);
                     imgElement.show();
                 }
@@ -851,9 +852,9 @@ function deleteTemplate(template_id){
         dataType: 'json',
         success: function(response) {
             alert(response.message);
-            if (!response.success) {
-                loadTemplate(page = 1)
-            }
+
+            loadTemplate(page = 1)
+
         },
         error: function(xhr, status, error) {
             alert('상태 업데이트에 실패했습니다. 다시 시도해 주세요.');
@@ -1056,11 +1057,12 @@ $(document).ready(function() {
         strongTitle.addClass("blind");
         strongSubTitle.addClass("blind");
         itemListSetting.addClass("blind");
+        templateImageUploadForm.addClass("blind");
         switch(emphasizeType) {
             case "ITEM_LIST":
                 // Show strong message elements and hide image upload form
                 itemListSetting.removeClass("blind");
-                templateImageUploadForm.removeClass("blind");;
+                templateImageUploadForm.removeClass("blind");
                 break;
             case "TEXT":
                 // Show strong message elements and hide image upload form
@@ -1255,8 +1257,20 @@ $(document).ready(function() {
         $('#previewHighlightTitle').html(updatedContent);
     });
     $('#highlightSubtitle').on('input', function() {
+        var currentLength = $(this).val().length;
+        if(currentLength <= 1000){
+            $(this).siblings('label').find('.charCount').text(currentLength + "/1000");
+        }
+        if (currentLength > 1000) {
+            $(this).siblings('label').find('.errorMsg').removeClass("blind");
+            $(this).siblings('label').find('.errorMsg').addClass("active");
+            $(this).val($(this).val().substring(0, 1000));  // 글자수 제한
+        } else {
+            $(this).siblings('label').find('.errorMsg').addClass("blind");
+        }
         var inputValue = $(this).val();
-        $('#previewHighlightSubtitle').html(inputValue);  // 미리보기 영역 비움
+        var content = inputValue.replace(/\n/g, '<br>');
+        $('#previewHighlightSubtitle').html(content);  // 미리보기 영역 비움
     });
 
     $('#formSubmit').on('click', function(event) {
@@ -1302,7 +1316,8 @@ $(document).ready(function() {
             success: function(response) {
                 if (response.success) {
                     alert("템플릿이 성공적으로 등록되었습니다.");
-                    $('#requestTemplate')[0].reset();
+                    // $('#requestTemplate')[0].reset();
+                    window.location.href='index.php?route=templateList';
                 } else {
                     if (response.code === '505') {
                         alert("오류: " + response.message);
@@ -1835,5 +1850,14 @@ $(document).ready(function() {
                 $('.item-list-box').addClass('blind');
             }
         });
+    });
+    $('#removeImage').on('click', function() {
+        // 미리보기 영역을 숨기고 파일 업로드 필드를 다시 활성화
+        $('.image-preview').hide(); // 이미지 미리보기 영역 숨김
+        $('#templateImageUploadForm').append(`        
+            <input name="file" type="file" id="f-attach" data-fakefile="file" />
+            <label for="f-attach" class="fm-file-btn">파일첨부</label>
+            <input type="text" data-fakefile="text" readonly="readonly" placeholder="파일 사이즈 최대 500KB" class="fm-ipt fm-file" />
+        `);
     });
 });
