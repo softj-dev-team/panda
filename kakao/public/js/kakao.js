@@ -61,6 +61,22 @@ var specialChars = [
     "♂", "ꋭ", "ꋯ", "ާ", "ި", "ީ", "ު", "ޫ", "ެ", "ޭ", "ޮ", "ᚗ", "ᚘ", "፡", "።", "፣", "፤", "፥", "፦", "፧", "‘", "’", "‚", "‛", "“", "”", "„",
     "‥", "…", "‧", "′", "″", "〝", "〞", "〟"
 ];
+function contentReplace(){
+    var currentContent = $('#highlightTitle').val();
+    var content = currentContent.replace(/\n/g, '<br>');
+    var pattern = /\(([^)]+)\)/g;
+    var matches = content.match(pattern);
+    if (matches) {
+        matches.forEach(function(match) {
+            var iconName = match.replace(/[()]/g, '');
+            if (iconMap[iconName]) {
+                var imgTag = `<img class="view-icon" src="${iconMap[iconName]}" alt="${iconName}" />`;
+                content = content.replace(match, imgTag);
+            }
+        });
+    }
+    $('#previewHighlightTitle').html(content);
+}
 function changeStrongTitle(){
     if($('#strong_sub_title').val() || $('#strong_title').val()){
         $('#previewHighlightTitle').css('border-top', '1px solid #bbb');
@@ -937,20 +953,6 @@ function convertToHtml(text) {
 }
 $(document).ready(function() {
 
-    $('#highlightTitle').on('input', function() {
-        var currentLength = $(this).val().length;
-
-        if(currentLength <= 1000){
-            $('#charCount').text(currentLength + "/1000");
-        }
-        if (currentLength > 1000) {
-            $('#errorMsg').removeClass("blind");
-            $('#errorMsg').addClass("active");
-            $(this).val($(this).val().substring(0, 1000));  // 글자수 제한
-        } else {
-            $('#errorMsg').addClass("blind");
-        }
-    });
     $('#buttonName').on('input', function() {
         var currentLength = $(this).val().length;
         if(currentLength <= 14){
@@ -1223,10 +1225,23 @@ $(document).ready(function() {
 
     // 텍스트 입력된 값을 iconMap을 참고하여 이미지로 변환
     $('#highlightTitle').on('input', function() {
-        var inputValue = $(this).val();  // 입력된 전체 텍스트 가져오기
+        var currentLength = $(this).val().length;
 
+        if(currentLength <= 1000){
+            $('#charCount').text(currentLength + "/1000");
+        }
+        if (currentLength > 1000) {
+            $('#errorMsg').removeClass("blind");
+            $('#errorMsg').addClass("active");
+            $(this).val($(this).val().substring(0, 1000));  // 글자수 제한
+        } else {
+            $('#errorMsg').addClass("blind");
+        }
+
+        var inputValue = $(this).val();  // 입력된 전체 텍스트 가져오기
+        var content = inputValue.replace(/\n/g, '<br>');
         // 텍스트에서 (아이콘명) 패턴을 찾아서 해당 패턴을 이미지로 변환
-        var updatedContent = inputValue.replace(/\(([^)]+)\)/g, function(match, iconName) {
+        var updatedContent = content.replace(/\(([^)]+)\)/g, function(match, iconName) {
             // iconMap에 있는 아이콘명일 경우, 해당 이미지를 반환
             if (iconMap[iconName]) {
                 return `<img class="view-icon" src="${iconMap[iconName]}" alt="${iconName}" />`;
@@ -1544,16 +1559,20 @@ $(document).ready(function() {
     // 변수 추가
     $('#insertVariableBtn').on('click', function() {
         var variableName = $('#variableName').val().trim();
-        var content = $('#previewHighlightTitle').html();
-        if (variableName) {
-            var currentContent = $('#highlightTitle').val();
-            $('#highlightTitle').val(currentContent + ' #{' + variableName + '}');
-            $('#previewHighlightTitle').html(content + ' #{' + variableName + '}');
+        var $textarea = $('#highlightTitle');
+        var cursorPosition = $textarea.prop("selectionStart"); // 커서의 시작 위치
+        var textBeforeCursor = $textarea.val().substring(0, cursorPosition); // 커서 앞의 텍스트
+        var textAfterCursor = $textarea.val().substring(cursorPosition); // 커서 뒤의 텍스트
 
-            modal.hide();
-        } else {
-            alert('변수명을 입력해 주세요.');
-        }
+        var textToInsert = ` #{` + variableName + '}'; // 삽입할 텍스트
+        $textarea.val(textBeforeCursor + textToInsert + textAfterCursor);
+
+        // 삽입한 텍스트 뒤로 커서를 이동
+        $textarea.prop("selectionStart", cursorPosition + textToInsert.length);
+        $textarea.prop("selectionEnd", cursorPosition + textToInsert.length);
+        $textarea.focus(); // 포커스를 다시 textarea로 이동
+        contentReplace();
+        modal.hide();
     });
     $('#goTemplateReg').on('click', function() {
         window.location.href = '/kakao/index.php?route=template'; // 이동할 URL을 여기에 입력하세요.
@@ -1570,15 +1589,37 @@ $(document).ready(function() {
         // 3. iconMap에 아이콘을 저장 (이미 존재하는 아이콘이면 덮어쓰기)
         iconMap[iconName] = url;
 
-        // 4. 현재 highlightTitle의 텍스트 업데이트
-        var currentText = $('#highlightTitle').val();
-        $('#highlightTitle').val(currentText + ' (' + iconName + ')');
+        var $textarea = $('#highlightTitle');
+        var cursorPosition = $textarea.prop("selectionStart"); // 커서의 시작 위치
+        var textBeforeCursor = $textarea.val().substring(0, cursorPosition); // 커서 앞의 텍스트
+        var textAfterCursor = $textarea.val().substring(cursorPosition); // 커서 뒤의 텍스트
 
-        // 5. previewHighlightTitle에 이미지 추가
-        var content = $('#previewHighlightTitle').html();
-        var img = `<img class="view-icon" src="${url}" alt="${iconName}" />`;
-        $('#previewHighlightTitle').html(content + img);
+        var textToInsert = ' (' + iconName + ')'; // 삽입할 텍스트
+        $textarea.val(textBeforeCursor + textToInsert + textAfterCursor);
 
+        // 삽입한 텍스트 뒤로 커서를 이동
+        $textarea.prop("selectionStart", cursorPosition + textToInsert.length);
+        $textarea.prop("selectionEnd", cursorPosition + textToInsert.length);
+        $textarea.focus(); // 포커스를 다시 textarea로 이동
+
+        // 5. textarea 내용을 줄바꿈을 <br>로 변환 후 처리
+        var content = $textarea.val().replace(/\n/g, '<br>');
+
+        // 6. 패턴을 인식하여 (곤란)(웃음) 등 여러 패턴을 찾아 처리
+        var pattern = /\(([^)]+)\)/g; // (패턴) 형태를 인식하는 정규식
+        var matches = content.match(pattern); // 모든 (패턴)을 찾음
+        if (matches) {
+            matches.forEach(function(match) {
+                var iconName = match.replace(/[()]/g, ''); // 괄호 제거
+
+                // 저장된 iconMap에서 아이콘 URL을 가져와서 치환
+                if (iconMap[iconName]) {
+                    var imgTag = `<img class="view-icon" src="${iconMap[iconName]}" alt="${iconName}" />`;
+                    content = content.replace(match, imgTag); // (패턴)을 <img>로 대체
+                }
+            });
+        }
+        $('#previewHighlightTitle').html(content);
         // 6. 팝업 닫기
         $('#kkoIconPopup').hide();
     });
@@ -1641,10 +1682,19 @@ $(document).ready(function() {
     // 특수문자 클릭 시 입력 필드에 삽입
     $(document).on('click', '.special-char', function() {
         var selectedChar = $(this).text();
-        var currentText = $('#highlightTitle').val();
-        $('#highlightTitle').val(currentText + selectedChar);
-        var content = $('#previewHighlightTitle').html();
-        $('#previewHighlightTitle').html(content+selectedChar);
+        var $textarea = $('#highlightTitle');
+        var cursorPosition = $textarea.prop("selectionStart"); // 커서의 시작 위치
+        var textBeforeCursor = $textarea.val().substring(0, cursorPosition); // 커서 앞의 텍스트
+        var textAfterCursor = $textarea.val().substring(cursorPosition); // 커서 뒤의 텍스트
+
+        var textToInsert = selectedChar; // 삽입할 텍스트
+        $textarea.val(textBeforeCursor + textToInsert + textAfterCursor);
+
+        // 삽입한 텍스트 뒤로 커서를 이동
+        $textarea.prop("selectionStart", cursorPosition + textToInsert.length);
+        $textarea.prop("selectionEnd", cursorPosition + textToInsert.length);
+        $textarea.focus(); // 포커스를 다시 textarea로 이동
+        contentReplace();
         $('#specialCharPopup').hide(); // 선택 후 팝업 닫기
     });
     // 새로운 input 필드 세트 추가
