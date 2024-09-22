@@ -246,10 +246,10 @@
             var selectedTemplateType = $('input[name="template_type"]:checked').val();
             var selectTemplateKey = $('input[name="template_key"]').val();
 
-            if (!selectedTemplateType) {
-                alert('템플릿 유형을 선택하세요');
-                return;
-            }
+            // if (!selectedTemplateType) {
+            //     alert('템플릿 유형을 선택하세요');
+            //     return;
+            // }
             if (!selectTemplateKey) {
                 alert('전송대상 템플릿 을 선택하세요');
                 return;

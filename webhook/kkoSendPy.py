@@ -19,6 +19,7 @@ db_config = {
 
 # API 설정
 api_base_url = os.getenv('API_BASE_URL')
+api_template_url = os.getenv('API_TEMPLATE_URL')
 api_endpoint = '/v3/A/leahue1/messages'
 api_url = f"{api_base_url}{api_endpoint}"  # 베이스 URL과 엔드포인트 결합
 headers = {
@@ -107,7 +108,7 @@ def process_data():
                     data = [{}]
                     try:
                         #
-                        template = requests.get(f"{api_base_url}{'/api/v1/leahue/template'}", headers=headers, json=templateLoad)
+                        template = requests.get(f"{api_template_url}{'/api/v1/leahue/template'}", headers=headers, json=templateLoad)
                         template.raise_for_status()
                         response_template = template.json()
 
