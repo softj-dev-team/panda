@@ -4,10 +4,10 @@ import json
 import time
 from dotenv import load_dotenv
 import os
-
+import logging
 # .env 파일에서 환경 변수 로드
 load_dotenv()
-
+logging.basicConfig(filename='app_log.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 # 데이터베이스 연결 설정
 db_config = {
     'host': os.getenv('DB_HOST'),
@@ -88,25 +88,119 @@ def process_data():
                     mb_kko_fee = get_mb_kko_fee(cursor, member_info_idx)
 
                     if mb_kko_fee is None:
-                        print(f"Member info not found or mb_kko_fee is missing for member_idx: {member_info_idx}")
+                        logging.warning(f"Member info not found or mb_kko_fee is missing for member_idx: {member_info_idx}")
                         continue
 
                     # API 전송을 위한 데이터 구성
-                    payload = json.dumps([
-                        {
-                            "custMsgSn": cust_msg_sn,
-                            "senderKey": result['fyellowid'],
-                            "phoneNum": result['fdestine'],
-                            "templateCode": result['ftemplatekey'],
-                            "message": result['fmessage']
-                        }
-                    ])
+                    payload ={
+                        "custMsgSn": cust_msg_sn,
+                        "senderKey": result['fyellowid'],
+                        "phoneNum": result['fdestine'],
+                        "templateCode": result['ftemplatekey'],
+                        "message": result['fmessage']
+                    }
+                    templateLoad ={
+                        "senderKey": result['fyellowid'],
+                        "templateCode": result['ftemplatekey'],
+                    }
 
+                    data = [{}]
                     try:
-                        response = requests.post(api_url, headers=headers, data=payload)
+                        #
+                        template = requests.get(f"{api_base_url}{'/api/v1/leahue/template'}", headers=headers, json=templateLoad)
+                        template.raise_for_status()
+                        response_template = template.json()
+
+                        # msgType 처리
+                        if response_template['data'].get('templateEmphasizeType') == "IMAGE":
+                            data[0]['msgType'] = 'AI'
+
+                        # 제목과 헤더 추가
+                        if 'templateTitle' in response_template['data']:
+                            data[0]['title'] = response_template['data']['templateTitle']
+
+                        if 'templateHeader' in response_template['data']:
+                            data[0]['header'] = response_template['data']['templateHeader']
+
+                        # ITEM_LIST 처리
+                        if response_template['data'].get('templateEmphasizeType') == 'ITEM_LIST':
+                            if 'templateItemHighlight' in response_template['data']:
+                                if 'title' in response_template['data']['templateItemHighlight']:
+                                    data[0]['itemHighlight'] = {'title': response_template['data']['templateItemHighlight']['title']}
+                                if 'description' in response_template['data']['templateItemHighlight']:
+                                    data[0]['itemHighlight']['description'] = response_template['data']['templateItemHighlight']['description']
+
+                            # 리스트 처리
+                            if 'list' in response_template['data']['templateItem']:
+                                item_list = []
+                                for template_item_list in response_template['data']['templateItem']['list']:
+                                    item = {}
+                                    if 'title' in template_item_list:
+                                        item['title'] = template_item_list['title']
+                                    if 'description' in template_item_list:
+                                        item['description'] = template_item_list['description']
+                                    item_list.append(item)
+                                data[0]['item'] = {'list': item_list}
+
+                            # 요약 처리
+                            if 'summary' in response_template['data']['templateItem']:
+                                summary_list = []
+                                for template_item_summary in response_template['data']['templateItem']['summary']:
+                                    summary = {}
+                                    if 'title' in template_item_summary:
+                                        summary['title'] = template_item_summary['title']
+                                    if 'description' in template_item_summary:
+                                        summary['description'] = template_item_summary['description']
+                                    summary_list.append(summary)
+                                data[0]['item']['summary'] = summary_list
+
+                        # 버튼 데이터 추가
+                        if 'buttons' in response_template['data']:
+                            button_list = []
+                            for button in response_template['data']['buttons']:
+                                button_data = {}
+                                if 'name' in button:
+                                    button_data['name'] = button['name']
+                                if 'linkType' in button:
+                                    button_data['type'] = button['linkType']
+                                if 'linkMo' in button:
+                                    button_data['url_mobile'] = button['linkMo']
+                                if 'linkPc' in button:
+                                    button_data['url_pc'] = button['linkPc']
+                                if 'linkIos' in button:
+                                    button_data['scheme_ios'] = button['linkIos']
+                                if 'linkAnd' in button:
+                                    button_data['scheme_android'] = button['linkAnd']
+                                button_list.append(button_data)
+                            data[0]['button'] = button_list
+
+                        # Quick Replies 데이터 추가
+                        if 'quickReplies' in response_template['data']:
+                            quick_reply_list = []
+                            for quick_reply in response_template['data']['quickReplies']:
+                                quick_reply_data = {}
+                                if 'name' in quick_reply:
+                                    quick_reply_data['name'] = quick_reply['name']
+                                if 'linkType' in quick_reply:
+                                    quick_reply_data['type'] = quick_reply['linkType']
+                                if 'linkMo' in quick_reply:
+                                    quick_reply_data['url_mobile'] = quick_reply['linkMo']
+                                if 'linkPc' in quick_reply:
+                                    quick_reply_data['url_pc'] = quick_reply['linkPc']
+                                if 'linkIos' in quick_reply:
+                                    quick_reply_data['scheme_ios'] = quick_reply['linkIos']
+                                if 'linkAnd' in quick_reply:
+                                    quick_reply_data['scheme_android'] = quick_reply['linkAnd']
+                                quick_reply_list.append(quick_reply_data)
+                            data[0]['quickReply'] = quick_reply_list
+
+                        # 데이터 처리 후 병합
+                        if isinstance(data[0], dict):
+                            payload.update(data[0])
+
+                        response = requests.post(api_url, headers=headers, json=payload)
                         response.raise_for_status()
                         response_data = response.json()
-
                         if response_data and isinstance(response_data, list) and len(response_data) > 0:
                             data = response_data[0]
 
@@ -139,23 +233,23 @@ def process_data():
                             ))
 
                         else:
-                            print(f"응답 데이터가 유효하지 않습니다: {response_data}")
+                           logging.error(f"응답 데이터가 유효하지 않습니다: {response_data}")
 
                     except requests.exceptions.RequestException as e:
-                        print(f"API 요청 중 오류 발생: {e}")
+                        logging.error(f"API 요청 중 오류 발생: {e}")
 
                 # 발송 건수가 2건 이상이고, 발송 성공 건수가 있는 경우 포인트 차감
                 if total_sent >= 2:
                     total_fee = total_sent * mb_kko_fee
                     update_point(cursor, member_info_idx, total_fee, f"알림톡 발송({total_sent}건)")
-                    print(f"{total_sent}건의 발송 성공에 대해 포인트 {total_fee} 차감 완료")
+                    logging.info(f"{total_sent}건의 발송 성공에 대해 포인트 {total_fee} 차감 완료")
 
                 connection.commit()
-                print(f"{batch_size}건의 API 요청 처리 및 데이터베이스 업데이트 완료")
+                logging.info(f"{batch_size}건의 API 요청 처리 및 데이터베이스 업데이트 완료")
             else:
-                print("fetc2 컬럼이 'AR'인 데이터를 찾을 수 없습니다.")
+                logging.info("fetc2 컬럼이 'AR'인 데이터를 찾을 수 없습니다.")
     except pymysql.MySQLError as e:
-        print(f"데이터베이스 작업 중 오류 발생: {e}")
+        logging.error(f"데이터베이스 작업 중 오류 발생: {e}")
     finally:
         connection.close()
 

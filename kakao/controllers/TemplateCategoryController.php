@@ -835,8 +835,7 @@ class TemplateCategoryController extends Controller
                 "senderKey" => $profileKey,
                 "templateCode" => $templateKey,
                 "message" => $message,
-                "phoneNum" => $fdestine,
-                "smsSndNum" => $fcallback,
+                "phoneNum" => $fdestine
 
         //            "receiveList" =>[
         //                [
@@ -898,6 +897,7 @@ class TemplateCategoryController extends Controller
         }
         if(isset($param['smssendyn']) && $param['smsmemo']){
             $smslength=strlen($param['smsmemo']);
+            $data[0]["smsSndNum" ]= $fcallback;
             if($smslength <= 90){
                 $data[0]["smsKind" ]= "S";
                 $data[0]["smsMessage" ]= $param['smsmemo'];
@@ -944,44 +944,44 @@ class TemplateCategoryController extends Controller
                 $data[0]['button'][] = $buttonData;
             }
         }
-        if(isset($template["data"]["buttons"])){
+        if(isset($template["data"]["quickReplies"])){
+            foreach ($template["data"]["quickReplies"] as $index => $puickRepliesData) {
+                // 각 버튼에 대해 처리할 버튼 데이터 배열 생성
+                $puickRepliesData = [];
 
+                // 버튼 이름 주입
+                if (isset($puickRepliesData['name'])) {
+                    $puickRepliesData['name'] = $puickRepliesData['name'];
+                }
+
+                // linkType에 따른 type 주입
+                if (isset($puickRepliesData['linkType'])) {
+                    $puickRepliesData['type'] = $puickRepliesData['linkType'];
+                }
+
+                // 모바일 URL 주입
+                if (isset($puickRepliesData['linkMo'])) {
+                    $puickRepliesData['url_mobile'] = $puickRepliesData['linkMo'];
+                }
+                // 모바일 URL 주입
+                if (isset($puickRepliesData['linkPc'])) {
+                    $puickRepliesData['url_pc'] = $puickRepliesData['linkPc'];
+                }
+                // iOS 스킴 주입
+                if (isset($puickRepliesData['linkIos'])) {
+                    $puickRepliesData['scheme_ios'] = $puickRepliesData['linkIos'];
+                }
+
+                // Android 스킴 주입
+                if (isset($puickRepliesData['linkAnd'])) {
+                    $puickRepliesData['scheme_android'] = $puickRepliesData['linkAnd'];
+                }
+
+                // 버튼 데이터를 $data 배열의 첫 번째 요소의 'button' 항목에 추가
+                $data[0]['quickReply'][] = $puickRepliesData;
+            }
         }
-        foreach ($template["data"]["quickReplies"] as $index => $puickRepliesData) {
-            // 각 버튼에 대해 처리할 버튼 데이터 배열 생성
-            $puickRepliesData = [];
 
-            // 버튼 이름 주입
-            if (isset($puickRepliesData['name'])) {
-                $puickRepliesData['name'] = $puickRepliesData['name'];
-            }
-
-            // linkType에 따른 type 주입
-            if (isset($puickRepliesData['linkType'])) {
-                $puickRepliesData['type'] = $puickRepliesData['linkType'];
-            }
-
-            // 모바일 URL 주입
-            if (isset($puickRepliesData['linkMo'])) {
-                $puickRepliesData['url_mobile'] = $puickRepliesData['linkMo'];
-            }
-            // 모바일 URL 주입
-            if (isset($puickRepliesData['linkPc'])) {
-                $puickRepliesData['url_pc'] = $puickRepliesData['linkPc'];
-            }
-            // iOS 스킴 주입
-            if (isset($puickRepliesData['linkIos'])) {
-                $puickRepliesData['scheme_ios'] = $puickRepliesData['linkIos'];
-            }
-
-            // Android 스킴 주입
-            if (isset($puickRepliesData['linkAnd'])) {
-                $puickRepliesData['scheme_android'] = $puickRepliesData['linkAnd'];
-            }
-
-            // 버튼 데이터를 $data 배열의 첫 번째 요소의 'button' 항목에 추가
-            $data[0]['quickReply'][] = $puickRepliesData;
-        }
         $apiResponse = $this->sendCurlRequest($url, $method, json_encode($data), $headers);
         $responseData = json_decode($apiResponse, true);
 
