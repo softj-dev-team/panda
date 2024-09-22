@@ -286,7 +286,7 @@
         $('input[name="variables[]"]').each(function() {
             var varName = $(this).data('varname');
             var varValue = $(this).val();
-            var regex = new RegExp('#{' + varName + '}', 'g');
+            var regex = new RegExp('\\#\\{' + varName + '\\}', 'g');
             filledTemplate = filledTemplate.replace(regex, varValue);
             templateContent = templateContent.replace(regex, varValue);
         });

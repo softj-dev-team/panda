@@ -850,7 +850,52 @@ class TemplateCategoryController extends Controller
             'Content-Type: application/json',
             'Authorization: Bearer F46CBA8E658BAC08965FD887B767CBC1',
         ];
+        if($template['data']['templateEmphasizeType']=="IMAGE"){
+            $data[0]['msgType']= 'AI';
+        }
+        if(isset($template['data']['templateTitle'])){
+            $data[0]['title']= $template['data']['templateTitle'];
+        }
+        if(isset($template['data']['templateHeader'])){
+            $data[0]['header']= $template['data']['templateHeader'];
+        }
+        if(isset($template['data']) && $template['data']['templateEmphasizeType']=='ITEM_LIST'){
 
+            if(isset($template['data']['templateItemHighlight'])){
+                if (isset($template['data']['templateItemHighlight']['title'])) {
+                    $data[0]['itemHighlight']['title'] = $template['data']['templateItemHighlight']['title'];
+                }
+                if (isset($template['data']['templateItemHighlight']['title'])) {
+                    $data[0]['itemHighlight']['description'] = $template['data']['templateItemHighlight']['description'];
+                }
+            }
+            if(isset($template['data']['templateItem']["list"])){
+                $ltemList = [];
+                foreach ($template["data"]["templateItem"]["list"] as $templateItemList) {
+
+                    if (isset($templateItemList['title'])) {
+                        $ltemList['title'] = $templateItemList['title'];
+                    }
+                    if (isset($templateItemList['description'])) {
+                        $ltemList['description'] = $templateItemList['description'];
+                    }
+                    $data[0]['item']['list'][] = $ltemList;
+                }
+            }
+            if(isset($template['data']['templateItem']["summary"])){
+                $summaryList = [];
+                foreach ($template["data"]["templateItem"]["summary"] as $templateItemSummary) {
+
+                    if (isset($templateItemSummary['title'])) {
+                        $summaryList['title'] = $templateItemSummary['title'];
+                    }
+                    if (isset($templateItemSummary['description'])) {
+                        $summaryList['description'] = $templateItemSummary['description'];
+                    }
+                    $data[0]['item']['summary'][] = $summaryList;
+                }
+            }
+        }
         if(isset($param['smssendyn']) && $param['smsmemo']){
             $smslength=strlen($param['smsmemo']);
             if($smslength <= 90){
@@ -862,42 +907,81 @@ class TemplateCategoryController extends Controller
             }
         }
         // 버튼 데이터 추가
-        foreach ($template["data"]["buttons"] as $index => $button) {
+        if(isset($template["data"]["buttons"])){
+            foreach ($template["data"]["buttons"] as $index => $button) {
+                // 각 버튼에 대해 처리할 버튼 데이터 배열 생성
+                $buttonData = [];
+
+                // 버튼 이름 주입
+                if (isset($button['name'])) {
+                    $buttonData['name'] = $button['name'];
+                }
+
+                // linkType에 따른 type 주입
+                if (isset($button['linkType'])) {
+                    $buttonData['type'] = $button['linkType'];
+                }
+
+                // 모바일 URL 주입
+                if (isset($button['linkMo'])) {
+                    $buttonData['url_mobile'] = $button['linkMo'];
+                }
+                // 모바일 URL 주입
+                if (isset($button['linkPc'])) {
+                    $buttonData['url_pc'] = $button['linkPc'];
+                }
+                // iOS 스킴 주입
+                if (isset($button['linkIos'])) {
+                    $buttonData['scheme_ios'] = $button['linkIos'];
+                }
+
+                // Android 스킴 주입
+                if (isset($button['linkAnd'])) {
+                    $buttonData['scheme_android'] = $button['linkAnd'];
+                }
+
+                // 버튼 데이터를 $data 배열의 첫 번째 요소의 'button' 항목에 추가
+                $data[0]['button'][] = $buttonData;
+            }
+        }
+        if(isset($template["data"]["buttons"])){
+
+        }
+        foreach ($template["data"]["quickReplies"] as $index => $puickRepliesData) {
             // 각 버튼에 대해 처리할 버튼 데이터 배열 생성
-            $buttonData = [];
+            $puickRepliesData = [];
 
             // 버튼 이름 주입
-            if (isset($button['name'])) {
-                $buttonData['name'] = $button['name'];
+            if (isset($puickRepliesData['name'])) {
+                $puickRepliesData['name'] = $puickRepliesData['name'];
             }
 
             // linkType에 따른 type 주입
-            if (isset($button['linkType'])) {
-                $buttonData['type'] = $button['linkType'];
+            if (isset($puickRepliesData['linkType'])) {
+                $puickRepliesData['type'] = $puickRepliesData['linkType'];
             }
 
             // 모바일 URL 주입
-            if (isset($button['linkMo'])) {
-                $buttonData['url_mobile'] = $button['linkMo'];
+            if (isset($puickRepliesData['linkMo'])) {
+                $puickRepliesData['url_mobile'] = $puickRepliesData['linkMo'];
             }
             // 모바일 URL 주입
-            if (isset($button['linkPc'])) {
-                $buttonData['url_pc'] = $button['linkPc'];
+            if (isset($puickRepliesData['linkPc'])) {
+                $puickRepliesData['url_pc'] = $puickRepliesData['linkPc'];
             }
             // iOS 스킴 주입
-            if (isset($button['linkIos'])) {
-                $buttonData['scheme_ios'] = $button['linkIos'];
+            if (isset($puickRepliesData['linkIos'])) {
+                $puickRepliesData['scheme_ios'] = $puickRepliesData['linkIos'];
             }
 
             // Android 스킴 주입
-            if (isset($button['linkAnd'])) {
-                $buttonData['scheme_android'] = $button['linkAnd'];
+            if (isset($puickRepliesData['linkAnd'])) {
+                $puickRepliesData['scheme_android'] = $puickRepliesData['linkAnd'];
             }
 
             // 버튼 데이터를 $data 배열의 첫 번째 요소의 'button' 항목에 추가
-            $data[0]['button'][] = $buttonData;
+            $data[0]['quickReply'][] = $puickRepliesData;
         }
-
         $apiResponse = $this->sendCurlRequest($url, $method, json_encode($data), $headers);
         $responseData = json_decode($apiResponse, true);
 

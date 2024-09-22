@@ -638,11 +638,17 @@ function loadTemplateDetails(templateId) {
                     $('.highlight-description-view').removeClass('blind')
                     $('.highlight-title-view').text(templateItemHighlight.title)
                     $('.highlight-description-view').text(templateItemHighlight.description)
-                    $('#HighlightThumbnailImg').attr('src', templateItemHighlight.imageUrl);
+                    if(templateItemHighlight.imageUrl){
+                        $('#HighlightThumbnailImg').attr('src', templateItemHighlight.imageUrl);
+                    }else{
+                        $('#HighlightThumbnailImg').hide()
+                    }
+
                 }else{
                     $('.highlight-box').addClass('blind')
                     $('.highlight-title-view').removeClass('blind')
                     $('.highlight-description-view').removeClass('blind')
+
                 }
                 // 버튼 배열을 순회하여 각 버튼을 생성하고 추가
                 let generatedButton = '';
