@@ -48,16 +48,15 @@ if ($sms_type == "mms") {
 	if ($sms_title) {
 		$sms_type = "lms";
 		$module_type = $my_member_row['lms_module_type'];
-	} else {
-		if ($sms_type == "sms") {
-			$module_type = $my_member_row['sms_module_type'];
-			if ($sms_content_length >= 90) {
-				$sms_type = "lms";
-				$module_type = $my_member_row['lms_module_type'];
-				$sms_title = mb_substr($sms_content, 0, 20);
-			}
-		}
 	}
+}
+if ($sms_type == "sms") {
+    $module_type = $my_member_row['sms_module_type'];
+    if ($sms_content_length >= 90) {
+        $sms_type = "lms";
+        $module_type = $my_member_row['lms_module_type'];
+        $sms_title = mb_substr($sms_content, 0, 20);
+    }
 }
 
 //echo "sms_type 2 = ".$sms_type."<br>";
