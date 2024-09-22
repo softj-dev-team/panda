@@ -45,19 +45,15 @@ $module_type = "";
 if ($sms_type == "mms") {
 	$module_type = $my_member_row['mms_module_type'];
 } else {
-	if ($sms_title) {
-		$sms_type = "lms";
-		$module_type = $my_member_row['lms_module_type'];
-        if ($sms_type == "sms") {
-            $module_type = $my_member_row['sms_module_type'];
+    if ($sms_type == "sms") {
+        $module_type = $my_member_row['sms_module_type'];
+        $sms_type = "sms";
+        if ($sms_content_length >= 90) {
             $sms_type = "lms";
-            if ($sms_content_length >= 90) {
-                $sms_type = "lms";
-                $module_type = $my_member_row['lms_module_type'];
-                $sms_title = mb_substr($sms_content, 0, 20);
-            }
+            $module_type = $my_member_row['lms_module_type'];
+            $sms_title = mb_substr($sms_content, 0, 20);
         }
-	}
+    }
 }
 
 
