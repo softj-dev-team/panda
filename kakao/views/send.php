@@ -179,17 +179,18 @@
                         </table>
 
                         <div class="fm-box">
-                            <input type="checkbox" id="f-chk-all" class="fm-chk"><label for="f-chk-all" class="fm-chk-i"><strong>대체문자 사용</strong></label>
+                            <input type="checkbox" id="f-chk-all" class="fm-chk" name="smssendyn"><label for="f-chk-all" class="fm-chk-i"><strong>대체문자 사용</strong></label>
                             <p>알림톡 발송이 실패 된 경우, 해당 내용을 문자로 대체 발송하여 누락을 방하는 기능입니다.</p>
+                        </div>
+                    </div>
+                    <div class="fm-row">
+                        <div class="fm-box">
+                            <textarea name="smsmemo" placeholder="내용을 입력해 주세요." id="f-des" class="fm-ta" data-chkarea="case1" class="guide-tab-cont" "></textarea>
                         </div>
                     </div>
                 </form>
 
-                <div class="fm-row">
-                    <div class="fm-box">
-                        <textarea name="smsmemo" placeholder="내용을 입력해 주세요." id="f-des" class="fm-ta" data-chkarea="case1" class="guide-tab-cont" "></textarea>
-                    </div>
-                </div>
+
                 <div class="btn-wrap flex-c">
                     <a href="#none" id="sendMessagesButton" class="btn-t-2 btn-c-2">발송하기</a>
                 </div>

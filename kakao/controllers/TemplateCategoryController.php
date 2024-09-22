@@ -446,16 +446,16 @@ class TemplateCategoryController extends Controller
                     ];
                     // 버튼 종류에 따라 추가 필드를 설정
                     if (!empty($_POST['quickReplies_linkMo'][$index])) {
-                        $button['linkMo'] = $_POST['quickReplies_linkMo'][$index];              // 모바일 링크
+                        $quickReplie['linkMo'] = $_POST['quickReplies_linkMo'][$index];              // 모바일 링크
                     }
                     if (!empty($_POST['quickReplies_linkPc'][$index])) {
-                        $button['linkPc'] = $_POST['quickReplies_linkPc'][$index];
+                        $quickReplie['linkPc'] = $_POST['quickReplies_linkPc'][$index];
                     }
                     if (!empty($_POST['quickReplies_linkAnd'][$index])) {
-                        $button['linkAnd'] = $_POST['quickReplies_linkAnd'][$index];
+                        $quickReplie['linkAnd'] = $_POST['quickReplies_linkAnd'][$index];
                     }
                     if (!empty($_POST['quickReplies_linkIos'][$index])) {
-                        $button['linkIos'] = $_POST['quickReplies_linkIos'][$index];
+                        $quickReplie['linkIos'] = $_POST['quickReplies_linkIos'][$index];
                     }
 
                     $quickReplies[] = $quickReplie;  // 버튼 추가
@@ -589,6 +589,13 @@ class TemplateCategoryController extends Controller
                     foreach ($buttons as $index => $button) {
                         foreach ($button as $key => $value) {
                             $data["buttons[$index].$key"] = $value; // API 요청 포맷에 맞게 배열을 구성
+                        }
+                    }
+                }
+                if (!empty($quickReplies)) {
+                    foreach ($quickReplies as $index => $quickReplies) {
+                        foreach ($quickReplie as $key => $value) {
+                            $data["quickReplies[$index].$key"] = $value; // API 요청 포맷에 맞게 배열을 구성
                         }
                     }
                 }
@@ -817,15 +824,20 @@ class TemplateCategoryController extends Controller
     // Alimtalk 메시지 전송 요청 메서드
     private function sendAlimtalkRequest($message,$fdestine, $fcallback, $profileKey, $templateKey,$param)
     {
+
+        $template = $this->getTemplateForAPI($profileKey,$templateKey);
+
         $url = 'https://wt-api.carrym.com:8443/v3/A/leahue1/messages';
         $method = 'POST';
         $data = [
             [
                 "custMsgSn" => 'F46CBA8E658BAC08965FD887B767CBC1',
-                    "senderKey" => $profileKey,
-                    "templateCode" => $templateKey,
-                    "message" => $message,
-                    "phoneNum" => $fdestine,
+                "senderKey" => $profileKey,
+                "templateCode" => $templateKey,
+                "message" => $message,
+                "phoneNum" => $fdestine,
+                "smsSndNum" => $fcallback,
+
         //            "receiveList" =>[
         //                [
         //                    "receiveNum" => $fdestine,
@@ -839,11 +851,75 @@ class TemplateCategoryController extends Controller
             'Authorization: Bearer F46CBA8E658BAC08965FD887B767CBC1',
         ];
 
+        if(isset($param['smssendyn']) && $param['smsmemo']){
+            $smslength=strlen($param['smsmemo']);
+            if($smslength <= 90){
+                $data[0]["smsKind" ]= "S";
+                $data[0]["smsMessage" ]= $param['smsmemo'];
+            }else{
+                $data[0]["smsKind" ]= "L";
+                $data[0]["lmsMessage" ]= $param['smsmemo'];
+            }
+        }
+        // 버튼 데이터 추가
+        foreach ($template["data"]["buttons"] as $index => $button) {
+            // 각 버튼에 대해 처리할 버튼 데이터 배열 생성
+            $buttonData = [];
+
+            // 버튼 이름 주입
+            if (isset($button['name'])) {
+                $buttonData['name'] = $button['name'];
+            }
+
+            // linkType에 따른 type 주입
+            if (isset($button['linkType'])) {
+                $buttonData['type'] = $button['linkType'];
+            }
+
+            // 모바일 URL 주입
+            if (isset($button['linkMo'])) {
+                $buttonData['url_mobile'] = $button['linkMo'];
+            }
+            // 모바일 URL 주입
+            if (isset($button['linkPc'])) {
+                $buttonData['url_pc'] = $button['linkPc'];
+            }
+            // iOS 스킴 주입
+            if (isset($button['linkIos'])) {
+                $buttonData['scheme_ios'] = $button['linkIos'];
+            }
+
+            // Android 스킴 주입
+            if (isset($button['linkAnd'])) {
+                $buttonData['scheme_android'] = $button['linkAnd'];
+            }
+
+            // 버튼 데이터를 $data 배열의 첫 번째 요소의 'button' 항목에 추가
+            $data[0]['button'][] = $buttonData;
+        }
+
         $apiResponse = $this->sendCurlRequest($url, $method, json_encode($data), $headers);
         $responseData = json_decode($apiResponse, true);
 
 
         return $responseData;
+
+    }
+    public function getTemplateForAPI($profile_key=null,$template_key=null)
+    {
+        $url = 'https://wt-api.carrym.com:8445/api/v1/leahue/template';
+
+        $data = [
+            'senderKey' => $profile_key,
+            'templateCode' => $template_key
+        ];
+        $headers = [
+            'Content-Type: application/json'
+        ];
+        // 파일 전송 요청
+        $response = $this->sendCurlRequest($url, 'GET', $data, $headers);
+        $responseDecoded = json_decode($response, true);
+        return $responseDecoded;
 
     }
     public function sendMessage()
@@ -904,7 +980,7 @@ class TemplateCategoryController extends Controller
                 $message = $_POST['message'];
                 $profileKey = $_POST['profile_key'];
                 $templateKey = $_POST['template_key'];
-                $responseData = $this->sendAlimtalkRequest($message,$fdestine, $fcallback, $profileKey, $templateKey,null);
+                $responseData = $this->sendAlimtalkRequest($message,$fdestine, $fcallback, $profileKey, $templateKey,$_POST);
 
                 if (isset($responseData[0]['code'])) {
                     $code = $responseData[0]['code'];

@@ -247,7 +247,7 @@ function updateButtonList(type) {
         if (item.linkType === 'AC') {
             channelButtonItem = $(`
                 <span class="kko-sub-text">채널 추가하고 이 채널의 마케팅 메시지 등을 카카오톡으로 받기</span>
-                <button class="generated-button addCh">${item.name}</button>
+                <button class="generated-button addCh">체널추가</button>
             `);
 
             buttonList.prepend(buttonItem); // 채널 추가 버튼 맨 위로
@@ -645,12 +645,23 @@ function loadTemplateDetails(templateId) {
                     $('.highlight-description-view').removeClass('blind')
                 }
                 // 버튼 배열을 순회하여 각 버튼을 생성하고 추가
+                let generatedButton = '';
+                // 기존의 kko-sub-text 및 generated-button 요소 제거
+                $('.kko-sub-text').remove();
+                $('.generated-button').remove();
                 $.each(template.apiRespone.buttons, function(index, button) {
                     // 각 버튼의 이름을 사용하여 버튼을 생성
-                    const generatedButton = $(`<button class="generated-button ${button.linkType=='AC'?'addCh':'jss2034'}">${button.name}</button>`);
 
-                    // #previewHighlightSubtitle 이전에 버튼 추가
-                    $('#previewHighlightSubtitle').after(generatedButton);
+                    generatedButton='';
+                    if (button.linkType == 'AC') {
+                        generatedButton = $(`<span class="kko-sub-text">채널 추가하고 이 채널의 마케팅 메시지 등을 카카오톡으로 받기</span><button class="generated-button ${button.linkType == 'AC' ? 'addCh' : 'jss2034'}">${button.name}</button>`);
+                        // AC 타입 버튼은 맨 위로 추가
+                        $('#previeButtonList').prepend(generatedButton);
+                    } else {
+                        generatedButton = $(`<button class="generated-button ${button.linkType == 'AC' ? 'addCh' : 'jss2034'}">${button.name}</button>`);
+                        // 다른 버튼들은 기존 방식대로 추가
+                        $('#previeButtonList').after(generatedButton);
+                    }
                 });
 
                 $('#previewHighlightTitle').html(templateTitle);
@@ -1356,7 +1367,7 @@ $(document).ready(function() {
             success: function(response) {
                 if (response.success) {
                     alert("템플릿이 성공적으로 등록되었습니다.");
-                    $('#requestTemplate')[0].reset();
+                    windows.location.href='index.php?route=templateList'
                 } else {
                     if (response.code === '505') {
                         alert("오류: " + response.message);
@@ -1376,22 +1387,22 @@ $(document).ready(function() {
         });
     });
 
-    var modal = $('#profileModal');
+    var profileModal = $('#profileModal');
     var span = $('.close');
 
     $('.addChild').on('click', function() {
-        modal.show();
+        profileModal.show();
         loadProfileCategory();
         loadProfiles();
     });
 
     span.on('click', function() {
-        modal.hide();
+        profileModal.hide();
     });
 
     $(window).on('click', function(event) {
-        if ($(event.target).is(modal)) {
-            modal.hide();
+        if ($(event.target).is(profileModal)) {
+            profileModal.hide();
         }
     });
 

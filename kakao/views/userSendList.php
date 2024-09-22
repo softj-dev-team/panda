@@ -62,7 +62,7 @@
 
 <script>
     loadDataList();
-    const statusMapping = {
+    const sendStatusMapping = {
         'AS': '알림톡/친구톡 발송 성공',
         'AF': '알림톡/친구톡 발송 실패',
         'SS': '문자 발송 성공',
@@ -103,7 +103,7 @@
                         <td class="truncated-message" title="${data.fmessage}">
                             ${truncatedMessage}
                         </td>
-                        <td>${statusMapping[data.fetc2]}</td>
+                        <td>${sendStatusMapping[data.fetc2]}</td>
                     </tr>`;
                         table.append(row);
                     });
