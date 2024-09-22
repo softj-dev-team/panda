@@ -100,15 +100,17 @@ def process_data():
                         "templateCode": result['ftemplatekey'],
                         "message": result['fmessage']
                     }
+
                     templateLoad ={
                         "senderKey": result['fyellowid'],
                         "templateCode": result['ftemplatekey'],
+
                     }
 
                     data = [{}]
                     try:
                         #
-                        template = requests.get(f"{api_template_url}{'/api/v1/leahue/template'}", headers=headers, json=templateLoad)
+                        template = requests.get(f"{api_template_url}{'/api/v1/leahue/template'}", headers=headers, params=templateLoad)
                         template.raise_for_status()
                         response_template = template.json()
 
@@ -199,7 +201,7 @@ def process_data():
                         if isinstance(data[0], dict):
                             payload.update(data[0])
 
-                        response = requests.post(api_url, headers=headers, json=payload)
+                        response = requests.post(api_url, headers=headers, data=json.dumps([payload]))
                         response.raise_for_status()
                         response_data = response.json()
                         if response_data and isinstance(response_data, list) and len(response_data) > 0:
