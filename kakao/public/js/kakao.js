@@ -1373,7 +1373,7 @@ $(document).ready(function() {
             success: function(response) {
                 if (response.success) {
                     alert("템플릿이 성공적으로 등록되었습니다.");
-                    windows.location.href='index.php?route=templateList'
+                    window.location.href = 'index.php?route=templateList';
                 } else {
                     if (response.code === '505') {
                         alert("오류: " + response.message);
