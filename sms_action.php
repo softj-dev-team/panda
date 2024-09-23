@@ -1,13 +1,16 @@
-<? include $_SERVER["DOCUMENT_ROOT"] . "/pro_inc/include_default.php"; // 공통함수 인클루드 
+<?php include $_SERVER["DOCUMENT_ROOT"] . "/pro_inc/include_default.php"; // 공통함수 인클루드
 ?>
-<? include $_SERVER["DOCUMENT_ROOT"] . "/pro_inc/check_login_frame.php"; // 공통함수 인클루드 
+<?php include $_SERVER["DOCUMENT_ROOT"] . "/pro_inc/check_login_frame.php"; // 공통함수 인클루드
 ?>
-<?
+<?php
 /*echo "<xmp>";
 		print_r($_REQUEST);
 	echo "</xmp>";
 	exit;*/
-
+function normalizeNewlines($string) {
+    // Windows 스타일 줄바꿈 \r\n을 Unix 스타일 \n으로 통일
+    return str_replace("\r\n", "\n", $string);
+}
 $send_type = trim(sqlfilter($_REQUEST['send_type']));
 $sms_type = trim(sqlfilter($_REQUEST['sms_type']));
 $sms_category = trim(sqlfilter($_REQUEST['sms_category']));
@@ -18,6 +21,8 @@ $file_idx_cp = trim(sqlfilter($_REQUEST['file_idx_cp']));
 $member_idx = $_SESSION['member_coinc_idx'];
 $sms_title = trim(sqlfilter($_REQUEST['sms_title']));
 $sms_content = trim(sqlfilter($_REQUEST['sms_content']));
+$sms_content = trim(sqlfilter($_REQUEST['sms_content']));
+$sms_content_ori = normalizeNewlines($_REQUEST['sms_content']);
 $division_yn = trim(sqlfilter($_REQUEST['division_yn']));
 $division_cnt = trim(sqlfilter($_REQUEST['division_cnt']));
 $division_min = trim(sqlfilter($_REQUEST['division_min']));
@@ -35,7 +40,7 @@ if ($send_type == "adv" && $transmit_type == "send") {
 }
 
 $sms_content_length = mb_strwidth($sms_content, "UTF-8");
-
+$sms_content_strlen = strlen($sms_content_ori);
 /*echo "sms_type = ".$sms_type."<br>";
 	echo "sms_title = ".$sms_title."<br>";
 	echo "sms_content_length = ".$sms_content_length."<br>";*/
@@ -47,8 +52,8 @@ if ($sms_type == "mms") {
 } else {
     if ($sms_type == "sms") {
         $module_type = $my_member_row['sms_module_type'];
-        $sms_type = "sms";
-        if ($sms_content_length >= 90) {
+
+        if ($sms_content_strlen > 90) {
             $sms_type = "lms";
             $module_type = $my_member_row['lms_module_type'];
             $sms_title = mb_substr($sms_content, 0, 20);
