@@ -53,7 +53,7 @@ if ($sms_type == "mms") {
     if ($sms_type == "sms") {
         $module_type = $my_member_row['sms_module_type'];
 
-        if ($sms_content_strlen > 90) {
+        if ($sms_content_length > 90) {
             $sms_type = "lms";
             $module_type = $my_member_row['lms_module_type'];
             $sms_title = mb_substr($sms_content, 0, 20);
