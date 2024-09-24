@@ -176,6 +176,7 @@ if ($_FILES['file_add']['size'] > 0) { // 파일이 있다면 업로드한다 �
 ########## 문자 전송 테이블에 insert 시작 ##############
 if ($transmit_type == "send") {
 	$receive_cell_num_arr = $_REQUEST['receive_cell_num_arr'];
+    $base_time = new DateTime(); // 현재 시간
 
 	for ($i = 0; $i < sizeof($receive_cell_num_arr); $i++) { // 수신자 루프 시작 
 		$cell = $receive_cell_num_arr[$i];
@@ -205,71 +206,72 @@ if ($transmit_type == "send") {
 
 		$save_cell_idx = mysqli_insert_id($gconnet);
 
-		if ($reserv_yn == "Y") {
-			$fsenddate = $reserv_date . " " . $reserv_time . ":" . $reserv_minute . ":00";
-		}
+        if ($reserv_yn == "Y") {
+            // 예약 시간 사용 (예약 시작 시간 설정)
+            $base_time = new DateTime($reserv_date . " " . $reserv_time . ":" . $reserv_minute . ":00");
+        } else {
+            // 현재 시간 사용
+            $base_time = new DateTime();
+        }
 
+        // 기본적으로 현재 시간을 기준으로 분 단위로 계산
+        if ($division_yn == 'Y') {
+            // 루프 인덱스에 따라 $division_min 단위로 시간 증가
+            $send_time = clone $base_time;
+            // 현재 인덱스($i + 1)가 $division_cnt를 넘으면 division_min * ceil(($i + 1) / $division_cnt) 만큼 시간이 추가됨
+            $send_time->modify("+" . ($division_min * ceil(($i + 1) / $division_cnt)) . " minutes");
+            $fsenddate = $send_time->format('Y-m-d H:i:s');
+        } else {
+            // 예약 시간 있는 경우 그대로, 없는 경우 now()
+            $fsenddate = ($reserv_yn == "Y") ? $base_time->format('Y-m-d H:i:s') : "now()";
+        }
 		if ($sms_type == "sms") { // 단문 
 			if ($my_member_row["sms_module_type"] == "LG") {
 				$fmsgtype = "0";
-				if ($reserv_yn == "Y") {
-					$sql_sms_send = "INSERT INTO TBL_SEND_TRAN (fmsgtype, fmessage, fsenddate, fdestine, fcallback,fetc1, fetc4) VALUES ('" . $fmsgtype . "','" . $sms_content . "','" . $fsenddate . "','" . $cell . "','" . $cell_send . "','" . $save_cell_idx . "', '301230126')";
-				} else {
-					$sql_sms_send = "INSERT INTO TBL_SEND_TRAN (fmsgtype, fmessage, fsenddate, fdestine, fcallback,fetc1, fetc4) VALUES ('" . $fmsgtype . "','" . $sms_content . "',now(),'" . $cell . "','" . $cell_send . "','" . $save_cell_idx . "', '301230126')";
-				}
+
+                $sql_sms_send = "INSERT INTO TBL_SEND_TRAN (fmsgtype, fmessage, fsenddate, fdestine, fcallback,fetc1, fetc4) VALUES ('" . $fmsgtype . "','" . $sms_content . "','" . $fsenddate . "','" . $cell . "','" . $cell_send . "','" . $save_cell_idx . "', '301230126')";
+
 			} else if ($my_member_row["sms_module_type"] == "JUD1") {
 				$fmsgtype = "0";
-				if ($reserv_yn == "Y") {
-					$sql_sms_send = "INSERT INTO SMS_MAIN_AGENT_JUD1 (MSG_TYPE, S_MSG, REQUESTDT, RESERVE, RESERVETIME, S_PHONE, S_CALLBACK ,S_ETC1, S_ETC6) VALUES 
-					('" . $fmsgtype . "','" . $sms_content . "',now(), 'Y', '" . $fsenddate . "','" . $cell . "','" . $cell_send . "','" . $save_cell_idx . "', '301230126')";
-				} else {
-					$sql_sms_send = "INSERT INTO SMS_MAIN_AGENT_JUD1 (MSG_TYPE, S_MSG, REQUESTDT, S_PHONE, S_CALLBACK,S_ETC1, S_ETC6) VALUES ('" . $fmsgtype . "','" . $sms_content . "',now(),'" . $cell . "','" . $cell_send . "','" . $save_cell_idx . "', '301230126')";
-				}
+
+                $sql_sms_send = "INSERT INTO SMS_MAIN_AGENT_JUD1 (MSG_TYPE, S_MSG, REQUESTDT, RESERVE, RESERVETIME, S_PHONE, S_CALLBACK ,S_ETC1, S_ETC6) VALUES 
+                ('" . $fmsgtype . "','" . $sms_content . "',now(), 'Y', '" . $fsenddate . "','" . $cell . "','" . $cell_send . "','" . $save_cell_idx . "', '301230126')";
+
 			} else if ($my_member_row["sms_module_type"] == "JUD2") {
 				$fmsgtype = "0";
-				if ($reserv_yn == "Y") {
-					$sql_sms_send = "INSERT INTO SMS_MAIN_AGENT_JUD2 (MSG_TYPE, S_MSG, REQUESTDT, RESERVE, RESERVETIME, S_PHONE, S_CALLBACK ,S_ETC1, S_ETC6) VALUES 
-					('" . $fmsgtype . "','" . $sms_content . "',now(), 'Y', '" . $fsenddate . "','" . $cell . "','" . $cell_send . "','" . $save_cell_idx . "', '301230126')";
-				} else {
-					$sql_sms_send = "INSERT INTO SMS_MAIN_AGENT_JUD2 (MSG_TYPE, S_MSG, REQUESTDT, S_PHONE, S_CALLBACK,S_ETC1, S_ETC6) VALUES ('" . $fmsgtype . "','" . $sms_content . "',now(),'" . $cell . "','" . $cell_send . "','" . $save_cell_idx . "', '301230126')";
-				}
+
+                $sql_sms_send = "INSERT INTO SMS_MAIN_AGENT_JUD2 (MSG_TYPE, S_MSG, REQUESTDT, RESERVE, RESERVETIME, S_PHONE, S_CALLBACK ,S_ETC1, S_ETC6) VALUES 
+                ('" . $fmsgtype . "','" . $sms_content . "',now(), 'Y', '" . $fsenddate . "','" . $cell . "','" . $cell_send . "','" . $save_cell_idx . "', '301230126')";
+
 			}
 		} elseif ($sms_type == "lms") { // 장문 
 
 			if ($my_member_row["lms_module_type"] == "LG") {
 				$fmsgtype = "2";
-				if ($reserv_yn == "Y") {
-					$sql_sms_send = "INSERT INTO TBL_SEND_TRAN (fmsgtype, fsubject, fmessage, fsenddate, fdestine, fcallback,fetc1, fetc4) VALUES ('" . $fmsgtype . "','" . $sms_title . "','" . $sms_content . "','" . $fsenddate . "','" . $cell . "','" . $cell_send . "','" . $save_cell_idx . "' , '301230126')";
-				} else {
-					$sql_sms_send = "INSERT INTO TBL_SEND_TRAN (fmsgtype, fsubject, fmessage, fsenddate, fdestine, fcallback,fetc1, fetc4) VALUES ('" . $fmsgtype . "','" . $sms_title . "','" . $sms_content . "',now(),'" . $cell . "','" . $cell_send . "','" . $save_cell_idx . "' , '301230126')";
-				}
+
+                $sql_sms_send = "INSERT INTO TBL_SEND_TRAN (fmsgtype, fsubject, fmessage, fsenddate, fdestine, fcallback,fetc1, fetc4) VALUES ('" . $fmsgtype . "','" . $sms_title . "','" . $sms_content . "','" . $fsenddate . "','" . $cell . "','" . $cell_send . "','" . $save_cell_idx . "' , '301230126')";
+
 			} else if ($my_member_row["lms_module_type"] == "JUD1") {
 				$fmsgtype = "1";
-				if ($reserv_yn == "Y") {
-					$sql_sms_send = "INSERT INTO SMS_MAIN_AGENT_JUD1 (MSG_TYPE, S_MSG, S_TEXT, REQUESTDT, RESERVE, RESERVETIME, S_PHONE, S_CALLBACK ,S_ETC1, S_ETC6) VALUES 
-					('" . $fmsgtype . "','" . $sms_title . "','" . $sms_content . "',now(), 'Y', '" . $fsenddate . "','" . $cell . "','" . $cell_send . "','" . $save_cell_idx . "', '301230126')";
-				} else {
-					$sql_sms_send = "INSERT INTO SMS_MAIN_AGENT_JUD1 (MSG_TYPE, S_MSG, S_TEXT, REQUESTDT, S_PHONE, S_CALLBACK,S_ETC1, S_ETC6) VALUES ('" . $fmsgtype . "','" . $sms_title . "','" . $sms_content . "',now(),'" . $cell . "','" . $cell_send . "','" . $save_cell_idx . "', '301230126')";
-				}
+
+                $sql_sms_send = "INSERT INTO SMS_MAIN_AGENT_JUD1 (MSG_TYPE, S_MSG, S_TEXT, REQUESTDT, RESERVE, RESERVETIME, S_PHONE, S_CALLBACK ,S_ETC1, S_ETC6) VALUES 
+                ('" . $fmsgtype . "','" . $sms_title . "','" . $sms_content . "',now(), 'Y', '" . $fsenddate . "','" . $cell . "','" . $cell_send . "','" . $save_cell_idx . "', '301230126')";
+
 			} else if ($my_member_row["lms_module_type"] == "JUD2") {
 				$fmsgtype = "1";
-				if ($reserv_yn == "Y") {
-					$sql_sms_send = "INSERT INTO SMS_MAIN_AGENT_JUD2 (MSG_TYPE, S_MSG, S_TEXT, REQUESTDT, RESERVE, RESERVETIME, S_PHONE, S_CALLBACK ,S_ETC1, S_ETC6) VALUES 
-					('" . $fmsgtype . "','" . $sms_title . "','" . $sms_content . "',now(), 'Y', '" . $fsenddate . "','" . $cell . "','" . $cell_send . "','" . $save_cell_idx . "', '301230126')";
-				} else {
-					$sql_sms_send = "INSERT INTO SMS_MAIN_AGENT_JUD2 (MSG_TYPE, S_MSG, S_TEXT, REQUESTDT, S_PHONE, S_CALLBACK,S_ETC1, S_ETC6) VALUES ('" . $fmsgtype . "','" . $sms_title . "','" . $sms_content . "',now(),'" . $cell . "','" . $cell_send . "','" . $save_cell_idx . "', '301230126')";
-				}
+
+                $sql_sms_send = "INSERT INTO SMS_MAIN_AGENT_JUD2 (MSG_TYPE, S_MSG, S_TEXT, REQUESTDT, RESERVE, RESERVETIME, S_PHONE, S_CALLBACK ,S_ETC1, S_ETC6) VALUES 
+                ('" . $fmsgtype . "','" . $sms_title . "','" . $sms_content . "',now(), 'Y', '" . $fsenddate . "','" . $cell . "','" . $cell_send . "','" . $save_cell_idx . "', '301230126')";
+
 			}
 		} elseif ($sms_type == "mms") { // 이미지 
 
 			if ($my_member_row["lms_module_type"] == "LG") {
 				$fmsgtype = "3";
 				$ffilepath = $_P_DIR_FILE2 . $file_c;
-				if ($reserv_yn == "Y") {
-					$sql_sms_send = "INSERT INTO TBL_SEND_TRAN (fmsgtype, fsubject, fmessage, fsenddate, fdestine, fcallback, ffilepath,fetc1, fetc4) VALUES ('" . $fmsgtype . "','" . $sms_title . "','" . $sms_content . "','" . $fsenddate . "','" . $cell . "','" . $cell_send . "','" . $ffilepath . "','" . $save_cell_idx . "', '301230126')";
-				} else {
-					$sql_sms_send = "INSERT INTO TBL_SEND_TRAN (fmsgtype, fsubject, fmessage, fsenddate, fdestine, fcallback, ffilepath,fetc1, fetc4) VALUES ('" . $fmsgtype . "','" . $sms_title . "','" . $sms_content . "',now(),'" . $cell . "','" . $cell_send . "','" . $ffilepath . "','" . $save_cell_idx . "', '301230126')";
-				}
+
+                $sql_sms_send = "INSERT INTO TBL_SEND_TRAN (fmsgtype, fsubject, fmessage, fsenddate, fdestine, fcallback, ffilepath,fetc1, fetc4) VALUES ('" . $fmsgtype . "','" . $sms_title . "','" . $sms_content . "','" . $fsenddate . "','" . $cell . "','" . $cell_send . "','" . $ffilepath . "','" . $save_cell_idx . "', '301230126')";
+
 			} else if ($my_member_row["lms_module_type"] == "JUD1") {
 				$fmsgtype = "1";
 				$file_cnt = 0;
@@ -280,12 +282,10 @@ if ($transmit_type == "send") {
 					$ffilepath = "";
 					$file_cnt = 0;
 				}
-				if ($reserv_yn == "Y") {
-					$sql_sms_send = "INSERT INTO SMS_MAIN_AGENT_JUD1 (MSG_TYPE, S_MSG, S_TEXT, REQUESTDT,RESERVE, RESERVETIME, S_PHONE, S_CALLBACK,FILE_PATH1,S_ETC1, S_ETC6, FILE_CNT) VALUES 
-					('" . $fmsgtype . "','" . $sms_title . "','" . $sms_content . "',now(), 'Y', '" . $fsenddate . "','" . $cell . "','" . $cell_send . "','" . $ffilepath . "','" . $save_cell_idx . "', '301230126', " . $file_cnt . ")";
-				} else {
-					$sql_sms_send = "INSERT INTO SMS_MAIN_AGENT_JUD1 (MSG_TYPE, S_MSG, S_TEXT, REQUESTDT, S_PHONE, S_CALLBACK,FILE_PATH1,S_ETC1, S_ETC6, FILE_CNT) VALUES ('" . $fmsgtype . "','" . $sms_title . "','" . $sms_content . "',now(),'" . $cell . "','" . $cell_send . "','" . $ffilepath . "','" . $save_cell_idx . "', '301230126', " . $file_cnt . ")";
-				}
+
+                $sql_sms_send = "INSERT INTO SMS_MAIN_AGENT_JUD1 (MSG_TYPE, S_MSG, S_TEXT, REQUESTDT,RESERVE, RESERVETIME, S_PHONE, S_CALLBACK,FILE_PATH1,S_ETC1, S_ETC6, FILE_CNT) VALUES 
+                ('" . $fmsgtype . "','" . $sms_title . "','" . $sms_content . "',now(), 'Y', '" . $fsenddate . "','" . $cell . "','" . $cell_send . "','" . $ffilepath . "','" . $save_cell_idx . "', '301230126', " . $file_cnt . ")";
+
 			} else if ($my_member_row["lms_module_type"] == "JUD2") {
 				$fmsgtype = "1";
 				$file_cnt = 0;
@@ -296,12 +296,10 @@ if ($transmit_type == "send") {
 					$ffilepath = "";
 					$file_cnt = 0;
 				}
-				if ($reserv_yn == "Y") {
-					$sql_sms_send = "INSERT INTO SMS_MAIN_AGENT_JUD2 (MSG_TYPE, S_MSG, S_TEXT, REQUESTDT,RESERVE, RESERVETIME, S_PHONE, S_CALLBACK,FILE_PATH1,S_ETC1, S_ETC6, FILE_CNT) VALUES 
-					('" . $fmsgtype . "','" . $sms_title . "','" . $sms_content . "',now(), 'Y', '" . $fsenddate . "','" . $cell . "','" . $cell_send . "','" . $ffilepath . "','" . $save_cell_idx . "', '301230126', " . $file_cnt . ")";
-				} else {
-					$sql_sms_send = "INSERT INTO SMS_MAIN_AGENT_JUD2 (MSG_TYPE, S_MSG, S_TEXT, REQUESTDT, S_PHONE, S_CALLBACK,FILE_PATH1 ,S_ETC1, S_ETC6, FILE_CNT) VALUES ('" . $fmsgtype . "','" . $sms_title . "','" . $sms_content . "',now(),'" . $cell . "','" . $cell_send . "','" . $ffilepath . "','" . $save_cell_idx . "', '301230126' , " . $file_cnt . ")";
-				}
+
+                $sql_sms_send = "INSERT INTO SMS_MAIN_AGENT_JUD2 (MSG_TYPE, S_MSG, S_TEXT, REQUESTDT,RESERVE, RESERVETIME, S_PHONE, S_CALLBACK,FILE_PATH1,S_ETC1, S_ETC6, FILE_CNT) VALUES 
+                ('" . $fmsgtype . "','" . $sms_title . "','" . $sms_content . "',now(), 'Y', '" . $fsenddate . "','" . $cell . "','" . $cell_send . "','" . $ffilepath . "','" . $save_cell_idx . "', '301230126', " . $file_cnt . ")";
+
 			}
 		} // 단문, 장문, 이미지 모두 종료 
 

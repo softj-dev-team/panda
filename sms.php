@@ -38,7 +38,38 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
 
     <!--content-->
 
+    <!-- 레이어 팝업 -->
+    <div id="popupLayer" class="popup-layer" style="display:none;">
+        <div class="popup-content popcontent">
+            <div class="poptitle flex-just-end">
+                <button onclick="closePopup()"><img src="images/popup/close.svg"></button>
+            </div>
+            <h2>메세지 전송 결과</h2>
+            <div class="tlb center">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>메세지 형식</th>
+                        <th>전송요청 수</th>
+                        <th>전체발송 수</th>
+                        <th>중복번호 수</th>
+<!--                        <th>수신거부 수</th>-->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><span id="resultMsgType">단문</span></td>
+                        <td><span id="resultSendCnt">0</span> 건</td>
+                        <td><span id="resultSendOkCnt">0</span> 건</td>
+                        <td><span id="resultSendDupCnt">0</span> 건</td>
+<!--                        <td>6명</td>-->
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
+        </div>
+    </div>
 
     <section class="sub">
         <div class="sub_title">
@@ -174,10 +205,32 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                                     </div>
                                     <div class="number_info_bottom">
                                         총<span id="cell_receive_cnt">0</span>명
+<!--                                        <div>-->
+<!--                                            직접 추가 총<span id="directPaste">1</span>명 <buttont type="button" data-id="directPaste">삭제</buttont>-->
+<!--                                        </div>-->
+                                        <div class="addressCount" style="display: none">
+                                            수신 번호 추가 <span id="directAdd">0</span> 명 <i type="button" class="fa-solid fa-circle-minus countDelBtn" data-id="directAdd"></i>
+                                        </div>
+                                        <div class="addressCount" style="display: none">
+                                            텍스트 파일 불러오기 <span id="textFileAdd">0</span> 명 <i type="button" class="fa-solid fa-circle-minus countDelBtn" data-id="textFileAdd"></i>
+                                        </div>
+                                        <div class="addressCount" style="display: none">
+                                            엑셀 파일 불러오기 <span id="excelFileAdd">0</span> 명 <i class="fa-solid fa-circle-minus countDelBtn" data-id="excelFileAdd"></i>
+                                        </div>
+                                        <div class="addressCount" style="display: none">
+                                            엑셀 직접 붙여넣기 총 <span id="excelDirectPaste">0</span>명 <i type="button" class="fa-solid fa-circle-minus countDelBtn" data-id="excelDirectPaste"></i>
+                                        </div>
+                                        <div class="addressCount" style="display: none">
+                                            주소록 불러오기 총 <span id="callAddress">0</span>명 <i type="button" class="fa-solid fa-circle-minus countDelBtn" data-id="callAddress"></i>
+                                        </div>
+                                        <div class="addressCount" style="display: none">
+                                            직접 붙여넣기 총 <span id="singleNumberDirectPaste">0</span>명 <i type="button" class="fa-solid fa-circle-minus countDelBtn" data-id="singleNumberDirectPaste"></i>
+                                        </div>
                                     </div>
                                     <div class="close_btn_sms">
                                         <a href="javascript:abDelete();">삭제</a>
                                     </div>
+
 
                                 </div>
 
@@ -722,14 +775,64 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
             $("#transmit_type").val("save");
             sms_frm.submit();
         }
+        // 팝업을 표시하는 함수
+        function showPopup() {
+            document.getElementById('popupLayer').style.display = 'flex';
+        }
 
+        // 팝업을 닫는 함수
+        function closePopup() {
+            document.getElementById('popupLayer').style.display = 'none';
+        }
         function go_msg_send() {
             var ban_ = ban();
             if (ban_) {
+                var form = document.getElementById('sms_frm');
+                var formData = new FormData(form);
                 var check = chkFrm('sms_frm');
+                var reserv_yn =$('input[name="reserv_yn"]').val()
+                var confirmMessage ='';
+                var tableListCnt = table.getData().length;
+                var msgTypeName='';
+                if(reserv_yn==='N'){
+                    confirmMessage ='즉시';
+                }else{
+                    confirmMessage ='예약';
+                }
+                var content_lenght =getStringLength($("#sms").val());
+                if (content_lenght > 90) {
+                    msgTypeName = '장문'
+                } else {
+                    msgTypeName = '단문'
+                }
                 if (check && validate()) {
-                    $("#transmit_type").val("send");
-                    sms_frm.submit();
+                    var result = confirm("메세지를 ["+confirmMessage+"] 발송합니다.\n"+tableListCnt+" 건을 ["+confirmMessage+"] 발송 하시겠습니다까?" );
+                    if (result) {
+                        var list = table.getData();
+                        list.forEach(function(item, index) {
+                            formData.append('receive_cell_num_arr[]', item.number);
+                        });
+
+                        formData.append('transmit_type', 'send');
+                        var xhr = new XMLHttpRequest();
+                        xhr.open('POST', form.action, true);
+                        xhr.onload = function () {
+                            if (xhr.status === 200) {
+                                // 폼 전송 후 팝업을 표시
+                                showPopup();
+                                $('#resultSendOkCnt').text(tableListCnt);
+                                $('#resultSendCnt').text(tableListCnt);
+                                $('#resultMsgType').text(msgTypeName);
+                            } else {
+                                alert('전송 중 오류가 발생했습니다.');
+                            }
+                        };
+                        xhr.send(formData);
+                    } else {
+                        // 사용자가 취소 버튼을 눌렀을 때의 동작
+                        return;
+                    }
+
                 } else {
                     false;
                 }
@@ -737,8 +840,9 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
         }
 
         function validate() {
+            var list = table.getData();
 
-            if ($("#cell_receive_list").children().length == 0) {
+            if (list.length == 0) {
                 alert("수신번호를 입력해 주세요.");
                 return false;
             }
@@ -837,29 +941,49 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                 }
 
                 // 자리수 확인
-                if (cell_receive_dan.length == 10 || cell_receive_dan.length == 11) {} else {
+                if (cell_receive_dan.length == 10 || cell_receive_dan.length == 11) {
+                } else {
                     //alert("변작번호로 판별되어 관련 법령에 따라 문자 발송이 차단됩니다.");
                     alert("자리수가 맞지 않습니다.");
                     return;
                 }
 
                 // "011" 또는 "017" 로 시작하는지 확인
-                if (cell_receive_dan.startsWith("010") || cell_receive_dan.startsWith("017")) {} else {
+                if (cell_receive_dan.startsWith("010") || cell_receive_dan.startsWith("017")) {
+                } else {
                     alert("변작번호로 판별되어 관련 법령에 따라 문자 발송이 차단됩니다.");
                     return;
                 }
 
-                let html = `
-                    <div class="box">
-                        <input type="checkbox" name="receive_cell_num" value="${$('#cell_receive_dan').val()}" required="no" message="수신번호">
-                        <span data-hp="${$('#cell_receive_dan').val()}">${$('#cell_receive_dan').val()}</span>
-						<input type="hidden" name="receive_cell_num_arr[]" value="${$('#cell_receive_dan').val()}">
-				    </div>
-				`
-                $('#cell_receive_list').append(html);
-                $("#cell_receive_dan").val("");
-                deleteDuplicate();
-                $('#cell_receive_cnt').html($('#cell_receive_list').find('div').length);
+                let newData = {
+
+                    number: cell_receive_dan,
+                    key: "directAdd"
+                };
+                let list = table.getData();
+
+                let isDuplicate = list.some(function (item) {
+                    return item.number === newData.number;
+                });
+                if(!isDuplicate){
+                    table.addData([newData], true);
+                }else{
+                    alert("수신 목록에 이미 존재하는 번호입니다.");
+                    return;
+                }
+                let tableList = table.getData();
+                let count = tableList.filter(function(item) {
+                    return item.key === 'directAdd';  // key가 'textFileAdd'인 항목만 필터링
+                }).length;
+                //table.replaceData(list);//데이터 비우고 다시추고
+                if (tableList.length > 300000) {
+                    alert('최대 300,000개까지 등록할 수 있습니다.');
+                } else {
+
+                    $('#directAdd').text(count);
+                    $('#directAdd').parent().show();
+                    $('#cell_receive_cnt').text(tableList.length);
+                }
 
             }
         }
@@ -921,60 +1045,70 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                 readText(async function(result) {
                     //alert(result);
                     let list = result.split((/,| |\r\n/));
-
+                    let listCount = 0
+                    let newData = {};
                     if (list.length > 300000) {
                         alert('최대 300,000개까지 등록할 수 있습니다.');
                     } else {
-                        //list = await rejectHpCheck(list, 0);
-                        list = await checkDuplicateText(list);
                         list.forEach(item => {
-                            if (item != '') {
-                                let html = `
-                                <div class="box">
-                                	<input type="checkbox" name="receive_cell_num" value="${item}" required="no" message="수신번호">
-                                    <span data-hp="${item}">${item}</span>
-									<input type="hidden" name="receive_cell_num_arr[]" value="${item}">
-                                </div>
-							`
-                                $('#cell_receive_list').append(html);
+                            newData = {
+                                number: cell_receive_dan,
+                                key: "textFileAdd"
+                            };
+                            let isDuplicate = list.some(function (item) {
+                                return item.number === newData.number;
+                            });
+                            if(!isDuplicate){
+                                listCount = listCount + 1;
+                                table.addData([newData], true);
                             }
+
                         });
-                        deleteDuplicate();
-                        $('#cell_receive_cnt').text($('#cell_receive_list').find('div').length);
+                        let tableList = table.getData();
+                        let count = tableList.filter(function(item) {
+                            return item.key === 'textFileAdd';  // key가 'textFileAdd'인 항목만 필터링
+                        }).length;
+                        $('#textFileAdd').text(count);
+                        $('#textFileAdd').parent().show();
+
+                        $('#cell_receive_cnt').text(tableList.length);
                     }
                 });
             }
             $(this).val('');
+
         });
 
         $("#text_add_btn").click(async function() {
             if ($("#tab-7").hasClass('current')) {
 
                 let list = $("#text_add_val").val().replaceAll('-', '').split(/\,|\s+|\n/);
-                console.log(list);
+                let listCount = 0
+                let newData = {};
                 if (list.length > 300000) {
                     alert('최대 300,000개까지 등록할 수 있습니다.');
                 } else {
-                    //list = await rejectHpCheck(list, 0);
-                    list = await checkDuplicateText(list);
-
+                    console.log(list)
                     list.forEach(item => {
-                        if (item != '') {
-                            let html = `
-                                <div class="box">
-                                	<input type="checkbox" name="receive_cell_num" value="${item}" required="no" message="수신번호">
-                                    <span data-hp="${item}">${item}</span>
-									<input type="hidden" name="receive_cell_num_arr[]" value="${item}">
-                                </div>
-							`
-                            $('#cell_receive_list').append(html);
+                        newData = {
+                            number: item,
+                            key: "singleNumberDirectPaste"
+                        };
+                        let isDuplicate = list.some(function (item) {
+                            return item.number === newData.number;
+                        });
+                        if(!isDuplicate){
+                            listCount = listCount + 1;
+                            table.addData([newData], true);
                         }
                     });
-                    deleteDuplicate();
-                    $('#cell_receive_cnt').text($('#cell_receive_list').find('div').length);
-
-
-
+                    let tableList = table.getData();
+                    let count = tableList.filter(function(item) {
+                        return item.key === 'singleNumberDirectPaste';
+                    }).length;
+                    $('#singleNumberDirectPaste').text(count);
+                    $('#singleNumberDirectPaste').parent().show();
+                    $('#cell_receive_cnt').text(tableList.length);
 
                 }
             } else if ($("#tab-6").hasClass('current')) {
@@ -989,6 +1123,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                     return false;
                 } else {
                     var list_test = [];
+
                     $.ajax({
                         url: "./address_get.php",
                         type: "GET",
@@ -998,50 +1133,88 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                         async: true,
                         dataType: "json",
                         success: function(data) {
+                            let listCount = 0
+                            let newData = {};
                             data.forEach(item => {
-                                let html = `
-                                <div class="box">
-                                	<input type="checkbox" name="receive_cell_num" value="${item.receive_num}" required="no" message="수신번호">
-                                    <span data-hp="${item.receive_num}">${item.receive_num}</span>
-									<input type="hidden" name="receive_cell_num_arr[]" value="${item.receive_num}">
-                                </div>
-							`
-                                $('#cell_receive_list').append(html);
+                                newData = {
+                                    name:item.receive_name,
+                                    number: item.receive_num,
+                                    key: "callAddress"
+                                };
+                                let isDuplicate = data.some(function (item) {
+                                    return item.number === newData.number;
+                                });
+                                if(!isDuplicate){
+                                    listCount = listCount + 1;
+                                    table.addData([newData], true);
+                                }
                             });
-                            deleteDuplicate();
-                            $('#cell_receive_cnt').html($('#cell_receive_list').find('div').length);
+                            let tableList = table.getData();
+                            let count = tableList.filter(function(item) {
+                                return item.key === 'callAddress';
+                            }).length;
+                            $('#callAddress').text(count);
+                            $('#callAddress').parent().show();
+                            $('#cell_receive_cnt').text(tableList.length);
                         },
                     });
                 }
 
             } else if ($("#tab-8").hasClass('current')) {
-
+                deleteDuplicateTable()
                 let list = table.getData();
-                console.log(list);
+                // 고유 키를 각 데이터에 추가
+                list.forEach(function (item, index) {
+                    // 만약 고유 키가 없다면 추가 (기존에 없을 경우에만 생성)
+                    if (!item.hasOwnProperty('key')) {
+                        item.key = 'excelDirectPaste';  // 고유 키 생성
+                    }
+                });
+                table.replaceData(list);
                 if (list.length > 300000) {
                     alert('최대 300,000개까지 등록할 수 있습니다.');
                 } else {
-                    //list = await rejectHpCheck(list, 0);
-                    list = await checkDuplicateExcelCopy(list);
-                    list.forEach(item => {
-                        if (item != '') {
-                            let html = `
-                                <div class="box">
-                                	<input type="checkbox" name="receive_cell_num" value="${item['number']}" required="no" message="수신번호">
-                                    <span data-hp="${item['number']}">${item['number']}(${item['name']})</span>
-									<input type="hidden" name="receive_cell_num_arr[]" value="${item['number']}">
-                                </div>
-							`
-                            $('#cell_receive_list').append(html);
-                        }
-                    });
-                    deleteDuplicate();
-                    $('#cell_receive_cnt').text($('#cell_receive_list').find('div').length);
+
+                    let tableList = table.getData();
+                    let count = tableList.filter(function(item) {
+                        return item.key === 'excelDirectPaste';  // key가 'textFileAdd'인 항목만 필터링
+                    }).length;
+                    $('#excelDirectPaste').text(count );
+                    $('#excelDirectPaste').parent().show();
+
+
+                    $('#cell_receive_cnt').text(tableList.length);
                 }
             }
 
         });
+        function deleteDataByKey(key) {
+            // 현재 테이블의 데이터를 가져옴
+            let currentData = table.getData();
 
+            // 해당 key를 가진 데이터를 제외한 나머지 데이터를 필터링
+            let filteredData = currentData.filter(function (item) {
+                return item.key !== key;  // 특정 key가 아닌 데이터만 남김
+            });
+
+            // 필터링된 데이터를 테이블에 반영
+            table.replaceData(filteredData);
+            $(''+key).text(table.getData().length)
+            $(''+key).parent().hide();
+        }
+        $(".countDelBtn").on('click',function (){
+            // 현재 테이블의 데이터를 가져옴
+            let currentData = table.getData();
+            var key = $(this).data('id');
+            let filteredData = currentData.filter(function (item) {
+                return item.key !== key;  // 특정 key가 아닌 데이터만 남김
+            });
+            // 필터링된 데이터를 테이블에 반영
+            table.replaceData(filteredData);
+            $('#'+key).parent().hide();
+            currentData = table.getData();
+            $('#cell_receive_cnt').text(currentData.length);
+        })
         // 엑셀 불러오기
         $("#excel_file").on('change', function() {
             $('#cell_receive_list').html('');
@@ -1055,32 +1228,35 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                 readExcel(async function(result) {
                     // 타이틀 체크
                     console.log(result);
+                    let listCount = 0
+                    let newData = {};
                     if (Object.keys(result[0]).includes('HP')) {
                         if (result.length > 300000) {
                             alert('최대 300,000개까지 등록할 수 있습니다.');
                         } else {
                             //result = await rejectHpCheck(result, 1);
-                            result = await checkDuplicateExcel(result);
+                            // result = await checkDuplicateExcel(result);
                             result.forEach(item => {
-                                var item_name = "";
-                                if (item.NAME != undefined) {
-                                    item_name = "(" + item.NAME + ")";
+                                newData = {
+                                    name:item.NAME,
+                                    number: item.HP,
+                                    key: "excelFileAdd"
+                                };
+                                let isDuplicate = result.some(function (item) {
+                                    return item.number === newData.number;
+                                });
+                                if(!isDuplicate){
+                                    listCount = listCount + 1;
+                                    table.addData([newData], true);
                                 }
-                                let html = `
-                                  	<div class="box">
-										<input type="checkbox" name="receive_cell_num" value="${item.HP}" required="no" message="수신번호">
-										<span data-hp="${item.HP}">${item.HP} ${item_name}</span>
-										<input type="hidden" name="receive_cell_num_arr[]" value="${item.HP}">
-									</div>
-                                `
-                                $('#cell_receive_list').append(html);
-                                /*}else{
-                                    alert('전화번호 양식이 옳바르지 않은 번호가 존재합니다.\n다시 입력 후 등록해주세요.');
-                                    $('#abDiv').html('');
-                                }*/
                             });
-                            deleteDuplicate();
-                            $('#cell_receive_cnt').text($('#cell_receive_list').find('div').length);
+                            let tableList = table.getData();
+                            let count = tableList.filter(function(item) {
+                                return item.key === 'excelFileAdd';
+                            }).length;
+                            $('#excelFileAdd').text(count);
+                            $('#excelFileAdd').parent().show();
+                            $('#cell_receive_cnt').text(tableList.length);
 
                         }
 
@@ -1141,7 +1317,27 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
             const uniqueArr = [...set];
             return uniqueArr;
         }
+        function deleteDuplicateTable(){
+            // 모든 데이터를 가져옴
+            let data = table.getData();
 
+            // 중복된 number 값을 확인하기 위한 객체
+            let seenNumbers = {};
+
+            // 중복된 데이터를 필터링
+            let filteredData = data.filter(function(item) {
+                // 만약 이미 seenNumbers에 해당 number가 있으면 중복으로 간주
+                if (seenNumbers[item.number]) {
+                    return false;  // 중복된 데이터는 필터링해서 제외
+                } else {
+                    seenNumbers[item.number] = true;  // 중복되지 않은 number는 기록
+                    return true;  // 중복되지 않은 데이터만 남김
+                }
+            });
+
+            // 중복이 제거된 데이터를 테이블에 다시 반영
+            table.replaceData(filteredData);
+        }
         function deleteDuplicate() {
             var boxes = $('#cell_receive_list .box');
 

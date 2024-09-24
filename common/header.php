@@ -6,6 +6,14 @@ if ($_SESSION['member_coinc_idx']) {
     }
 }
 ?>
+<div class="spinner-background" style="display: none;"></div>
+
+<div class="loadingio-spinner-spin-2by998twmg8" style="display: none;">
+    <div class="ldio-yzaezf3dcmj">
+        <div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div>
+        <div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div>
+    </div>
+</div>
 <!--header-->
 <header>
     <div class="header">

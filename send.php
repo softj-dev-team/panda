@@ -1,47 +1,117 @@
-<? include "./common/head.php"; ?>
-<? include $_SERVER["DOCUMENT_ROOT"] . "/pro_inc/check_login.php"; // 공통함수 인클루드 
-?>
-<?
+<?php
+include "./common/head.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/pro_inc/check_login.php"; // 공통함수 인클루드
+
 $member_idx = $_SESSION['member_coinc_idx'];
-
 $pageNo = trim(sqlfilter($_REQUEST['pageNo']));
-
 $field = trim(sqlfilter($_REQUEST['field']));
 $keyword = sqlfilter($_REQUEST['keyword']);
-
-################## 파라미터 조합 #####################
-$total_param = 'field=' . $field . '&keyword=' . $keyword;
-
+$s_date = isset($_REQUEST['s_date']) ? $_REQUEST['s_date'] : '';
+$e_date = isset($_REQUEST['e_date']) ? $_REQUEST['e_date'] : '';
 if (!$pageNo) {
     $pageNo = 1;
 }
 
-$where = " and member_idx='" . $member_idx . "' and transmit_type='send' and is_del='N' and (case when reserv_yn = 'Y' then CONCAT(reserv_date,' ',reserv_time,':',reserv_minute) <= '" . date("Y-m-d H:i") . "' else idx > 0 end)";
-
-if ($keyword) {
-    $where .= " and (sms_content like '%" . $keyword . "%' or sms_title like '%" . $keyword . "%')";
-}
-
-$pageScale = 10; // 페이지당 10 개씩 
+$pageScale = 10; // 페이지당 10 개씩
 $start = ($pageNo - 1) * $pageScale;
 
-$StarRowNum = (($pageNo - 1) * $pageScale);
-$EndRowNum = $pageScale;
+################## 파라미터 조합 #####################
+$total_param = 'field=' . $field . '&keyword=' . $keyword;
 
-$order_by = " order by idx desc ";
+$where = " AND a.member_idx = '$member_idx' AND a.transmit_type = 'send' AND a.is_del = 'N'";
+//$where .= " AND (CASE WHEN a.reserv_yn = 'Y' THEN CONCAT(a.reserv_date, ' ', a.reserv_time, ':', a.reserv_minute) <= '" . date("Y-m-d H:i") . "' ELSE a.idx > 0 END)";
 
-$query = "select *,(select file_chg from board_file where 1 and board_tbname='sms_save' and board_code='mms' and board_idx=a.idx order by idx asc limit 0,1) as file_chg,CONCAT(reserv_date,' ',reserv_time,':',reserv_minute) as reserv from sms_save a where 1 " . $where . $order_by . " limit " . $StarRowNum . " , " . $EndRowNum;
-//echo $query;
+if ($keyword) {
+    $where .= " AND (a.sms_content LIKE '%$keyword%' OR a.sms_title LIKE '%$keyword%' OR a.cell_send LIKE '%$keyword%' OR sc.cell LIKE '%$keyword%')";
+}
+
+$order_by = " ORDER BY a.idx DESC";
+
+    // 현재 날짜와 입력된 날짜에 따른 유동적인 범위 계산
+    $currentDate = new DateTime();  // 현재 날짜
+    $startDate = isset($_REQUEST['s_date']) ? new DateTime($_REQUEST['s_date']) : (clone $currentDate)->modify('-1 months');
+    $endDate = isset($_REQUEST['e_date']) ? new DateTime($_REQUEST['e_date']) : $currentDate;
+
+    // 종료 날짜는 다음 달의 시작으로 설정 (월을 포함시키기 위해)
+    $endDate->modify('last day of this month');
+
+    // module_type 값에 따라 다른 테이블과 조인
+    $dynamic_table = '';
+    $module_type_query = ''; // LG, JUD1, JUD2에 따른 조인 구문을 동적으로 생성
+
+
+
+    $tables = [];
+    $interval = new DateInterval('P1M');  // 1개월 간격
+    while ($startDate->format('Ym') <= $endDate->format('Ym')) {
+        $tables[] = "TBL_SEND_LOG_" . $startDate->format('Ym');  // 각 달의 테이블 이름 생성
+        $startDate->add($interval);  // 1개월씩 더하기
+    }
+    $logQueries = [];
+    foreach ($tables as $table) {
+        $logQueries[] = "
+            SELECT fetc1, frsltstat 
+            FROM $table WHERE finsertdate <= '" . $endDate->format('Y-m-d') . "'         
+        ";
+    }
+    // 쿼리들을 UNION으로 결합
+    $dynamic_table = implode(" UNION ALL ", $logQueries);
+    $module_type_query = "LEFT JOIN ($dynamic_table) log_table ON log_table.fetc1 = sc.idx AND a.module_type = 'LG'";
+
+
+
+// 전체 쿼리 작성
+$query = "
+    SELECT a.idx, a.sms_title, a.sms_content, a.wdate, a.send_type, a.sms_type, a.module_type, a.cell_send, sc.cell,
+           CONCAT(a.reserv_date, ' ', a.reserv_time, ':', a.reserv_minute) AS reserv,
+           b.file_chg, 
+           COUNT(sc.idx) AS receive_cnt_tot,
+           SUM(
+               CASE 
+                   WHEN a.module_type = 'LG' AND log_table.frsltstat = '06' THEN 1
+                   WHEN a.module_type = 'JUD1' AND jud1_table.RSTATE = 0 THEN 1
+                   WHEN a.module_type = 'JUD2' AND jud2_table.RSTATE = 0 THEN 1
+                   ELSE 0 
+               END
+           ) AS receive_cnt_suc,
+           SUM(
+               CASE 
+                   WHEN a.module_type = 'LG' AND log_table.frsltstat = '07' THEN 1
+                   WHEN a.module_type = 'JUD1' AND jud1_table.RSTATE != 0 THEN 1
+                   WHEN a.module_type = 'JUD2' AND jud2_table.RSTATE != 0 THEN 1
+                   ELSE 0 
+               END
+           ) AS receive_cnt_fail
+    FROM sms_save a
+    JOIN sms_save_cell sc ON sc.save_idx = a.idx
+    LEFT JOIN board_file b ON b.board_idx = a.idx AND b.board_tbname = 'sms_save' AND b.board_code = 'mms'
+    $module_type_query  -- 동적으로 생성된 조인
+     LEFT JOIN (
+        SELECT S_ETC1, RSTATE
+        FROM SMS_BACKUP_AGENT_JUD1
+    ) jud1_table ON jud1_table.S_ETC1 = sc.idx AND a.module_type = 'JUD1'
+
+    LEFT JOIN (
+        SELECT S_ETC1, RSTATE
+        FROM SMS_BACKUP_AGENT_JUD2
+    ) jud2_table ON jud2_table.S_ETC1 = sc.idx AND a.module_type = 'JUD2'
+    where 1 
+        $where
+    GROUP BY a.idx
+    ORDER BY a.idx DESC
+    LIMIT $start, $pageScale
+";
+
+// 쿼리 실행 및 결과 처리
 $result = mysqli_query($gconnet, $query);
 
-$query_cnt = "select idx from sms_save a where 1 " . $where;
+// 카운트 쿼리 최적화
+$query_cnt = "SELECT COUNT(*) AS cnt FROM sms_save a WHERE 1 " . $where;
 $result_cnt = mysqli_query($gconnet, $query_cnt);
-$num = mysqli_num_rows($result_cnt);
-
-//echo $num;
+$num = mysqli_fetch_assoc($result_cnt)['cnt'];
 
 $iTotalSubCnt = $num;
-$totalpage    = ($iTotalSubCnt - 1) / $pageScale  + 1;
+$totalpage = ceil($iTotalSubCnt / $pageScale);
 ?>
 
 <body>
@@ -52,12 +122,40 @@ $totalpage    = ($iTotalSubCnt - 1) / $pageScale  + 1;
     <!--content-->
 
 
-
-    <section class="sub">
+    <section class="sub sub_min">
         <div class="sub_title">
             <h2>전송결과</h2>
-
         </div>
+        <div class="flex-just-start">
+            <div class="sendContentBox">
+                <h3>발송문자</h3>
+                <div class="sendContentBoxBody">
+                    <p></p>
+                    <span class="byteCount"></span>
+                </div>
+            </div>
+            <div class="sendContentDetailBox">
+                <table>
+                    <thead>
+
+                    </thead>
+                    <tbody>
+                    <tr><th>발송방법</th><td class="rowDataSmsType"></td></tr>
+                    <tr><th>제목</th><td class="rowDataTitle"></td></tr>
+                    <tr><th>선차감금액</th><td ><span class="rowDataUsePoint">00.00</span> 원</td></tr>
+                    <tr><th>실사용금액</th><td ><span class="rowDataUseSumPoint">00.00</span> 원</td></tr>
+                    <tr><th rowspan="4">발송내역</th><td>발송 시도건수 <span class="rowDataTotSendCnt">0</span> 건</td></tr>
+                    <tr><td>발송 성공 <span class="rowDataSuccesSendCnt">0</span> 건</td></tr>
+                    <tr><td>발송 실패 <span class="rowDataFaileTotSendCnt">0</span> 건</td></tr>
+                    <tr><td>발송 대기 <span class="rowDataMoreTotSendCnt">0</span> 건</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </section>
+    <section class="sub sub_min">
+
 
         <div class="adress_btn">
         </div>
@@ -65,7 +163,14 @@ $totalpage    = ($iTotalSubCnt - 1) / $pageScale  + 1;
 
         <div class="tab_btn_are">
 
-            <form name="s_mem" id="s_mem" method="post" action="send.php">
+            <form name="s_mem" id="s_mem" method="post" action="send.php" class="flex-just-start">
+                <div class="btn ">
+                    <span>기간선택 </span>
+                    <input type="text" style="width:120px;" class="datepicker" id="s_date" name="s_date" value="">
+                    <span> ~ </span>
+                    <input type="text" style="width:120px;" class="datepicker" id="e_date" name="e_date" value="">
+                    <a href="javascript:s_mem.submit();" class="blue">조회</a>
+                </div>
                 <div class="input_tab">
                     <input type="text" name="keyword" id="keyword" value="<?= $keyword ?>">
                     <a href="javascript:s_mem.submit();">
@@ -75,8 +180,8 @@ $totalpage    = ($iTotalSubCnt - 1) / $pageScale  + 1;
             </form>
 
             <div class="btn">
-                <a href="./send_success_down.php">성공내역 엑셀다운로드</a>
-                <a href="./send_fail_down.php">실패내역 엑셀다운로드</a>
+<!--                <a href="./send_success_down.php">성공내역 엑셀다운로드</a>-->
+<!--                <a href="./send_fail_down.php">실패내역 엑셀다운로드</a>-->
                 <a href="javascript:go_tot_del();">내역삭제</a>
             </div>
 
@@ -89,12 +194,11 @@ $totalpage    = ($iTotalSubCnt - 1) / $pageScale  + 1;
                 <table>
                     <colgroup>
                         <col style="width:4%;">
-                        <col style="width:10%;">
-                        <col style="width:6%">
-                        <col style="width:20%">
+                        <col style="width:15%;">
                         <col style="width:10%">
-                        <col style="width:25%">
-                        <col style="width:7%">
+                        <col style="width:10%">
+                        <col style="width:10%">
+                        <col style="width:6%">
                         <col style="width:6%">
                         <col style="width:6%">
                         <col style="width:6%">
@@ -103,9 +207,9 @@ $totalpage    = ($iTotalSubCnt - 1) / $pageScale  + 1;
                         <th class="check"><input type="checkbox" onclick="javascript:CheckAll()"></th>
                         <th>등록일시</th>
                         <th>구분</th>
-                        <th>제목</th>
-                        <th>이미지</th>
-                        <th>내용</th>
+                        <th>발신번호</th>
+                        <th>수신번호</th>
+<!--                        <th>내용</th>-->
                         <th>총건수</th>
                         <th>성공</th>
                         <th>실패</th>
@@ -113,141 +217,33 @@ $totalpage    = ($iTotalSubCnt - 1) / $pageScale  + 1;
                         <!--<th>결과</th>
                     <th>비고</th>-->
                     </tr>
-                    <?
-                    for ($i = 0; $i < mysqli_num_rows($result); $i++) { // 대분류 루프 시작
-                        $row = mysqli_fetch_array($result);
+                    <?php
+                    while ($row = mysqli_fetch_array($result)) {
+                        $listnum = $iTotalSubCnt - (($pageNo - 1) * $pageScale) - $i;
 
-                        $listnum    = $iTotalSubCnt - (($pageNo - 1) * $pageScale) - $i;
+                        // 전송 유형 및 구분 설정
+                        $view_ok = ($row['send_type'] == 'gen') ? "문자" :
+                            (($row['send_type'] == 'adv') ? "광고문자" :
+                                (($row['send_type'] == 'elc') ? "선거문자" :
+                                    (($row['send_type'] == 'pht') ? "포토문자" :
+                                        "3사테스트")));
 
-                        if ($row['send_type'] == "gen") {
-                            $view_ok = "문자";
-                        } elseif ($row['send_type'] == "adv") {
-                            $view_ok = "광고문자";
-                        } elseif ($row['send_type'] == "elc") {
-                            $view_ok = "선거문자";
-                        } elseif ($row['send_type'] == "pht") {
-                            $view_ok = "포토문자";
-                        } elseif ($row['send_type'] == "test") {
-                            $view_ok = "3사테스트";
-                        }
+                        $section = ($row['sms_type'] == 'sms') ? "단문" :
+                            (($row['sms_type'] == 'lms') ? "장문" : "이미지문자");
 
-                        if ($row['sms_type'] == "sms") {
-                            $section = "단문";
-                        } elseif ($row['sms_type'] == "lms") {
-                            $section = "장문";
-                        } elseif ($row['sms_type'] == "mms") {
-                            $section = "이미지문자";
-                        }
-
-                        $sql_sub_1 = "select idx from sms_save_cell where 1 and is_del='N' and save_idx='" . $row['idx'] . "'";
-                        $query_sub_1 = mysqli_query($gconnet, $sql_sub_1);
-                        $row['receive_cnt_tot'] = mysqli_num_rows($query_sub_1);
-
-                        if ($row['module_type'] == "LG") {
-
-                            $sql_sub_2 = "select idx from sms_save_cell where 1 and is_del='N' and save_idx='" . $row['idx'] . "' and idx in (select fetc1 from TBL_SEND_LOG_" . str_replace("-", "", substr($row['wdate'], 0, 7)) . " where 1 and frsltstat='06')";
-                            $query_sub_2 = mysqli_query($gconnet, $sql_sub_2);
-                            $row['receive_cnt_suc'] = mysqli_num_rows($query_sub_2);
-
-                            $sql_sub_3 = "select idx from sms_save_cell where 1 and is_del='N' and save_idx='" . $row['idx'] . "' and idx in (select fetc1 from TBL_SEND_LOG_" . str_replace("-", "", substr($row['wdate'], 0, 7)) . " where 1 and frsltstat='07')";
-                            $query_sub_3 = mysqli_query($gconnet, $sql_sub_3);
-                            $row['receive_cnt_fail'] = mysqli_num_rows($query_sub_3);
-                        } else if ($row['module_type'] == "JUD1") {
-                            $sql_sub_2 = "select idx from sms_save_cell where 1 and is_del='N' and save_idx='" . $row['idx'] . "' and idx in (select S_ETC1 from SMS_BACKUP_AGENT_JUD1 where 1 and RSTATE=0)";
-                            $query_sub_2 = mysqli_query($gconnet, $sql_sub_2);
-                            $row['receive_cnt_suc'] = mysqli_num_rows($query_sub_2);
-
-                            $sql_sub_3 = "select idx from sms_save_cell where 1 and is_del='N' and save_idx='" . $row['idx'] . "' and idx in (select S_ETC1 from SMS_BACKUP_AGENT_JUD1 where 1 and RSTATE!=0)";
-                            $query_sub_3 = mysqli_query($gconnet, $sql_sub_3);
-                            $row['receive_cnt_fail'] = mysqli_num_rows($query_sub_3);
-                        } else if ($row['module_type'] == "JUD2") {
-                            $sql_sub_2 = "select idx from sms_save_cell where 1 and is_del='N' and save_idx='" . $row['idx'] . "' and idx in (select S_ETC1 from SMS_BACKUP_AGENT_JUD2 where 1 and RSTATE=0)";
-                            $query_sub_2 = mysqli_query($gconnet, $sql_sub_2);
-                            $row['receive_cnt_suc'] = mysqli_num_rows($query_sub_2);
-
-                            $sql_sub_3 = "select idx from sms_save_cell where 1 and is_del='N' and save_idx='" . $row['idx'] . "' and idx in (select S_ETC1 from SMS_BACKUP_AGENT_JUD1 where 1 and RSTATE=!0)";
-                            $query_sub_3 = mysqli_query($gconnet, $sql_sub_3);
-                            $row['receive_cnt_fail'] = mysqli_num_rows($query_sub_3);
-                        }
-
-                    ?>
-                        <tr>
-                            <td class="check"><input type="checkbox" name="send_idx[]" id="send_idx[]" value="<?= $row["idx"] ?>" required="yes" message="전송결과"></td>
-                            <td><?= $row['wdate'] ?></td>
-                            <td><?= $view_ok ?><br />(<?= $section ?>)</td>
-                            <td><?= $row['sms_title'] ?></td>
-                            <td>
-                                <? if ($row['file_chg']) { ?>
-                                    <img src="<?= $_P_DIR_WEB_FILE ?>sms/img_thumb/<?= $row['file_chg'] ?>" style="max-width:60%;">
-                                <? } ?>
-                            </td>
-                            <td style="text-align:left;    word-break: break-all;"><?= $row['sms_content'] ?></td>
+                        ?>
+                        <tr class="sendResultDataRow" data-id="<?= $row['idx'] ?>">
+                            <td class="check"><input type="checkbox" name="send_idx[]" value="<?= $row['idx'] ?>"></td>
+                            <td><span ><?= $row['wdate'] ?></span></td>
+                            <td><?= $view_ok ?> (<?= $section ?>)</td>
+                            <td><?= $row['cell_send'] ?></td>
+                            <td><?= $row['cell'] ?></td>
                             <td><?= number_format($row['receive_cnt_tot']) ?></td>
-                            <td><?php
-                                if ($row['send_type'] == "test") {
-                                    $sql_test = "select idx from sms_save_cell where 1 and is_del='N' and save_idx='" . $row['idx'] . "' and idx in (select fetc1 from TBL_SEND_LOG_" . str_replace("-", "", substr($row['wdate'], 0, 7)) . " where 1 and frsltstat='06')";
-                                    $query_test = mysqli_query($gconnet, $sql_test);
-                                    for ($j = 0; $j < mysqli_num_rows($query_test); $j++) { // 대분류 루프 시작
-                                        $test_data = mysqli_fetch_array($query_test);
-                                        $sql_test_2 = "select fdestine from TBL_SEND_LOG_" . str_replace("-", "", substr($row['wdate'], 0, 7)) . " where 1 and fetc1='" . $test_data['idx'] . "' and frsltstat='06'";
-                                        $query_test_2 = mysqli_query($gconnet, $sql_test_2);
-                                        $test_data_2 = mysqli_fetch_array($query_test_2);
-                                        if ($test_data_2['fdestine'] == "01055072105") {
-                                            echo "LG<br>";
-                                        } else if ($test_data_2['fdestine'] == "01044382106") {
-                                            echo "KT<br>";
-                                        } else if ($test_data_2['fdestine'] == "01047592106") {
-                                            echo "SK<br>";
-                                        }
-                                    }
-                                } else {
-                                    echo number_format($row['receive_cnt_suc']);
-                                }
-                                ?></td>
-                            <td><?php if ($row['send_type'] == "test") {
-                                    $sql_test = "select idx from sms_save_cell where 1 and is_del='N' and save_idx='" . $row['idx'] . "' and idx in (select fetc1 from TBL_SEND_LOG_" . str_replace("-", "", substr($row['wdate'], 0, 7)) . " where 1 and frsltstat='07')";
-                                    $query_test = mysqli_query($gconnet, $sql_test);
-                                    for ($j = 0; $j < mysqli_num_rows($query_test); $j++) { // 대분류 루프 시작
-                                        $test_data = mysqli_fetch_array($query_test);
-                                        $sql_test_2 = "select fdestine from TBL_SEND_LOG_" . str_replace("-", "", substr($row['wdate'], 0, 7)) . " where 1 and fetc1='" . $test_data['idx'] . "' and frsltstat='07'";
-                                        $query_test_2 = mysqli_query($gconnet, $sql_test_2);
-                                        $test_data_2 = mysqli_fetch_array($query_test_2);
-                                        if ($test_data_2['fdestine'] == "01055072105") {
-                                            echo "LG<br>";
-                                        } else if ($test_data_2['fdestine'] == "01044382106") {
-                                            echo "KT<br>";
-                                        } else if ($test_data_2['fdestine'] == "01047592106") {
-                                            echo "SK<br>";
-                                        }
-                                    }
-                                } else {
-                                    echo number_format($row['receive_cnt_fail']);
-                                } ?></td>
-                            <td><?php
-                                if ($row['send_type'] == "test") {
-                                    $sql_test = "select idx from sms_save_cell where 1 and is_del='N' and save_idx='" . $row['idx'] . "' and idx in (select fetc1 from TBL_SEND_TRAN where 1 and frsltstat='00')";
-                                    $query_test = mysqli_query($gconnet, $sql_test);
-                                    for ($j = 0; $j < mysqli_num_rows($query_test); $j++) { // 대분류 루프 시작
-                                        $test_data = mysqli_fetch_array($query_test);
-                                        $sql_test_2 = "select fdestine from TBL_SEND_TRAN where 1 and fetc1='" . $test_data['idx'] . "' and frsltstat='00'";
-                                        $query_test_2 = mysqli_query($gconnet, $sql_test_2);
-                                        $test_data_2 = mysqli_fetch_array($query_test_2);
-                                        if ($test_data_2['fdestine'] == "01055072105") {
-                                            echo "LG<br>";
-                                        } else if ($test_data_2['fdestine'] == "01044382106") {
-                                            echo "KT<br>";
-                                        } else if ($test_data_2['fdestine'] == "01047592106") {
-                                            echo "SK<br>";
-                                        }
-                                    }
-                                } else {
-                                    echo number_format(($row['receive_cnt_tot'] - $row['receive_cnt_suc'] - $row['receive_cnt_fail']));
-                                }
-                                ?></td>
-                            <!--<td>전송</td>
-                    <td>비고</td>-->
+                            <td><?= number_format($row['receive_cnt_suc']) ?></td>
+                            <td><?= number_format($row['receive_cnt_fail']) ?></td>
+                            <td><?= number_format(($row['receive_cnt_tot'] - $row['receive_cnt_suc'] - $row['receive_cnt_fail'])) ?></td>
                         </tr>
-                    <? } ?>
+                    <?php } ?>
                 </table>
             </div>
         </form>
@@ -380,7 +376,9 @@ $totalpage    = ($iTotalSubCnt - 1) / $pageScale  + 1;
 
     <!--footer-->
     <div><? include "./common/footer.php"; ?></div>
-
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 
     <script>
         $(document).ready(function() {
@@ -438,6 +436,36 @@ $totalpage    = ($iTotalSubCnt - 1) / $pageScale  + 1;
                 false;
             }
         }
+        $(function() {
+            var today = new Date();
+            var oneMonthAgo = new Date();
+            oneMonthAgo.setMonth(today.getMonth() - 1);
+            // 날짜 형식을 YYYY-MM-DD로 변환하는 함수
+            function formatDate(date) {
+                var day = ("0" + date.getDate()).slice(-2);
+                var month = ("0" + (date.getMonth() + 1)).slice(-2);
+                return date.getFullYear() + "-" + month + "-" + day;
+            }
+            // Datepicker 초기화 및 날짜 기본값 설정
+            $("#s_date").datepicker({
+                dateFormat: 'yy-mm-dd'
+            }).val(formatDate(oneMonthAgo)); // 한 달 전 날짜 기본값
+
+            $("#e_date").datepicker({
+                dateFormat: 'yy-mm-dd'
+            }).val(formatDate(today)); // 오늘 날짜 기본값
+            $(".datepicker").datepicker({
+                changeYear:true,
+                changeMonth:true,
+                minDate: '-90y',
+                yearRange: 'c-90:c',
+                dateFormat:'yy-mm-dd',
+                showMonthAfterYear:true,
+                constrainInput: true,
+                dayNamesMin: ['일','월', '화', '수', '목', '금', '토' ],
+                monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
+            });
+        });
     </script>
 
 </body>

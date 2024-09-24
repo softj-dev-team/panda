@@ -9,22 +9,35 @@
 	$e_date = trim(sqlfilter($_REQUEST['e_date']));
 	
 	$where_p = " and member_idx='".$member_idx."' and transmit_type='send' and is_del='N' and (case when reserv_yn = 'Y' then CONCAT(reserv_date,' ',reserv_time,':',reserv_minute) <= '".date("Y-m-d H:i")."' else idx > 0 end)";
-	
-	if($keyword){
-		$where_p .= " and (sms_content like '%".$keyword."%' or sms_title like '%".$keyword."%')";
-	}
-	
-	if(!$s_date && !$e_date){
-		if($s_date){
-			$where_p .= " and substring(wdate,1,10) >= '".$s_date."'";
-		}
-		
-		if($e_date){
-			$where_p .= " and substring(wdate,1,10) <= '".$e_date."'";
-		}
-	} else {
-		$where_p .= " and substring(wdate,1,10) = '".date("Y-m-d")."'";
-	}
+
+    // 예약 발송에 대한 조건을 추가
+    $where_p .= " and (CASE WHEN reserv_yn = 'Y' THEN CONCAT(reserv_date, ' ', reserv_time, ':', reserv_minute) <= '".date("Y-m-d H:i")."' ELSE idx > 0 END)";
+
+    // 키워드 검색 조건 추가
+    if ($keyword) {
+        $where_p .= " and (sms_content like '%" . $keyword . "%' or sms_title like '%" . $keyword . "%'or cell_send like '%" . $keyword . "%')";
+    }
+
+    // 종료일을 다음 날로 설정하여 00:00까지 포함
+    if ($e_date) {
+        // 종료일을 하루 더한 값으로 설정
+        $e_date_plus_one = date('Y-m-d', strtotime($e_date . ' +1 day'));
+    }
+
+    // 날짜 검색 조건 추가
+    if ($s_date && $e_date) {
+        // 시작일과 종료일(종료일 + 1)을 사용한 날짜 범위 조회
+        $where_p .= " and wdate >= '" . $s_date . " 00:00:00' and wdate < '" . $e_date_plus_one . " 00:00:00'";
+    } elseif ($s_date) {
+        // 시작일만 있을 경우, 해당 일 이후의 데이터를 조회
+        $where_p .= " and wdate >= '" . $s_date . " 00:00:00'";
+    } elseif ($e_date) {
+        // 종료일만 있을 경우, 해당 일 이전의 데이터를 조회 (종료일 + 1일 전까지)
+        $where_p .= " and wdate < '" . $e_date_plus_one . " 00:00:00'";
+    } else {
+        // 날짜가 없으면 오늘 날짜를 기준으로 조회
+        $where_p .= " and wdate >= '" . date("Y-m-d") . " 00:00:00' and wdate < '" . date("Y-m-d", strtotime('+1 day')) . " 00:00:00'";
+    }
 ?>
     <body>
         

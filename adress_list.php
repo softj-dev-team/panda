@@ -20,7 +20,7 @@ if (!$pageNo) {
 $where = " and address_group_num.member_idx='" . $member_idx . "' and address_group_num.group_idx='" . $group_idx . "' ";
 
 if ($keyword) {
-    $where .= " and receive_num like '%" . $keyword . "%'";
+    $where .= " and (address_group_num.receive_num like '%" . $keyword . "%' or address_group_num.receive_name like '%" . $keyword . "%')";
 }
 
 $pageScale = 10; // 페이지당 10 개씩 
@@ -84,7 +84,7 @@ $row_group = mysqli_fetch_array($result_group);
 
 
         <div class="tab_btn_are">
-            <form name="s_mem" id="s_mem" method="post" action="adress.php">
+            <form name="s_mem" id="s_mem" method="post" action="/adress_list.php?group_idx=<?= $group_idx ?>">
                 <div class="input_tab">
                     <input type="text" name="keyword" id="keyword" value="<?= $keyword ?>" placeholder="번호검색">
                     <a href="javascript:s_mem.submit();">
