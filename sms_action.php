@@ -56,7 +56,7 @@ if ($sms_type == "mms") {
         if ($sms_content_length > 90) {
             $sms_type = "lms";
             $module_type = $my_member_row['lms_module_type'];
-            $sms_title = mb_substr($sms_content, 0, 20);
+//            $sms_title = mb_substr($sms_content, 0, 20);
         }
     }
 }
