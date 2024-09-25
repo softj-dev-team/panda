@@ -712,6 +712,7 @@ ul.tabs li.current{
     color: #333;
 }
 .sendContentBoxBody{
+    width: 100%;
     background-color: #d0f0f9; /* 배경 색상 */
     padding: 20px;
     border-radius: 10px;
@@ -720,6 +721,12 @@ ul.tabs li.current{
     overflow-wrap: break-word; /* 긴 단어를 영역을 벗어나지 않게 줄바꿈 */
     word-break: break-word; /* 단어가 너무 길 경우 강제로 줄바꿈 */
 }
+.sendContentBoxBody img{
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
 /* 문자 내용 텍스트 */
 .sendContentBoxBody p {
     margin: 0;
