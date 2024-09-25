@@ -223,7 +223,7 @@ if ($transmit_type == "send") {
             $fsenddate = $send_time->format('Y-m-d H:i:s');
         } else {
             // 예약 시간 있는 경우 그대로, 없는 경우 now()
-            $fsenddate = ($reserv_yn == "Y") ? $base_time->format('Y-m-d H:i:s') : "now()";
+            $fsenddate = $base_time->format('Y-m-d H:i:s');
         }
 		if ($sms_type == "sms") { // 단문 
 			if ($my_member_row["sms_module_type"] == "LG") {

@@ -808,6 +808,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                 if (check && validate()) {
                     var result = confirm("메세지를 ["+confirmMessage+"] 발송합니다.\n"+tableListCnt+" 건을 ["+confirmMessage+"] 발송 하시겠습니다까?" );
                     if (result) {
+                        var dupDelCnt = deleteDuplicateTable()
                         var list = table.getData();
                         list.forEach(function(item, index) {
                             formData.append('receive_cell_num_arr[]', item.number);
@@ -820,9 +821,10 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                             if (xhr.status === 200) {
                                 // 폼 전송 후 팝업을 표시
                                 showPopup();
-                                $('#resultSendOkCnt').text(tableListCnt);
+                                $('#resultSendOkCnt').text(tableListCnt-dupDelCnt);
                                 $('#resultSendCnt').text(tableListCnt);
                                 $('#resultMsgType').text(msgTypeName);
+                                $('#resultSendDupCnt').text(dupDelCnt);
                             } else {
                                 alert('전송 중 오류가 발생했습니다.');
                             }
@@ -1052,7 +1054,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                     } else {
                         list.forEach(item => {
                             newData = {
-                                number: cell_receive_dan,
+                                number: item,
                                 key: "textFileAdd"
                             };
                             let isDuplicate = list.some(function (item) {
@@ -1062,8 +1064,8 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                                 listCount = listCount + 1;
                                 table.addData([newData], true);
                             }
-
                         });
+
                         let tableList = table.getData();
                         let count = tableList.filter(function(item) {
                             return item.key === 'textFileAdd';  // key가 'textFileAdd'인 항목만 필터링
@@ -1317,26 +1319,40 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
             const uniqueArr = [...set];
             return uniqueArr;
         }
+        function cleanNumber(number) {
+            // number가 undefined, null, 또는 숫자형인 경우를 처리
+            if (typeof number !== 'string') {
+                number = String(number); // 숫자형이나 다른 타입이면 문자열로 변환
+            }
+            return number.replace(/[^\w]/g, '').trim();  // 특수문자 및 공백 제거
+        }
         function deleteDuplicateTable(){
             // 모든 데이터를 가져옴
             let data = table.getData();
 
             // 중복된 number 값을 확인하기 위한 객체
             let seenNumbers = {};
+            // 특수문자 및 공백을 제거하는 함수
+            let duplicateCount = 0;
 
             // 중복된 데이터를 필터링
             let filteredData = data.filter(function(item) {
+                console.log(item.number)
+                let cleanedNumber = cleanNumber(item.number);
+
                 // 만약 이미 seenNumbers에 해당 number가 있으면 중복으로 간주
-                if (seenNumbers[item.number]) {
+                if (seenNumbers[cleanedNumber]) {
+                    duplicateCount++;
                     return false;  // 중복된 데이터는 필터링해서 제외
                 } else {
-                    seenNumbers[item.number] = true;  // 중복되지 않은 number는 기록
+                    seenNumbers[cleanedNumber] = true;  // 중복되지 않은 number는 기록
                     return true;  // 중복되지 않은 데이터만 남김
                 }
             });
 
             // 중복이 제거된 데이터를 테이블에 다시 반영
             table.replaceData(filteredData);
+            return duplicateCount;
         }
         function deleteDuplicate() {
             var boxes = $('#cell_receive_list .box');
