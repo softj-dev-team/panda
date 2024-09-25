@@ -106,7 +106,7 @@ $totalpage = ceil($iTotalSubCnt / $pageScale);
             <div class="sendContentBox">
                 <h3>발송문자</h3>
                 <div class="sendContentBoxBody">
-                    <img src="/upload_file/sms/img_thumb/1695455815-KSSIW.png">
+                    <img src="">
                     <p></p>
                     <span class="byteCount"></span>
                 </div>
