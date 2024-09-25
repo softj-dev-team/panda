@@ -33,7 +33,7 @@ $query = "
            ) AS receive_cnt_suc,
            SUM(
                CASE 
-                   WHEN a.module_type = 'LG' AND log_table.frsltstat = '07' THEN 1
+                   WHEN a.module_type = 'LG' AND log_table.frsltstat != '06' THEN 1
                    WHEN a.module_type = 'JUD1' AND jud1_table.RSTATE != 0 THEN 1
                    WHEN a.module_type = 'JUD2' AND jud2_table.RSTATE != 0 THEN 1
                    ELSE 0 
