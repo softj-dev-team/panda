@@ -790,7 +790,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                 var form = document.getElementById('sms_frm');
                 var formData = new FormData(form);
                 var check = chkFrm('sms_frm');
-                var reserv_yn =$('input[name="reserv_yn"]').val()
+                var reserv_yn =$('input[name="reserv_yn"]').is(':checked');
                 var confirmMessage ='';
                 var tableListCnt = table.getData().length;
                 var msgTypeName='';
@@ -806,7 +806,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                     msgTypeName = '단문'
                 }
                 if (check && validate()) {
-                    var result = confirm("메세지를 ["+confirmMessage+"] 발송합니다.\n"+tableListCnt+" 건을 ["+confirmMessage+"] 발송 하시겠습니다까?" );
+                    var result = confirm("메세지를 ["+confirmMessage+"] 발송합니다.\n"+tableListCnt+" 건을 ["+confirmMessage+"] 발송 하겠습니다까?" );
                     if (result) {
                         var dupDelCnt = deleteDuplicateTable()
                         var list = table.getData();
