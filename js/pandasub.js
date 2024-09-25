@@ -62,9 +62,17 @@ $(document).ready(function() {
                         rowDataUseSumPoint.text(formatCost(data[0].fail_mms_cost));
                     }
                     if(data[0].file_chg){
+                        sendContentBoxBodyImg.show();
                         sendContentBoxBodyImg.attr('src', '/upload_file/sms/img_thumb/'+data[0].file_chg);
+                        // 이미지 로딩 실패 시 404 처리
+                        sendContentBoxBodyImg.on('error', function() {
+                            // 이미지 로딩 실패 시, 이미지 숨기기 또는 대체 이미지 표시
+                            sendContentBoxBodyImg.hide();  // 이미지 숨기기
+                            // 혹은 대체 이미지를 설정하고 싶다면
+                            // sendContentBoxBodyImg.attr('src', '/path/to/default_image.jpg');
+                        });
                     }else{
-                        sendContentBoxBodyImg.attr('src', '');
+                        sendContentBoxBodyImg.hide();
                     }
 
                     rowDataTotSendCnt.text(data[0].receive_cnt_tot)
