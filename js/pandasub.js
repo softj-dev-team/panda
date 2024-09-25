@@ -29,7 +29,7 @@ $(document).ready(function() {
             var rowDataSuccesSendCnt =      $('.rowDataSuccesSendCnt')
             var rowDataFaileTotSendCnt =    $('.rowDataFaileTotSendCnt')
             var rowDataMoreTotSendCnt =     $('.rowDataMoreTotSendCnt')
-
+            var sendContentBoxBodyImg =     $('.sendContentBoxBody img')
             showLoadingSpinner();
             $.ajax({
                 url: "./send_detail.php",
@@ -60,6 +60,9 @@ $(document).ready(function() {
                         rowDataUseSumPoint.text(formatCost(data[0].fail_lms_cost));
                     } else if (data[0].sms_type === 'mms') {
                         rowDataUseSumPoint.text(formatCost(data[0].fail_mms_cost));
+                    }
+                    if(data[0].ffilepath){
+                        sendContentBoxBodyImg.attr('src', data[0].ffilepath);
                     }
 
                     rowDataTotSendCnt.text(data[0].receive_cnt_tot)
