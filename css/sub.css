@@ -228,10 +228,22 @@ p.top_text{text-align: center; display: block; font-size: 16px; color: #222; bor
 a.sms080{display: block; text-align: center; background: #FF7A00; color: #fff; height: 40px; line-height: 40px; border-radius: 5px}
 
 .sms .sms_form textarea{resize: none; border: 0; padding: 10px; height: 450px;}
-.sms .sms_form .imgsmsbtn{padding: 10px; height: 250px; display: flex; align-items: center; justify-content: center}
+
+.sms .sms_form .imgsmsbtn {
+    width: 100%;
+    padding: 10px;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
 
 .sms .sms_form .imgsmsbtn + textarea{height: 200px}
-
+.sms .sms_form .imgsmsbtn img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+}
 .byte{position: absolute; right: 0; top: 3px; font-size: 18px; font-weight: 400; color: #00C1FF}
 #test_cnt b{font-weight: 600; color: #FF7A00}
 
