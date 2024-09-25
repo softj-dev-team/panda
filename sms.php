@@ -738,7 +738,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
             data: [],
             placeholder: "복사(Ctrl+C)한 내용을 여기에 붙여넣기(Ctrl+V) 해주세요.",
             clipboard: true,
-            clipboardPasteAction: "replace",
+            clipboardPasteAction: "update",
             columns: [{
                     title: "이름",
                     field: "name",
@@ -750,9 +750,36 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                     width: 104,
                     sorter: "number",
                 },
-
+                {
+                    title: "key",
+                    field: "key",
+                    visible: false,  // key 열을 숨김
+                    defaultValue: "excelDirectPaste",  // key 열에 기본값 설정
+                },
             ],
+
+            clipboardPasteParser: function(pasteData) {
+                // 붙여넣기 데이터를 가공하는 부분
+                // pasteData는 텍스트로 붙여넣어진 데이터를 가공하는 과정입니다.
+
+                let parsedData = pasteData.split("\n").map(function(row) {
+                    let values = row.split("\t");  // 붙여넣기에서 각 열의 값을 탭으로 구분
+
+                    // 데이터가 올바르게 분할되었을 때만 처리
+                    if (values.length > 1) {
+                        return {
+                            name: values[0],
+                            number: values[1],
+                            key: "excelDirectPaste",  // key 값을 수동으로 추가
+                        };
+                    }
+                });
+
+                // 유효한 데이터만 필터링 (빈 데이터 제외)
+                return parsedData.filter(Boolean);
+            }
         });
+
         table.on("dataLoading", function(data) {
             if (data.length) {
                 data.forEach(function(elem, index) {
@@ -1163,16 +1190,9 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                 }
 
             } else if ($("#tab-8").hasClass('current')) {
-                deleteDuplicateTable()
+
                 let list = table.getData();
-                // 고유 키를 각 데이터에 추가
-                list.forEach(function (item, index) {
-                    // 만약 고유 키가 없다면 추가 (기존에 없을 경우에만 생성)
-                    if (!item.hasOwnProperty('key')) {
-                        item.key = 'excelDirectPaste';  // 고유 키 생성
-                    }
-                });
-                table.replaceData(list);
+
                 if (list.length > 300000) {
                     alert('최대 300,000개까지 등록할 수 있습니다.');
                 } else {
