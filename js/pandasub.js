@@ -63,6 +63,8 @@ $(document).ready(function() {
                     }
                     if(data[0].file_chg){
                         sendContentBoxBodyImg.attr('src', '/upload_file/sms/img_thumb/'+data[0].file_chg);
+                    }else{
+                        sendContentBoxBodyImg.attr('src', '');
                     }
 
                     rowDataTotSendCnt.text(data[0].receive_cnt_tot)
