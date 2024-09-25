@@ -543,3 +543,13 @@ function curTime() {
 		clock.innerHTML= year+"."+month+"."+day+" "+don+" "+hrs+":"+min+":"+sec;
 		setTimeout("curTime()",1000)
 }
+$(document).ready(function() {
+	var member_gubun = $('input[name=member_gubun]:checked').val()
+	$('input[name=member_gubun]').on('change',function (){
+		if(member_gubun==='4'){
+
+		}
+	})
+
+
+});
