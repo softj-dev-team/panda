@@ -65,36 +65,12 @@ $query = "
     SELECT a.idx, a.sms_title, a.sms_content, a.wdate, a.send_type, a.sms_type, a.module_type, a.cell_send, sc.cell,
            CONCAT(a.reserv_date, ' ', a.reserv_time, ':', a.reserv_minute) AS reserv,
            b.file_chg, 
-           COUNT(sc.idx) AS receive_cnt_tot,
-           SUM(
-               CASE 
-                   WHEN a.module_type = 'LG' AND log_table.frsltstat = '06' THEN 1
-                   WHEN a.module_type = 'JUD1' AND jud1_table.RSTATE = 0 THEN 1
-                   WHEN a.module_type = 'JUD2' AND jud2_table.RSTATE = 0 THEN 1
-                   ELSE 0 
-               END
-           ) AS receive_cnt_suc,
-           SUM(
-               CASE 
-                   WHEN a.module_type = 'LG' AND log_table.frsltstat != '06' THEN 1
-                   WHEN a.module_type = 'JUD1' AND jud1_table.RSTATE != 0 THEN 1
-                   WHEN a.module_type = 'JUD2' AND jud2_table.RSTATE != 0 THEN 1
-                   ELSE 0 
-               END
-           ) AS receive_cnt_fail
+           COUNT(sc.idx) AS receive_cnt_tot
+           
     FROM sms_save a
     JOIN sms_save_cell sc ON sc.save_idx = a.idx
     LEFT JOIN board_file b ON b.board_idx = a.idx AND b.board_tbname = 'sms_save' AND b.board_code = 'mms'
-    $module_type_query  -- 동적으로 생성된 조인
-     LEFT JOIN (
-        SELECT S_ETC1, RSTATE
-        FROM SMS_BACKUP_AGENT_JUD1
-    ) jud1_table ON jud1_table.S_ETC1 = sc.idx AND a.module_type = 'JUD1'
-
-    LEFT JOIN (
-        SELECT S_ETC1, RSTATE
-        FROM SMS_BACKUP_AGENT_JUD2
-    ) jud2_table ON jud2_table.S_ETC1 = sc.idx AND a.module_type = 'JUD2'
+    
     where 1 
         $where
     GROUP BY a.idx
@@ -199,9 +175,7 @@ $totalpage = ceil($iTotalSubCnt / $pageScale);
                         <col style="width:10%">
                         <col style="width:10%">
                         <col style="width:6%">
-                        <col style="width:6%">
-                        <col style="width:6%">
-                        <col style="width:6%">
+
                     </colgroup>
                     <tr>
                         <th class="check"><input type="checkbox" onclick="javascript:CheckAll()"></th>
@@ -209,13 +183,8 @@ $totalpage = ceil($iTotalSubCnt / $pageScale);
                         <th>구분</th>
                         <th>발신번호</th>
                         <th>수신번호</th>
-<!--                        <th>내용</th>-->
                         <th>총건수</th>
-                        <th>성공</th>
-                        <th>실패</th>
-                        <th>잔여</th>
-                        <!--<th>결과</th>
-                    <th>비고</th>-->
+
                     </tr>
                     <?php
                     while ($row = mysqli_fetch_array($result)) {
@@ -239,9 +208,7 @@ $totalpage = ceil($iTotalSubCnt / $pageScale);
                             <td><?= $row['cell_send'] ?></td>
                             <td><?= $row['cell'] ?></td>
                             <td><?= number_format($row['receive_cnt_tot']) ?></td>
-                            <td><?= number_format($row['receive_cnt_suc']) ?></td>
-                            <td><?= number_format($row['receive_cnt_fail']) ?></td>
-                            <td><?= number_format(($row['receive_cnt_tot'] - $row['receive_cnt_suc'] - $row['receive_cnt_fail'])) ?></td>
+
                         </tr>
                     <?php } ?>
                 </table>
