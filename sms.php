@@ -817,7 +817,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                 var form = document.getElementById('sms_frm');
                 var formData = new FormData(form);
                 var check = chkFrm('sms_frm');
-                var reserv_yn =$('input[name="reserv_yn"]').is(':checked');
+                var reserv_yn =$('input[name="reserv_yn"]:checked').val();
                 var confirmMessage ='';
                 var tableListCnt = table.getData().length;
                 var msgTypeName='';

@@ -816,28 +816,31 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
             sms_frm.submit();
             //alert("문자내용 저장 되었습니다.");
         }
+        // 팝업을 표시하는 함수
+        function showPopup() {
+            document.getElementById('popupLayer').style.display = 'flex';
+        }
 
+        // 팝업을 닫는 함수
+        function closePopup() {
+            document.getElementById('popupLayer').style.display = 'none';
+        }
         function go_msg_send() {
             var ban_ = ban();
             if (ban_) {
                 var form = document.getElementById('sms_frm');
                 var formData = new FormData(form);
                 var check = chkFrm('sms_frm');
-                var reserv_yn =$('input[name="reserv_yn"]').is(':checked');
+                var reserv_yn =$('input[name="reserv_yn"]:checked').val();
                 var confirmMessage ='';
                 var tableListCnt = table.getData().length;
-                var msgTypeName='';
+                var msgTypeName='이미지';
                 if(reserv_yn==='N'){
                     confirmMessage ='즉시';
                 }else{
                     confirmMessage ='예약';
                 }
-                var content_lenght =getStringLength($("#sms").val());
-                if (content_lenght > 90) {
-                    msgTypeName = '장문'
-                } else {
-                    msgTypeName = '단문'
-                }
+
                 if (check && validate()) {
                     var result = confirm("메세지를 ["+confirmMessage+"] 발송합니다.\n"+tableListCnt+" 건을 ["+confirmMessage+"] 발송 하겠습니다까?" );
                     if (result) {
