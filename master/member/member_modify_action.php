@@ -17,7 +17,7 @@ if ($_REQUEST['member_password']) {
 	$user_pwd = md5($user_pwd);
 }
 $user_name = trim(sqlfilter($_REQUEST['member_name']));
-
+$company_name = trim(sqlfilter($_REQUEST['company_name']));
 $tel1 = trim(sqlfilter($_REQUEST['tel1']));
 $tel2 = trim(sqlfilter($_REQUEST['tel2']));
 $tel3 = trim(sqlfilter($_REQUEST['tel3']));
@@ -97,6 +97,7 @@ if ($_REQUEST['member_password']) {
 	$query .= " user_pwd = '" . $user_pwd . "', ";
 }
 $query .= " user_name = '" . $user_name . "', ";
+$query .= " company_name = '" . $company_name . "', ";
 $query .= " tel = '" . $tel . "', ";
 $query .= " cell = '" . $cell . "', ";
 $query .= " birthday = '" . $birthday . "', ";

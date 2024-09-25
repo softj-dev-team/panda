@@ -462,14 +462,14 @@ $bbs_code = "member";
 								</tr>
 								<tr>
 									<th scope="row">이름</th>
-									<td colspan="3">
+									<td>
 										<input type="text" style="width:20%;" name="member_name" id="member_name" required="yes" message="이름" value="<?= $row['user_name'] ?>" readonly>
 									</td>
-									<!--<th scope="row">닉네임</th>
-							<td colspan="3">
-								<input type="text" style="width:20%;" name="member_nick" id="user_nick" required="yes" message="닉네임"/>&nbsp;<a href="javascript:ch_nick();" class="btn_green">중복확인</a>
-								<div id="check_nick" style="paddig-top:10px;"></div>
-							</td>-->
+									<th scope="row">사업자명</th>
+                                    <td>
+                                        <input type="text" style="width:100%;" name="company_name" id="company_name" required="yes" message="사업자명" value="<?= $row['company_name'] ?>"/>
+
+                                    </td>
 								</tr>
 								<tr>
 									<th scope="row"> 휴대전화<br />(인증번호)</th>
@@ -533,8 +533,10 @@ $bbs_code = "member";
 										<input type="radio" name="member_gubun" value="1" <?= $row[member_gubun] == "1" ? "checked" : "" ?> message="회원구분" id="member_gubun_1"> 일반회원
 										<input type="radio" name="member_gubun" value="2" <?= $row[member_gubun] == "2" ? "checked" : "" ?> message="회원구분" id="member_gubun_2"> 광고회원
 										<input type="radio" name="member_gubun" value="3" <?= $row[member_gubun] == "3" ? "checked" : "" ?> message="회원구분" id="member_gubun_3"> 휴면회원
+                                        <input type="radio" name="member_gubun" value="4" <?= $row[member_gubun] == "4" ? "checked" : "" ?> message="회원구분" id="member_gubun_4"> 사업자회원
 									</td>
 								</tr>
+
 								<tr>
 									<th scope="row"> 단가설정</th>
 									<td>
