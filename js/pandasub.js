@@ -62,7 +62,7 @@ $(document).ready(function() {
                         rowDataUseSumPoint.text(formatCost(data[0].fail_mms_cost));
                     }
                     if(data[0].ffilepath){
-                        sendContentBoxBodyImg.attr('src', data[0].ffilepath);
+                        sendContentBoxBodyImg.attr('src', '/upload_file/sms/img_thumb/'+data[0].file_chg);
                     }
 
                     rowDataTotSendCnt.text(data[0].receive_cnt_tot)
