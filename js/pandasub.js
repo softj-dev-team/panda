@@ -61,7 +61,7 @@ $(document).ready(function() {
                     } else if (data[0].sms_type === 'mms') {
                         rowDataUseSumPoint.text(formatCost(data[0].fail_mms_cost));
                     }
-                    if(data[0].ffilepath){
+                    if(data[0].file_chg){
                         sendContentBoxBodyImg.attr('src', '/upload_file/sms/img_thumb/'+data[0].file_chg);
                     }
 
