@@ -19,7 +19,7 @@ if ($result && mysqli_num_rows($result) > 0) {
 $yearMonth = date('Ym', strtotime($wdate));
 $tableName = "TBL_SEND_LOG_" . $yearMonth;  // 테이블 이름 예: TBL_SEND_LOG_202409
 $query = "
-    SELECT log_table.ffilepath,a.idx, a.sms_title, a.sms_content, length(a.sms_content) as content_length, a.wdate, a.send_type, a.sms_type, a.module_type, a.cell_send, sc.cell,
+    SELECT log_table.ffilepath,log_table.fsubject, a.idx, a.sms_title, a.sms_content, length(a.sms_content) as content_length, a.wdate, a.send_type, a.sms_type, a.module_type, a.cell_send, sc.cell,
            CONCAT(a.reserv_date, ' ', a.reserv_time, ':', a.reserv_minute) AS reserv,
            b.file_chg, 
            COUNT(sc.idx) AS receive_cnt_tot,
@@ -71,7 +71,7 @@ $query = "
     JOIN sms_save_cell sc ON sc.save_idx = a.idx
     LEFT JOIN board_file b ON b.board_idx = a.idx AND b.board_tbname = 'sms_save' AND b.board_code = 'mms'
       left join (
-           SELECT fetc1, frsltstat, ffilepath
+           SELECT fetc1, frsltstat, ffilepath,fsubject
             FROM $tableName
       ) log_table ON log_table.fetc1 = sc.idx AND a.module_type = 'LG'
         

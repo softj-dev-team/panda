@@ -819,11 +819,13 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
         // 팝업을 표시하는 함수
         function showPopup() {
             document.getElementById('popupLayer').style.display = 'flex';
+
         }
 
         // 팝업을 닫는 함수
         function closePopup() {
             document.getElementById('popupLayer').style.display = 'none';
+            window.location.reload();
         }
         function go_msg_send() {
             var ban_ = ban();

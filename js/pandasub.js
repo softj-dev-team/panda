@@ -46,7 +46,7 @@ $(document).ready(function() {
                     sendContentBoxBodyp.html(data[0].sms_content)
                     byteCount.text(data[0].content_length + ' byte')
                     rowDataSmsType.text(data[0].sms_type)
-                    rowDataTitle.text(data[0].sms_title)
+                    rowDataTitle.text(data[0].fsubject)
                     if (data[0].sms_type === 'sms') {
                         rowDataUsePoint.text(formatCost(data[0].sms_cost));
                     } else if (data[0].sms_type === 'lms') {
