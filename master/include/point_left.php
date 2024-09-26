@@ -10,5 +10,11 @@
 	  		<!--<li <? if ($smenu == 3) { ?>class="on"<? } ?>>
 					<a href="../point/member_coupon_list.php?bmenu=<?= $bmenu ?>&smenu=3">쿠폰 내역 조회</a>
 				</li>-->
+            <li <? if ($smenu == 4) { ?>class="on" <? } ?>>
+                <a href="../analysis/day.php?bmenu=<?= $bmenu ?>&smenu=4">일별통계</a>
+            </li>
+            <li <? if ($smenu == 5) { ?>class="on" <? } ?>>
+                <a href="../analysis/month.php?bmenu=<?= $bmenu ?>&smenu=5">월별통계</a>
+            </li>
 	  	</ul>
 	  </aside>
