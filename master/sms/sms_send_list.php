@@ -449,10 +449,24 @@ $totalpage	= ($iTotalSubCnt - 1) / $pageScale  + 1;
 											if ($row['module_type'] == "LG") {
 
 												$sql_sub_2 = "select idx from sms_save_cell where 1 and is_del='N' and save_idx='" . $row['idx'] . "' and idx in (select fetc1 from TBL_SEND_LOG_" . str_replace("-", "", substr($row['wdate'], 0, 7)) . " where 1 and frsltstat='06')";
-												$query_sub_2 = mysqli_query($gconnet, $sql_sub_2);
+                                                $sql_sub_2 = "SELECT ssc.idx 
+                                                                  FROM sms_save_cell AS ssc
+                                                                  JOIN TBL_SEND_LOG_" . str_replace("-", "", substr($row['wdate'], 0, 7)) . " AS tsl
+                                                                  ON ssc.idx = tsl.fetc1
+                                                                  WHERE ssc.is_del = 'N'
+                                                                  AND ssc.save_idx = '" . $row['idx'] . "'
+                                                                  AND tsl.frsltstat = '06'";
+
+                                                $query_sub_2 = mysqli_query($gconnet, $sql_sub_2);
 												$row['receive_cnt_suc'] = mysqli_num_rows($query_sub_2);
 
-												$sql_sub_3 = "select idx from sms_save_cell where 1 and is_del='N' and save_idx='" . $row['idx'] . "' and idx in (select fetc1 from TBL_SEND_LOG_" . str_replace("-", "", substr($row['wdate'], 0, 7)) . " where 1 and not frsltstat='06')";
+												$sql_sub_3 = "SELECT ssc.idx 
+                                                                  FROM sms_save_cell AS ssc
+                                                                  JOIN TBL_SEND_LOG_" . str_replace("-", "", substr($row['wdate'], 0, 7)) . " AS tsl
+                                                                  ON ssc.idx = tsl.fetc1
+                                                                  WHERE ssc.is_del = 'N'
+                                                                  AND ssc.save_idx = '" . $row['idx'] . "'
+                                                                  AND tsl.frsltstat != '06'";
 												$query_sub_3 = mysqli_query($gconnet, $sql_sub_3);
 												$row['receive_cnt_fail'] = mysqli_num_rows($query_sub_3);
 											} else if ($row['module_type'] == "JUD1") {
