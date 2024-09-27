@@ -75,7 +75,11 @@
                             <label for="f-search-sel-2" class="blind">검색 카테고리</label>
                             <select id="f-search-sel-2" class="fm-sel-2" name="template_type">
                                 <option value="">메세지 유형</option>
+
                                 <option value="BA">기본형</option>
+                                <option value="EX">부가정보형</option>
+                                <option value="AD">채널추가형</option>
+                                <option value="MI">복합형</option>
                                 <!--                            <option value="">NEWS</option>-->
                             </select>
                         </div>
@@ -84,7 +88,9 @@
                             <select id="f-search-sel-3" class="fm-sel-2" name="template_emphasize_type">
                                 <option value="">강조 유형</option>
                                 <option value="NONE">선택안함</option>
+                                <option value="IMAGE">이미지형</option>
                                 <option value="TEXT">강조표기형</option>
+                                <option value="ITEM_LIST">아이템리스트형</option>
                             </select>
                         </div>
                         <div class="sch-sel">
@@ -123,10 +129,11 @@
                             <th scope="col">No</th>
 <!--                            <th scope="col">검색용아이디</th>-->
                             <th scope="col">템플릿명</th>
-                            <th scope="col">유형</th>
+                            <th scope="col">메세지유형</th>
+                            <th scope="col">강조유형</th>
                             <th scope="col">등록일</th>
                             <th scope="col">검수결과</th>
-                            <th scope="col">상태</th>
+                            <th scope="col">사용상태</th>
                             <th scope="col">다운로드</th>
                         </tr>
                         </thead>

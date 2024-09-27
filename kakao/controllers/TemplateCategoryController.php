@@ -730,7 +730,7 @@ class TemplateCategoryController extends Controller
                     $template['template_name'] = $responseData['data']['templateName'];
                     $template['template_type'] = $responseData['data']['templateMessageType'];
                     $template['strong_sub_title'] = $responseData['data']['templateTitle'];
-                    $template['template_emphasize_type'] = $responseData['data']['templateSubtitle'];
+                    $template['template_emphasize_type'] = $responseData['data']['templateEmphasizeType'];
                     $template['category_id'] = $responseData['data']['categoryCode'];
                     // modifiedAt 값이 있는 경우에만 update_at에 할당
                     if (!empty($templateData['modifiedAt'])) {

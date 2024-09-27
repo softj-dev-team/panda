@@ -760,6 +760,12 @@ function loadTemplate(page = 1) {
         'ITEM_LIST': '아이템리스트형',
         'TEXT': '강조표기형'
     };
+    const templateEmphasizeTypeMapping = {
+        'NONE': '선택안함',
+        'IMAGE': '이미지',
+        'ITEM_LIST': '아이템리스트',
+        'TEXT': '강조표기'
+    };
     showLoadingSpinner(); // 스피너 표시
     $.ajax({
         url: '/kakao/index.php?route=getUserTemplate',
@@ -782,6 +788,7 @@ function loadTemplate(page = 1) {
                 response.template.forEach(function(template) {
                     var statusText = statusMapping[template.status];
                     var templateText = templateTypeMapping[template.template_type]
+                    var templateEmphasizeTypeText = templateEmphasizeTypeMapping[template.template_emphasize_type]
                     var inspectionStatusText = inspectionStatusMapping[template.inspection_status]
                     var comments = template.inspection_comments;
 
@@ -802,6 +809,7 @@ function loadTemplate(page = 1) {
                             <td>${template.id}</td>
                             <td><a href="#" id="templateSelect" data-id="${template.id}">${template.template_name}</a></td>
                             <td>${templateText}</td>
+                             <td>${templateEmphasizeTypeText}</td>
                             <td>${formatDate(template.created_at)}</td>
                             <td ${comments ? 'class=tooltip' :''}>${inspectionStatusText}&nbsp;${comments ? '<span class="tooltiptext tooltiptext-w">'+comments+'</span>' :''}</td>
                             <td>${statusText}</td>
@@ -947,7 +955,7 @@ function formatDate(dateString) {
     var hours = ('0' + date.getHours()).slice(-2); // 시를 2자리로 맞춤
     var minutes = ('0' + date.getMinutes()).slice(-2); // 분을 2자리로 맞춤
 
-    return `${year}.${month}.${day} ${hours}:${minutes}`;
+    return `${year}.${month}.${day}`;
 }
 function formatDate14(dateStr) {
     if (!dateStr || dateStr.length !== 14) {
