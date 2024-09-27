@@ -402,6 +402,7 @@ function validateForm(form) {
                 // 필수 입력 필드가 비어 있는지 확인
                 if (inputField.value.trim() === "") {
                     // 오류 상태 표시
+                    inputField.classList.remove('blind');
                     inputField.classList.add('fm-error');
                     errorText.classList.add('active');
                     errorText.textContent = "항목을 입력해 주세요."; // 에러 메시지 설정
@@ -1260,6 +1261,7 @@ $(document).ready(function() {
         if (currentLength > 1000) {
             $('#errorMsg').removeClass("blind");
             $('#errorMsg').addClass("active");
+            $(this).addClass('fm-error');
             $(this).val($(this).val().substring(0, 1000));  // 글자수 제한
         } else {
             $('#errorMsg').addClass("blind");

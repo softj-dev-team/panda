@@ -177,8 +177,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                         <div class="custom-input-container">
                             <label for="template_title" class="fm-label custom-label">메세지 내용 * (<span id="charCount">0/1000</span>)</label>
                             <textarea name="template_title" id="highlightTitle" class="fm-ta" placeholder="템플릿내용은 한/영 구분없이 1,000자까지 입력 가능합니다. 변수에 들어갈 내용의 최대 길이를 감안하여 작성해 주세요."></textarea>
-
-                            <span id="errorMsg" class="fm-error-txt blind" >* 1000자를 초과할 수 없습니다.</span>
+                            <span id="errorMsg" class="fm-error-txt" >* 1000자를 초과할 수 없습니다.</span>
                         </div>
                         <div class="flex-just-start">
                             <button type="button" class="btn-t-3 btn-c-4" id="addVariableBtn">변수추가</button>
