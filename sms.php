@@ -1340,12 +1340,22 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
             const uniqueArr = [...set];
             return uniqueArr;
         }
+
         function cleanNumber(number) {
             // number가 undefined, null, 또는 숫자형인 경우를 처리
             if (typeof number !== 'string') {
                 number = String(number); // 숫자형이나 다른 타입이면 문자열로 변환
             }
-            return number.replace(/[^\w]/g, '').trim();  // 특수문자 및 공백 제거
+
+            // 특수문자 및 공백 제거
+            let cleanedNumber = number.replace(/[^\d]/g, '').trim();  // 숫자만 남기고 공백 제거
+
+            // 만약 번호가 '010'으로 시작하지 않고 10자리라면 '010'을 앞에 붙여줌
+            if (cleanedNumber.length === 10 && cleanedNumber.startsWith('1')) {
+                cleanedNumber = '0' + cleanedNumber;
+            }
+
+            return cleanedNumber;
         }
         function deleteDuplicateTable(){
             // 모든 데이터를 가져옴
