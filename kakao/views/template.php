@@ -149,6 +149,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                                 <label for="f-attach-highlight" class="fm-file-btn ">파일첨부</label>
                                 <input type="text" data-fakefile="text" readonly="readonly" placeholder="하이라이트 썸네일" class="fm-ipt fm-file" />
                             </div>
+                            <span class="error-message"></span>
                         </div>
 
                         <div class="fm-row"></div>

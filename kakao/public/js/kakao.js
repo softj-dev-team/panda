@@ -1887,4 +1887,101 @@ $(document).ready(function() {
             <input type="text" data-fakefile="text" readonly="readonly" placeholder="파일 사이즈 최대 500KB" class="fm-ipt fm-file" />
         `);
     });
+    $('#f-attach-highlight').on('change', function() {
+        var fileInput = this.files[0];
+        var errorMessage = $('.error-message');
+        errorMessage.text(''); // 기존 에러 메시지 초기화
+
+        // 파일이 선택되지 않은 경우 처리
+        if (!fileInput) {
+            alert('파일을 선택해주세요.');
+            return;
+        }
+
+        // 파일 확장자 체크
+        var validExtensions = ['jpg', 'jpeg', 'png'];
+        var fileExtension = fileInput.name.split('.').pop().toLowerCase();
+        if ($.inArray(fileExtension, validExtensions) === -1) {
+            alert('JPEG, JPG, PNG 형식의 파일만 가능합니다.');
+            return;
+        }
+
+        // 파일 크기 체크 (500KB 이하)
+        if (fileInput.size > 500 * 1024) {
+            alert('파일 크기는 500KB 이하이어야 합니다.');
+            return;
+        }
+
+        var img = new Image();
+        img.src = URL.createObjectURL(fileInput);
+
+        img.onload = function() {
+            // 가로 너비 체크 (108px 이상)
+            if (img.width < 108) {
+                alert('아이템 리스트 이미지의 가로 너비는 최소 108px이어야 합니다.');
+                return;
+            }
+
+            // 가로:세로 비율 1:1 체크
+            if (img.width !== img.height) {
+                alert('아이템 리스트 이미지는 가로:세로 비율이 1:1이어야 합니다.');
+                return;
+            }
+
+            // 유효성 통과 시 에러 메시지를 지움
+            errorMessage.text('');
+            alert('이미지 유효성 검사를 통과했습니다.');
+        };
+
+        img.onerror = function() {
+            alert('유효하지 않은 이미지 파일입니다.');
+        };
+    });
+    $('#f-attach').on('change', function() {
+        var fileInput = this.files[0];
+
+        // 파일이 선택되지 않은 경우 처리
+        if (!fileInput) {
+            alert('파일을 선택해주세요.');
+            return;
+        }
+
+        // 파일 확장자 체크
+        var validExtensions = ['jpg', 'jpeg', 'png'];
+        var fileExtension = fileInput.name.split('.').pop().toLowerCase();
+        if ($.inArray(fileExtension, validExtensions) === -1) {
+            alert('JPEG, JPG, PNG 형식의 파일만 가능합니다.');
+            return;
+        }
+
+        // 파일 크기 체크 (500KB 이하)
+        if (fileInput.size > 500 * 1024) {
+            alert('파일 크기는 500KB 이하이어야 합니다.');
+            return;
+        }
+
+        var img = new Image();
+        img.src = URL.createObjectURL(fileInput);
+
+        img.onload = function() {
+            // 가로 너비 체크 (500px 이상)
+            if (img.width < 500) {
+                alert('이미지의 가로 너비는 최소 500px이어야 합니다.');
+                return;
+            }
+
+            // 가로:세로 비율 2:1 체크
+            if (img.width / img.height !== 2) {
+                alert('이미지는 가로:세로 비율이 2:1이어야 합니다.');
+                return;
+            }
+
+            // 유효성 통과 시
+            alert('이미지 유효성 검사를 통과했습니다.');
+        };
+
+        img.onerror = function() {
+            alert('유효하지 않은 이미지 파일입니다.');
+        };
+    });
 });
