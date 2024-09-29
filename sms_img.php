@@ -794,6 +794,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                 return parsedData.filter(Boolean);
             }
         });
+        let isReplacingData = false;  // 중복 실행 방지를 위한 플래그
         table.on("dataLoading", function(data) {
             if (isReplacingData) return;  // 이미 데이터가 로드 중이면 중단
 
@@ -1290,6 +1291,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
         })
         // 엑셀 불러오기
         $("#excel_file").on('change', function() {
+            showLoadingSpinner();
             $('#cell_receive_list').html('');
             $('#cell_receive_cnt').text('0');
             let ext = $("#excel_file").val().split(".").pop().toLowerCase();
@@ -1330,15 +1332,17 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                             $('#excelFileAdd').text(count);
                             $('#excelFileAdd').parent().show();
                             $('#cell_receive_cnt').text(tableList.length);
-
+                            hideLoadingSpinner();
                         }
 
                     } else {
                         alert('엑셀 양식을 참고해주세요.\n헤더는 [이름 = NAME, 번호 = HP]이 되어야합니다.');
+                        hideLoadingSpinner();
                     }
                 });
             }
             $(this).val('');
+
         });
         /* 파일붙여넣기 & 엑셀붙여넣기 끝 */
 

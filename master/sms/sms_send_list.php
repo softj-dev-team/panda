@@ -520,8 +520,8 @@ $totalpage	= ($iTotalSubCnt - 1) / $pageScale  + 1;
 												</td>
 												<td style="text-align:left;padding-top:5px;padding-bottom:5px;padding-left:5px;padding-right:5px;"><?= $row['sms_content'] ?></td>
 												<td><?= $row['send_ip'] ?></td>
-												<td><?= number_format($row['chg_mile']) ?></td>
-												<td><?= number_format($row['chg_mile'] / $row['receive_cnt_tot'] * $row['receive_cnt_suc']) ?></td>
+												<td><?= number_format($row['chg_mile'], 2) ?></td>
+												<td><?= number_format($row['chg_mile'] / $row['receive_cnt_tot'] * $row['receive_cnt_suc'] , 2) ?></td>
 												<td><?= number_format($row['receive_cnt_tot']) ?></td>
 												<td><?= number_format($row['receive_cnt_suc']) ?></td>
 												<td><?= number_format($row['receive_cnt_fail']) ?></td>

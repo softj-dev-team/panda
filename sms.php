@@ -1094,6 +1094,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
 
         // 텍스트 불러오기
         $("#text_file").on('change', function() {
+            showLoadingSpinner();
             $('#cell_receive_list').html('');
             $('#cell_receive_cnt').text('0');
             let ext = $("#text_file").val().split(".").pop().toLowerCase();
@@ -1128,6 +1129,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                         let count = tableList.filter(function(item) {
                             return item.key === 'textFileAdd';  // key가 'textFileAdd'인 항목만 필터링
                         }).length;
+                        hideLoadingSpinner()
                         $('#textFileAdd').text(count);
                         $('#textFileAdd').parent().show();
 
@@ -1270,6 +1272,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
         })
         // 엑셀 불러오기
         $("#excel_file").on('change', function() {
+            showLoadingSpinner();
             $('#cell_receive_list').html('');
             $('#cell_receive_cnt').text('0');
             let ext = $("#excel_file").val().split(".").pop().toLowerCase();
@@ -1278,6 +1281,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                 $("#excel_file").val("");
                 return false;
             } else {
+
                 readExcel(async function(result) {
                     // 타이틀 체크
                     console.log(result);
@@ -1287,6 +1291,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                         if (result.length > 300000) {
                             alert('최대 300,000개까지 등록할 수 있습니다.');
                         } else {
+
                             //result = await rejectHpCheck(result, 1);
                             // result = await checkDuplicateExcel(result);
                             result.forEach(item => {
@@ -1310,15 +1315,17 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                             $('#excelFileAdd').text(count);
                             $('#excelFileAdd').parent().show();
                             $('#cell_receive_cnt').text(tableList.length);
-
+                            hideLoadingSpinner()
                         }
 
                     } else {
                         alert('엑셀 양식을 참고해주세요.\n헤더는 [이름 = NAME, 번호 = HP]이 되어야합니다.');
+                        hideLoadingSpinner()
                     }
                 });
             }
             $(this).val('');
+
         });
         /* 파일붙여넣기 & 엑셀붙여넣기 끝 */
 

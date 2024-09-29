@@ -60,7 +60,7 @@
         
         <div class="tab_btn_are">
             
-			<form name="s_mem" id="s_mem" method="post" action="send03.php">
+			<form name="s_mem" id="s_mem" method="post" action="send03.php" class="flex-just-start">
 				<div class="input_tab">
 					<input type="text" name="keyword" id="keyword" value="<?=$keyword?>">
 					<a href="javascript:s_mem.submit();">
