@@ -836,7 +836,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
             window.location.reload();
         }
         function go_msg_send() {
-            showLoadingSpinner();
+
             var ban_ = ban();
             if (ban_) {
                 var form = document.getElementById('sms_frm');
@@ -860,6 +860,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                 if (check && validate()) {
                     var result = confirm("메세지를 ["+confirmMessage+"] 발송합니다.\n"+tableListCnt+" 건을 ["+confirmMessage+"] 발송 하겠습니다까?" );
                     if (result) {
+                        showLoadingSpinner();
                         var dupDelCnt = deleteDuplicateTable()
                         var list = table.getData();
                         list.forEach(function(item, index) {
