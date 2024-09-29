@@ -780,16 +780,39 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
             }
         });
 
-        table.on("dataLoading", function(data) {
-            if (data.length) {
-                data.forEach(function(elem, index) {
-                    if (elem.number) {
-                        elem.number = elem.number.replace(/\D/g, '')
-                    } else {
-                        data.splice(index, 1);
-                    }
+        let isReplacingData = false;  // 중복 실행 방지를 위한 플래그
 
-                })
+        table.on("dataLoading", function(data) {
+            if (isReplacingData) return;  // 이미 데이터가 로드 중이면 중단
+
+            if (data.length) {
+                // 데이터 배열을 필터링하여 number가 있는 요소만 남기고, 숫자로 정제함
+                let cleanedData = data.filter(function(elem, index) {
+                    if (elem.number) {
+                        // number가 문자열인지 확인하고, 문자열이 아닌 경우 문자열로 변환
+                        if (typeof elem.number !== 'string') {
+                            elem.number = String(elem.number);  // 문자열로 변환
+                        }
+
+                        // 숫자 이외의 문자를 모두 제거
+                        elem.number = elem.number.replace(/\D/g, '');
+                        return true;  // number가 있으면 유지
+                    } else {
+                        return false;  // number가 없으면 필터링하여 제외
+                    }
+                });
+
+                // 중복 실행 방지 플래그 설정
+                isReplacingData = true;
+                // 정제된 데이터를 다시 테이블에 반영
+                table.replaceData(cleanedData).then(function() {
+                    // 데이터가 성공적으로 대체된 후, 플래그를 해제
+                    isReplacingData = false;
+                }).catch(function(err) {
+                    // 오류 발생 시 플래그 해제
+                    isReplacingData = false;
+                    console.error("Error replacing data:", err);
+                });
             }
         });
 
@@ -847,15 +870,22 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                         xhr.open('POST', form.action, true);
                         xhr.onload = function () {
                             if (xhr.status === 200) {
-                                // 폼 전송 후 팝업을 표시
-                                showPopup();
-                                $('#resultSendOkCnt').text(tableListCnt-dupDelCnt);
-                                $('#resultSendCnt').text(tableListCnt);
-                                $('#resultMsgType').text(msgTypeName);
-                                $('#resultSendDupCnt').text(dupDelCnt);
+                                var response = JSON.parse(xhr.responseText);
+                                if (response.status === 'error') {
+                                    // 예외 처리 메시지 표시
+                                    alert(response.message);
+                                } else if (response.status === 'success') {
+                                    // 예외가 없을 경우 팝업 표시
+                                    showPopup();
+                                    $('#resultSendOkCnt').text(tableListCnt - dupDelCnt);
+                                    $('#resultSendCnt').text(tableListCnt);
+                                    $('#resultMsgType').text(msgTypeName);
+                                    $('#resultSendDupCnt').text(dupDelCnt);
+                                }
                             } else {
-                                alert('전송 중 오류가 발생했습니다.');
+                                alert('서버와의 통신 중 오류가 발생했습니다.');
                             }
+                            console.log(xhr)
                         };
                         xhr.send(formData);
                     } else {

@@ -39,31 +39,34 @@ $(document).ready(function() {
                 },
                 async: true,
                 dataType: "json",
-                success: function(data) {
+                success: function(response) {
                     hideLoadingSpinner();
                     // 서버에서 데이터를 정상적으로 받았을 때
-                    console.log(data);
-                    sendContentBoxBodyp.html(data[0].sms_content)
-                    byteCount.text(data[0].content_length + ' byte')
-                    rowDataSmsType.text(data[0].sms_type)
-                    rowDataTitle.text(data[0].fsubject)
-                    if (data[0].sms_type === 'sms') {
-                        rowDataUsePoint.text(formatCost(data[0].sms_cost));
-                    } else if (data[0].sms_type === 'lms') {
-                        rowDataUsePoint.text(formatCost(data[0].lms_cost));
-                    } else if (data[0].sms_type === 'mms') {
-                        rowDataUsePoint.text(formatCost(data[0].mms_cost));
+                    console.log(response.data);
+                    var contentWithLineBreaks = response.data.sms_content.replace(/\n/g, '<br>');
+                    sendContentBoxBodyp.html(contentWithLineBreaks);
+
+                    byteCount.text(response.data.sms_content_length + ' byte');
+                    rowDataSmsType.text(response.data.sms_type)
+                    rowDataTitle.text(response.data.fsubject)
+
+                    if (response.data.sms_type === 'sms') {
+                        rowDataUsePoint.text(formatCost(response.data.sms_cost));
+                    } else if (response.data.sms_type === 'lms') {
+                        rowDataUsePoint.text(formatCost(response.data.lms_cost));
+                    } else if (response.data.sms_type=== 'mms') {
+                        rowDataUsePoint.text(formatCost(response.data.mms_cost));
                     }
-                    if (data[0].sms_type === 'sms') {
-                        rowDataUseSumPoint.text(formatCost(data[0].fail_sms_cost));
-                    } else if (data[0].sms_type === 'lms') {
-                        rowDataUseSumPoint.text(formatCost(data[0].fail_lms_cost));
-                    } else if (data[0].sms_type === 'mms') {
-                        rowDataUseSumPoint.text(formatCost(data[0].fail_mms_cost));
+                    if (response.data.sms_type === 'sms') {
+                        rowDataUseSumPoint.text(formatCost(response.data.success_sms_cost));
+                    } else if (response.data.sms_type=== 'lms') {
+                        rowDataUseSumPoint.text(formatCost(response.data.success_lms_cost));
+                    } else if (response.data.sms_type === 'mms') {
+                        rowDataUseSumPoint.text(formatCost(response.data.success_mms_cost));
                     }
-                    if(data[0].file_chg){
+                    if(response.data.file_chg){
                         sendContentBoxBodyImg.show();
-                        sendContentBoxBodyImg.attr('src', '/upload_file/sms/img_thumb/'+data[0].file_chg);
+                        sendContentBoxBodyImg.attr('src', '/upload_file/sms/img_thumb/'+response.data.file_chg);
                         // 이미지 로딩 실패 시 404 처리
                         sendContentBoxBodyImg.on('error', function() {
                             // 이미지 로딩 실패 시, 이미지 숨기기 또는 대체 이미지 표시
@@ -75,10 +78,10 @@ $(document).ready(function() {
                         sendContentBoxBodyImg.hide();
                     }
 
-                    rowDataTotSendCnt.text(data[0].receive_cnt_tot)
-                    rowDataSuccesSendCnt.text(data[0].receive_cnt_suc)
-                    rowDataFaileTotSendCnt.text(data[0].receive_cnt_fail)
-                    rowDataMoreTotSendCnt.text(data[0].receive_cnt_tot - data[0].receive_cnt_suc-data[0].receive_cnt_fail)
+                    rowDataTotSendCnt.text(Number(response.data.receive_cnt_tot).toLocaleString())
+                    rowDataSuccesSendCnt.text(Number(response.data.receive_cnt_suc).toLocaleString())
+                    rowDataFaileTotSendCnt.text(Number(response.data.receive_cnt_fail).toLocaleString())
+                    rowDataMoreTotSendCnt.text(Number(response.data.receive_cnt_tot - response.data.receive_cnt_suc-response.data.receive_cnt_fail).toLocaleString())
                 },
                 error: function(xhr, status, error) {
                     hideLoadingSpinner();

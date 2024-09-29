@@ -104,7 +104,7 @@
 				$row['receive_cnt_suc'] = mysqli_num_rows($query_sub_2);
 				$tot_2 = $tot_2+$row['receive_cnt_suc'];
 				
-				$sql_sub_3 = "select idx from sms_save_cell where 1 and is_del='N' and save_idx in (select idx from sms_save where 1 ".$where_p." and sms_type='sms') and idx in (select fetc1 from TBL_SEND_LOG_".date("Ym")." where 1 and frsltstat='07')";
+				$sql_sub_3 = "select idx from sms_save_cell where 1 and is_del='N' and save_idx in (select idx from sms_save where 1 ".$where_p." and sms_type='sms') and idx in (select fetc1 from TBL_SEND_LOG_".date("Ym")." where 1 and frsltstat!='06')";
 				$query_sub_3 = mysqli_query($gconnet,$sql_sub_3);
 				$row['receive_cnt_fail'] = mysqli_num_rows($query_sub_3);
 				$tot_3 = $tot_3+$row['receive_cnt_fail'];
@@ -130,7 +130,7 @@
 				$row['receive_cnt_suc'] = mysqli_num_rows($query_sub_2);
 				$tot_2 = $tot_2+$row['receive_cnt_suc'];
 				
-				$sql_sub_3 = "select idx from sms_save_cell where 1 and is_del='N' and save_idx in (select idx from sms_save where 1 ".$where_p." and sms_type='lms') and idx in (select fetc1 from TBL_SEND_LOG_".date("Ym")." where 1 and frsltstat='07')";
+				$sql_sub_3 = "select idx from sms_save_cell where 1 and is_del='N' and save_idx in (select idx from sms_save where 1 ".$where_p." and sms_type='lms') and idx in (select fetc1 from TBL_SEND_LOG_".date("Ym")." where 1 and frsltstat!='06')";
 				$query_sub_3 = mysqli_query($gconnet,$sql_sub_3);
 				$row['receive_cnt_fail'] = mysqli_num_rows($query_sub_3);
 				$tot_3 = $tot_3+$row['receive_cnt_fail'];
@@ -156,7 +156,7 @@
 				$row['receive_cnt_suc'] = mysqli_num_rows($query_sub_2);
 				$tot_2 = $tot_2+$row['receive_cnt_suc'];
 				
-				$sql_sub_3 = "select idx from sms_save_cell where 1 and is_del='N' and save_idx in (select idx from sms_save where 1 ".$where_p." and sms_type='mms') and idx in (select fetc1 from TBL_SEND_LOG_".date("Ym")." where 1 and frsltstat='07')";
+				$sql_sub_3 = "select idx from sms_save_cell where 1 and is_del='N' and save_idx in (select idx from sms_save where 1 ".$where_p." and sms_type='mms') and idx in (select fetc1 from TBL_SEND_LOG_".date("Ym")." where 1 and frsltstat!='06')";
 				$query_sub_3 = mysqli_query($gconnet,$sql_sub_3);
 				$row['receive_cnt_fail'] = mysqli_num_rows($query_sub_3);
 				$tot_3 = $tot_3+$row['receive_cnt_fail'];

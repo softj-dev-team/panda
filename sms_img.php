@@ -795,15 +795,36 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
             }
         });
         table.on("dataLoading", function(data) {
-            if (data.length) {
-                data.forEach(function(elem, index) {
-                    if (elem.number) {
-                        elem.number = elem.number.replace(/\D/g, '')
-                    } else {
-                        data.splice(index, 1);
-                    }
+            if (isReplacingData) return;  // 이미 데이터가 로드 중이면 중단
 
-                })
+            if (data.length) {
+                // 데이터 배열을 필터링하여 number가 있는 요소만 남기고, 숫자로 정제함
+                let cleanedData = data.filter(function(elem, index) {
+                    if (elem.number) {
+                        // number가 문자열인지 확인하고, 문자열이 아닌 경우 문자열로 변환
+                        if (typeof elem.number !== 'string') {
+                            elem.number = String(elem.number);  // 문자열로 변환
+                        }
+
+                        // 숫자 이외의 문자를 모두 제거
+                        elem.number = elem.number.replace(/\D/g, '');
+                        return true;  // number가 있으면 유지
+                    } else {
+                        return false;  // number가 없으면 필터링하여 제외
+                    }
+                });
+
+                // 중복 실행 방지 플래그 설정
+                isReplacingData = true;
+                // 정제된 데이터를 다시 테이블에 반영
+                table.replaceData(cleanedData).then(function() {
+                    // 데이터가 성공적으로 대체된 후, 플래그를 해제
+                    isReplacingData = false;
+                }).catch(function(err) {
+                    // 오류 발생 시 플래그 해제
+                    isReplacingData = false;
+                    console.error("Error replacing data:", err);
+                });
             }
         });
 
