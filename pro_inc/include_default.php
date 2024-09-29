@@ -126,3 +126,6 @@ if (mysqli_num_rows($query_sms_configure) > 0) {
 $inc_pubyoil_arr = [
 	'1' => '월요일', '2' => '화요일', '3' => '수요일', '4' => '목요일', '5' => '금요일', '6' => '토요일', '7' => '일요일'
 ];
+function process_division_value($value) {
+    return (is_numeric($value) && $value !== '') ? "'" . $value . "'" : "null";
+}
