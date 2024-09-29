@@ -126,10 +126,11 @@
                             <th scope="col">No</th>
                             <!--                            <th scope="col">검색용아이디</th>-->
                             <th scope="col">템플릿명</th>
-                            <th scope="col">유형</th>
+                            <th scope="col">메세지유형</th>
+                            <th scope="col">강조유형</th>
                             <th scope="col">등록일</th>
                             <th scope="col">검수결과</th>
-                            <th scope="col">상태</th>
+                            <th scope="col">사용상태</th>
                             <th scope="col">다운로드</th>
                         </tr>
                         </thead>

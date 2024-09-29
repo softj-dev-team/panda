@@ -106,7 +106,7 @@ class TemplateCategoryModel
             $stmt->execute();
 
             // 로그에 쿼리 남기기
-            error_log("Executing dynamic updateTemplate query: " . $sql);
+//            error_log("Executing dynamic updateTemplate query: " . $sql);
         } catch (Exception $e) {
             throw new Exception('Failed to updateTemplateByArray: ' . $e->getMessage());
         }
@@ -167,7 +167,7 @@ class TemplateCategoryModel
         }
 
         if (!empty($template_title)) {
-            $sql .= " AND t.template_title LIKE :template_title";
+            $sql .= " AND (t.template_title LIKE :template_title or t.template_name LIKE :template_name)";
         }
 
         $sql .= " ORDER BY t.id DESC LIMIT :limit OFFSET :offset";
@@ -193,12 +193,16 @@ class TemplateCategoryModel
         if (!empty($template_title)) {
             $titleSearch = '%' . $template_title . '%';
             $stmt->bindParam(':template_title', $titleSearch, PDO::PARAM_STR);
+            $stmt->bindParam(':template_name', $titleSearch, PDO::PARAM_STR);
         }
 
         $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
         $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
 
         $stmt->execute();
+        error_log('getUserTemplate executed SQL: ' . $sql);
+        error_log('Bindings: profile_id = ' . $profile_id . ', template_type = ' . $template_type . ', template_emphasize_type = ' . $template_emphasize_type .
+            ', inspection_status = ' . $inspection_status . ', status = ' . $status . ', template_title = ' . $titleSearch . ', limit = ' . $limit . ', offset = ' . $offset);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     public function getUserTotalTemplate($profile_id, $template_type = null, $template_emphasize_type = null, $inspection_status = null, $status = null, $template_title = null)
@@ -221,7 +225,7 @@ class TemplateCategoryModel
             $sql .= ' AND status = :status';
         }
         if (!empty($template_title)) {
-            $sql .= ' AND template_title LIKE :template_title';
+            $sql .= " AND (template_title LIKE :template_title or template_name LIKE :template_name)";
         }
 
         $stmt = $this->conn->prepare($sql);
@@ -245,6 +249,7 @@ class TemplateCategoryModel
         if (!empty($template_title)) {
             $titleSearch = '%' . $template_title . '%';
             $stmt->bindParam(':template_title', $titleSearch, PDO::PARAM_STR);
+            $stmt->bindParam(':template_name', $titleSearch, PDO::PARAM_STR);
         }
 
         $stmt->execute();
