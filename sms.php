@@ -836,6 +836,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
             window.location.reload();
         }
         function go_msg_send() {
+            showLoadingSpinner();
             var ban_ = ban();
             if (ban_) {
                 var form = document.getElementById('sms_frm');
@@ -873,9 +874,11 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                                 var response = JSON.parse(xhr.responseText);
                                 if (response.status === 'error') {
                                     // 예외 처리 메시지 표시
+                                    hideLoadingSpinner();
                                     alert(response.message);
                                 } else if (response.status === 'success') {
                                     // 예외가 없을 경우 팝업 표시
+                                    hideLoadingSpinner();
                                     showPopup();
                                     $('#resultSendOkCnt').text(tableListCnt - dupDelCnt);
                                     $('#resultSendCnt').text(tableListCnt);
@@ -883,9 +886,9 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                                     $('#resultSendDupCnt').text(dupDelCnt);
                                 }
                             } else {
+                                hideLoadingSpinner();
                                 alert('서버와의 통신 중 오류가 발생했습니다.');
                             }
-                            console.log(xhr)
                         };
                         xhr.send(formData);
                     } else {

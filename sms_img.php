@@ -850,6 +850,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
             window.location.reload();
         }
         function go_msg_send() {
+            showLoadingSpinner();
             var ban_ = ban();
             if (ban_) {
                 var form = document.getElementById('sms_frm');
@@ -880,12 +881,14 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                         xhr.onload = function () {
                             if (xhr.status === 200) {
                                 // 폼 전송 후 팝업을 표시
+                                hideLoadingSpinner();
                                 showPopup();
                                 $('#resultSendOkCnt').text(tableListCnt-dupDelCnt);
                                 $('#resultSendCnt').text(tableListCnt);
                                 $('#resultMsgType').text(msgTypeName);
                                 $('#resultSendDupCnt').text(dupDelCnt);
                             } else {
+                                hideLoadingSpinner();
                                 alert('전송 중 오류가 발생했습니다.');
                             }
                         };
