@@ -112,26 +112,128 @@ function get_send_time($base_time, $division_yn, $division_min, $division_cnt, $
 
 // 문자 전송 SQL 쿼리 생성 함수
 function build_sms_send_query($my_member_row, $sms_type, $sms_content, $sms_title, $fsenddate, $cell, $cell_send, $save_cell_idx, $file_c) {
-    if ($sms_type == "sms") {
-        $fmsgtype = "0";
-        return sprintf(
-            "INSERT INTO TBL_SEND_TRAN (fmsgtype, fmessage, fsenddate, fdestine, fcallback, fetc1, fetc4) VALUES ('%s', '%s', '%s', '%s', '%s', '%d', '301230126')",
-            $fmsgtype, $sms_content, $fsenddate, $cell, $cell_send, $save_cell_idx
-        );
-    } elseif ($sms_type == "lms") {
-        $fmsgtype = "1";
-        return sprintf(
-            "INSERT INTO SMS_MAIN_AGENT_JUD1 (MSG_TYPE, S_MSG, S_TEXT, REQUESTDT, RESERVE, RESERVETIME, S_PHONE, S_CALLBACK, S_ETC1, S_ETC6) VALUES ('%s', '%s', '%s', NOW(), 'Y', '%s', '%s', '%d', '301230126')",
-            $fmsgtype, $sms_title, $sms_content, $fsenddate, $cell, $cell_send, $save_cell_idx
-        );
-    } elseif ($sms_type == "mms") {
-        $fmsgtype = "3";
-        return sprintf(
-            "INSERT INTO TBL_SEND_TRAN (fmsgtype, fsubject, fmessage, fsenddate, fdestine, fcallback, ffilepath, fetc1, fetc4) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '301230126')",
-            $fmsgtype, $sms_title, $sms_content, $fsenddate, $cell, $cell_send, $_P_DIR_FILE2 . $file_c, $save_cell_idx
-        );
+    global $_P_DIR_FILE2;
+
+    // 메시지 모듈 타입 결정
+    $module_type = $my_member_row["sms_module_type"] ?? $my_member_row["lms_module_type"];
+
+    // 예약 여부 판단: $fsenddate가 현재 시간보다 미래인지 확인
+    $current_time = new DateTime();
+    $send_time = new DateTime($fsenddate);
+    $is_reserved = ($send_time > $current_time);
+
+    // $send_date 설정
+    $send_date = $fsenddate;
+
+    // 메시지 타입 설정
+    $fmsgtype_map = [
+        'sms' => '0',
+        'lms' => ($module_type == 'LG') ? '2' : '1',
+        'mms' => ($module_type == 'LG') ? '3' : '1',
+    ];
+    $fmsgtype = $fmsgtype_map[$sms_type];
+
+    // 이미지 파일 경로 설정
+    $ffilepath = '';
+    $file_cnt = 0;
+    if ($sms_type == 'mms' && $file_c) {
+        $ffilepath = $_P_DIR_FILE2 . $file_c;
+        $file_cnt = 1;
     }
+
+    // 모듈 타입별 테이블 매핑
+    $module_table_map = [
+        'LG'   => 'TBL_SEND_TRAN',
+        'JUD1' => 'SMS_MAIN_AGENT_JUD1',
+        'JUD2' => 'SMS_MAIN_AGENT_JUD2',
+    ];
+    $table_name = $module_table_map[$module_type];
+
+    // 공통 필드 및 값 설정
+    $fields = [];
+    $placeholders = [];
+    $values = [];
+
+    if ($module_type == 'LG') {
+        // LG 모듈 필드 설정
+        $fields = ['fmsgtype', 'fsenddate', 'fdestine', 'fcallback', 'fetc1', 'fetc4'];
+        $placeholders = ["'%s'", "'%s'", "'%s'", "'%s'", "'%s'", "'%s'"];
+        $values = [$fmsgtype, $send_date, $cell, $cell_send, $save_cell_idx, '301230126'];
+
+        if ($sms_type == 'sms') {
+            $fields[] = 'fmessage';
+            $placeholders[] = "'%s'";
+            $values[] = $sms_content;
+        } else {
+            $fields[] = 'fsubject';
+            $fields[] = 'fmessage';
+            $placeholders[] = "'%s'";
+            $placeholders[] = "'%s'";
+            $values[] = $sms_title;
+            $values[] = $sms_content;
+        }
+
+        if ($sms_type == 'mms' && $ffilepath) {
+            $fields[] = 'ffilepath';
+            $placeholders[] = "'%s'";
+            $values[] = $ffilepath;
+        }
+    } else {
+        // JUD 모듈 필드 설정
+        $fields = ['MSG_TYPE', 'REQUESTDT', 'S_PHONE', 'S_CALLBACK', 'S_ETC1', 'S_ETC6'];
+        $placeholders = ["'%s'", "'%s'", "'%s'", "'%s'", "'%s'", "'%s'"];
+        $values = [$fmsgtype, date('Y-m-d H:i:s'), $cell, $cell_send, $save_cell_idx, '301230126'];
+
+        if ($is_reserved) {
+            $fields[] = 'RESERVE';
+            $fields[] = 'RESERVETIME';
+            $placeholders[] = "'%s'";
+            $placeholders[] = "'%s'";
+            $values[] = 'Y';
+            $values[] = $fsenddate;
+        }
+
+        if ($sms_type == 'sms') {
+            $fields[] = 'S_MSG';
+            $placeholders[] = "'%s'";
+            $values[] = $sms_content;
+        } else {
+            $fields[] = 'S_MSG';
+            $fields[] = 'S_TEXT';
+            $placeholders[] = "'%s'";
+            $placeholders[] = "'%s'";
+            $values[] = $sms_title;
+            $values[] = $sms_content;
+        }
+
+        if ($sms_type == 'mms' && $ffilepath) {
+            $fields[] = 'FILE_PATH1';
+            $fields[] = 'FILE_CNT';
+            $placeholders[] = "'%s'";
+            $placeholders[] = "%d";
+            $values[] = $ffilepath;
+            $values[] = $file_cnt;
+        }
+    }
+
+    // 필드와 값을 문자열로 변환
+    $fields_str = implode(', ', $fields);
+    $placeholders_str = implode(', ', $placeholders);
+
+    // SQL 쿼리 생성
+    $sql_sms_send = sprintf(
+        "INSERT INTO %s (%s) VALUES (%s)",
+        $table_name,
+        $fields_str,
+        $placeholders_str
+    );
+
+    // 값들을 sprintf에 적용
+    $sql_sms_send = vsprintf($sql_sms_send, array_map('addslashes', $values));
+
+    return $sql_sms_send;
 }
+
 
 // 포인트 차감 처리 함수
 function deduct_points($my_member_row, $sms_type_txt, $total_send_mny, $receive_cell_num_arr, $member_idx, $save_idx) {
@@ -277,7 +379,7 @@ try {
         if ($transmit_type == "send") {
             $receive_cell_num_arr = $_REQUEST['receive_cell_num_arr'];
             $base_time = new DateTime(); // 현재 시간
-
+            $i = 0;
             // 수신자 목록을 순회하면서 문자 전송
             foreach ($receive_cell_num_arr as $cell) {
 
@@ -306,6 +408,7 @@ try {
                 if (!mysqli_query($gconnet, $sql_sms_send)) {
                     throw new Exception("문자 전송 중 오류가 발생했습니다: " . mysqli_error($gconnet));
                 }
+                $i++;
             }
 
             // 포인트 차감 처리

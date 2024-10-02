@@ -872,14 +872,14 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                         xhr.open('POST', form.action, true);
                         xhr.onload = function () {
                             if (xhr.status === 200) {
+                                hideLoadingSpinner();
                                 var response = JSON.parse(xhr.responseText);
                                 if (response.status === 'error') {
                                     // 예외 처리 메시지 표시
-                                    hideLoadingSpinner();
+
                                     alert(response.message);
                                 } else if (response.status === 'success') {
                                     // 예외가 없을 경우 팝업 표시
-                                    hideLoadingSpinner();
                                     showPopup();
                                     $('#resultSendOkCnt').text(tableListCnt - dupDelCnt);
                                     $('#resultSendCnt').text(tableListCnt);
