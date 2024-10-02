@@ -5,7 +5,7 @@
 //define('DB_NAME', 'pandakko');
 //define('DB_USER', 'pandakko');
 //define('DB_PASS', '!1qazsoftj');
-define('DB_HOST', '139.150.69.187');
+define('DB_HOST', 'localhost');
 define('DB_NAME', 'asssahcom9');
 define('DB_USER', 'asssahcom9');
 define('DB_PASS', 'soulvocal7!!');
