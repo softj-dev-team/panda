@@ -1,3 +1,4 @@
+var popupTable;
 function hideLoadingSpinner() {
     $('.spinner-background').hide();
     $('.loadingio-spinner-spin-2by998twmg8').hide();
@@ -8,6 +9,9 @@ function showLoadingSpinner() {
 }
 function formatCost(cost) {
     return parseFloat(cost).toFixed(2);
+}
+function closeAllPopup() {
+    $('.popup-layer').hide();
 }
 $(document).ready(function() {
     $('.sendResultDataRow').on('click', function() {

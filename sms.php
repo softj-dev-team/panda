@@ -28,8 +28,8 @@ $filtering_list = mysqli_fetch_array($result_filter);
 $filteringArray = explode(",", $filtering_list['filtering_text']);
 
 ?>
-<link href="https://unpkg.com/tabulator-tables/dist/css/tabulator.min.css" rel="stylesheet">
-<script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
+<link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css" rel="stylesheet">
+<script src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
 
 <body>
 
@@ -70,7 +70,21 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
 
         </div>
     </div>
+    <!-- 팝업 레이어 -->
+    <div id="sendListPopupLayer" class="popup-layer" style="display:none;">
+        <div class="popup-content">
+            <div class="poptitle flex-just-end">
+                <button type="button" onclick="closeAllPopup()"><img src="images/popup/close.svg"></button>
+            </div>
+            <h2>20건씩 발송하기</h2>
+            <h4>체크박스를 선택(Shift + 드래그) 하신 후 선택 발송하셔야 합니다.</h4>
+            <div id="data-table"></div>
+            <div class="flex-c">
+                <button type="button" id="sendSelected" class="btn-t-3 btn-c-3">선택된 항목 발송</button>
+            </div>
 
+        </div>
+    </div>
     <section class="sub">
         <div class="sub_title">
             <?php if ($_REQUEST['send_type'] == "adv") { ?>
@@ -297,7 +311,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
 
 
         <div class="btn_pry">
-            <a href="javascript:go_msg_send();" class="btn02 btn">전송하기</a>
+            <?=$send_type=="elc"?'<button class="btn02 btn" id="openSendListPopupButton">20 건씩 전송하기</button>':''?>   <a href="javascript:go_msg_send();" class="btn02 btn">전송하기</a>
         </div>
 
 
@@ -902,7 +916,85 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                 }
             }
         }
+        function go_list_msg_send() {
 
+            var ban_ = ban();
+            if (ban_) {
+                var form = document.getElementById('sms_frm');
+                var formData = new FormData(form);
+                var check = chkFrm('sms_frm');
+                var reserv_yn =$('input[name="reserv_yn"]:checked').val();
+                var confirmMessage ='';
+                var list = popupTable.getSelectedData();
+                var tableListCnt = list.length;
+                var msgTypeName='';
+                if(reserv_yn==='N'){
+                    confirmMessage ='즉시';
+                }else{
+                    confirmMessage ='예약';
+                }
+                var content_lenght =getStringLength($("#sms").val());
+                if (content_lenght > 90) {
+                    msgTypeName = '장문'
+                } else {
+                    msgTypeName = '단문'
+                }
+
+                if(tableListCnt<=0){
+                    alert('수신 번호 를 선택 하세요.')
+                    check=false
+                }
+                if(tableListCnt < 20){
+                    alert('최소 선택 범위는 20 건 입니다.')
+                    check=false
+                }
+                if (check && validate()) {
+                    var result = confirm("메세지를 ["+confirmMessage+"] 발송합니다.\n"+tableListCnt+" 건을 ["+confirmMessage+"] 발송 하겠습니다까?" );
+                    if (result) {
+                        showLoadingSpinner();
+                        var dupDelCnt = deleteDuplicateTable()
+                        list.forEach(function(item, index) {
+                            formData.append('receive_cell_num_arr[]', item.number);
+                        });
+
+                        formData.append('transmit_type', 'send');
+                        var xhr = new XMLHttpRequest();
+                        xhr.open('POST', form.action, true);
+                        xhr.onload = function () {
+                            if (xhr.status === 200) {
+                                hideLoadingSpinner();
+                                var response = JSON.parse(xhr.responseText);
+                                if (response.status === 'error') {
+                                    // 예외 처리 메시지 표시
+
+                                    alert(response.message);
+                                } else if (response.status === 'success') {
+                                    // 예외가 없을 경우 팝업 표시
+                                    alert('발송이 완료되었습니다.')
+                                    // 선택된 행의 데이터를 업데이트
+                                    let selectedData = popupTable.getSelectedData();
+                                    let updatedData = selectedData.map(row => {
+                                        return { id: row.id, status: "01" };  // status만 업데이트
+                                    });
+                                    popupTable.updateData(updatedData);
+                                    checkAllStatusAndMoveToNextPage();
+                                }
+                            } else {
+                                hideLoadingSpinner();
+                                alert('서버와의 통신 중 오류가 발생했습니다.');
+                            }
+                        };
+                        xhr.send(formData);
+                    } else {
+                        // 사용자가 취소 버튼을 눌렀을 때의 동작
+                        return;
+                    }
+
+                } else {
+                    false;
+                }
+            }
+        }
         function validate() {
             var list = table.getData();
 
@@ -1198,31 +1290,61 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                         },
                         async: true,
                         dataType: "json",
+                        beforeSend: function() {
+                            // AJAX 요청이 시작되기 전에 로딩 스피너를 보여줌
+                            showLoadingSpinner();
+                        },
                         success: function(data) {
-                            let listCount = 0
-                            let newData = {};
-                            data.forEach(item => {
-                                newData = {
-                                    name:item.receive_name,
-                                    number: item.receive_num,
-                                    key: "callAddress"
-                                };
-                                let isDuplicate = data.some(function (item) {
-                                    return item.number === newData.number;
-                                });
-                                if(!isDuplicate){
-                                    listCount = listCount + 1;
-                                    table.addData([newData], true);
+                            let listCount = 0;
+                            let newDataList = [];  // 새로운 데이터를 담을 배열
+                            let existingNumbers = new Set();  // 중복 체크를 위한 Set
+
+                            // 기존 테이블 데이터에서 이미 추가된 번호를 Set에 저장
+                            let tableList = table.getData();
+                            tableList.forEach(item => {
+                                if (item.key === 'callAddress') {
+                                    existingNumbers.add(item.number);
                                 }
                             });
-                            let tableList = table.getData();
-                            let count = tableList.filter(function(item) {
+
+                            // 새로운 데이터를 처리
+                            data.forEach(item => {
+                                let newNumber = item.receive_num;
+
+                                // 중복된 전화번호가 없을 때만 처리
+                                if (!existingNumbers.has(newNumber)) {
+                                    let newData = {
+                                        name: item.receive_name,
+                                        number: newNumber,
+                                        key: "callAddress"
+                                    };
+                                    newDataList.push(newData);
+                                    listCount++;
+                                    existingNumbers.add(newNumber);  // 중복 방지를 위해 Set에 추가
+                                }
+                            });
+
+                            // 최종적으로 한 번에 데이터를 테이블에 추가
+                            if (newDataList.length > 0) {
+                                table.addData(newDataList, true);  // DOM 조작 최소화
+                            }
+
+                            // 카운트 계산 및 업데이트
+                            let count = table.getData().filter(function(item) {
                                 return item.key === 'callAddress';
                             }).length;
+
                             $('#callAddress').text(count);
                             $('#callAddress').parent().show();
-                            $('#cell_receive_cnt').text(tableList.length);
+                            $('#cell_receive_cnt').text(table.getData().length);
+                            // 로딩 스피너 숨김
+                            hideLoadingSpinner();
                         },
+                        error: function() {
+                            // 에러가 발생한 경우에도 로딩 스피너를 숨김
+                            hideLoadingSpinner();
+                            alert("데이터를 불러오는 중 문제가 발생했습니다.");
+                        }
                     });
                 }
 
@@ -1277,59 +1399,71 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
         // 엑셀 불러오기
         $("#excel_file").on('change', function() {
             showLoadingSpinner();
-            $('#cell_receive_list').html('');
-            $('#cell_receive_cnt').text('0');
+            $('#cell_receive_list').html('');  // 기존 리스트 초기화
+            $('#cell_receive_cnt').text('0');  // 카운트 초기화
             let ext = $("#excel_file").val().split(".").pop().toLowerCase();
+
+            // 파일 확장자 체크
             if ($.inArray(ext, ["xls", "xlsx"]) == -1) {
                 alert("엑셀 파일만 첨부 가능합니다.");
-                $("#excel_file").val("");
+                $("#excel_file").val("");  // 파일 선택 초기화
+                hideLoadingSpinner();  // 스피너 숨김
                 return false;
             } else {
-
                 readExcel(async function(result) {
+                    let listCount = 0;
+                    let newDataList = [];  // 새로운 데이터를 한꺼번에 저장할 배열
+                    let existingNumbers = new Set();  // 중복 체크용 Set
+
                     // 타이틀 체크
-                    console.log(result);
-                    let listCount = 0
-                    let newData = {};
                     if (Object.keys(result[0]).includes('HP')) {
                         if (result.length > 300000) {
                             alert('최대 300,000개까지 등록할 수 있습니다.');
-                        } else {
-
-                            //result = await rejectHpCheck(result, 1);
-                            // result = await checkDuplicateExcel(result);
-                            result.forEach(item => {
-                                newData = {
-                                    name:item.NAME,
-                                    number: item.HP,
-                                    key: "excelFileAdd"
-                                };
-                                let isDuplicate = result.some(function (item) {
-                                    return item.number === newData.number;
-                                });
-                                if(!isDuplicate){
-                                    listCount = listCount + 1;
-                                    table.addData([newData], true);
-                                }
-                            });
-                            let tableList = table.getData();
-                            let count = tableList.filter(function(item) {
-                                return item.key === 'excelFileAdd';
-                            }).length;
-                            $('#excelFileAdd').text(count);
-                            $('#excelFileAdd').parent().show();
-                            $('#cell_receive_cnt').text(tableList.length);
-                            hideLoadingSpinner()
+                            hideLoadingSpinner();  // 스피너 숨김
+                            return;
                         }
+
+                        // 엑셀 데이터를 처리
+                        result.forEach(item => {
+                            let newData = {
+                                name: item.NAME,
+                                number: item.HP,
+                                key: "excelFileAdd"
+                            };
+
+                            // 중복 체크
+                            if (!existingNumbers.has(newData.number)) {
+                                newDataList.push(newData);  // 중복이 아니면 리스트에 추가
+                                existingNumbers.add(newData.number);  // 중복 방지를 위해 Set에 추가
+                                listCount++;
+                            }
+                        });
+
+                        // 테이블에 데이터를 한꺼번에 추가 (DOM 조작 최소화)
+                        if (newDataList.length > 0) {
+                            table.addData(newDataList, true);
+                        }
+
+                        // 카운트 업데이트
+                        let tableList = table.getData();
+                        let count = tableList.filter(function(item) {
+                            return item.key === 'excelFileAdd';
+                        }).length;
+
+                        $('#excelFileAdd').text(count);
+                        $('#excelFileAdd').parent().show();
+                        $('#cell_receive_cnt').text(tableList.length);
+
+                        hideLoadingSpinner();  // 작업 완료 후 스피너 숨김
 
                     } else {
                         alert('엑셀 양식을 참고해주세요.\n헤더는 [이름 = NAME, 번호 = HP]이 되어야합니다.');
-                        hideLoadingSpinner()
+                        hideLoadingSpinner();  // 에러 발생 시에도 스피너 숨김
                     }
                 });
             }
-            $(this).val('');
 
+            $(this).val('');  // 파일 선택 초기화
         });
         /* 파일붙여넣기 & 엑셀붙여넣기 끝 */
 
@@ -1465,6 +1599,75 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                 return true;
             }
         }
+        $('#sendSelected').on('click',function (){
+            go_list_msg_send();
+        })
+        // 현재 페이지의 모든 행의 status가 01인지 확인하는 함수
+        function checkAllStatusAndMoveToNextPage() {
+            let currentData = popupTable.getSelectedData();  // 현재 페이지의 데이터만 가져옴
+            let allStatusUpdated = currentData.every(item => item.status === "01");
+            // 모든 status가 01인 경우 다음 페이지로 이동
+            if (allStatusUpdated) {
+                let currentPage = popupTable.getPage();
+                let totalPages = popupTable.getPageMax();
+
+                if (currentPage < totalPages) {
+                    popupTable.setPage(currentPage + 1);  // 다음 페이지로 이동
+                }
+            }
+        }
+
+        // 팝업 열기 함수
+        $('#openSendListPopupButton').click(function() {
+
+            let tableData = table.getData();
+            if(tableData.length <= 0){
+                alert("수신번호를 입력해 주세요.");
+            }else{
+                $('#sendListPopupLayer').show()
+                // 기본값 00 설정
+                tableData.forEach((item, index) => {
+                    if (!item.id) {
+                        item.id = index + 1;  // index 기반으로 id 필드를 추가
+                    }
+                    if (!item.status) {
+                        item.status = "00";  // 발송여부 기본값 00 설정
+                    }
+                });
+                popupTable = new Tabulator("#data-table", {
+                    data: tableData, // table.getData()로 가져온 데이터를 사용
+                    layout: "fitColumns",
+                    pagination: "true",  // 로컬 페이징
+                    paginationSize: 20,   // 20건씩 표시
+                    selectable: true,  // 다중 선택 가능
+                    selectableRangeMode: "drag",  // 마우스 드래그로 범위 선택
+                    selectablePersistence: true,  // 페이징 변경 후에도 선택 상태 유지
+                    selectableRollingSelection:true,
+                    selectableCheck: function(row) {
+                        // 모든 행을 선택 가능하게 설정
+                        return true;
+                    },
+                    columns: [
+                        { title: "선택", field: "select", formatter: "rowSelection", width: 50, hozAlign: "center", headerSort: false, cellClick: function(e, cell) {
+                                // cellClick 이벤트는 필요 없을 수 있습니다.
+                            }},
+                        { title: "전화번호", field: "number", sorter: "string" },
+                        { title: "이름", field: "name", sorter: "string" },
+                        { title: "발송여부", field: "status", formatter: function(cell, formatterParams) {
+                                // 발송여부 값을 텍스트로 변환하여 표시
+                                let value = cell.getValue();
+                                return value === "00" ? "미발송" : (value === "01" ? "발송완료" : value);
+                            }}
+                    ],
+                    dataChanged: function(data) {
+                        checkAllStatusAndMoveToNextPage();  // 데이터 변경 시 자동 페이지 이동 체크
+                    },
+                    tableBuilt: function() {
+                        checkAllStatusAndMoveToNextPage();  // 테이블이 처음 렌더링될 때 자동 페이지 이동 체크
+                    },
+                });
+            }
+        });
     </script>
 
 </body>
