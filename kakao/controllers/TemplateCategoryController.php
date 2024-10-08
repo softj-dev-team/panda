@@ -1085,6 +1085,7 @@ class TemplateCategoryController extends Controller
         return $responseDecoded;
 
     }
+
     public function sendMessage()
     {
         $response = ['status' => 'error', 'message' => 'An unknown error occurred'];
@@ -1103,7 +1104,7 @@ class TemplateCategoryController extends Controller
                 $profileKey = $templateDetails['profile_key'];
                 $templateKey = $templateDetails['template_key'];
                 $callbackNumber = $templateDetails['cs_phone_number'];
-
+                $group_key = $this->generateUniqueNumericKey();
                 foreach ($data as $index => $row) {
                     if ($index == 0) continue; // Skip the header row
 
@@ -1129,7 +1130,8 @@ class TemplateCategoryController extends Controller
                         $message,
                         $profileKey,
                         $templateKey,
-                        $member_idx
+                        $member_idx,
+                        $group_key
                     );
                 }
                 // 성공한 경우
@@ -1178,9 +1180,9 @@ class TemplateCategoryController extends Controller
                     throw new Exception('No response code received from the server.');
                 }
                 $member_idx=$this->data['inc_member_row']['idx'];
-
+                $group_key = $this->generateUniqueNumericKey();
                 // 예를 들어, 템플릿이 성공적으로 저장되었을 경우
-               $this->sendTransaction->saveMessage($fdestine, $fcallback, $message, $profileKey, $templateKey,$responseData[0]['sn'],$responseData[0]['code'],$responseData[0]['altCode'],$responseData[0]['altMsg'],$responseData[0]['altSndDtm'],$responseData[0]['altRcptDtm'],$member_idx);
+                $this->sendTransaction->saveMessage($fdestine, $fcallback, $message, $profileKey, $templateKey,$responseData[0]['sn'],$responseData[0]['code'],$responseData[0]['altCode'],$responseData[0]['altMsg'],$responseData[0]['altSndDtm'],$responseData[0]['altRcptDtm'],$group_key,$member_idx);
 
 
                 $point_sect = "smspay"; //

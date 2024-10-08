@@ -13,6 +13,12 @@ $route = isset($_GET['route']) ? $_GET['route'] : '';
 
 
 switch ($route) {
+    case 'sendDetail':
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $controller = new UserAlimTalkController();
+            $controller->sendDetail();
+        }
+        break;
     case 'getKakaoIcon':
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $controller = new TemplateCategoryController();

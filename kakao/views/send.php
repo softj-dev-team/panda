@@ -219,6 +219,10 @@
                 data: formData,
                 processData: false,
                 contentType: false,
+                beforeSend: function() {
+                    // AJAX 요청이 시작되기 전에 로딩 스피너를 보여줌
+                    showLoadingSpinner();
+                },
                 success: function (response) {
                     var data = JSON.parse(response);
                     if (data.status === 'success') {
@@ -226,11 +230,13 @@
                     } else {
                         alert( data.message);
                     }
+                    hideLoadingSpinner();
                 },
                 error: function (xhr, status, error) {
                     console.error('Error: ' + error);
                     console.error('Status: ' + status);
                     console.dir(xhr);
+                    hideLoadingSpinner();
                 }
             });
         });

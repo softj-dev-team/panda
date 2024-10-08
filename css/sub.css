@@ -713,9 +713,12 @@ ul.tabs li.current{
     border-radius: 10px;
     border: 1px solid #e0e0e0;
     padding: 10px;
-    width: 350px;
+    width: 450px;
     text-align: center;
     height: 100%;
+}
+.sendContentBox .p35{
+    width: 35%;
 }
 .sendContentBox h3 {
     margin: 0;
@@ -764,6 +767,10 @@ ul.tabs li.current{
     padding: 10px 0;
 }
 .sendContentDetailBox{
+    margin-left: 20px;
+}
+.sendContentDetailBox.w100{
+    width: 100%;
     margin-left: 20px;
 }
 .sendContentDetailBox table th{

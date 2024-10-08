@@ -72,6 +72,16 @@ class Controller {
 
         $this->data['inc_notice_query'] = $crud->selectWithOrderAndLimit($where, $order, $limit);
     }
+    function generateUniqueNumericKey() {
+        // 현재 시간(마이크로초 포함)을 숫자로 변환
+        $time = microtime(true) * 10000; // 소수점 제거를 위해 10000을 곱함
+
+        // 4자리 난수 생성
+        $randomNumber = rand(1000, 9999);
+
+        // 시간과 난수를 결합하여 숫자로만 이루어진 고유 키 반환
+        return (string) $time . (string) $randomNumber;
+    }
     public function view($view, $data = []) {
         $data = array_merge($this->data, $data);
         extract($this->data);

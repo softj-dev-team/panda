@@ -183,6 +183,7 @@ kakao-notification-button-container {
 }
 
 #previewHighlightTitle {
+    text-align: left;
     font-size: 18px;
     font-weight: bold;
     color: #000;
@@ -192,6 +193,7 @@ kakao-notification-button-container {
 }
 
 #previewHighlightSubtitle {
+    text-align: left;
     font-size: 14px;
     color: #666;
     white-space: normal;
@@ -1076,6 +1078,7 @@ input[data-fakefile="file"] { position:absolute; width:1px; height:16px; padding
     line-height: 1.43;
 }
 .template-header{
+    text-align: left;
     border-bottom: 1px solid #bbb;
     margin-bottom: 8px;
     padding-bottom: 8px;

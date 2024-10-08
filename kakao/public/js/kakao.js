@@ -246,7 +246,7 @@ function updateButtonList(type) {
         // 채널 추가 버튼일 경우 맨 위에 추가
         if (item.linkType === 'AC') {
             channelButtonItem = $(`
-                <span class="kko-sub-text">채널 추가하고 이 채널의 마케팅 메시지 등을 카카오톡으로 받기</span>
+                <span class="kko-sub-text">채널 추가하고 이 채널의 마케팅 <br>메시지 등을 카카오톡으로 받기</span>
                 <button class="generated-button addCh">체널추가</button>
             `);
 
@@ -661,7 +661,7 @@ function loadTemplateDetails(templateId) {
 
                     generatedButton='';
                     if (button.linkType == 'AC') {
-                        generatedButton = $(`<span class="kko-sub-text">채널 추가하고 이 채널의 마케팅 메시지 등을 카카오톡으로 받기</span><button class="generated-button ${button.linkType == 'AC' ? 'addCh' : 'jss2034'}">${button.name}</button>`);
+                        generatedButton = $(`<span class="kko-sub-text">채널 추가하고 이 채널의 마케팅 <br>메시지 등을 카카오톡으로 받기</span><button class="generated-button ${button.linkType == 'AC' ? 'addCh' : 'jss2034'}">${button.name}</button>`);
                         // AC 타입 버튼은 맨 위로 추가
                         $('#previeButtonList').prepend(generatedButton);
                     } else {
@@ -2005,4 +2005,55 @@ $(document).ready(function() {
             alert('유효하지 않은 이미지 파일입니다.');
         };
     });
+    $(document).on('click', '.sendResultDataRow', function() {
+
+        try {
+            var group_key = $(this).data('id');
+
+            if (!group_key) {
+                throw new Error('ID 값이 올바르지 않습니다.');
+            }
+            var rowDataSmsType =            $('.rowDataSmsType');
+            var rowDataUseSumPoint =        $('.rowDataUseSumPoint')
+            var rowDataTotSendCnt =         $('.rowDataTotSendCnt')
+            var rowDataSuccesSendCnt =      $('.rowDataSuccesSendCnt')
+            var rowDataFaileTotSendCnt =    $('.rowDataFaileTotSendCnt')
+            var rowDataMoreTotSendCnt =     $('.rowDataMoreTotSendCnt')
+            showLoadingSpinner();
+            $.ajax({
+                url: "/kakao/index.php?route=sendDetail",
+                type: "GET",
+                data: {
+                    group_key: group_key,
+                },
+                async: true,
+                dataType: "json",
+                success: function(response) {
+                    hideLoadingSpinner();
+                    console.log(response.data[0]);
+                    rowDataSmsType.text('알림톡')
+                    rowDataUseSumPoint.text(response.data[0].use_point);
+                    rowDataTotSendCnt.text(Number(response.data[0].tot_cnt).toLocaleString())
+                    rowDataSuccesSendCnt.text(Number(response.data[0].receive_cnt_suc).toLocaleString())
+                    rowDataFaileTotSendCnt.text(Number(response.data[0].receive_cnt_fail).toLocaleString())
+                    rowDataMoreTotSendCnt.text(Number(response.data[0].receive_cnt_tot - response.data[0].receive_cnt_suc-response.data[0].receive_cnt_fail).toLocaleString())
+                    loadTemplateDetails(response.data[0].template_id)
+                },
+                error: function(xhr, status, error) {
+                    hideLoadingSpinner();
+                    // AJAX 요청 중 오류가 발생했을 때
+                    console.error("AJAX 요청 중 오류 발생: ", error);
+                    console.error("응답 상태: ", status);
+                    console.error("서버 응답: ", xhr.responseText);
+                    alert('데이터를 가져오는 중 오류가 발생했습니다. 다시 시도해 주세요.');
+                },
+
+            });
+        } catch (e) {
+            // JavaScript 예외 처리
+            console.error("예외 발생: ", e.message);
+            alert("문제가 발생했습니다: " + e.message);
+        }
+    });
+
 });
