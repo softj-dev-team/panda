@@ -390,9 +390,9 @@ class TemplateCategoryController extends Controller
             $templateItemHighlight_description = $_POST['itemHlightDescription'] ?? '';
             $image_path = null;
             $item_list = null;
-            $templateImageName = null;
-            $templateImageUrl = null;
-            $thumbnailImageUrl = null;
+            $templateImageName = $_POST['templateImageName'] ?? '';
+            $templateImageUrl = $_POST['templateImageUrl'] ?? '';
+            $thumbnailImageUrl = $_POST['templateItemHighlightImageUrl'] ?? '';
             $created_at = date('Y-m-d H:i:s');
             $template = $this->templateCategory->getTemplateById($template_id);
             // 버튼 데이터가 있을 경우 처리
@@ -577,7 +577,7 @@ class TemplateCategoryController extends Controller
                     $data['newTemplateTitle'] = $template_strong_title;
                     $data['newTemplateSubtitle'] = $template_strong_sub_title;
                 }
-                if($template_emphasize_type == "IMAGE"){
+                if($template_emphasize_type == "IMAGE" || $template_emphasize_type == "ITEM_LIST"){
                     $data['newTemplateImageName'] = $templateImageName;
                     $data['newTemplateImageUrl'] = $templateImageUrl;
                 }
@@ -769,7 +769,86 @@ class TemplateCategoryController extends Controller
             $this->sendJsonResponse(['error' => 'An error occurred']);
         }
     }
+    public function getMasterUserTemplate()
+    {
+        try {
+            $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+            $limit = 10;
+            $offset = ($page - 1) * $limit;
 
+            $template_type = isset($_GET['template_type']) ? $_GET['template_type'] : null;
+            $template_emphasize_type = isset($_GET['template_emphasize_type']) ? $_GET['template_emphasize_type'] : null;
+            $inspection_status = isset($_GET['inspection_status']) ? $_GET['inspection_status'] : null;
+            $status = isset($_GET['status']) ? $_GET['status'] : null;
+            $template_title = isset($_GET['template_title']) ? $_GET['template_title'] : null;
+
+            // 사용자 템플릿 가져오기
+//            $templates = $this->templateCategory->getMasterUserTemplate($profile_id=null, $template_type, $offset, $limit, $template_emphasize_type, $inspection_status, $status, $template_title);
+
+
+//            foreach ($templates as &$template) {
+//                $template_id = $template['id'];
+//                $template_key = $template['template_key'];
+//                $senderKey = $template['profile_key'];
+//                // 외부 API 호출을 통해 템플릿 상태 가져오기
+//                $url = 'https://wt-api.carrym.com:8445/api/v1/leahue/template?senderKey='.$senderKey.'&templateCode='.$template_key;
+//                $method = 'GET';
+//
+//                $headers = [
+//                    'Content-Type: application/json'
+//                ];
+//
+//                $apiResponse = $this->sendCurlRequest($url, $method, null, $headers);
+//                $responseData = json_decode($apiResponse, true);
+//                error_log("Executing update request: " . $responseData['code'] ."/". $responseData['data']['status'] ."/". $responseData['data']['inspectionStatus']);
+//                // 외부 API 응답에서 상태 값 추출
+//                $template=[];
+//                if ($responseData['code']=="200") {
+//                    $template['status'] = $responseData['data']['status'];
+//                    $template['template_title'] = $responseData['data']['templateContent'];
+//                    $template['inspection_status'] = $responseData['data']['inspectionStatus'];
+//                    $template['template_name'] = $responseData['data']['templateName'];
+//                    $template['template_type'] = $responseData['data']['templateMessageType'];
+//                    $template['strong_sub_title'] = $responseData['data']['templateTitle'];
+//                    $template['template_emphasize_type'] = $responseData['data']['templateEmphasizeType'];
+//                    $template['category_id'] = $responseData['data']['categoryCode'];
+//                    // modifiedAt 값이 있는 경우에만 update_at에 할당
+//                    if (!empty($templateData['modifiedAt'])) {
+//                        $template['update_at'] = $responseData['data']['modifiedAt'];
+//                    }
+//                    if (!empty($responseData['data']['comments'])) {
+//                        $template['inspection_comments'] = $responseData['data']['comments'][0]['content'];
+//                    }
+//                    if (!empty($templateData['templateImageUrl'])) {
+//                        $template['image_path'] = $responseData['data']['modifiedAt'];
+//                    }
+//                    try {
+//                        // 데이터베이스에서 템플릿 상태 업데이트
+////                        $this->templateCategory->updateTemplate($template_id, $template['status'], $template['templateContent'],$template['inspection_status'],$template['comments'],$template['update_at']);
+//                        $this->templateCategory->updateTemplateByArray($template_id, $template);
+//                    } catch (Exception $e) {
+//                        // 업데이트 실패 시 예외 처리
+//                        error_log("Failed to update template ID $template_id: " . $e->getMessage());
+//                    }
+//                }
+//            }
+
+            // 최신 상태로 다시 템플릿 데이터 가져오기
+            $updatedTemplates = $this->templateCategory->getMasterUserTemplate($profile_id=null, $template_type, $offset, $limit, $template_emphasize_type, $inspection_status, $status, $template_title);
+            $total = $this->templateCategory->getMasterUserTotalTemplate($profile_id=null, $template_type, $template_emphasize_type, $inspection_status, $status, $template_title);
+
+            if ($total > 0) {
+                // 결과 반환
+                $this->sendJsonResponse(['success' => true, 'template' => $updatedTemplates, 'total' => $total]);
+            } else {
+                // total이 0이거나 없을 때
+                $this->sendJsonResponse(['success' => false, 'message' => 'No templates found', 'total' => 0]);
+            }
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+            $this->sendJsonResponse(['error' => 'An error occurred']);
+        }
+    }
     public function getTemplateDetails()
     {
         try {

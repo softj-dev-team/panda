@@ -4,7 +4,14 @@
     align-items: center;
     gap:5px
 }
-
+.flex-c-start{
+    padding: 5px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+}
 .flex-row{
     display: flex;
     justify-content: center;
@@ -187,6 +194,8 @@ kakao-notification-button-container {
 #previewHighlightSubtitle {
     font-size: 14px;
     color: #666;
+    white-space: normal;
+    word-wrap: break-word;
 }
 
 .previewFooter {
@@ -1110,4 +1119,6 @@ input[data-fakefile="file"] { position:absolute; width:1px; height:16px; padding
 .item-list-description{
     width: 70%;
     font-weight: 600;
+    white-space: normal;
+    word-wrap: break-word;
 }

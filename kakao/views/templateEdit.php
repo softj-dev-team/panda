@@ -24,7 +24,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                         </div>
                         <div class="highlight-body">
                             <div class="image-wrapper">
-                                <img id="uploadedImage" style="display: <?=$data['image_path']?'block':'none'?>" src="<?=$data['image_path']?>" alt="Uploaded Logo">
+                                <img id="uploadedImage" style="display: <?=$data['apiResponeData']['templateImageUrl']?'block':'none'?>" src="<?=$data['apiResponeData']['templateImageUrl']?>" alt="Uploaded Logo">
                             </div>
                             <div class="template-header <?= $data['apiResponeData']['templateHeader'] ?'':'blind'?>"><?= $data['apiResponeData']['templateHeader'] ?></div>
                             <div class="highlight-box <?= $data['apiResponeData']['templateItemHighlight']?'':'blind'?>">
@@ -148,17 +148,25 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                         <div class="fm-box mgl-5 w-100 <?=$data['apiResponeData']['templateEmphasizeType']=='ITEM_LIST' || $data['apiResponeData']['templateEmphasizeType']=='IMAGE' ?'':'blind'?>" id="templateImageUploadForm" >
                             <?php if ($imageUrl): ?>
                                 <!-- 이미지가 이미 첨부된 경우, 파일 업로드 필드를 숨기고 이미지 미리보기 표시 -->
-                            <div class="flex-c image-preview ">
-                                <div class="fm-ipt">
-                                    첨부된 이미지: <?=$imageName?>
+                            <div class="flex-between image-preview ">
+                                <div class="flex-c">
+                                    <span>이미지: </span><img src="<?=$imageUrl?>" style="height: 40px">
+                                    <input type="hidden" name="templateImageUrl" value="<?=$imageUrl?>">
+                                    <input type="hidden" name="templateImageName" value="<?=$imageName?>">
                                 </div>
                                 <button type="button" id="removeImage" class="btn-t-ipt btn-c-4">삭제</button>
                             </div>
                             <?php else: ?>
                                 <!-- 이미지가 없을 경우 파일 첨부 필드를 표시 -->
-                                <input name="file" type="file" id="f-attach" data-fakefile="file" />
-                                <label for="f-attach" class="fm-file-btn">파일첨부</label>
-                                <input type="text" data-fakefile="text" readonly="readonly" placeholder="파일 사이즈 최대 500KB" class="fm-ipt fm-file" />
+                                <div class="fm-box">
+                                    <input name="file" type="file" id="f-attach" data-fakefile="file" />
+                                    <label for="f-attach" class="fm-file-btn ">파일첨부</label>
+                                    <input type="text" data-fakefile="text" readonly="readonly" placeholder="파일 사이즈 최대 500KB" class="fm-ipt fm-file" />
+                                </div>
+                                <div class="flex-c-start">
+                                    <p>- 이미지 제한 사이즈 - 가로 500px 이상, 가로:세로 비율이 2:1아닌 경우 업로드 불가합니다</p>
+                                    <p>- 파일형식 및 크기 : jpg, png / 최대 500KB</p>
+                                </div>
                             <?php endif; ?>
 
                         </div>
@@ -182,9 +190,28 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                                 <input id="itemHlightDescription" type="text" class="fm-ipt custom-input" name="itemHlightDescription" maxlength="16" placeholder="하이라이트 설명" value="<?=$data['apiResponeData']['templateItemHighlight']['description']?>">
                             </div>
                             <div class="fm-box " id="templateHighlightThumbnailUploadForm" >
-                                <input name="highlightFile" type="file" id="f-attach-highlight" data-fakefile="file" />
-                                <label for="f-attach-highlight" class="fm-file-btn ">파일첨부</label>
-                                <input type="text" data-fakefile="text" readonly="readonly" placeholder="하이라이트 썸네일" class="fm-ipt fm-file" />
+                                <?php if ($data['apiResponeData']['templateItemHighlight']['imageUrl']): ?>
+                                    <!-- 이미지가 이미 첨부된 경우, 파일 업로드 필드를 숨기고 이미지 미리보기 표시 -->
+                                    <div class="flex-between templateItemHighlightImageUrl">
+                                        <div class="flex-c">
+                                            <span>하이라이트 이미지: </span><img src="<?=$data['apiResponeData']['templateItemHighlight']['imageUrl']?>" style="height: 40px">
+                                            <input type="hidden" name="templateItemHighlightImageUrl" value="<?=$data['apiResponeData']['templateItemHighlight']['imageUrl']?>">
+                                        </div>
+                                        <button type="button" id="templateItemHighlightImageUrl" class="btn-t-ipt btn-c-4">삭제</button>
+                                    </div>
+                                <?php else: ?>
+                                    <!-- 이미지가 없을 경우 파일 첨부 필드를 표시 -->
+                                    <div class="fm-box">
+                                        <input name="highlightFile" type="file" id="f-attach-highlight" data-fakefile="file">
+                                        <label for="f-attach-highlight" class="fm-file-btn ">파일첨부</label>
+                                        <input type="text" data-fakefile="text" readonly="readonly" placeholder="하이라이트 썸네일" class="fm-ipt fm-file">
+                                    </div>
+                                    <div class="flex-c-start">
+                                        <p>- 이미지 제한 사이즈 - 가로 500px 이상, 가로:세로 비율이 2:1아닌 경우 업로드 불가합니다</p>
+                                        <p>- 파일형식 및 크기 : jpg, png / 최대 500KB</p>
+                                    </div>
+                                <?php endif; ?>
+
                             </div>
                         </div>
 

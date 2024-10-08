@@ -365,3 +365,144 @@ a.btn_blue{display:inline-block; height:32px; padding:0 20px; font-weight:bold; 
 a.btn_gray{display:inline-block; height:32px; padding:0 20px; font-weight:bold; color:#fff; line-height:32px; text-decoration:none; border:0; border-radius:4px; background-color:#5e5e5e;}
 a.btn_green{display:inline-block; height:32px; padding:0 20px; font-weight:bold; color:#fff; line-height:32px; text-decoration:none; border:0; border-radius:4px; background-color:#08bb54;}
 a.btn_red{display:inline-block; height:32px; padding:0 20px; font-weight:bold; color:#fff; line-height:32px; text-decoration:none; border:0; border-radius:4px; background-color:#f96666;}
+/* 스피너 배경 설정 */
+.spinner-background {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5); /* 반투명 회색 배경 */
+	z-index: 9998; /* 스피너보다 낮게 설정 */
+}
+
+/* 스피너 설정 */
+.loadingio-spinner-spin-2by998twmg8 {
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 9999;
+	text-align: center;
+	width: 200px;
+	height: 200px;
+}
+
+.ldio-yzaezf3dcmj {
+	width: 100%;
+	height: 100%;
+	position: relative;
+	transform: translateZ(0) scale(1);
+	backface-visibility: hidden;
+}
+
+.ldio-yzaezf3dcmj div > div {
+	position: absolute;
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	background: #ffffff;
+	animation: ldio-yzaezf3dcmj 1s linear infinite;
+}
+
+/* 개별 스피너 점의 애니메이션 설정 */
+@keyframes ldio-yzaezf3dcmj {
+	0% {
+		opacity: 1;
+		backface-visibility: hidden;
+		transform: translateZ(0) scale(1.5, 1.5);
+	}
+	100% {
+		opacity: 0;
+		backface-visibility: hidden;
+		transform: translateZ(0) scale(1, 1);
+	}
+}
+
+.ldio-yzaezf3dcmj div:nth-child(1) > div {
+	left: 148px;
+	top: 88px;
+	animation-delay: -0.875s;
+}
+
+.ldio-yzaezf3dcmj > div:nth-child(1) {
+	transform: rotate(0deg);
+	transform-origin: 160px 100px;
+}
+
+.ldio-yzaezf3dcmj div:nth-child(2) > div {
+	left: 130px;
+	top: 130px;
+	animation-delay: -0.75s;
+}
+
+.ldio-yzaezf3dcmj > div:nth-child(2) {
+	transform: rotate(45deg);
+	transform-origin: 142px 142px;
+}
+
+.ldio-yzaezf3dcmj div:nth-child(3) > div {
+	left: 88px;
+	top: 148px;
+	animation-delay: -0.625s;
+}
+
+.ldio-yzaezf3dcmj > div:nth-child(3) {
+	transform: rotate(90deg);
+	transform-origin: 100px 160px;
+}
+
+.ldio-yzaezf3dcmj div:nth-child(4) > div {
+	left: 46px;
+	top: 130px;
+	animation-delay: -0.5s;
+}
+
+.ldio-yzaezf3dcmj > div:nth-child(4) {
+	transform: rotate(135deg);
+	transform-origin: 58px 142px;
+}
+
+.ldio-yzaezf3dcmj div:nth-child(5) > div {
+	left: 28px;
+	top: 88px;
+	animation-delay: -0.375s;
+}
+
+.ldio-yzaezf3dcmj > div:nth-child(5) {
+	transform: rotate(180deg);
+	transform-origin: 40px 100px;
+}
+
+.ldio-yzaezf3dcmj div:nth-child(6) > div {
+	left: 46px;
+	top: 46px;
+	animation-delay: -0.25s;
+}
+
+.ldio-yzaezf3dcmj > div:nth-child(6) {
+	transform: rotate(225deg);
+	transform-origin: 58px 58px;
+}
+
+.ldio-yzaezf3dcmj div:nth-child(7) > div {
+	left: 88px;
+	top: 28px;
+	animation-delay: -0.125s;
+}
+
+.ldio-yzaezf3dcmj > div:nth-child(7) {
+	transform: rotate(270deg);
+	transform-origin: 100px 40px;
+}
+
+.ldio-yzaezf3dcmj div:nth-child(8) > div {
+	left: 130px;
+	top: 46px;
+	animation-delay: 0s;
+}
+
+.ldio-yzaezf3dcmj > div:nth-child(8) {
+	transform: rotate(315deg);
+	transform-origin: 142px 58px;
+}

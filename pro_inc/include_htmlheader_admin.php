@@ -28,3 +28,11 @@
 <!--<body>
 <div id="wrap" class="skin_type01">-->
 
+<div class="spinner-background" style="display: none;"></div>
+
+<div class="loadingio-spinner-spin-2by998twmg8" style="display: none;">
+    <div class="ldio-yzaezf3dcmj">
+        <div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div>
+        <div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div>
+    </div>
+</div>

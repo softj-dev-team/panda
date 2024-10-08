@@ -137,21 +137,20 @@ function readText(callback){
     reader.readAsText(file);
 }
 
-// 엑셀 파일 읽기
-function readExcel(callback) {
-    let input = event.target;
-    let reader = new FileReader();
-    reader.onload = function () {
-        let data = reader.result;
-        let workBook = XLSX.read(data, { type: 'binary' });
-        workBook.SheetNames.forEach(function (sheetName) {
-            // console.log('SheetName: ' + sheetName);
-            let rows = XLSX.utils.sheet_to_json(workBook.Sheets[sheetName]);
-            callback(rows);
-        })
-    };
-    reader.readAsBinaryString(input.files[0]);
-}
+     // 엑셀 파일 읽기 (ArrayBuffer 사용)
+     function readExcel(callback) {
+         let input = event.target;
+         let reader = new FileReader();
+         reader.onload = function () {
+             let data = new Uint8Array(reader.result);
+             let workBook = XLSX.read(data, { type: 'array' });
+             workBook.SheetNames.forEach(function (sheetName) {
+                 let rows = XLSX.utils.sheet_to_json(workBook.Sheets[sheetName]);
+                 callback(rows);
+             });
+         };
+         reader.readAsArrayBuffer(input.files[0]);
+     }
 
 // 핸드폰 번호 정규식
 function isHpFormat(hp){

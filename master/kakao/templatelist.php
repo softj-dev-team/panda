@@ -55,25 +55,77 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
 				</div>
 				<div class="list">
 					<!-- 검색창 시작 -->
-					<table class="search">
-                        <form name="s_mem" id="s_mem" method="post" action="list.php">
-                            <input type="hidden" name="bmenu" value="<?=$bmenu?>"/>
-                            <input type="hidden" name="smenu" value="<?=$smenu?>"/>
-                            <input type="hidden" name="s_cnt" id="s_cnt" value="<?=$s_cnt?>"/>
-                            <input type="hidden" name="s_order" id="s_order" value="<?=$s_order?>"/>
-                        </form>
+                    <table class="search">
+                        <form name="s_mem" id="s_mem" method="post" action="<?= basename($_SERVER['PHP_SELF']) ?>">
+                            <input type="hidden" name="bmenu" value="<?= $bmenu ?>" />
+                            <input type="hidden" name="smenu" value="<?= $smenu ?>" />
+                            <input type="hidden" name="s_cnt" id="s_cnt" value="<?= $s_cnt ?>" />
+                            <input type="hidden" name="s_order" id="s_order" value="<?= $s_order ?>" />
+                            <caption>검색</caption>
+                            <colgroup>
+                                <col style="width:20%;">
+                                <col style="width:20%;">
+                                <col style="width:20%;">
+                                <col style="width:20%;">
+                                <col style="width:10%;">
+                                <col style="width:20%;">
+                            </colgroup>
+                            <tr>
 
-				    </table>
+                                <td>
+                                    <select id="f-search-sel-2" class="fm-sel-2" name="template_type">
+                                        <option value="">메세지 유형</option>
+
+                                        <option value="BA">기본형</option>
+                                        <option value="EX">부가정보형</option>
+                                        <option value="AD">채널추가형</option>
+                                        <option value="MI">복합형</option>
+                                        <!--                            <option value="">NEWS</option>-->
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="f-search-sel-3" class="fm-sel-2" name="template_emphasize_type">
+                                        <option value="">강조 유형</option>
+                                        <option value="NONE">선택안함</option>
+                                        <option value="IMAGE">이미지형</option>
+                                        <option value="TEXT">강조표기형</option>
+                                        <option value="ITEM_LIST">아이템리스트형</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="f-search-sel-3" class="fm-sel-2" name="inspection_status">
+                                        <option value="">검수상태</option>
+                                        <option value="REG">등록</option>
+                                        <option value="REQ">검수요청</option>
+                                        <option value="APR">승인</option>
+                                        <option value="REJ">반려</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="f-search-sel-3" class="fm-sel-2" name="status">
+                                        <option value="">사용상태</option>
+                                        <option value="R">승인대기</option>
+                                        <option value="A">정상</option>
+                                        <option value="S">중단</option>
+                                    </select>
+                                </td>
+                                <th scope="row">조건검색</th>
+                                <td colspan="2">
+                                    <input type="text" title="검색" name="keyword" id="keyword" style="width:50%;" value="<?= $keyword ?>">
+                                </td>
+                            </tr>
+                        </form>
+                    </table>
 				<!-- 검색창 종료 -->
 				<div class="align_r mt20">
 					<!--<button class="btn_down">엑셀다운로드</button>-->
-<!--					<button class="btn_search" onclick="s_mem.submit();">검색</button>-->
+					<button class="btn_search" onclick="loadTemplate();">검색</button>
 				</div>
 
 				<!-- 리스트 시작 -->
 				<div class="search_wrap">
 
-                    <table class="search_list" id="profilesTable">
+                    <table class="search_list" id="templatelistTable">
                         <thead>
                         <tr>
                             <th>NO</th>
@@ -101,62 +153,87 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
                     </table>
 
 				</div>
-                <div id="pagination" class="pagination"></div>
+                <div id="templatePagination" class="pagination"></div>
 			</div>
 		</div>
 		<!-- content 종료 -->
 	</div>
 </div>
 <script>
-    loadProfiles();
-    const statusMapping = {
-        '01': '승인',
-        '02': '승인대기',
-        'R': '승인대기',
-        'A': '정상',
-        'D': '삭제',
-        'S': '중단'
-    };
-    const inspectionStatusMapping = {
-        // REG : 등록, REQ : 심사요청, APR : 승인,
-        // REJ : 반려
-        'REG': '등록',
-        'REQ': '검수결과대기',
-        'APR': '승인',
-        'REJ': '반려'
-    };
-    const templateTypeMapping = {
-        'BA': '기본형',
-        'EX': '부가정보형',
-        'AD': '채널추가형',
-        'MI': '복합형',
-        'ITEM_LIST': '아이템리스트형',
-        'TEXT': '강조표기형'
-    };
-    const template_emphasize_type = {
-        'NONE': '선택안함',
-        'ITEM_LIST': '아이템리스트형',
-        'TEXT': '강조표기형'
-    };
-    function loadProfiles(page = 1) {
+    loadTemplate();
+    function loadTemplate(page = 1) {
+        const profile_id = $('#f-sel').val();
+        const template_type = $('select[name="template_type"]').val();
+        const template_emphasize_type = $('select[name="template_emphasize_type"]').val();
+        const inspection_status = $('select[name="inspection_status"]').val();
+        const status = $('select[name="status"]').val();
+        const template_title = $('input[name="template_title"]').val();
+
+        const statusMapping = {
+            '01': '승인',
+            '02': '승인대기',
+            'R': '대기',
+            'A': '정상',
+            'S': '중단',
+            'D': '삭제'
+        };
+        const inspectionStatusMapping = {
+            // REG : 등록, REQ : 심사요청, APR : 승인,
+            // REJ : 반려
+            'REG': '등록',
+            'REQ': '검수결과대기',
+            'APR': '승인',
+            'REJ': '반려'
+        };
+        const templateTypeMapping = {
+            'BA': '기본형',
+            'EX': '부가정보형',
+            'AD': '채널추가형',
+            'MI': '복합형',
+            'ITEM_LIST': '아이템리스트형',
+            'TEXT': '강조표기형'
+        };
+        const templateEmphasizeTypeMapping = {
+            'NONE': '선택안함',
+            'IMAGE': '이미지',
+            'ITEM_LIST': '아이템리스트',
+            'TEXT': '강조표기'
+        };
+        showLoadingSpinner(); // 스피너 표시
         $.ajax({
-            url: '/kakao/index.php?route=getTemplate',
+            url: '/kakao/index.php?route=getMasterUserTemplate',
             type: 'GET',
-            data: { page: page },
+            data: {
+                page: page,
+                template_type: template_type,
+                template_emphasize_type: template_emphasize_type,
+                inspection_status: inspection_status,
+                status: status,
+                template_title: template_title
+            },
             dataType: 'json',
             success: function(response) {
+                hideLoadingSpinner(); // 스피너 숨기기
                 if (response.success) {
-
-                    var profilesTable = $('#profilesTable tbody');
+                    var profilesTable = $('#templatelistTable tbody');
                     profilesTable.empty();
                     response.template.forEach(function(template) {
                         var statusText = statusMapping[template.status];
-                        var templateTypeText = templateTypeMapping[template.template_type];
-                        var inspectionStatusText = inspectionStatusMapping[template.inspection_status];
-                        var templateEmphasizeTypeText = template_emphasize_type[template.template_emphasize_type];
-                        var row = `
-                            <tr">
-                                <td>${template.id}</td>
+                        var templateText = templateTypeMapping[template.template_type]
+                        var templateEmphasizeTypeText = templateEmphasizeTypeMapping[template.template_emphasize_type]
+                        var inspectionStatusText = inspectionStatusMapping[template.inspection_status]
+                        var comments = template.inspection_comments;
+
+                        console.log(comments)
+                        // 검수요청 버튼 조건에 따라 추가
+                        var inspectionRequestButton = '';
+                        var editButton = '';
+                        var deleteButton='';
+                        var inspectionsComment='';
+
+
+                        var row = `<tr>
+                                 <td>${template.id}</td>
                                 <td>${template.user_id}<br>${template.user_name}</td>
                                 <td>${template.profile_key}<br>${template.chananel_name}</td>
                                 <td>${template.template_name}</td>
@@ -165,7 +242,7 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
                                 <td class="truncated-message" title="${template.template_title}">
                                     ${template.template_title}
                                 </td>
-                                <td>${templateTypeText}</td>
+                                <td>${templateText}</td>
                                 <td>${templateEmphasizeTypeText}</td>
                                 <td>${template.strong_title}</td>
                                 <td>${template.strong_sub_title}</td>
@@ -173,18 +250,16 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
                                 <td>${template.image_path ? `<a href="${template.image_path}" target="_blank">파일 열람</a>` : '없음'}</td>
                                 <td>${statusText}</td>
                                 <td>${inspectionStatusText}</td>
-                            </tr>
-
-                            `;
+                        </tr>`;
                         profilesTable.append(row);
                     });
 
                     // 페이징 처리
-                    var pageSize = 10; // 한 페이지에 표시할 항목 수
-                    var totalRow = response.total; // 총 항목 수
-                    var totalPages = Math.ceil(totalRow / pageSize); // 총 페이지 수
-                    var currentPage = page; // 현재 페이지
-                    var pageSizeGroup = 10; // 페이지 그룹 크기
+                    var pageSize = 10;
+                    var totalRow = response.total;
+                    var totalPages = Math.ceil(totalRow / pageSize);
+                    var currentPage = page;
+                    var pageSizeGroup = 10;
 
                     var startPage = Math.floor((currentPage - 1) / pageSizeGroup) * pageSizeGroup + 1;
                     var endPage = startPage + pageSizeGroup - 1;
@@ -193,41 +268,45 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
                         endPage = totalPages;
                     }
 
-                    var pagination = $('#pagination');
+                    var pagination = $('#templatePagination');
                     pagination.empty();
-
-                    // 이전 페이지 링크
                     if (currentPage > 1) {
                         var prevPage = startPage - pageSizeGroup;
-                        pagination.append(`<a href="#" class="page-link" data-page="${prevPage > 0 ? prevPage : 1}"> &lt; </a>`);
+                        pagination.append(`<a href="#" class="page-link pre" data-page="${prevPage > 0 ? prevPage : 1}"> <img src="/images/pagenation/l.png"></a>`);
                     }
 
-                    // 페이지 번호 링크
                     for (var i = startPage; i <= endPage; i++) {
-                        var pageLink = `<a href="#" class="page-link ${i === currentPage ? 'on' : ''}" data-page="${i}">${i}</a>`;
+                        var pageLink = `<a href="#" class="page-link ${i === currentPage ? 'atv' : ''}" data-page="${i}">${i}</a>`;
                         pagination.append(pageLink);
                     }
 
-                    // 다음 페이지 링크
                     if (endPage < totalPages) {
                         var nextPage = endPage + 1;
-                        pagination.append(`<a href="#" class="page-link" data-page="${nextPage}"> &gt; </a>`);
+                        pagination.append(`<a href="#" class="page-link next" data-page="${nextPage}"><img src="/images/pagenation/r.png"></a>`);
                     }
+                } else {
+                    var profilesTable = $('#templatelistTable tbody');
+                    profilesTable.empty();
+                    var row = '<tr>'+
+                        '<td colspan="15" class="no-data">검색 결과가 없습니다.</td>'+
+                        '</tr>';
+                    profilesTable.append(row);
                 }
             },
             error: function(xhr, status, error) {
+                hideLoadingSpinner(); // 스피너 숨기기
                 alert('신청 목록을 불러오는 데 실패했습니다. 다시 시도해 주세요.');
                 console.error('Error: ' + error);
                 console.error('Status: ' + status);
                 console.dir(xhr);
             }
         });
-    }
 
+    }
     $(document).on('click', '.page-link', function(event) {
         event.preventDefault();
         var page = $(this).data('page');
-        loadProfiles(page);
+        loadTemplate(page);
     });
     $(document).on('change', '.status-select', function() {
         var id = $(this).data('id');

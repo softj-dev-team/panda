@@ -1882,9 +1882,30 @@ $(document).ready(function() {
         // 미리보기 영역을 숨기고 파일 업로드 필드를 다시 활성화
         $('.image-preview').hide(); // 이미지 미리보기 영역 숨김
         $('#templateImageUploadForm').append(`        
-            <input name="file" type="file" id="f-attach" data-fakefile="file" />
-            <label for="f-attach" class="fm-file-btn">파일첨부</label>
+           <div class="fm-box">
+                <input name="highlightFile" type="file" id="f-attach-highlight" data-fakefile="file">
+                <label for="f-attach-highlight" class="fm-file-btn ">파일첨부</label>
+                <input type="text" data-fakefile="text" readonly="readonly" placeholder="하이라이트 썸네일" class="fm-ipt fm-file">
+            </div>
+            <div class="flex-c-start">
+                <p>- 이미지 제한 사이즈 - 가로 500px 이상, 가로:세로 비율이 2:1아닌 경우 업로드 불가합니다</p>
+                <p>- 파일형식 및 크기 : jpg, png / 최대 500KB</p>
+            </div>
+        `);
+    });
+    $('#templateItemHighlightImageUrl').on('click', function() {
+        // 미리보기 영역을 숨기고 파일 업로드 필드를 다시 활성화
+        $('.templateItemHighlightImageUrl').hide(); // 이미지 미리보기 영역 숨김
+        $('#templateHighlightThumbnailUploadForm').append(`        
+          <div class="fm-box">
+            <input name="file" type="file" id="f-attach-highlight" data-fakefile="file" />
+            <label for="f-attach-highlight" class="fm-file-btn ">파일첨부</label>
             <input type="text" data-fakefile="text" readonly="readonly" placeholder="파일 사이즈 최대 500KB" class="fm-ipt fm-file" />
+        </div>
+        <div class="flex-c-start">
+            <p>- 이미지 제한 사이즈 - 가로 500px 이상, 가로:세로 비율이 2:1아닌 경우 업로드 불가합니다</p>
+            <p>- 파일형식 및 크기 : jpg, png / 최대 500KB</p>
+        </div>
         `);
     });
     $('#f-attach-highlight').on('change', function() {

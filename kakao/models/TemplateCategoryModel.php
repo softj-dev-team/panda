@@ -144,6 +144,130 @@ class TemplateCategoryModel
         $stmt = $this->conn->query('SELECT count(*) FROM template');
         return $stmt->fetchColumn();
     }
+    public function getMasterUserTemplate($profile_id=null, $template_type = null, $offset, $limit, $template_emphasize_type = null, $inspection_status = null, $status = null, $template_title = null)
+    {
+        $status_d ="D";
+        $sql = "SELECT t.*,
+                        tc.name as category_name, 
+                        kb.profile_key, 
+                        kb.business_name, 
+                        kb.chananel_name, 
+                        mi.user_id, 
+                        mi.user_name
+                    FROM template t
+                    LEFT JOIN template_category tc ON tc.code = t.category_id
+                    LEFT JOIN kakao_business kb ON t.profile_id = kb.id
+                    LEFT JOIN member_info mi ON kb.user_idx = mi.idx
+                    WHERE t.status != :status_d ";
+
+        if (!empty($template_type)) {
+            $sql .= " AND t.template_type = :template_type";
+        }
+
+        if (!empty($template_emphasize_type)) {
+            $sql .= " AND t.template_emphasize_type = :template_emphasize_type";
+        }
+        if (!empty($inspection_status)) {
+            $sql .= " AND t.inspection_status = :inspection_status";
+        }
+        if (!empty($status)) {
+            $sql .= " AND t.status = :status";
+        }
+
+        if (!empty($template_title)) {
+            $sql .= " AND (mi.user_id LIKE :user_id or t.template_title LIKE :template_title  or t.template_name LIKE :template_name)";
+        }
+
+        $sql .= " ORDER BY t.id DESC LIMIT :limit OFFSET :offset";
+
+        $stmt = $this->conn->prepare($sql);
+
+        $stmt->bindParam(':status_d', $status_d);
+        if (!empty($template_type)) {
+            $stmt->bindParam(':template_type', $template_type, PDO::PARAM_STR);
+        }
+        if (!empty($template_emphasize_type)) {
+            $stmt->bindParam(':template_emphasize_type', $template_emphasize_type, PDO::PARAM_STR);
+        }
+        if (!empty($inspection_status)) {
+            $stmt->bindParam(':inspection_status', $inspection_status, PDO::PARAM_STR);
+        }
+
+        if (!empty($status)) {
+            $stmt->bindParam(':status', $status, PDO::PARAM_STR);
+        }
+
+        if (!empty($template_title)) {
+            $titleSearch = '%' . $template_title . '%';
+            $stmt->bindParam(':template_title', $titleSearch, PDO::PARAM_STR);
+            $stmt->bindParam(':template_name', $titleSearch, PDO::PARAM_STR);
+            $stmt->bindParam(':user_id', $titleSearch, PDO::PARAM_STR);
+        }
+
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+        $stmt->execute();
+        error_log('getMasterUserTemplate executed SQL: ' . $sql);
+        error_log('Bindings: profile_id = ' . $profile_id . ', template_type = ' . $template_type . ', template_emphasize_type = ' . $template_emphasize_type .
+            ', inspection_status = ' . $inspection_status . ', status = ' . $status . ', template_title = ' . $titleSearch . ', limit = ' . $limit . ', offset = ' . $offset);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function getMasterUserTotalTemplate($profile_id=null, $template_type = null, $template_emphasize_type = null, $inspection_status = null, $status = null, $template_title = null)
+    {
+        $status_d ="D";
+        // 기본 SQL 쿼리
+        $sql = "SELECT count(*)
+                    FROM template t
+                    LEFT JOIN template_category tc ON tc.code = t.category_id
+                    LEFT JOIN kakao_business kb ON t.profile_id = kb.id
+                    LEFT JOIN member_info mi ON kb.user_idx = mi.idx
+                    WHERE t.status != :status_d ";
+
+        if (!empty($template_type)) {
+            $sql .= " AND t.template_type = :template_type";
+        }
+        if (!empty($template_emphasize_type)) {
+            $sql .= " AND t.template_emphasize_type = :template_emphasize_type";
+        }
+        if (!empty($inspection_status)) {
+            $sql .= " AND t.inspection_status = :inspection_status";
+        }
+        if (!empty($status)) {
+            $sql .= " AND t.status = :status";
+        }
+
+        if (!empty($template_title)) {
+            $sql .= " AND (mi.user_id LIKE :user_id or t.template_title LIKE :template_title or t.template_name LIKE :template_name)";
+        }
+
+        $stmt = $this->conn->prepare($sql);
+
+        // 필수 파라미터 바인딩
+        $stmt->bindParam(':status_d', $status_d);
+        // 선택적 파라미터 바인딩
+        if (!empty($template_type)) {
+            $stmt->bindParam(':template_type', $template_type, PDO::PARAM_STR);
+        }
+        if (!empty($template_emphasize_type)) {
+            $stmt->bindParam(':template_emphasize_type', $template_emphasize_type, PDO::PARAM_STR);
+        }
+        if (!empty($inspection_status)) {
+            $stmt->bindParam(':inspection_status', $inspection_status, PDO::PARAM_STR);
+        }
+        if (!empty($status)) {
+            $stmt->bindParam(':status', $status, PDO::PARAM_STR);
+        }
+        if (!empty($template_title)) {
+            $titleSearch = '%' . $template_title . '%';
+            $stmt->bindParam(':template_title', $titleSearch, PDO::PARAM_STR);
+            $stmt->bindParam(':template_name', $titleSearch, PDO::PARAM_STR);
+            $stmt->bindParam(':user_id', $titleSearch, PDO::PARAM_STR);
+        }
+
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    }
     public function getUserTemplate($profile_id, $template_type = null, $offset, $limit, $template_emphasize_type = null, $inspection_status = null, $status = null, $template_title = null)
     {
         $status_d ="D";
@@ -153,6 +277,9 @@ class TemplateCategoryModel
             LEFT JOIN kakao_business kb ON t.profile_id = kb.id
             WHERE t.profile_id = :profile_id and t.status != :status_d ";
 
+        if (!empty($template_type)) {
+            $sql .= " AND t.template_type = :template_type";
+        }
         if (!empty($template_type)) {
             $sql .= " AND t.template_type = :template_type";
         }

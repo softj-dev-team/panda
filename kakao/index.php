@@ -83,6 +83,12 @@ switch ($route) {
             $controller->getUserTemplate();
         }
         break;
+    case 'getMasterUserTemplate':
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $controller = new TemplateCategoryController();
+            $controller->getMasterUserTemplate();
+        }
+        break;
     case 'getTemplateDetails':
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $controller = new TemplateCategoryController();

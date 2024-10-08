@@ -120,12 +120,19 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                             </div>
                         </div>
 
-                        <div class="fm-box mgl-5 w-100 blind" id="templateImageUploadForm" >
-                            <input name="file" type="file" id="f-attach" data-fakefile="file" />
-                            <label for="f-attach" class="fm-file-btn ">파일첨부</label>
-<!--                            <input type="hidden" name="selectedImage" id="selectedImage">-->
-                            <input type="text" data-fakefile="text" readonly="readonly" placeholder="파일 사이즈 최대 500KB" class="fm-ipt fm-file" />
+                        <div class="mgl-5 w-100 blind" id="templateImageUploadForm" >
+                            <div class="fm-box">
+                                <input name="file" type="file" id="f-attach" data-fakefile="file" />
+                                <label for="f-attach" class="fm-file-btn ">파일첨부</label>
+    <!--                            <input type="hidden" name="selectedImage" id="selectedImage">-->
+                                <input type="text" data-fakefile="text" readonly="readonly" placeholder="파일 사이즈 최대 500KB" class="fm-ipt fm-file" />
+                            </div>
+                            <div class="flex-c-start">
+                                <p>- 이미지 제한 사이즈 - 가로 500px 이상, 가로:세로 비율이 2:1아닌 경우 업로드 불가합니다</p>
+                                <p>- 파일형식 및 크기 : jpg, png / 최대 500KB</p>
+                            </div>
                         </div>
+
                     </div>
                     <div id="itemListSetting" class="blind">
                         <div class="fm-row">
@@ -144,10 +151,16 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                                 <label for="itemHlightDescription" class="custom-label">하이라이트 설명  </label>
                                 <input id="itemHlightDescription" type="text" class="fm-ipt custom-input" name="itemHlightDescription" maxlength="16" placeholder="하이라이트 제목">
                             </div>
-                            <div class="fm-box " id="templateHighlightThumbnailUploadForm" >
-                                <input name="highlightFile" type="file" id="f-attach-highlight" data-fakefile="file" />
-                                <label for="f-attach-highlight" class="fm-file-btn ">파일첨부</label>
-                                <input type="text" data-fakefile="text" readonly="readonly" placeholder="하이라이트 썸네일" class="fm-ipt fm-file" />
+                            <div id="templateHighlightThumbnailUploadForm" >
+                                <div class="fm-box" >
+                                    <input name="highlightFile" type="file" id="f-attach-highlight" data-fakefile="file" />
+                                    <label for="f-attach-highlight" class="fm-file-btn ">파일첨부</label>
+                                    <input type="text" data-fakefile="text" readonly="readonly" placeholder="하이라이트 썸네일" class="fm-ipt fm-file" />
+                                </div>
+                                <div class="flex-c-start">
+                                    <p>- 이미지 제한 사이즈 - 가로 108px 이상, 가로:세로 비율이 1:1이 아닌 경우 업로드 불가합니다.</p>
+                                    <p>- 파일형식 및 크기 : jpg, png / 최대 500KB</p>
+                                </div>
                             </div>
                             <span class="error-message"></span>
                         </div>
