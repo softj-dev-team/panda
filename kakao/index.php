@@ -83,6 +83,12 @@ switch ($route) {
             $controller->getKakaoSendList();
         }
         break;
+    case 'getKakaoSendListDetail':
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $controller = new MasterController();
+            $controller->getKakaoSendListDetail();
+        }
+        break;
     case 'getUserTemplate':
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $controller = new TemplateCategoryController();

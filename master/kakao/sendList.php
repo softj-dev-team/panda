@@ -18,6 +18,29 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
 
 </style>
 <body>
+<!-- 팝업 레이어 -->
+<div id="sendListPopupLayer" class="popup-layer" style="display:none;">
+    <div class="popup-content">
+        <div class="poptitle flex-just-end">
+            <button type="button" onclick="closeAllPopup()" style="border: none; background: none"><img src="/images/popup/close.svg"></button>
+        </div>
+        <div class="flex-just-start">
+            <select id="filter-field">
+                <option value="fcallback">발신번호</option>
+                <option value="fdestine">수신번호</option>
+                <option value="fetc3">결과코드</option>
+                <option value="fetc4">결과메세지</option>
+            </select>
+            <input id="filter-value" type="text" placeholder="검색조건">
+            <button type="button" id="searchBt">검색</button>
+        </div>
+
+
+        <div id="data-table" style="margin-top: 10px"></div>
+
+
+    </div>
+</div>
 <div id="wrap" class="skin_type01">
 	<?php include $_SERVER["DOCUMENT_ROOT"]."/master/include/admin_top.php"; // 상단메뉴?>
 	<div class="sub_wrap">
@@ -96,11 +119,9 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
                             <th>발송회원</th>
                             <th>발신번호</th>
                             <th>메세지</th>
-
-                            <th>발송상태</th>
-                            <th>결과코드</th>
-                            <th>결과</th>
+                            <th>발신IP</th>
                             <th>발송건수</th>
+                            <th>발송내역보기</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -116,8 +137,13 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
 		<!-- content 종료 -->
 	</div>
 </div>
+    <link href="https://unpkg.com/tabulator-tables/dist/css/tabulator.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
 <script>
-    $(document).ready(function() {loadProfiles();});
+    let sendListDetail =[];
+    $(document).ready(function() {
+        loadProfiles();
+    });
     const statusMapping = {
         'AS': '알림톡/친구톡 발송 성공',
         'AF': '알림톡/친구톡 발송 실패',
@@ -159,10 +185,9 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
                         <td class="truncated-message" title="${data.fmessage}">
                             ${truncatedMessage}
                         </td>
-                        <td>${statusMapping[data.fetc2]}</td>
-                        <td>${data.fetc3}</td>
-                        <td>${data.fetc4}</td>
+                        <td>${data.fetc1}</td>
                         <td>${data.tot_cnt}</td>
+                        <td><button type="button" class="sendListDetail" style="padding:3px 5px; border:1px solid gray;" data-id="${data.fetc7}">발송내역보기</button></td>
                     </tr>`;
                         table.append(row);
                     });
@@ -271,6 +296,92 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
             dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
             monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
         });
+    });
+    $(document).on('click','.sendListDetail',function() {
+        var group_key = $(this).attr('data-id');//큰숫자가 주입되는경우 변환될수 있으니 그대로 출력한다.
+        var fieldEl = document.getElementById("filter-field");
+        var valueEl = document.getElementById("filter-value");
+        var filterVal = fieldEl.options[fieldEl.selectedIndex].value;
+        var filter = filterVal == "function" ? customFilter : filterVal;
+        console.log(group_key)
+        $.ajax({
+            url: '/kakao/index.php?route=getKakaoSendListDetail',
+            type: 'GET',
+            data: {
+                // page: page,
+                // keyword:keyword,
+                // s_date:s_date,
+                // e_date:e_date,
+                group_key:group_key
+            },
+            dataType: 'json',
+            success: function(response) {
+                console.log(response.data)
+
+                $('#sendListPopupLayer').show()
+                var popupTable = new Tabulator("#data-table", {
+                    data: response.data, // table.getData()로 가져온 데이터를 사용
+                    layout: "fitColumns",
+                    pagination: "true",  // 로컬 페이징
+                    paginationSize: 20,   // 20건씩 표시
+                    selectable: true,  // 다중 선택 가능
+                    selectableRangeMode: "drag",  // 마우스 드래그로 범위 선택
+                    selectablePersistence: false,  // 페이징 변경 후에도 선택 상태 유지
+                    selectableRollingSelection:true,
+                    selectableCheck: function(row) {
+                        // 모든 행을 선택 가능하게 설정
+                        return true;
+                    },
+                    columns: [
+                        // { title: "선택", field: "select", formatter: "rowSelection", width: 50, hozAlign: "center", headerSort: false, cellClick: function(e, cell) {
+                        //         // cellClick 이벤트는 필요 없을 수 있습니다.
+                        //     }},
+                        { title: "전송일시", field: "finsertdate", sorter: "string" },
+                        { title: "발신번호", field: "fcallback", sorter: "string" },
+                        { title: "수신번호", field: "fdestine", sorter: "string" },
+                        { title: "결과코드", field: "fetc3", sorter: "string" },
+                        { title: "결과메세지", field: "fetc4", sorter: "string" },
+                        // { title: "결과코드", field: "fetc2", formatter: function(cell, formatterParams) {
+                        //         // 발송여부 값을 텍스트로 변환하여 표시
+                        //         let value = cell.getValue();
+                        //         return value === "AS" ? "발송" : (value === "AS" ? "발송완료" : value);
+                        //     }}
+                    ],
+                    // dataChanged: function(data) {
+                    //     checkAllStatusAndMoveToNextPage();  // 데이터 변경 시 자동 페이지 이동 체크
+                    // },
+                    // tableBuilt: function() {
+                    //     checkAllStatusAndMoveToNextPage();  // 테이블이 처음 렌더링될 때 자동 페이지 이동 체크
+                    // },
+                });
+                $(document).on('click','#searchBt',function (){
+                    popupTable.setFilter(filter,'like', valueEl.value);
+                })
+
+            },
+            error: function(xhr, status, error) {
+                alert('목록을 불러오는 데 실패했습니다. 다시 시도해 주세요.');
+                console.log('Error: ' + error);
+                console.log('Status: ' + status);
+                console.dir(xhr);
+            }
+        });
+        // let tableData = table.getData();
+        // if(tableData.length <= 0){
+        //     alert("수신번호를 입력해 주세요.");
+        // }else{
+
+        //     // 기본값 00 설정
+        //     tableData.forEach((item, index) => {
+        //         if (!item.id) {
+        //             item.id = index + 1;  // index 기반으로 id 필드를 추가
+        //         }
+        //         if (!item.status) {
+        //             item.status = "00";  // 발송여부 기본값 00 설정
+        //         }
+        //     });
+
+        // }
     });
 </script>
 <? include $_SERVER["DOCUMENT_ROOT"]."/pro_inc/include_bottom_admin_tail.php"; ?>

@@ -562,3 +562,6 @@ function hideLoadingSpinner() {
 	$('.spinner-background').hide();
 	$('.loadingio-spinner-spin-2by998twmg8').hide();
 }
+function closeAllPopup() {
+	$('.popup-layer').hide();
+}
