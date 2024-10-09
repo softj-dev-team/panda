@@ -215,7 +215,6 @@ def process_data():
                             update_sql = """
                             UPDATE TBL_SEND_TRAN_KKO
                             SET
-                                fetc1 = %s,
                                 fetc2 = %s,
                                 fetc3 = %s,
                                 fetc4 = %s,
@@ -225,7 +224,6 @@ def process_data():
                             WHERE fseq = %s
                             """
                             cursor.execute(update_sql, (
-                                data.get("sn", None),
                                 data.get("code", None),
                                 data.get("altCode", None),
                                 data.get("altMsg", None),
