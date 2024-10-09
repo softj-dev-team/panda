@@ -7,7 +7,7 @@ $member_idx = $_SESSION['member_coinc_idx'];
 $my_member_row = get_member_data($_SESSION['member_coinc_idx']);
 
 
-$query_group = "select *,(select count(idx) from address_group_num where 1 and address_group_num.group_idx=address_group.idx) as group_cnt from address_group where 1 and member_idx='" . $member_idx . "' order by idx desc";
+$query_group = "select *,(select count(idx) from address_group_num where 1 and address_group_num.group_idx=address_group.idx) as group_cnt from address_group where 1 and is_del != 'Y' and member_idx='" . $member_idx . "' order by idx desc";
 $result_group = mysqli_query($gconnet, $query_group);
 
 if ($my_member_row['master_ok'] == "N") {

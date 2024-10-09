@@ -30,7 +30,7 @@ $EndRowNum = $pageScale;
 
 $order_by = " order by idx desc ";
 
-$query = "select *,(select count(idx) from address_group_num where 1 and group_idx=address_group.idx) as group_cnt from address_group where 1 " . $where . $order_by . " limit " . $StarRowNum . " , " . $EndRowNum;
+$query = "select *,(select count(idx) from address_group_num where 1 and is_del!='Y' and group_idx=address_group.idx) as group_cnt from address_group where 1 and is_del != 'Y' " . $where . $order_by . " limit " . $StarRowNum . " , " . $EndRowNum;
 //echo $query;
 $result = mysqli_query($gconnet, $query);
 
