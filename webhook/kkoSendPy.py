@@ -219,7 +219,7 @@ def process_data():
                                 fetc3 = %s,
                                 fetc4 = %s,
                                 fetc5 = %s,
-                                fetc6 = %s,
+                                fetc6 = %s
                             WHERE fseq = %s
                             """
                             cursor.execute(update_sql, (
