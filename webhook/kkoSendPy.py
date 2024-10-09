@@ -220,7 +220,6 @@ def process_data():
                                 fetc4 = %s,
                                 fetc5 = %s,
                                 fetc6 = %s,
-                                fetc8 = %s
                             WHERE fseq = %s
                             """
                             cursor.execute(update_sql, (
@@ -229,7 +228,6 @@ def process_data():
                                 data.get("altMsg", None),
                                 data.get("altSndDtm", None),
                                 data.get("altRcptDtm", None),
-                                member_info_idx,
                                 result['fseq']
                             ))
 
