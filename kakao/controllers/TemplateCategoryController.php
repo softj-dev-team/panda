@@ -1089,6 +1089,7 @@ class TemplateCategoryController extends Controller
     public function sendMessage()
     {
         $response = ['status' => 'error', 'message' => 'An unknown error occurred'];
+        $client_ip = $this->getClientIP();
         try {
             if (isset($_FILES['templateFile']) && $_FILES['templateFile']['error'] == 0) {
                 $filePath = $_FILES['templateFile']['tmp_name'];
@@ -1131,7 +1132,8 @@ class TemplateCategoryController extends Controller
                         $profileKey,
                         $templateKey,
                         $member_idx,
-                        $group_key
+                        $group_key,
+                        $client_ip
                     );
                 }
                 // 성공한 경우
@@ -1182,7 +1184,7 @@ class TemplateCategoryController extends Controller
                 $member_idx=$this->data['inc_member_row']['idx'];
                 $group_key = $this->generateUniqueNumericKey();
                 // 예를 들어, 템플릿이 성공적으로 저장되었을 경우
-                $this->sendTransaction->saveMessage($fdestine, $fcallback, $message, $profileKey, $templateKey,$responseData[0]['sn'],$responseData[0]['code'],$responseData[0]['altCode'],$responseData[0]['altMsg'],$responseData[0]['altSndDtm'],$responseData[0]['altRcptDtm'],$group_key,$member_idx);
+                $this->sendTransaction->saveMessage($fdestine, $fcallback, $message, $profileKey, $templateKey,$responseData[0]['sn'],$responseData[0]['code'],$responseData[0]['altCode'],$responseData[0]['altMsg'],$responseData[0]['altSndDtm'],$responseData[0]['altRcptDtm'],$group_key,$member_idx,$client_ip);
 
 
                 $point_sect = "smspay"; //

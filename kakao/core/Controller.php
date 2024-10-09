@@ -72,6 +72,18 @@ class Controller {
 
         $this->data['inc_notice_query'] = $crud->selectWithOrderAndLimit($where, $order, $limit);
     }
+    function getClientIP() {
+        if (isset($_SERVER['HTTP_CLIENT_IP']) && !empty($_SERVER['HTTP_CLIENT_IP'])) {
+            $ip = $_SERVER['HTTP_CLIENT_IP'];
+        } elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && !empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            // X-Forwarded-For 헤더에는 여러 IP가 콤마로 구분되어 있을 수 있으므로, 첫 번째 IP를 선택함
+            $ip = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR'])[0];
+        } else {
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }
+
+        return $ip;
+    }
     function generateUniqueNumericKey() {
         // 현재 시간(마이크로초 포함)을 숫자로 변환
         $time = microtime(true) * 10000; // 소수점 제거를 위해 10000을 곱함

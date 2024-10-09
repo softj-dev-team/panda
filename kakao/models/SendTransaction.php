@@ -11,7 +11,7 @@ class SendTransaction
         $this->conn = $database->connect();
     }
 
-    public function saveMessage( $fdestine,$fcallback,$message,$profile_key,$template_key,$sn,$code,$altCode,$altMsg,$altSndDtm,$altRcptDtm,$group_key,$member_idx)
+    public function saveMessage( $fdestine,$fcallback,$message,$profile_key,$template_key,$sn,$code,$altCode,$altMsg,$altSndDtm,$altRcptDtm,$group_key,$member_idx,$client_ip)
     {
         try {
 
@@ -24,7 +24,7 @@ class SendTransaction
             $stmt->bindParam(':message', $message);
             $stmt->bindParam(':fdestine', $fdestine);
             $stmt->bindParam(':fcallback', $fcallback);
-            $stmt->bindParam(':fetc1', $sn);
+            $stmt->bindParam(':fetc1', $client_ip);
             $stmt->bindParam(':fetc2', $code);
             $stmt->bindParam(':fetc3', $altCode);
             $stmt->bindParam(':fetc4', $altMsg);
@@ -38,14 +38,14 @@ class SendTransaction
             throw new Exception('Failed to save message: ' . $e->getMessage());
         }
     }
-    public function saveMessageByList( $fdestine,$fcallback,$message,$profile_key,$template_key,$member_idx,$group_key)
+    public function saveMessageByList( $fdestine,$fcallback,$message,$profile_key,$template_key,$member_idx,$group_key,$client_ip)
     {
         try {
 
             $stmt = $this->conn->prepare("INSERT INTO TBL_SEND_TRAN_KKO
-                (fyellowid, ftemplatekey, fkkoresendtype, fmsgtype, fmessage, fsenddate, fdestine, fcallback,fetc8,fetc7)
+                (fyellowid, ftemplatekey, fkkoresendtype, fmsgtype, fmessage, fsenddate, fdestine, fcallback,fetc8,fetc7,fetc1)
                 VALUES
-                (:profile_key, :template_key, 'N', 4, :message, now(), :fdestine, :fcallback,:fetc8,:fetc7)");
+                (:profile_key, :template_key, 'N', 4, :message, now(), :fdestine, :fcallback,:fetc8,:fetc7,:fetc1)");
 
                 $stmt->bindParam(':profile_key', $profile_key);
                 $stmt->bindParam(':template_key', $template_key);
@@ -54,6 +54,7 @@ class SendTransaction
                 $stmt->bindParam(':fcallback', $fcallback);
                 $stmt->bindParam(':fetc8', $member_idx);
                 $stmt->bindParam(':fetc7', $group_key);
+                $stmt->bindParam(':fetc1', $client_ip);
                 $stmt->execute();
 
         } catch (Exception $e) {

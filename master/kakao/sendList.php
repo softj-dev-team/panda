@@ -69,18 +69,22 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
 							<col style="width:15%;">
 						</colgroup>
 						<tr>
-							<th scope="row"></th>
+							<th scope="row">발송일시</th>
+                            <td colspan="2">
+                                <input type="text" autocomplete="off" readonly="" name="s_date" style="width:40%;" class="datepicker" value="" > ~
+                                <input type="text" autocomplete="off" readonly="" name="e_date" style="width:40%;" class="datepicker" value="">
+                            </td>
+							<th scope="row">검색조건</th>
 							<td colspan="2">
-
-							</td>
-							<th scope="row"></th>
-							<td colspan="2">
-
+                                <input type="text" title="검색" name="keyword" id="keyword" style="width:50%;" value="">
 							</td>
 						</tr>
 
 				    </table>
-
+                    <div class="align_r mt20">
+                        <button class="btn_search" onclick="loadProfiles();">검색</button>
+                        <!--<button class="btn_down" onclick="order_excel_frm.submit();">엑셀다운로드</button>-->
+                    </div>
 
 				<!-- 리스트 시작 -->
 				<div class="search_wrap">
@@ -88,17 +92,15 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
                     <table class="search_list" id="kakaoSendListTable">
                         <thead>
                         <tr>
-                            <th>NO</th>
-                            <th>발신프로필키</th>
-                            <th>템플릿키</th>
+                            <th>발송일시</th>
+                            <th>발송회원</th>
                             <th>발신번호</th>
                             <th>메세지</th>
-                            <th>발송요청ID</th>
+
                             <th>발송상태</th>
                             <th>결과코드</th>
                             <th>결과</th>
-                            <th>발송일시</th>
-                            <th>결과수신일시</th>
+                            <th>발송건수</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -115,7 +117,7 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
 	</div>
 </div>
 <script>
-    loadProfiles();
+    $(document).ready(function() {loadProfiles();});
     const statusMapping = {
         'AS': '알림톡/친구톡 발송 성공',
         'AF': '알림톡/친구톡 발송 실패',
@@ -129,31 +131,38 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
     };
 
     function loadProfiles(page = 1) {
+        var keyword=$('input[name=keyword]').val()
+        var s_date=$('input[name=s_date]').val()
+        var e_date=$('input[name=e_date]').val()
         $.ajax({
             url: '/kakao/index.php?route=getKakaoSendList',
             type: 'GET',
-            data: { page: page },
+            data: {
+                page: page,
+                keyword:keyword,
+                s_date:s_date,
+                e_date:e_date
+            },
             dataType: 'json',
             success: function(response) {
                 if (response.success) {
                     var table = $('#kakaoSendListTable tbody');
+                    console.log(response.data)
                     table.empty();
                     response.data.forEach(function(data) {
+
                         var truncatedMessage = data.fmessage.length > 10 ? data.fmessage.substring(0, 10) + '...' : data.fmessage;
                         var row = `<tr>
-                        <td>${data.fseq}</td>
-                        <td>${data.fyellowid}</td>
-                        <td>${data.ftemplatekey}</td>
+                        <td>${data.frsltdate}</td>
+                        <td>${data.user_name}<br>(${data.user_id})</td>
                         <td>${data.fdestine}</td>
                         <td class="truncated-message" title="${data.fmessage}">
                             ${truncatedMessage}
                         </td>
-                        <td>${data.fetc1}</td>
                         <td>${statusMapping[data.fetc2]}</td>
                         <td>${data.fetc3}</td>
                         <td>${data.fetc4}</td>
-                        <td>${data.fetc5}</td>
-                        <td>${data.fetc6}</td>
+                        <td>${data.tot_cnt}</td>
                     </tr>`;
                         table.append(row);
                     });
@@ -231,7 +240,39 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
             }
         });
     });
+    $(function() {
+        var today = new Date();
+        var oneDayAgo = new Date();
+        var oneMonthAgo = new Date();
+        oneMonthAgo.setMonth(today.getMonth() - 1);
+        oneDayAgo.setDate(today.getDate() - 1);  // 하루 전
+        // 날짜 형식을 YYYY-MM-DD로 변환하는 함수
+        function formatDate(date) {
+            var day = ("0" + date.getDate()).slice(-2);
+            var month = ("0" + (date.getMonth() + 1)).slice(-2);
+            return date.getFullYear() + "-" + month + "-" + day;
+        }
+        // Datepicker 초기화 및 날짜 기본값 설정
+        $("input[name=s_date]").datepicker({
+            dateFormat: 'yy-mm-dd'
+        }).val(formatDate(oneDayAgo)); // 한 달 전 날짜 기본값
+
+        $("input[name=e_date]").datepicker({
+            dateFormat: 'yy-mm-dd'
+        }).val(formatDate(today)); // 오늘 날짜 기본값
+        $(".datepicker").datepicker({
+            changeYear: true,
+            changeMonth: true,
+            minDate: '-90y',
+            yearRange: 'c-90:c',
+            dateFormat: 'yy-mm-dd',
+            showMonthAfterYear: true,
+            constrainInput: true,
+            dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+            monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
+        });
+    });
 </script>
-<?// include $_SERVER["DOCUMENT_ROOT"]."/pro_inc/include_bottom_admin_tail.php"; ?>
+<? include $_SERVER["DOCUMENT_ROOT"]."/pro_inc/include_bottom_admin_tail.php"; ?>
 </body>
 </html>

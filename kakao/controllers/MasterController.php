@@ -15,9 +15,14 @@ class MasterController extends Controller
             $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
             $limit = 10;
             $offset = ($page - 1) * $limit;
+            $keyword = !empty(trim($_GET['keyword'] ?? '')) ? $_GET['keyword'] : null;
+            $currentDate = new DateTime();  // 현재 날짜
+            $startDate = (isset($_GET['s_date']) && trim($_GET['s_date']) !== '') ? new DateTime($_GET['s_date']) : (clone $currentDate)->modify('-1 months');
+            $endDate = (isset($_GET['e_date']) && trim($_GET['e_date']) !== '') ? new DateTime($_GET['e_date']) : $currentDate;
 
-            $data = $this->MasterModel->getKakaoSendList($offset, $limit);
-            $total = $this->MasterModel->getTotalKakaoSendList();
+
+            $data = $this->MasterModel->getKakaoSendList($offset, $limit,$keyword,$startDate,$endDate);
+            $total = $this->MasterModel->getTotalKakaoSendList($keyword,$startDate,$endDate);
             $this->sendJsonResponse(['success' => true, 'data' => $data, 'total' => $total]);
         } catch (Exception $e) {
             error_log($e->getMessage());
