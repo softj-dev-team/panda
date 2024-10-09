@@ -178,7 +178,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                     <table>
                         <tr>
                             <th>제목</th>
-                            <td><input type="text" id="sms_title" name="sms_title" required="yes" message="제목"></td>
+                            <td><input type="text" id="sms_title" name="sms_title"  message="제목"></td>
                         </tr>
                         <tr>
                             <th>수신번호</th>
