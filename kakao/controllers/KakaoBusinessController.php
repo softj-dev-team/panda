@@ -82,7 +82,7 @@ class KakaoBusinessController extends Controller
                 $this->sendJsonResponse(['success' => false, 'message' => '기존에 등록 신청 내역이 있습니다. 신청 목록의 상태를 확인해주세요']);
                 return;
             }
-            $url = 'https://wt-api.carrym.com:8445/api/v1/leahue/sender/token?yellowId='.$chananel_name.'&phoneNumber='.$cs_phone_number;
+            $url = 'https://wt-api.carrym.com:8445/api/v1/leahue/sender/token?yellowId='.urlencode($chananel_name).'&phoneNumber='. urlencode($cs_phone_number);
             $method = 'GET';
 
             $headers = [
@@ -103,6 +103,17 @@ class KakaoBusinessController extends Controller
         } catch (Exception $e) {
             error_log($e->getMessage());
             $this->sendJsonResponse(['success' => false, 'message' => '인증요청에 실패했습니다: ' . $e->getMessage()]);
+        }
+    }
+    public function deleteProfile()
+    {
+        try {
+            $profile_id = $_POST['profile_id'];
+            $this->kakaoBusinessModel->deleteProfile($profile_id);
+            $this->sendJsonResponse(['success' => true, 'message' => '발신프로필 삭제 완료되었습니다.']);
+        }catch (Exception $e){
+            error_log($e->getMessage());
+            $this->sendJsonResponse(['success' => false, 'message' => '요청에 실패했습니다: ' . $e->getMessage()]);
         }
     }
     public function requestProfileKey()

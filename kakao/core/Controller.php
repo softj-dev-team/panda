@@ -58,6 +58,18 @@ class Controller {
         $this->data['inc_sms_denie_num'] = $inc_sms_denie_num;
         $this->data['inc_pubyoil_arr'] = $inc_pubyoil_arr;
         $this->data['inc_member_row'] = $this->memberModel->getMemberData($_SESSION['member_coinc_idx']);
+
+
+        if($this->data['inc_member_row']['member_gubun']!='4'){
+
+            echo '<script type="text/javascript">';
+            echo 'alert(" * 알림톡 기능은 사업자 회원만 이용 가능합니다..");';
+            echo 'window.location.href = "/";'; // 로그인 페이지로 리다이렉트
+            echo '</script>';
+            exit(); // 이후 코드 실행 방지
+        }
+
+
         require_once $_SERVER["DOCUMENT_ROOT"] . '/kakao/models/CRUD.php';
         $crud = new CRUD('board_content');
 
@@ -157,8 +169,8 @@ class Controller {
                 // GET or other methods
                 if ($data) {
                     $url .= '?' . http_build_query($data);
-                    curl_setopt($curl, CURLOPT_URL, $url);
                 }
+                curl_setopt($curl, CURLOPT_URL, $url);
                 break;
         }
 

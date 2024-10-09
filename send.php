@@ -91,16 +91,10 @@ $totalpage = ceil($iTotalSubCnt / $pageScale);
 ?>
 
 <body>
-
-    <!--header-->
-    <div><? include "./common/header.php"; ?></div>
-
-    <!--content-->
-
-
-    <section class="sub sub_min">
-        <div class="sub_title">
-            <h2>전송결과</h2>
+<div id="sendListPopupLayer" class="popup-layer" style="display:none;">
+    <div class="popup-content p75">
+        <div class="poptitle flex-just-end">
+            <button type="button" onclick="closeAllPopup()" style="border: none; background: none"><img src="/images/popup/close.svg"></button>
         </div>
         <div class="flex-just-start">
             <div class="sendContentBox">
@@ -122,13 +116,42 @@ $totalpage = ceil($iTotalSubCnt / $pageScale);
                     <tr><th>선차감금액</th><td ><span class="rowDataUsePoint">00.00</span> 원</td></tr>
                     <tr><th>실사용금액</th><td ><span class="rowDataUseSumPoint">00.00</span> 원</td></tr>
                     <tr><th rowspan="4">발송내역</th><td>발송 시도건수 <span class="rowDataTotSendCnt">0</span> 건</td></tr>
-                    <tr><td>발송 성공 <span class="rowDataSuccesSendCnt">0</span> 건</td></tr>
-                    <tr><td>발송 실패 <span class="rowDataFaileTotSendCnt">0</span> 건</td></tr>
+                    <tr><td class="flex-between w320"><span>발송 성공 <span class="rowDataSuccesSendCnt">0</span> 건 </span><button type="button" class="btn-c-3 btn-t-3" id="downloadExcelSucc" data-id="">엑셀다운로드</button></td> </tr>
+                    <tr><td class="flex-between w320"><span>발송 실패 <span class="rowDataFaileTotSendCnt">0</span> 건 </span><button type="button" class="btn-c-3 btn-t-3" id="downloadExcelFail" data-id="">엑셀다운로드</button></td></tr>
                     <tr><td>발송 대기 <span class="rowDataMoreTotSendCnt">0</span> 건</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
+        <div class="flex-just-start">
+
+            <select id="filter-field" class="fm-sel-2">
+                <option value="cell_send">발신번호</option>
+                <option value="cell">수신번호</option>
+                <option value="isp">통신사</option>
+                <option value="status">결과코드</option>
+            </select>
+            <input id="filter-value" type="text" class="fm-ipt-2" placeholder="검색조건">
+            <button type="button" id="searchBt" class="btn-c-3 btn-t-ipt">검색</button>
+        </div>
+
+
+        <div id="data-table" style="margin-top: 10px"></div>
+
+
+    </div>
+</div>
+    <!--header-->
+    <div><? include "./common/header.php"; ?></div>
+
+    <!--content-->
+
+
+    <section class="sub sub_min">
+        <div class="sub_title">
+            <h2>전송결과</h2>
+        </div>
+
 
     </section>
     <section class="sub sub_min">

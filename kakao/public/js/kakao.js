@@ -61,6 +61,9 @@ var specialChars = [
     "♂", "ꋭ", "ꋯ", "ާ", "ި", "ީ", "ު", "ޫ", "ެ", "ޭ", "ޮ", "ᚗ", "ᚘ", "፡", "።", "፣", "፤", "፥", "፦", "፧", "‘", "’", "‚", "‛", "“", "”", "„",
     "‥", "…", "‧", "′", "″", "〝", "〞", "〟"
 ];
+function closeAllPopup() {
+    $('.popup-layer').hide();
+}
 function contentReplace(){
     var currentContent = $('#highlightTitle').val();
     var content = currentContent.replace(/\n/g, '<br>');
@@ -507,7 +510,7 @@ function loadProfiles(page = 1) {
                             <td>${profile.industry}</td>
                             <td>${profile.cs_phone_number}</td>                           
                             <td>${statusMapping[profile.status]}</td>
-                            
+                            <td><button class="fa fa-trash-can tooltip" id="deleteProfile" data-id="${profile.id}"><span class="tooltiptext">삭제</span></button></td>
                         </tr>`;
                     profilesTable.append(row);
                 });
@@ -589,6 +592,7 @@ function loadTemplateDetails(templateId) {
         success: function(response) {
             if (response.success) {
                 var template = response.template;
+                console.log(template)
                 var fcallback = template.cs_phone_number;
                 var templateTitle = template.apiRespone.convContent;
                 var templateContent = template.apiRespone.templateContent;
@@ -1435,8 +1439,8 @@ $(document).ready(function() {
             return;
         }
 
-        if (!/^@\w+/.test(chananelName)) {
-            alert('채널 이름은 @로 시작해야 합니다.');
+        if (!/^@[a-zA-Z가-힣0-9_]+$/.test(chananelName)) {
+            alert('채널 이름은 @로 시작해야 하며, 영문, 한글, 숫자, 밑줄만 포함할 수 있습니다.');
             $('#chananel_name').focus();
             return;
         }
@@ -1469,8 +1473,8 @@ $(document).ready(function() {
             return;
         }
 
-        if (!/^@\w+/.test(chananelName)) {
-            alert('채널 이름은 @로 시작해야 합니다.');
+        if (!/^@[a-zA-Z가-힣0-9_]+$/.test(chananelName)) {
+            alert('채널 이름은 @로 시작해야 하며, 영문, 한글, 숫자, 밑줄만 포함할 수 있습니다.');
             $('#chananel_name').focus();
             return;
         }
@@ -2005,6 +2009,14 @@ $(document).ready(function() {
             alert('유효하지 않은 이미지 파일입니다.');
         };
     });
+    $(document).on('click','#downloadExcelSucc',function() {
+        var idx =$(this).attr('data-id');
+        window.location.href=`/kakao/index.php?route=excelDownloadKaKao&idx=${idx}&downloadSuccess=false`
+    });
+    $(document).on('click','#downloadExcelFail',function() {
+        var idx =$(this).attr('data-id');
+        window.location.href=`/kakao/index.php?route=excelDownloadKaKao&idx=${idx}&downloadSuccess=true`
+    });
     $(document).on('click', '.sendResultDataRow', function() {
 
         try {
@@ -2019,6 +2031,8 @@ $(document).ready(function() {
             var rowDataSuccesSendCnt =      $('.rowDataSuccesSendCnt')
             var rowDataFaileTotSendCnt =    $('.rowDataFaileTotSendCnt')
             var rowDataMoreTotSendCnt =     $('.rowDataMoreTotSendCnt')
+            var downloadExcelSucc =         $('#downloadExcelSucc')
+            var downloadExcelFail =         $('#downloadExcelFail')
             showLoadingSpinner();
             $.ajax({
                 url: "/kakao/index.php?route=sendDetail",
@@ -2030,7 +2044,11 @@ $(document).ready(function() {
                 dataType: "json",
                 success: function(response) {
                     hideLoadingSpinner();
-                    console.log(response.data[0]);
+
+                    var list = response.data['list']
+                    console.log(response.data);
+                    downloadExcelSucc.attr('data-id',response.data[0].fetc7)
+                    downloadExcelFail.attr('data-id',response.data[0].fetc7)
                     rowDataSmsType.text('알림톡')
                     rowDataUseSumPoint.text(response.data[0].use_point);
                     rowDataTotSendCnt.text(Number(response.data[0].tot_cnt).toLocaleString())
@@ -2038,6 +2056,32 @@ $(document).ready(function() {
                     rowDataFaileTotSendCnt.text(Number(response.data[0].receive_cnt_fail).toLocaleString())
                     rowDataMoreTotSendCnt.text(Number(response.data[0].receive_cnt_tot - response.data[0].receive_cnt_suc-response.data[0].receive_cnt_fail).toLocaleString())
                     loadTemplateDetails(response.data[0].template_id)
+                    $('#sendListPopupLayer').show();
+                    var popupTable = new Tabulator("#data-table", {
+                        data: list, // table.getData()로 가져온 데이터를 사용
+                        layout: "fitColumns",
+                        pagination: "true",  // 로컬 페이징
+                        paginationSize: 10,   // 20건씩 표시
+                        selectable: true,  // 다중 선택 가능
+                        selectableRangeMode: "drag",  // 마우스 드래그로 범위 선택
+                        selectablePersistence: false,  // 페이징 변경 후에도 선택 상태 유지
+                        selectableRollingSelection:true,
+                        selectableCheck: function(row) {
+                            // 모든 행을 선택 가능하게 설정
+                            return true;
+                        },
+                        columns: [
+                            { title: "전송일시", field: "finsertdate", sorter: "string" },
+                            { title: "발신번호", field: "fcallback", sorter: "string" },
+                            { title: "수신번호", field: "fdestine", sorter: "string" },
+                            { title: "결과코드", field: "fetc3", sorter: "string" },
+                            { title: "결과메세지", field: "fetc4", sorter: "string" },
+
+                        ],
+                    });
+                    $(document).on('click','#searchBt',function (){
+                        popupTable.setFilter(filter,'like', valueEl.value);
+                    })
                 },
                 error: function(xhr, status, error) {
                     hideLoadingSpinner();
@@ -2055,5 +2099,32 @@ $(document).ready(function() {
             alert("문제가 발생했습니다: " + e.message);
         }
     });
-
+    $(document).on('click','#deleteProfile',function (){
+        var profile_id = $(this).attr('data-id');
+        console.log(profile_id)
+        $.ajax({
+            url: '/kakao/index.php?route=deleteProfile',
+            type: 'POST',
+            data: {
+                profile_id:profile_id
+            },
+            // processData: false,
+            // contentType: false,
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    alert(response.message);
+                    loadProfiles()
+                } else {
+                    alert("오류: " + response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                alert("실패했습니다. 다시 시도해 주세요.");
+                console.error('Error: ' + error);
+                console.error('Status: ' + status);
+                console.dir(xhr);
+            }
+        });
+    })
 });

@@ -90,6 +90,17 @@ class KakaoBusinessModel
             throw new Exception('Failed to retrieve profiles: ' . $e->getMessage());
         }
     }
+    public function deleteProfile($profile_id)
+    {
+        try {
+            $stmt = $this->conn->prepare("DELETE FROM kakao_business WHERE id = :id ");
+            $stmt->bindParam(':id', $profile_id, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            throw new Exception('Failed to delete profiles: ' . $e->getMessage());
+        }
+    }
     public function getProfilesForMaster($offset, $limit)
     {
         try {

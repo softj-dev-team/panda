@@ -4,122 +4,140 @@
 
 <!--header-->
 <div><?php require_once $_SERVER["DOCUMENT_ROOT"] ."/common/header.php"; ?></div>
+<div id="sendListPopupLayer" class="popup-layer" style="display:none;">
+    <div class="popup-content p75">
+        <div class="poptitle flex-just-end">
+            <button type="button" onclick="closeAllPopup()" style="border: none; background: none"><img src="/images/popup/close.svg"></button>
+        </div>
+        <div class="flex-just-start">
+            <div class="sendContentBox">
+                <h3>알림톡 내용</h3>
+                <div id="preview">
 
+                    <div id="previewChannelName">채널명</div>
+                    <div id="previewTemplate">
+                        <div class="highlight-container">
+                            <div class="highlight-header">
+                                <span>알림톡 도착</span>
+                                <div class="jss1382">kakako</div>
+                            </div>
+                            <div class="highlight-body">
+                                <div class="image-wrapper">
+                                    <img id="uploadedImage" src="" alt="Uploaded Logo">
+                                </div>
+                                <div class="template-header blind">템플릿 헤더</div>
+                                <div class="highlight-box blind">
+                                    <div>
+                                        <div class="highlight-title-view blind" >하이라이트 타이틀</div>
+                                        <div class="highlight-description-view blind">하이라이트 설명</div>
+                                    </div>
+                                    <div class="highlight-thumbnail">
+                                        <img id="HighlightThumbnailImg" src="">
+                                    </div>
+                                </div>
+                                <div class="item-list-box blind">
+
+                                </div>
+                                <div id="previewStrongSubTitle" class="previewStrongSubTitle"></div>
+                                <div id="previewStrongTitle" class="previewStrongTitle"></div>
+                                <div id="previewHighlightTitle"></div>
+                                <div id="previewHighlightSubtitle"></div>
+                                <div id="previewChButtonList">
+
+                                </div>
+                                <div id="previeButtonList"></div>
+                            </div>
+                        </div>
+                        <div class="quickLinkList"></div>
+                    </div>
+                </div>
+                <p class="preview-note">미리보기는 실제 단말기와 차이가 있을 수 있습니다.</p>
+            </div>
+            <div class="sendContentDetailBox">
+                <table>
+                    <thead>
+
+                    </thead>
+                    <tbody>
+                    <tr><th>발송방법</th><td class="rowDataSmsType"></td></tr>
+                    <tr><th>실사용금액</th><td ><span class="rowDataUseSumPoint">00.00</span> 원</td></tr>
+                    <tr><th rowspan="4">발송내역</th><td>발송 시도건수 <span class="rowDataTotSendCnt">0</span> 건</td></tr>
+                    <tr><td class="flex-between w320"><span>발송 성공 <span class="rowDataSuccesSendCnt">0</span> 건 </span><button type="button" class="btn-c-3 btn-t-3" id="downloadExcelSucc" data-id="">엑셀다운로드</button></td> </tr>
+                    <tr><td class="flex-between w320"><span>발송 실패 <span class="rowDataFaileTotSendCnt">0</span> 건 </span><button type="button" class="btn-c-3 btn-t-3" id="downloadExcelFail" data-id="">엑셀다운로드</button></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <div class="flex-just-start">
+            <select id="filter-field" class="fm-sel-2">
+                <option value="fcallback">발신번호</option>
+                <option value="fdestine">수신번호</option>
+                <option value="fetc3">결과코드</option>
+                <option value="fetc4">결과메세지</option>
+            </select>
+            <input id="filter-value" type="text" class="fm-ipt-2" placeholder="검색조건">
+            <button type="button" id="searchBt" class="btn-c-3 btn-t-ipt">검색</button>
+        </div>
+
+
+        <div id="data-table" style="margin-top: 10px"></div>
+
+
+    </div>
+</div>
 <!--content-->
+
 <section class="sub sub_min">
     <div class="sub_title">
         <h2>알림톡 전송결과</h2>
     </div>
-    <div class="flex-just-start">
-        <div class="sendContentBox p35">
-            <h3>알림톡 내용</h3>
-            <div id="preview">
+    <div class="tab_btn_are">
+        <div class="btn ">
 
-                <div id="previewChannelName">채널명</div>
-                <div id="previewTemplate">
-                    <div class="highlight-container">
-                        <div class="highlight-header">
-                            <span>알림톡 도착</span>
-                            <div class="jss1382">kakako</div>
-                        </div>
-                        <div class="highlight-body">
-                            <div class="image-wrapper">
-                                <img id="uploadedImage" src="" alt="Uploaded Logo">
-                            </div>
-                            <div class="template-header blind">템플릿 헤더</div>
-                            <div class="highlight-box blind">
-                                <div>
-                                    <div class="highlight-title-view blind" >하이라이트 타이틀</div>
-                                    <div class="highlight-description-view blind">하이라이트 설명</div>
-                                </div>
-                                <div class="highlight-thumbnail">
-                                    <img id="HighlightThumbnailImg" src="">
-                                </div>
-                            </div>
-                            <div class="item-list-box blind">
-
-                            </div>
-                            <div id="previewStrongSubTitle" class="previewStrongSubTitle"></div>
-                            <div id="previewStrongTitle" class="previewStrongTitle"></div>
-                            <div id="previewHighlightTitle"></div>
-                            <div id="previewHighlightSubtitle"></div>
-                            <div id="previewChButtonList">
-
-                            </div>
-                            <div id="previeButtonList"></div>
-                        </div>
-                    </div>
-                    <div class="quickLinkList"></div>
-                </div>
-            </div>
-            <p class="preview-note">미리보기는 실제 단말기와 차이가 있을 수 있습니다.</p>
+            <input type="text" style="width:120px;" class="datepicker" id="s_date" name="s_date" value="">
+            <span> ~ </span>
+            <input type="text" style="width:120px;" class="datepicker" id="e_date" name="e_date" value="">
+            <a href="javascript:loadDataList();" class="blue">조회</a>
         </div>
-        <div class="sendContentDetailBox w100">
-            <table>
-                <thead>
-
-                </thead>
-                <tbody>
-                <tr><th>발송방법</th><td class="rowDataSmsType"></td></tr>
-                <tr><th>실사용금액</th><td ><span class="rowDataUseSumPoint">00.00</span> 원</td></tr>
-                <tr><th rowspan="4">발송내역</th><td>발송 시도건수 <span class="rowDataTotSendCnt">0</span> 건</td></tr>
-                <tr><td>발송 성공 <span class="rowDataSuccesSendCnt">0</span> 건</td></tr>
-                <tr><td>발송 실패 <span class="rowDataFaileTotSendCnt">0</span> 건</td></tr>
-                </tbody>
-            </table>
-            <div class="tab_btn_are">
-                <div class="btn ">
-
-                    <input type="text" style="width:120px;" class="datepicker" id="s_date" name="s_date" value="">
-                    <span> ~ </span>
-                    <input type="text" style="width:120px;" class="datepicker" id="e_date" name="e_date" value="">
-                    <a href="javascript:loadDataList();" class="blue">조회</a>
-                </div>
-                <div class="input_tab">
-                    <input type="text" name="keyword" id="keyword" >
-                    <a href="#" id="goSearch">
-                        <img src="/images/search.png">
-                    </a>
-                </div>
-
-            </div>
-
-            <form method="post" name="frm" id="frm" target="_fra">
-
-                <div class="tlb center border">
-                    <table id="listTable">
-                        <colgroup>
-
-                            <col style="width:20%;">
-                            <col style="width:25%">
-                            <col style="width:30%">
-                            <col style="width:20%">
-
-                        </colgroup>
-                        <thead>
-                        <tr>
-
-                            <th>등록일시</th>
-                            <th>구분</th>
-                            <th>발신 번호</th>
-                            <th>총건수</th>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-
-                        </tbody>
-                    </table>
-                    <div id="pagination" class="pagenation"></div>
-                </div>
-            </form>
+        <div class="input_tab">
+            <input type="text" name="keyword" id="keyword" >
+            <a href="#" id="goSearch">
+                <img src="/images/search.png">
+            </a>
         </div>
+
     </div>
 
-</section>
-<section class="sub sub_min">
+    <form method="post" name="frm" id="frm" target="_fra">
 
+        <div class="tlb center border">
+            <table id="listTable">
+                <colgroup>
 
+                    <col style="width:20%;">
+                    <col style="width:25%">
+                    <col style="width:30%">
+                    <col style="width:20%">
+
+                </colgroup>
+                <thead>
+                <tr>
+
+                    <th>등록일시</th>
+                    <th>구분</th>
+                    <th>발신 번호</th>
+                    <th>총건수</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                </tbody>
+            </table>
+            <div id="pagination" class="pagenation"></div>
+        </div>
+    </form>
 
 </section>
 

@@ -24,11 +24,15 @@ $query_wdate = "SELECT  a.wdate,
                     LEFT JOIN member_info_sendinfo mi ON mi.member_idx = a.member_idx
                           WHERE a.idx = $idx";
 $result_wdate = mysqli_query($gconnet, $query_wdate);
-
+$query="SELECT a.* FROM sms_save_cell a where a.save_idx = $idx";
+$result = mysqli_query($gconnet, $query);
+$row_data = mysqli_fetch_assoc($result);
+$response['data']['list'] = $row_data;
 if ($result_wdate && mysqli_num_rows($result_wdate) > 0) {
 
     $row_wdate = mysqli_fetch_assoc($result_wdate);
-    $response['data'] = $row_wdate;
+
+    $response['data'] = array_merge($response['data'],$row_wdate);
     $wdate = $row_wdate['wdate'];
     $mb_short_fee = $row_wdate['mb_short_fee'];
     $mb_long_fee = $row_wdate['mb_long_fee'];
@@ -52,7 +56,7 @@ if ($module_type === 'LG') {
             SUM(CASE WHEN frsltstat = '06' THEN 1 ELSE 0 END) AS receive_cnt_suc,
             SUM(CASE WHEN frsltstat != '06' THEN 1 ELSE 0 END) AS receive_cnt_fail,
             (SUM(CASE WHEN frsltstat = '06' THEN 1 ELSE 0 END) * $mb_short_fee) AS success_sms_cost,
-            (SUM(CASE WHEN frsltstat = '06' THEN 1 ELSE 0 END) * $mb_short_fee) AS success_lms_cost,
+            (SUM(CASE WHEN frsltstat = '06' THEN 1 ELSE 0 END) * $mb_long_fee) AS success_lms_cost,
             (SUM(CASE WHEN frsltstat = '06' THEN 1 ELSE 0 END) * $mb_img_fee) AS success_mms_cost,
             (COUNT(*) * $mb_short_fee) as sms_cost,
             (COUNT(*) * $mb_long_fee) as lms_cost,

@@ -1,4 +1,4 @@
-var popupTable;
+
 function hideLoadingSpinner() {
     $('.spinner-background').hide();
     $('.loadingio-spinner-spin-2by998twmg8').hide();
@@ -13,9 +13,17 @@ function formatCost(cost) {
 function closeAllPopup() {
     $('.popup-layer').hide();
 }
+$(document).on('click','#downloadExcelSucc',function() {
+    var idx =$(this).attr('data-id');
+    window.location.href=`/kakao/index.php?route=excelDownload&idx=${idx}&downloadSuccess=false`
+});
+$(document).on('click','#downloadExcelFail',function() {
+    var idx =$(this).attr('data-id');
+    window.location.href=`/kakao/index.php?route=excelDownload&idx=${idx}&downloadSuccess=true`
+});
 $(document).ready(function() {
     $('.sendResultDataRow').on('click', function() {
-        console.log(11);
+
 
         try {
             var idx = $(this).data('id');
@@ -34,9 +42,13 @@ $(document).ready(function() {
             var rowDataFaileTotSendCnt =    $('.rowDataFaileTotSendCnt')
             var rowDataMoreTotSendCnt =     $('.rowDataMoreTotSendCnt')
             var sendContentBoxBodyImg =     $('.sendContentBoxBody img')
+            var downloadExcelSucc =         $('#downloadExcelSucc')
+            var downloadExcelFail =         $('#downloadExcelFail')
             showLoadingSpinner();
+
+
             $.ajax({
-                url: "./send_detail.php",
+                url: '/kakao/index.php?route=getSendListDetail',
                 type: "GET",
                 data: {
                     idx: idx,
@@ -47,30 +59,33 @@ $(document).ready(function() {
                     hideLoadingSpinner();
                     // 서버에서 데이터를 정상적으로 받았을 때
                     console.log(response.data);
-                    var contentWithLineBreaks = response.data.sms_content.replace(/\n/g, '<br>');
+                    var smsSave =response.data.smsSave[0]
+                    var sum =response.data.sum[0]
+                    var contentWithLineBreaks =smsSave.sms_content.replace(/\n/g, '<br>');
                     sendContentBoxBodyp.html(contentWithLineBreaks);
+                    downloadExcelSucc.attr('data-id',smsSave.save_idx)
+                    downloadExcelFail.attr('data-id',smsSave.save_idx)
+                    byteCount.text(smsSave.sms_content_length + ' byte');
+                    rowDataSmsType.text(smsSave.sms_type)
+                    rowDataTitle.text(smsSave.sms_title)
 
-                    byteCount.text(response.data.sms_content_length + ' byte');
-                    rowDataSmsType.text(response.data.sms_type)
-                    rowDataTitle.text(response.data.fsubject)
-
-                    if (response.data.sms_type === 'sms') {
-                        rowDataUsePoint.text(formatCost(response.data.sms_cost));
-                    } else if (response.data.sms_type === 'lms') {
-                        rowDataUsePoint.text(formatCost(response.data.lms_cost));
-                    } else if (response.data.sms_type=== 'mms') {
-                        rowDataUsePoint.text(formatCost(response.data.mms_cost));
+                    if (smsSave.sms_type === 'sms') {
+                        rowDataUsePoint.text(formatCost(sum.sms_cost));
+                    } else if (smsSave.sms_type === 'lms') {
+                        rowDataUsePoint.text(formatCost(sum.lms_cost));
+                    } else if (smsSave.sms_type=== 'mms') {
+                        rowDataUsePoint.text(formatCost(sum.mms_cost));
                     }
-                    if (response.data.sms_type === 'sms') {
-                        rowDataUseSumPoint.text(formatCost(response.data.success_sms_cost));
-                    } else if (response.data.sms_type=== 'lms') {
-                        rowDataUseSumPoint.text(formatCost(response.data.success_lms_cost));
-                    } else if (response.data.sms_type === 'mms') {
-                        rowDataUseSumPoint.text(formatCost(response.data.success_mms_cost));
+                    if (smsSave.sms_type === 'sms') {
+                        rowDataUseSumPoint.text(formatCost(sum.success_sms_cost));
+                    } else if (smsSave.sms_type=== 'lms') {
+                        rowDataUseSumPoint.text(formatCost(sum.success_lms_cost));
+                    } else if (smsSave.sms_type === 'mms') {
+                        rowDataUseSumPoint.text(formatCost(sum.success_mms_cost));
                     }
-                    if(response.data.file_chg){
+                    if(smsSave.file_chg){
                         sendContentBoxBodyImg.show();
-                        sendContentBoxBodyImg.attr('src', '/upload_file/sms/img_thumb/'+response.data.file_chg);
+                        sendContentBoxBodyImg.attr('src', '/upload_file/sms/img_thumb/'+smsSave.file_chg);
                         // 이미지 로딩 실패 시 404 처리
                         sendContentBoxBodyImg.on('error', function() {
                             // 이미지 로딩 실패 시, 이미지 숨기기 또는 대체 이미지 표시
@@ -82,10 +97,37 @@ $(document).ready(function() {
                         sendContentBoxBodyImg.hide();
                     }
 
-                    rowDataTotSendCnt.text(Number(response.data.receive_cnt_tot).toLocaleString())
-                    rowDataSuccesSendCnt.text(Number(response.data.receive_cnt_suc).toLocaleString())
-                    rowDataFaileTotSendCnt.text(Number(response.data.receive_cnt_fail).toLocaleString())
-                    rowDataMoreTotSendCnt.text(Number(response.data.receive_cnt_tot - response.data.receive_cnt_suc-response.data.receive_cnt_fail).toLocaleString())
+                    rowDataTotSendCnt.text(Number(smsSave.tot_cnt).toLocaleString())
+                    rowDataSuccesSendCnt.text(Number(sum.receive_cnt_suc).toLocaleString())
+                    rowDataFaileTotSendCnt.text(Number(sum.receive_cnt_fail).toLocaleString())
+                    rowDataMoreTotSendCnt.text(Number(sum.receive_cnt_tot - sum.receive_cnt_suc-sum.receive_cnt_fail).toLocaleString())
+                    $('#sendListPopupLayer').show()
+
+                    var popupTable = new Tabulator("#data-table", {
+                        data: response.data.saveCall, // table.getData()로 가져온 데이터를 사용
+                        layout: "fitColumns",
+                        pagination: "true",  // 로컬 페이징
+                        paginationSize: 10,   // 20건씩 표시
+                        selectable: true,  // 다중 선택 가능
+                        selectableRangeMode: "drag",  // 마우스 드래그로 범위 선택
+                        selectablePersistence: false,  // 페이징 변경 후에도 선택 상태 유지
+                        selectableRollingSelection:true,
+                        selectableCheck: function(row) {
+                            // 모든 행을 선택 가능하게 설정
+                            return true;
+                        },
+                        columns: [
+                            { title: "전송일시", field: "work_date", sorter: "string" },
+                            { title: "발신번호", field: "cell_send", sorter: "string" },
+                            { title: "수신번호", field: "cell", sorter: "string" },
+                            { title: "통신사", field: "isp", sorter: "string" },
+                            { title: "결과코드", field: "status", sorter: "string" },
+
+                        ],
+                    });
+                    $(document).on('click','#searchBt',function (){
+                        popupTable.setFilter(filter,'like', valueEl.value);
+                    })
                 },
                 error: function(xhr, status, error) {
                     hideLoadingSpinner();

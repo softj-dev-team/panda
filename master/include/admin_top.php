@@ -8,6 +8,7 @@
 				<span class="info">관리자</span>
 			</div>
 			<ul class="btn_wrap clearfix">
+                <li class="btn_refresh"><a href="/master/sms/sms_send_list_refund_call.php" >전체환불</a></li>
 				<li class="homepage"><a href="/" target="_blank">HOMEPAGE</a></li>
 				<li class="logout"><a href="../login/logout.php">LOG-OUT</a></li>
 			</ul>

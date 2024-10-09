@@ -13,6 +13,18 @@ $route = isset($_GET['route']) ? $_GET['route'] : '';
 
 
 switch ($route) {
+    case 'excelDownloadKaKao':
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $controller = new UserAlimTalkController();
+            $controller->excelDownloadKaKao();
+        }
+        break;
+    case 'excelDownload':
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $controller = new UserAlimTalkController();
+            $controller->excelDownload();
+        }
+        break;
     case 'sendDetail':
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $controller = new UserAlimTalkController();
@@ -37,6 +49,12 @@ switch ($route) {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $controller = new UserAlimTalkController();
             $controller->getUserAlimTalkSendList();
+        }
+        break;
+    case 'getSendListDetail':
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $controller = new UserAlimTalkController();
+            $controller->getSendListDetail();
         }
         break;
     case 'sendMessage':
@@ -117,6 +135,12 @@ switch ($route) {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $controller = new KakaoBusinessController();
             $controller->getKakaoProfileCategory();
+        }
+        break;
+    case 'deleteProfile':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $controller = new KakaoBusinessController();
+            $controller->deleteProfile();
         }
         break;
     case 'requestProfileKey':
