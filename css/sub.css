@@ -334,7 +334,7 @@ ul.tabs li.current{
 .tab_sub a:hover{background: #FFBA14; color: #000; transition-duration: .5s}
 
 .sample{margin-top: 30px;display: flex; flex-wrap: wrap}
-.sample .sample_box{width: calc(25% - 10px); margin:5px; border: 1px solid #dfdfdf; padding: 15px; border-radius: 15px}
+.sample .sample_box{width: calc(25% - 10px); margin:5px; border: 1px solid #dfdfdf; padding: 35px 15px 15px 15px; border-radius: 15px}
 .sample .sample_box.imeif{padding: 0}
 .sample .sample_box.imeif img{width: 100%; display: block}
 .sample .sample_box p{height: 150px; font-size: 14px; line-height: 22px; overflow-y: auto}

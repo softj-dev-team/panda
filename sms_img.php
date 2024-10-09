@@ -168,7 +168,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
 
                         </span>
                         <a href="javascript:alert('무료 수신거부 서비스는 필수입니다.');">080수신거부</a>
-                        <a href="#layer2" class="btn-example">메세지 보관함</a>
+                        <a href="#layer2" class="btn-example" id="btnSaveMessageCallList">메세지 보관함</a>
                         <a href="javascript:go_msg_save();">문자내용 저장</a>
                     </div>
                 </div>
@@ -747,6 +747,9 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
 
             sms_save_list();
             sms_sample_list();
+            $('#btnSaveMessageCallList').on('click',function (){
+                sms_save_list();
+            })
         });
 
         var table = new Tabulator("#excel_copy", {
@@ -834,9 +837,33 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
         }
 
         function go_msg_save() {
-            $("#transmit_type").val("save");
-            sms_frm.submit();
-            //alert("문자내용 저장 되었습니다.");
+            var form = document.getElementById('sms_frm');
+            var formData = new FormData(form);
+            var check = chkFrm('sms_frm');
+            if (check) {
+                var result = confirm("문자내용을 저장 합니다.하겠습니까?" );
+                if (result) {
+                    formData.append('transmit_type', 'save');
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', form.action, true);
+                    xhr.onload = function () {
+                        if (xhr.status === 200) {
+                            var response = JSON.parse(xhr.responseText);
+                            if (response.status === 'error') {
+                                // 예외 처리 메시지 표시
+                                alert(response.message);
+                            } else if (response.status === 'success') {
+                                alert(response.message);
+                            }
+                        } else {
+                            alert('서버와의 통신 중 오류가 발생했습니다.');
+                        }
+                    };
+                    xhr.send(formData);
+                }else {
+                    return;
+                }
+            }
         }
         // 팝업을 표시하는 함수
         function showPopup() {

@@ -28,8 +28,6 @@ $filtering_list = mysqli_fetch_array($result_filter);
 $filteringArray = explode(",", $filtering_list['filtering_text']);
 
 ?>
-<link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css" rel="stylesheet">
-<script src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
 
 <body>
 
@@ -178,7 +176,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
 
                         </span>
                         <a href="javascript:alert('무료 수신거부 서비스는 필수입니다.');">080수신거부</a>
-                        <a href="#layer2" class="btn-example">메세지 보관함</a>
+                        <a href="#layer2" class="btn-example" id="btnSaveMessageCallList">메세지 보관함</a>
                         <a href="javascript:go_msg_save();">문자내용 저장</a>
                     </div>
                 </div>
@@ -744,7 +742,9 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
 
             sms_save_list();
             sms_sample_list();
-
+            $('#btnSaveMessageCallList').on('click',function (){
+                sms_save_list();
+            })
         });
 
         var table = new Tabulator("#excel_copy", {
@@ -836,8 +836,33 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
         }
 
         function go_msg_save() {
-            $("#transmit_type").val("save");
-            sms_frm.submit();
+            var form = document.getElementById('sms_frm');
+            var formData = new FormData(form);
+            var check = chkFrm('sms_frm');
+            if (check) {
+                var result = confirm("문자내용을 저장 합니다.하겠습니까?" );
+                if (result) {
+                    formData.append('transmit_type', 'save');
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', form.action, true);
+                    xhr.onload = function () {
+                        if (xhr.status === 200) {
+                            var response = JSON.parse(xhr.responseText);
+                            if (response.status === 'error') {
+                                // 예외 처리 메시지 표시
+                                alert(response.message);
+                            } else if (response.status === 'success') {
+                                alert(response.message);
+                            }
+                        } else {
+                            alert('서버와의 통신 중 오류가 발생했습니다.');
+                        }
+                    };
+                    xhr.send(formData);
+                }else {
+                    return;
+                }
+            }
         }
         // 팝업을 표시하는 함수
         function showPopup() {
@@ -872,7 +897,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                     msgTypeName = '단문'
                 }
                 if (check && validate()) {
-                    var result = confirm("메세지를 ["+confirmMessage+"] 발송합니다.\n"+tableListCnt+" 건을 ["+confirmMessage+"] 발송 하겠습니다까?" );
+                    var result = confirm("메세지를 ["+confirmMessage+"] 발송합니다.\n"+tableListCnt+" 건을 ["+confirmMessage+"] 발송 하겠습니까?" );
                     if (result) {
                         showLoadingSpinner();
                         var dupDelCnt = deleteDuplicateTable()
@@ -1045,7 +1070,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                 },
                 success: function(data) {
                     console.log(data);
-                    $("#sms").html(data);
+                    $("#sms").val(data);
                     sms_text_count();
                     //$("#layer2").hide();
                 }
@@ -1399,73 +1424,99 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
         // 엑셀 불러오기
         $("#excel_file").on('change', function() {
             showLoadingSpinner();
-            $('#cell_receive_list').html('');  // 기존 리스트 초기화
-            $('#cell_receive_cnt').text('0');  // 카운트 초기화
+            $('#cell_receive_list').html('');
+            $('#cell_receive_cnt').text('0');
             let ext = $("#excel_file").val().split(".").pop().toLowerCase();
 
             // 파일 확장자 체크
             if ($.inArray(ext, ["xls", "xlsx"]) == -1) {
                 alert("엑셀 파일만 첨부 가능합니다.");
-                $("#excel_file").val("");  // 파일 선택 초기화
-                hideLoadingSpinner();  // 스피너 숨김
+                $("#excel_file").val("");
+                hideLoadingSpinner();
                 return false;
             } else {
-                readExcel(async function(result) {
+                readExcel(function(result) {
                     let listCount = 0;
-                    let newDataList = [];  // 새로운 데이터를 한꺼번에 저장할 배열
-                    let existingNumbers = new Set();  // 중복 체크용 Set
+                    let newDataList = [];
+                    let existingNumbers = new Set();
 
                     // 타이틀 체크
                     if (Object.keys(result[0]).includes('HP')) {
                         if (result.length > 300000) {
                             alert('최대 300,000개까지 등록할 수 있습니다.');
-                            hideLoadingSpinner();  // 스피너 숨김
+                            hideLoadingSpinner();
                             return;
                         }
 
-                        // 엑셀 데이터를 처리
-                        result.forEach(item => {
-                            let newData = {
-                                name: item.NAME,
-                                number: item.HP,
-                                key: "excelFileAdd"
-                            };
+                        // 데이터 청크 처리 함수
+                        function processDataInChunks(data, processChunk, onComplete) {
+                            let index = 0;
+                            let chunkSize = 1000; // 청크 크기 조절
 
-                            // 중복 체크
-                            if (!existingNumbers.has(newData.number)) {
-                                newDataList.push(newData);  // 중복이 아니면 리스트에 추가
-                                existingNumbers.add(newData.number);  // 중복 방지를 위해 Set에 추가
-                                listCount++;
+                            function nextChunk() {
+                                if (index < data.length) {
+                                    let end = Math.min(index + chunkSize, data.length);
+                                    let chunk = data.slice(index, end);
+                                    processChunk(chunk);
+                                    index = end;
+                                    setTimeout(nextChunk, 0); // 다음 청크 스케줄링
+                                } else {
+                                    onComplete();
+                                }
                             }
-                        });
-
-                        // 테이블에 데이터를 한꺼번에 추가 (DOM 조작 최소화)
-                        if (newDataList.length > 0) {
-                            table.addData(newDataList, true);
+                            nextChunk();
                         }
 
-                        // 카운트 업데이트
-                        let tableList = table.getData();
-                        let count = tableList.filter(function(item) {
-                            return item.key === 'excelFileAdd';
-                        }).length;
+                        // 청크 처리 함수
+                        function processChunk(chunk) {
+                            chunk.forEach(item => {
+                                let newData = {
+                                    name: item.NAME,
+                                    number: item.HP,
+                                    key: "excelFileAdd"
+                                };
 
-                        $('#excelFileAdd').text(count);
-                        $('#excelFileAdd').parent().show();
-                        $('#cell_receive_cnt').text(tableList.length);
+                                // 중복 체크
+                                if (!existingNumbers.has(newData.number)) {
+                                    newDataList.push(newData);
+                                    existingNumbers.add(newData.number);
+                                    listCount++;
+                                }
+                            });
+                        }
 
-                        hideLoadingSpinner();  // 작업 완료 후 스피너 숨김
+                        // 완료 후 호출 함수
+                        function onComplete() {
+                            // 테이블에 데이터 추가
+                            if (newDataList.length > 0) {
+                                table.addData(newDataList, true);
+                            }
+
+                            // 카운트 업데이트
+                            let tableList = table.getData();
+                            let count = tableList.filter(function(item) {
+                                return item.key === 'excelFileAdd';
+                            }).length;
+
+                            $('#excelFileAdd').text(count);
+                            $('#excelFileAdd').parent().show();
+                            $('#cell_receive_cnt').text(tableList.length);
+
+                            hideLoadingSpinner();
+                        }
+
+                        // 청크 단위로 데이터 처리 시작
+                        processDataInChunks(result, processChunk, onComplete);
 
                     } else {
                         alert('엑셀 양식을 참고해주세요.\n헤더는 [이름 = NAME, 번호 = HP]이 되어야합니다.');
-                        hideLoadingSpinner();  // 에러 발생 시에도 스피너 숨김
+                        hideLoadingSpinner();
                     }
                 });
             }
 
-            $(this).val('');  // 파일 선택 초기화
+            $(this).val('');
         });
-        /* 파일붙여넣기 & 엑셀붙여넣기 끝 */
 
         // 전체 선택 버튼
         function allSelectBtn() {
@@ -1641,7 +1692,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                     paginationSize: 20,   // 20건씩 표시
                     selectable: true,  // 다중 선택 가능
                     selectableRangeMode: "drag",  // 마우스 드래그로 범위 선택
-                    selectablePersistence: true,  // 페이징 변경 후에도 선택 상태 유지
+                    selectablePersistence: false,  // 페이징 변경 후에도 선택 상태 유지
                     selectableRollingSelection:true,
                     selectableCheck: function(row) {
                         // 모든 행을 선택 가능하게 설정

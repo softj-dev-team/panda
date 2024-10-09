@@ -98,7 +98,7 @@
 			?>	
 					<div class="sample_box">
 						<input type="checkbox" name="save_idx[]" id="save_idx[]" value="<?=$row["idx"]?>" required="yes"  message="저장된 메세지">
-						<span onclick="set_sms_form('<?=$row['idx']?>');" style="cursor:pointer;"><?=nl2br($row['sms_content'])?></a>
+						<span onclick="set_sms_form('<?=$row['idx']?>');" style="cursor:pointer;white-space: normal;word-wrap: break-word;"><?=nl2br($row['sms_content'])?></a>
 					</div>
 			<?}?>
 			</div>
