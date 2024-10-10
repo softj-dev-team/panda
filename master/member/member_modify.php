@@ -507,9 +507,10 @@ $bbs_code = "member";
 									</td>
 									<th scope="row">사업자</th>
                                     <td>
-                                        <input type="checkbox" name="company_yn" <?=$row['company_yn']?'checked':'' ?>><label>사업자회원</label>
-                                        <label>사업자명 : </label><input type="text" style="width:50%;" name="company_name" id="company_name" value="<?= $row['company_name'] ?>" placeholder="사업자명"/>
-
+                                        <div  class="flex-just-start">
+                                            <input type="checkbox" name="company_yn" <?=$row['company_yn']?'checked':'' ?>><label>사업자회원</label>
+                                            <label for="company_name">사업자명 : </label><input type="text" style="width:220px;display: <?=$row['company_yn']?'flex':'none'?>" name="company_name" id="company_name" value="<?= $row['company_name'] ?>" placeholder="사업자명" />
+                                        </div>
                                     </td>
 								</tr>
 								<tr>

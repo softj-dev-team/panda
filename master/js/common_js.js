@@ -551,7 +551,16 @@ $(document).ready(function() {
 		}
 	})
 
-
+});
+$(document).on('change', 'input[name=company_yn]', function () {
+	if ($(this).is(':checked')) {
+		// 체크되었을 때 실행할 코드
+		$('input[name=company_name]').show()
+		$('label[for=company_name]').show()
+	} else {
+		// 체크 해제되었을 때 실행할 코드
+		$('label[for=company_name]').hide()
+	}
 });
 function showLoadingSpinner() {
 	$('.spinner-background').show();

@@ -538,10 +538,18 @@ a.btn_red{display:inline-block; height:32px; padding:0 20px; font-weight:bold; c
 	display: flex;
 	text-align: center;
 	justify-content: flex-start;
-	margin-bottom: 10px;
+	align-items: center;
+	gap:5px
 }
 .flex-column{
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 10px;
+}
+.flex-c{
+	padding: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap:5px
 }
