@@ -695,10 +695,12 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
         var send_type ='<?=$_REQUEST['send_type']?>';
         var inc_sms_denie_num ='<?= $inc_sms_denie_num ?>';
         window.onload = function() {
-            var textarea = document.getElementById('sms');
-            textarea.value = "(선거운동정보)\n\n불법수집정보신고번호 118\n무료수신거부 "+inc_sms_denie_num;
-            var text_length = getStringLength($("#sms").val());
-            $('#test_cnt').html("<b>" + text_length + "</b>");
+            if(send_type==='elc') {
+                var textarea = document.getElementById('sms');
+                textarea.value = "(선거운동정보)\n\n불법수집정보신고번호 118\n무료수신거부 " + inc_sms_denie_num;
+                var text_length = getStringLength($("#sms").val());
+                $('#test_cnt').html("<b>" + text_length + "</b>");
+            }
         };
 
         document.getElementById('sms').addEventListener('input', function (e) {

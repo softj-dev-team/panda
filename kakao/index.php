@@ -19,12 +19,6 @@ switch ($route) {
             $controller->excelDownloadKaKao();
         }
         break;
-    case 'excelDownloadKaKao':
-        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            $controller = new UserAlimTalkController();
-            $controller->excelDownloadKaKao();
-        }
-        break;
     case 'excelDownload':
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $controller = new UserAlimTalkController();
