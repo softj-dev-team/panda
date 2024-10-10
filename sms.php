@@ -76,6 +76,9 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
             </div>
             <h2>20건씩 발송하기</h2>
             <h4>체크박스를 선택(Shift + 드래그) 하신 후 선택 발송하셔야 합니다.</h4>
+            <div class="flex-just-end">
+                <span><span id="sendDoneCnt">0</span>(발송건수) / <span id="sendTotCnt">0</span>(총 발송예정건수)</span>
+            </div>
             <div id="data-table"></div>
             <div class="flex-c">
                 <button type="button" id="sendSelected" class="btn-t-3 btn-c-3">선택된 항목 발송</button>
@@ -974,7 +977,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                     check=false
                 }
                 if (check && validate()) {
-                    var result = confirm("메세지를 ["+confirmMessage+"] 발송합니다.\n"+tableListCnt+" 건을 ["+confirmMessage+"] 발송 하겠습니다까?" );
+                    var result = confirm("메세지를 ["+confirmMessage+"] 발송합니다.\n"+tableListCnt+" 건을 ["+confirmMessage+"] 발송 하겠습니까?" );
                     if (result) {
                         showLoadingSpinner();
                         var dupDelCnt = deleteDuplicateTable()
@@ -1002,6 +1005,13 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                                         return { id: row.id, status: "01" };  // status만 업데이트
                                     });
                                     popupTable.updateData(updatedData);
+                                    // status가 "01"인 row들만 필터링
+                                    var filterRowData = popupTable.getData();
+                                    var filteredRows = filterRowData.filter(function(row) {
+                                        return row.status === "01";
+                                    });
+
+                                    $('#sendDoneCnt').text(Number(filteredRows.length).toLocaleString());
                                     checkAllStatusAndMoveToNextPage();
                                 }
                             } else {
@@ -1594,7 +1604,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
 
             // 중복된 데이터를 필터링
             let filteredData = data.filter(function(item) {
-                console.log(item.number)
+
                 let cleanedNumber = cleanNumber(item.number);
 
                 // 만약 이미 seenNumbers에 해당 number가 있으면 중복으로 간주
@@ -1667,24 +1677,32 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                 }
             }
         }
-
+        let popupTable;
         // 팝업 열기 함수
         $('#openSendListPopupButton').click(function() {
 
             let tableData = table.getData();
+
             if(tableData.length <= 0){
                 alert("수신번호를 입력해 주세요.");
             }else{
                 $('#sendListPopupLayer').show()
                 // 기본값 00 설정
-                tableData.forEach((item, index) => {
-                    if (!item.id) {
-                        item.id = index + 1;  // index 기반으로 id 필드를 추가
-                    }
-                    if (!item.status) {
-                        item.status = "00";  // 발송여부 기본값 00 설정
-                    }
-                });
+                if(!popupTable) {
+                    tableData.forEach((item, index) => {
+                        if (!item.id) {
+                            item.id = index + 1;  // index 기반으로 id 필드를 추가
+                        }
+                        if (!item.status) {
+                            item.status = "00";  // 발송여부 기본값 00 설정
+                        }
+                    });
+                }else{
+                    tableData = popupTable.getData();
+                }
+
+                $('#sendTotCnt').text(Number(tableData.length).toLocaleString());
+
                 popupTable = new Tabulator("#data-table", {
                     data: tableData, // table.getData()로 가져온 데이터를 사용
                     layout: "fitColumns",
@@ -1712,6 +1730,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                     ],
                     dataChanged: function(data) {
                         checkAllStatusAndMoveToNextPage();  // 데이터 변경 시 자동 페이지 이동 체크
+                        console.log(123)
                     },
                     tableBuilt: function() {
                         checkAllStatusAndMoveToNextPage();  // 테이블이 처음 렌더링될 때 자동 페이지 이동 체크

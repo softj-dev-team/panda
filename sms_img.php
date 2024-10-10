@@ -894,7 +894,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                 }
 
                 if (check && validate()) {
-                    var result = confirm("메세지를 ["+confirmMessage+"] 발송합니다.\n"+tableListCnt+" 건을 ["+confirmMessage+"] 발송 하겠습니다까?" );
+                    var result = confirm("메세지를 ["+confirmMessage+"] 발송합니다.\n"+tableListCnt+" 건을 ["+confirmMessage+"] 발송 하겠습니까?" );
                     if (result) {
                         showLoadingSpinner();
                         var dupDelCnt = deleteDuplicateTable()
