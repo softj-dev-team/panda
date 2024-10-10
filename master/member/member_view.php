@@ -18,7 +18,80 @@ $s_sect2 = trim(sqlfilter($_REQUEST['s_sect2']));
 $s_cnt = trim(sqlfilter($_REQUEST['s_cnt'])); // 목록 갯수 
 $s_order = trim(sqlfilter($_REQUEST['s_order'])); // 목록 정렬 
 
-$sql = "SELECT *,(select logdate from mem_login_count where 1 and member_idx=a.idx order by idx desc limit 0,1) as last_login,(select cur_mile from member_point where 1 and point_sect='smspay' and mile_sect != 'P' and member_idx=a.idx order by idx desc limit 0,1) as current_point,(select com_name from member_info_company where 1 and is_del='N' and idx=a.partner_idx order by idx desc limit 0,1) as com_name,(select mb_short_fee from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as mb_short_fee,(select mb_long_fee from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as mb_long_fee,(select mb_img_fee from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as mb_img_fee,(select mb_kko_fee from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as mb_kko_fee,(select mb_short_cnt from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as mb_short_cnt,(select mb_long_cnt from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as mb_long_cnt,(select mb_img_cnt from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as mb_img_cnt,(select call_num from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as call_num,(select call_memo from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as call_memo,(select use_yn from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as use_yn FROM member_info a where 1 and idx = '" . $idx . "' and del_yn='N'";
+$sql = "
+        SELECT *,
+               (select logdate from mem_login_count where 1 and member_idx = a.idx order by idx desc limit 0,1) as last_login,
+               (select cur_mile
+                from member_point
+                where 1
+                  and point_sect = 'smspay'
+                  and mile_sect != 'P'
+                  and member_idx = a.idx
+                order by idx desc
+                limit 0,1) as current_point,
+               (select com_name
+                from member_info_company
+                where 1 and is_del = 'N' and idx = a.partner_idx
+                order by idx desc
+                limit 0,1) as com_name,
+               (select mb_short_fee
+                from member_info_sendinfo
+                where 1 and is_del = 'N' and member_idx = a.idx
+                order by idx desc
+                limit 0,1) as mb_short_fee,
+               (select mb_long_fee
+                from member_info_sendinfo
+                where 1 and is_del = 'N' and member_idx = a.idx
+                order by idx desc
+                limit 0,1) as mb_long_fee,
+               (select mb_img_fee
+                from member_info_sendinfo
+                where 1 and is_del = 'N' and member_idx = a.idx
+                order by idx desc
+                limit 0,1) as mb_img_fee,
+               (select mb_kko_fee
+                from member_info_sendinfo
+                where 1 and is_del = 'N' and member_idx = a.idx
+                order by idx desc
+                limit 0,1) as mb_kko_fee,
+               (select mb_short_cnt
+                from member_info_sendinfo
+                where 1 and is_del = 'N' and member_idx = a.idx
+                order by idx desc
+                limit 0,1) as mb_short_cnt,
+               (select mb_long_cnt
+                from member_info_sendinfo
+                where 1 and is_del = 'N' and member_idx = a.idx
+                order by idx desc
+                limit 0,1)  as mb_long_cnt,
+               (select mb_img_cnt
+                from member_info_sendinfo
+                where 1 and is_del = 'N' and member_idx = a.idx
+                order by idx desc
+                limit 0,1)  as mb_img_cnt,
+               (select call_num
+                from member_info_sendinfo
+                where 1 and is_del = 'N' and member_idx = a.idx
+                order by idx desc
+                limit 0,1) as call_num,
+               (select call_memo
+                from member_info_sendinfo
+                where 1 and is_del = 'N' and member_idx = a.idx
+                order by idx desc
+                limit 0,1) as call_memo,
+               (select use_yn
+                from member_info_sendinfo
+                where 1 and is_del = 'N' and member_idx = a.idx
+                order by idx desc
+                limit 0,1) as use_yn,
+               (select auth_method
+                from member_info_sendinfo
+                where 1 and is_del = 'N' and member_idx = a.idx
+                order by idx desc
+                limit 0,1) as auth_method
+            FROM member_info a
+            where 1
+                and idx = '" . $idx . "' and del_yn='N'";
 
 //echo $sql; exit;
 $query = mysqli_query($gconnet, $sql);
@@ -250,7 +323,7 @@ if ($row['gender'] == "M") {
 									$call_num_arr = json_decode($row['call_num'], true);
 									$call_memo_arr = json_decode($row['call_memo'], true);
 									$use_yn_arr = json_decode($row['use_yn'], true);
-
+                                    $auth_method_arr = json_decode($row['auth_method'], true);
 									$call_num_cnt = sizeof($call_num_arr);
 									if ($call_num_cnt < 1) {
 										$call_num_cnt = 1;
@@ -268,6 +341,7 @@ if ($row['gender'] == "M") {
 											<span class="marr5 mnw50 dib">발신번호 : </span> <?= $call_num_arr[$i_num] ?>
 											<span class="marr5 marl20">메모 : </span> <?= $call_memo_arr[$i_num] ?>
 											<span class="marr5 marl20">상태 : </span> <?= $use_yn ?>
+                                            <span class="marr5 marl20">인증방법 : </span> <?= $auth_method_arr[$i_num] ?>
 										</div>
 									<? } ?>
 								</td>

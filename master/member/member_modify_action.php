@@ -132,7 +132,7 @@ $mb_img_cnt = trim(sqlfilter($_REQUEST['mb_img_cnt']));
 $call_num = json_encode($_REQUEST['call_num'], JSON_UNESCAPED_UNICODE);
 $call_memo = json_encode($_REQUEST['call_memo'], JSON_UNESCAPED_UNICODE);
 $use_yn = json_encode($_REQUEST['use_yn'], JSON_UNESCAPED_UNICODE);
-
+$auth_method=json_encode($_REQUEST['auth_method'], JSON_UNESCAPED_UNICODE);
 $prev_sql = "select idx from member_info_sendinfo where 1 and member_idx='" . $member_idx . "' and is_del='N'";
 $prev_query = mysqli_query($gconnet, $prev_sql);
 $prev_cnt = mysqli_num_rows($prev_query);
@@ -152,6 +152,7 @@ if ($prev_cnt == 0) {
 	$query_add .= " mb_img_cnt = '" . $mb_img_cnt . "', ";
 	$query_add .= " call_num = '" . $call_num . "', ";
 	$query_add .= " call_memo = '" . $call_memo . "', ";
+    $query_add .= " auth_method = '" . $auth_method . "', ";
 	$query_add .= " use_yn = '" . $use_yn . "', ";
 	$query_add .= " wdate = now() ";
 	//echo $query_add;
@@ -175,6 +176,7 @@ if ($prev_cnt == 0) {
 	$query_add .= " mb_img_cnt = '" . $mb_img_cnt . "', ";
 	$query_add .= " call_num = '" . $call_num . "', ";
 	$query_add .= " call_memo = '" . $call_memo . "', ";
+    $query_add .= " auth_method = '" . $auth_method . "', ";
 	$query_add .= " use_yn = '" . $use_yn . "', ";
 	$query_add .= " wdate = now() ";
 	$query_add .= " where 1 and member_idx='" . $member_idx . "' and is_del='N'";

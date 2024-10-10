@@ -11,7 +11,14 @@ class MasterModel
         $database = new Database();
         $this->conn = $database->connect();
     }
-
+    public function getBlockCallNumber($call=null){
+        $sql=
+            "SELECT cell_num FROM spam_list where cell_num=:cell_num";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':cell_num', $call, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     public function getKakaoSendList($offset, $limit,$keyword=null,$startDate=null,$endDate=null)
     {
@@ -50,8 +57,6 @@ class MasterModel
             $stmt->bindParam(':endDate', $endDate->format('Y-m-d'), PDO::PARAM_STR);
         }
         $stmt->execute();
-        error_log($sql);
-        error_log('keyword : '.$keyword);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     public function getTotalKakaoSendList($keyword=null,$startDate=null,$endDate=null)

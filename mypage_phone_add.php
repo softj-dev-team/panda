@@ -3,7 +3,9 @@ include $_SERVER["DOCUMENT_ROOT"] . "/pro_inc/include_default.php"; // 공통함
 $member_idx = $_SESSION['member_coinc_idx'];
 $my_member_row = get_member_data($_SESSION['member_coinc_idx']);
 extract($_REQUEST);
-
+$query = "select cell_num from spam_list where cell_num = $phone_no";
+$result = mysqli_query($gconnet, $query);
+$result_block_num = mysqli_fetch_assoc($result);
 $query = "select * from member_info_sendinfo where member_idx = $member_idx";
 //echo $query;
 $result = mysqli_query($gconnet, $query);
@@ -36,6 +38,8 @@ if ($my_member_row["cert_ci"] == $user_ci) {
         //성공 처리
         $result_code['result_code'] = "9999";
     }
+}else if($result_block_num){
+    $result_code['result_code'] = "9999";
 } else {
     // 다른 사람 명의인 경우
     $result_code['result_code'] = "7777";

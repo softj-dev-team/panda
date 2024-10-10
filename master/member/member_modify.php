@@ -101,40 +101,72 @@ $bbs_code = "member";
 
 	function go_submit() {
 		var check = chkFrm('frm');
+
 		if (check) {
 
 			if (document.frm.id_ok.value != "Y") {
 				alert('아이디 중복검색을 해주세요.');
 				return;
 			}
+            var isValid = true;
+            var ajaxRequests = []; // Ajax 요청을 저장할 배열
+            $('input[name="call_num[]"]').each(function() {
+                var pcs = $(this).val().replace(/[^0-9]/g, '');
+               if(validatePhoneNumber(pcs)){
+                   // 발신 차단된 번호 확인을 위한 Ajax 요청을 비동기적으로 처리
+                   var request = $.ajax({
+                       url: '/kakao/index.php?route=getBlockCallNumber',
+                       type: 'GET',
+                       data: {cell_num: pcs},
+                       dataType: 'json'
+                   }).done(function(response) {
+                       if (response.success) {
+                           alert(pcs + " 발신차단 된 휴대전화번호는 등록이 불가능합니다.");
+                           isValid = false;
+                       }
+                   }).fail(function(xhr, status, error) {
+                       alert("서버와 연결에 실패했습니다. 다시 시도해 주세요.");
+                       console.error('Error: ' + error);
+                       console.error('Status: ' + status);
+                       console.dir(xhr);
+                       isValid = false;
+                   });
 
-			/*if (document.frm.nick_ok.value != "Y"){
-				alert('닉네임 중복검색을 해주세요.');
-				return;	
-			}*/
+                   // Ajax 요청을 배열에 추가
+                   ajaxRequests.push(request);
 
-			/*if (document.frm.email_ok.value != "Y"){
-				alert('이메일 중복검사를 해주세요.');
-				return;	
-			}*/
+               }else{
+                   alert(pcs+' 는(은) 올바른 휴대폰 번호 형식이 아닙니다.');
+                   isValid = false;  // 잘못된 형식이면 상태를 변경
+                   return false;  // each() 루프 중지
+               }
+            });
+            // Ajax 요청들이 완료될 때까지 기다린 후, 유효성 검사 통과 시 폼 제출
+            $.when.apply($, ajaxRequests).done(function() {
+                if (isValid) {
+                    <?php if ($row['member_gubun'] == "SPE") { ?>
+                    if (!vender_num(document.frm.com_num1.value, document.frm.com_num2.value, document.frm.com_num3.value)) {
+                        isValid = false;
+                        return;
+                    }
+                    <? } ?>
 
-			<? if ($row['member_gubun'] == "SPE") { ?>
-				if (!vender_num(document.frm.com_num1.value, document.frm.com_num2.value, document.frm.com_num3.value)) {
-					return;
-				}
-			<? } ?>
+                    if (document.frm.member_password.value) {
+                        if (fnCheckId(document.frm.member_password.value, "비밀번호")) {
+                            if (document.frm.member_password.value != document.frm.member_password2.value) {
+                                alert('비밀번호와 비밀번호 확인이 맞지 않습니다!');
+                                isValid = false;
+                            }
+                        } else {
+                            isValid = false;
+                        }
+                    }
 
-			if (document.frm.member_password.value) {
-				if (fnCheckId(document.frm.member_password.value, "비밀번호")) {
-					if (document.frm.member_password.value != document.frm.member_password2.value) {
-						alert('비밀번호와 비밀번호 확인이 맞지 않습니다 ! ');
-						return;
-					}
-					frm.submit();
-				}
-			} else {
-				frm.submit();
-			}
+                    if (isValid) {
+                        document.frm.submit(); // 모든 검증을 통과하면 폼을 제출
+                    }
+                }
+            });
 
 		} else {
 			false;
@@ -323,27 +355,35 @@ $bbs_code = "member";
 		});
 	}
 
-	//숫자,영문 조합검사
-	function fnCheckId(uid, str) {
-		if (!/^[a-z0-9]{6,12}$/.test(uid)) {
-			alert(str + '는 숫자와 영(소)문자 조합으로 6~12자리를 사용해야 합니다.');
-			return false;
-		}
+    // 숫자, 영문, 특수문자 조합 검사
+    function fnCheckId(uid, str) {
+        // 영문 소문자, 숫자, 특수문자 조합으로 6~12자리인지 확인
+        if (!/^[a-z0-9!@#$%^&*()_+={}\[\]:;"'<>,.?/\\|-]{6,12}$/.test(uid)) {
+            alert(str + '는 숫자, 영문자, 특수문자 조합으로 6~12자리를 사용해야 합니다.');
+            return false;
+        }
 
-		var chk_num = uid.search(/[0-9]/g);
-		var chk_eng = uid.search(/[a-z]/ig);
+        // 숫자 포함 여부 검사
+        var chk_num = uid.search(/[0-9]/g);
+        // 영문자 포함 여부 검사
+        var chk_eng = uid.search(/[a-z]/ig);
+        // 특수문자 포함 여부 검사
+        var chk_special = uid.search(/[!@#$%^&*()_+={}\[\]:;"'<>,.?/\\|-]/g);
 
-		if (chk_num < 0 || chk_eng < 0) {
-			alert(str + '는 숫자와 영문자를 혼용하여야 합니다.');
-			return false;
-		}
+        // 숫자, 영문자, 특수문자가 모두 포함되어 있는지 확인
+        if (chk_num < 0 || chk_eng < 0 || chk_special < 0) {
+            alert(str + '는 숫자, 영문자, 특수문자를 혼용하여야 합니다.');
+            return false;
+        }
 
-		if (/(\w)\1\1\1/.test(uid)) {
-			alert(str + '에 같은 문자를 4번 이상 사용하실 수 없습니다.');
-			return false;
-		}
-		return true;
-	}
+        // 같은 문자를 4번 이상 반복하여 사용하는지 검사
+        if (/(\w)\1\1\1/.test(uid)) {
+            alert(str + '에 같은 문자를 4번 이상 사용하실 수 없습니다.');
+            return false;
+        }
+
+        return true;
+    }
 
 	function openDaumPostcode() {
 		new daum.Postcode({
@@ -634,7 +674,7 @@ $bbs_code = "member";
 
 										for ($i_num = 0; $i_num < $call_num_cnt; $i_num++) {
 										?>
-											<span class="marr5 mnw50 dib">발신번호 : </span> <input type="text" placeholder="" name="call_num[]" maxlength="13" value="<?= $call_num_arr[$i_num] ?>" id="call_num_<?= $i_num ?>" onchange="check_cell_num('<?= $i_num ?>');">
+											<span class="marr5 mnw50 dib">발신번호 : </span> <input type="text" placeholder="" class="call_num" name="call_num[]" maxlength="13" value="<?= $call_num_arr[$i_num] ?>" id="call_num_<?= $i_num ?>" onchange="check_cell_num('<?= $i_num ?>');">
 											<span class="marr5 marl20">메모 : </span> <input type="text" placeholder="" name="call_memo[]" size="30" value="<?= $call_memo_arr[$i_num] ?>">
 											<span class="marr5 marl20">상태 : </span> <select name="use_yn[]">
 												<option value="">선택하세요</option>
@@ -658,7 +698,7 @@ $bbs_code = "member";
 
 					<div class="write_btn align_r">
 						<a href="javascript:go_list();" class="btn_list">취소</a>
-						<button class="btn_modify" onclick="go_submit();">정보수정</button>
+						<button class="btn_modify" type="button" onclick="go_submit();">정보수정</button>
 					</div>
 
 				</div>
@@ -741,7 +781,7 @@ $bbs_code = "member";
 				var addedFormDiv = document.getElementById("addedFormDiv_2");
 				var str = "";
 
-				str += '<span class="marr5 mnw50 dib">발신번호 : </span> <input type="text" placeholder="" name="call_num[]" maxlength="13" id="call_num_' + count_2 + '" onchange=check_cell_num("' + count_2 + '");>&nbsp;<span class="marr5 marl20">메모 : </span> <input type="text" placeholder="" name="call_memo[]" size="30">&nbsp;<span class="marr5 marl20">상태 : </span> <select name="use_yn[]"><option value="">선택하세요</option><option value="Y">사용가능</option><option value="N">사용불가</option></select><span class="marr5 marl20">인증방법 : </span><select name="auth_method[]"><option value="">선택하세요</option><option value="kcp">kcp</option><option value="admin">admin</option></select><br/>';
+				str += '<span class="marr5 mnw50 dib">발신번호 : </span> <input type="text" placeholder="" class="call_num"  name="call_num[]" maxlength="13" id="call_num_' + count_2 + '" onchange=check_cell_num("' + count_2 + '");>&nbsp;<span class="marr5 marl20">메모 : </span> <input type="text" placeholder="" name="call_memo[]" size="30">&nbsp;<span class="marr5 marl20">상태 : </span> <select name="use_yn[]"><option value="">선택하세요</option><option value="Y">사용가능</option><option value="N">사용불가</option></select><span class="marr5 marl20">인증방법 : </span><select name="auth_method[]"><option value="">선택하세요</option><option value="kcp">kcp</option><option value="admin">admin</option></select><br/>';
 
 				var addedDiv = document.createElement("div"); // 폼 생성 
 				addedDiv.id = "added_2_" + count_2; // 폼 Div에 ID 부 여 (삭제를 위해)

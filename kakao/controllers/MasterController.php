@@ -49,4 +49,21 @@ class MasterController extends Controller
             $this->sendJsonResponse(['error' => 'An error occurred'.getMessage()]);
         }
     }
+    public function getBlockCallNumber(){
+        try {
+            $call = $_GET['cell_num'] ?? '';
+            $data = $this->MasterModel->getBlockCallNumber($call);
+            // 데이터 유효성 검증
+            if ($data === null || empty($data)) {
+                // 데이터가 없거나 유효하지 않은 경우
+                $this->sendJsonResponse(['success' => false, 'message' => '발신 차단된 번호가 아닙니다.']);
+            } else {
+                // 유효한 데이터를 반환하는 경우
+                $this->sendJsonResponse(['success' => true, 'data' => $data]);
+            }
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+            $this->sendJsonResponse(['error' => 'An error occurred'.getMessage()]);
+        }
+    }
 }

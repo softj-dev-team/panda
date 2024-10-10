@@ -491,8 +491,10 @@ $use_yn = json_decode($result_info["use_yn"], true);
                             alert("중복된 발신번호는 등록이 불가합니다.");
                         } else if (v.result_code == "7777") {
                             alert("타인 명의의 발신번호는 등록이 불가합니다.");
+                        } else if (v.result_code == "9999") {
+                            alert("발신 차단된 번호는 등록이 불가합니다.");
                         } else {
-                            location.reload(true);
+                            // location.reload(true);
                         }
                         //
                     }

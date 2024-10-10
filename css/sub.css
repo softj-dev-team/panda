@@ -1075,3 +1075,6 @@ input:checked[type='checkbox'] {
 .w320{
     width: 320px;
 }
+#sendListPopupLayerList{
+    z-index: 9998;
+}
