@@ -19,7 +19,7 @@ $s_order = trim(sqlfilter($_REQUEST['s_order'])); // 목록 정렬
 ################## 파라미터 조합 #####################
 $total_param = 'bmenu=' . $bmenu . '&smenu=' . $smenu . '&field=' . $field . '&keyword=' . $keyword . '&v_sect=' . $v_sect . '&s_gubun=' . $s_gubun . '&s_level=' . $s_level . '&s_gender=' . $s_gender . '&s_sect1=' . $s_sect1 . '&s_sect2=' . $s_sect2 . '&s_cnt=' . $s_cnt . '&s_order=' . $s_order;
 
-$where = " and memout_yn not in ('Y','S') and del_yn='N' and member_type in ('GEN')";
+$where = " and memout_yn not in ('Y','S') and member_type in ('GEN')";
 
 if (!$pageNo) {
 	$pageNo = 1;
@@ -66,7 +66,22 @@ if ($s_order == 1) {
 	$order_by = " order by user_name desc ";
 }
 
-$query = "select *,(select com_name from member_info_company where 1 and is_del='N' and idx=a.partner_idx order by idx desc limit 0,1) as com_name,(select mb_short_fee from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as mb_short_fee,(select mb_long_fee from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as mb_long_fee,(select mb_img_fee from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as mb_img_fee,(select mb_kko_fee from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as mb_kko_fee,(select cur_mile from member_point where 1 and point_sect='smspay' and mile_sect != 'P' and member_idx=a.idx order by idx desc limit 0,1) as current_point from member_info a where 1 " . $where . $order_by . " limit " . $StarRowNum . " , " . $EndRowNum;
+$query = "select *,
+            (
+                select com_name from member_info_company 
+                    where 1 and is_del='N' 
+                    and idx=a.partner_idx order by idx desc limit 0,1) as com_name,
+                    (select mb_short_fee from member_info_sendinfo where 1 and is_del='N' 
+                    and member_idx=a.idx order by idx desc limit 0,1) as mb_short_fee,
+                    (select mb_long_fee from member_info_sendinfo where 1 and is_del='N'
+                    and member_idx=a.idx order by idx desc limit 0,1) as mb_long_fee,
+                    (select mb_img_fee from member_info_sendinfo where 1 and is_del='N' 
+                    and member_idx=a.idx order by idx desc limit 0,1) as mb_img_fee,
+                    (select mb_kko_fee from member_info_sendinfo where 1 and is_del='N' 
+                    and member_idx=a.idx order by idx desc limit 0,1) as mb_kko_fee,
+                    (select cur_mile from member_point where 1 and point_sect='smspay' 
+                    and mile_sect != 'P' and member_idx=a.idx order by idx desc limit 0,1) as current_point 
+                from member_info a where 1 " . $where . $order_by . " limit " . $StarRowNum . " , " . $EndRowNum;
 //echo "<br><br>쿼리 = ".$query."<br><Br>";
 $result = mysqli_query($gconnet, $query);
 

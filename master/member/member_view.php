@@ -91,7 +91,7 @@ $sql = "
                 limit 0,1) as auth_method
             FROM member_info a
             where 1
-                and idx = '" . $idx . "' and del_yn='N'";
+                and idx = '" . $idx . "'";
 
 //echo $sql; exit;
 $query = mysqli_query($gconnet, $sql);
@@ -363,12 +363,18 @@ if ($row['gender'] == "M") {
 								<tr>
 									<th scope="row">회원상태</th>
 									<td colspan="3">
-										<select name="login_ok" required="yes" message="활성화 여부" size="1" style="vertical-align:middle;">
+										<select name="login_ok" required="yes" message="활성화 여부" size="1" >
 											<option value="">선택하세요</option>
 											<option value="Y" <?= $row[login_ok] == "Y" ? "selected" : "" ?>>활성화</option>
 											<option value="N" <?= $row[login_ok] == "N" ? "selected" : "" ?>>비활성화</option>
 										</select>
-									</td>
+
+                                        <select name="del_yn"  size="1" >
+                                            <option value="">선택하세요</option>
+                                            <option value="N" <?= $row[del_yn] == "N" ? "selected" : "" ?>>정상회원</option>
+                                            <option value="Y" <?= $row[del_yn] == "Y" ? "selected" : "" ?>>탈퇴회원</option>
+                                        </select>
+                                    </td>
 								</tr>
 								<input type="hidden" name="user_level" value="<?= $row[user_level] ?>" />
 								<tr>
