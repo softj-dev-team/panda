@@ -30,7 +30,7 @@ if ($_SESSION['member_coinc_idx']) {
             <? if ($_SESSION['member_coinc_idx']) { ?>
                 <div class="user">
                     <p>
-                        <b><?= $inc_member_row['member_gubun']=='4'?$inc_member_row['company_name'] : $inc_member_row['user_name'] ?></b> 님의 충전잔액은<span><?= number_format($inc_member_row['current_point']) ?></span>원입니다.
+                        <b><?= $inc_member_row['company_name']? $inc_member_row['company_name'] : $inc_member_row['user_name'] ?></b> 님의 충전잔액은<span><?= number_format($inc_member_row['current_point']) ?></span>원입니다.
                     </p>
                 </div>
                 <button class="coin" type="button" onclick="location.href='./pay.php'">

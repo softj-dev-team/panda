@@ -18,6 +18,7 @@ if ($_REQUEST['member_password']) {
 }
 $user_name = trim(sqlfilter($_REQUEST['member_name']));
 $company_name = trim(sqlfilter($_REQUEST['company_name']));
+$company_yn = isset($_REQUEST['company_yn'])??'';
 $tel1 = trim(sqlfilter($_REQUEST['tel1']));
 $tel2 = trim(sqlfilter($_REQUEST['tel2']));
 $tel3 = trim(sqlfilter($_REQUEST['tel3']));
@@ -98,6 +99,7 @@ if ($_REQUEST['member_password']) {
 }
 $query .= " user_name = '" . $user_name . "', ";
 $query .= " company_name = '" . $company_name . "', ";
+$query .= " company_yn = '" . $company_yn . "', ";
 $query .= " tel = '" . $tel . "', ";
 $query .= " cell = '" . $cell . "', ";
 $query .= " birthday = '" . $birthday . "', ";

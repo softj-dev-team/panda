@@ -8,12 +8,13 @@
 	
 	$user_level = trim(sqlfilter($_REQUEST['user_level']));
 	$login_ok = trim(sqlfilter($_REQUEST['login_ok']));
+    $del_yn = trim(sqlfilter($_REQUEST['del_yn']));
 	$master_ok = trim(sqlfilter($_REQUEST['master_ok']));
 	$admin_memo = trim(sqlfilter($_REQUEST['admin_memo']));
 
 	$ad_sect = $_SESSION['admin_coinc_id'];
 
-	$prev_sql = "select idx,user_level from member_info where 1 and idx = '".$idx."' and del_yn = 'N'";
+	$prev_sql = "select idx,user_level from member_info where 1 and idx = '".$idx."'";
 	$prev_query = mysqli_query($gconnet,$prev_sql);
 	$prev_cnt = mysqli_num_rows($prev_query);
 	
@@ -49,6 +50,7 @@
 	//$query .= " master_ok = '".$master_ok."', ";
 	//$query .= " user_level = '".$user_level."', ";
 	$query .= " login_ok = '".$login_ok."' ";
+    $query .= " del_yn = '".$del_yn."' ";
 	$query .= " where idx = '".$idx."' ";
 	$result = mysqli_query($gconnet,$query);
 		

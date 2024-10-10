@@ -60,14 +60,14 @@ class Controller {
         $this->data['inc_member_row'] = $this->memberModel->getMemberData($_SESSION['member_coinc_idx']);
 
 
-        if($this->data['inc_member_row']['member_gubun']!='4'){
-
-            echo '<script type="text/javascript">';
-            echo 'alert(" * 알림톡 기능은 사업자 회원만 이용 가능합니다..");';
-            echo 'window.location.href = "/";'; // 로그인 페이지로 리다이렉트
-            echo '</script>';
-            exit(); // 이후 코드 실행 방지
-        }
+//        if($this->data['inc_member_row']['member_gubun']!='4'){
+//
+//            echo '<script type="text/javascript">';
+//            echo 'alert(" * 알림톡 기능은 사업자 회원만 이용 가능합니다..");';
+//            echo 'window.location.href = "/";'; // 로그인 페이지로 리다이렉트
+//            echo '</script>';
+//            exit(); // 이후 코드 실행 방지
+//        }
 
 
         require_once $_SERVER["DOCUMENT_ROOT"] . '/kakao/models/CRUD.php';

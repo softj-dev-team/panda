@@ -38,7 +38,7 @@ $sql = "SELECT *,
 (select use_yn from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as use_yn,
 (select auth_method from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as auth_method,
 (select user_id from member_info where 1 and del_yn='N' and idx=(select member_idx from member_info_company 
-where 1 and is_del='N' and idx=a.partner_idx order by idx desc limit 0,1)) as partner_id FROM member_info a where 1=1 and idx = '" . $idx . "' and del_yn='N'";
+where 1 and is_del='N' and idx=a.partner_idx order by idx desc limit 0,1)) as partner_id FROM member_info a where 1=1 and idx = '" . $idx . "'";
 $query = mysqli_query($gconnet, $sql);
 
 if (mysqli_num_rows($query) == 0) {
@@ -505,9 +505,10 @@ $bbs_code = "member";
 									<td>
 										<input type="text" style="width:20%;" name="member_name" id="member_name" required="yes" message="이름" value="<?= $row['user_name'] ?>" readonly>
 									</td>
-									<th scope="row">사업자명</th>
+									<th scope="row">사업자</th>
                                     <td>
-                                        <input type="text" style="width:100%;" name="company_name" id="company_name" required="yes" message="사업자명" value="<?= $row['company_name'] ?>"/>
+                                        <input type="checkbox" name="company_yn" <?=$row['company_yn']?'checked':'' ?>><label>사업자회원</label>
+                                        <label>사업자명 : </label><input type="text" style="width:50%;" name="company_name" id="company_name" value="<?= $row['company_name'] ?>" placeholder="사업자명"/>
 
                                     </td>
 								</tr>
@@ -573,8 +574,7 @@ $bbs_code = "member";
 										<input type="radio" name="member_gubun" value="1" <?= $row[member_gubun] == "1" ? "checked" : "" ?> message="회원구분" id="member_gubun_1"> 일반회원
 										<input type="radio" name="member_gubun" value="2" <?= $row[member_gubun] == "2" ? "checked" : "" ?> message="회원구분" id="member_gubun_2"> 광고회원
 										<input type="radio" name="member_gubun" value="3" <?= $row[member_gubun] == "3" ? "checked" : "" ?> message="회원구분" id="member_gubun_3"> 휴면회원
-                                        <input type="radio" name="member_gubun" value="4" <?= $row[member_gubun] == "4" ? "checked" : "" ?> message="회원구분" id="member_gubun_4"> 사업자회원
-									</td>
+
 								</tr>
 
 								<tr>
@@ -673,20 +673,20 @@ $bbs_code = "member";
 										}
 
 										for ($i_num = 0; $i_num < $call_num_cnt; $i_num++) {
-										?>
-											<span class="marr5 mnw50 dib">발신번호 : </span> <input type="text" placeholder="" class="call_num" name="call_num[]" maxlength="13" value="<?= $call_num_arr[$i_num] ?>" id="call_num_<?= $i_num ?>" onchange="check_cell_num('<?= $i_num ?>');">
-											<span class="marr5 marl20">메모 : </span> <input type="text" placeholder="" name="call_memo[]" size="30" value="<?= $call_memo_arr[$i_num] ?>">
-											<span class="marr5 marl20">상태 : </span> <select name="use_yn[]">
-												<option value="">선택하세요</option>
-												<option value="Y" <?= $use_yn_arr[$i_num] == "Y" ? "selected" : "" ?>>사용가능</option>
-												<option value="N" <?= $use_yn_arr[$i_num] == "N" ? "selected" : "" ?>>사용불가</option>
-											</select>
-											<span class="marr5 marl20">인증방법 : </span> <select name="auth_method[]">
-												<option value="">선택하세요</option>
-												<option value="kcp" <?= $auth_method_arr[$i_num] == "kcp" ? "selected" : "" ?>>kcp</option>
-												<option value="admin" <?= $auth_method_arr[$i_num] == "admin" ? "selected" : "" ?>>admin</option>
-											</select>
-											<br />
+										?><div id="callNumberList<?=$i_num?>">
+                                                <span class="marr5 mnw50 dib">발신번호 : </span> <input type="text" placeholder="" class="call_num" name="call_num[]" maxlength="13" value="<?= $call_num_arr[$i_num] ?>" id="call_num_<?= $i_num ?>" onchange="check_cell_num('<?= $i_num ?>');">
+                                                <span class="marr5 marl20">메모 : </span> <input type="text" placeholder="" name="call_memo[]" size="30" value="<?= $call_memo_arr[$i_num] ?>">
+                                                <span class="marr5 marl20">상태 : </span> <select name="use_yn[]">
+                                                    <option value="">선택하세요</option>
+                                                    <option value="Y" <?= $use_yn_arr[$i_num] == "Y" ? "selected" : "" ?>>사용가능</option>
+                                                    <option value="N" <?= $use_yn_arr[$i_num] == "N" ? "selected" : "" ?>>사용불가</option>
+                                                </select>
+                                                <span class="marr5 marl20">인증방법 : </span> <select name="auth_method[]">
+                                                    <option value="">선택하세요</option>
+                                                    <option value="kcp" <?= $auth_method_arr[$i_num] == "kcp" ? "selected" : "" ?>>kcp</option>
+                                                    <option value="admin" <?= $auth_method_arr[$i_num] == "admin" ? "selected" : "" ?>>admin</option>
+                                                </select><button type="button" class="btn_red" onclick="document.getElementById('callNumberList<?=$i_num?>').remove()">삭제</button>
+                                            </div>
 										<? } ?>
 
 										<div id="addedFormDiv_2"></div>
