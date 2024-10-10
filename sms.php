@@ -68,8 +68,40 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
 
         </div>
     </div>
+    <!-- 레이어 팝업 -->
+    <div id="listResaultPopupLayer" class="popup-layer" style="display:none;">
+        <div class="popup-content popcontent">
+            <div class="poptitle flex-just-end">
+                <button onclick="document.getElementById('listResaultPopupLayer').style.display = 'none'"><img src="images/popup/close.svg"></button>
+            </div>
+            <h2>메세지 전송 결과</h2>
+            <div class="tlb center">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>메세지 형식</th>
+                        <th>전송요청 수</th>
+                        <th>전체발송 수</th>
+                        <th>중복번호 수</th>
+                        <!--                        <th>수신거부 수</th>-->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><span id="listResultMsgType">단문</span></td>
+                        <td><span id="listResultSendCnt">0</span> 건</td>
+                        <td><span id="listResultSendOkCnt">0</span> 건</td>
+                        <td><span id="listResultSendDupCnt">0</span> 건</td>
+                        <!--                        <td>6명</td>-->
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
     <!-- 팝업 레이어 -->
-    <div id="sendListPopupLayer" class="popup-layer" style="display:none;">
+    <div id="sendListPopupLayerList" class="popup-layer" style="display:none;">
         <div class="popup-content">
             <div class="poptitle flex-just-end">
                 <button type="button" onclick="closeAllPopup()"><img src="images/popup/close.svg"></button>
@@ -1006,7 +1038,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                                     alert(response.message);
                                 } else if (response.status === 'success') {
                                     // 예외가 없을 경우 팝업 표시
-                                    alert('발송이 완료되었습니다.')
+
                                     // 선택된 행의 데이터를 업데이트
                                     let selectedData = popupTable.getSelectedData();
                                     let updatedData = selectedData.map(row => {
@@ -1021,6 +1053,11 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
 
                                     $('#sendDoneCnt').text(Number(filteredRows.length).toLocaleString());
                                     checkAllStatusAndMoveToNextPage();
+                                    document.getElementById('listResaultPopupLayer').style.display = 'flex'
+                                    $('#listResultSendOkCnt').text(tableListCnt - dupDelCnt);
+                                    $('#listResultSendCnt').text(tableListCnt);
+                                    $('#listResultMsgType').text(msgTypeName);
+                                    $('#listResultSendDupCnt').text(dupDelCnt);
                                 }
                             } else {
                                 hideLoadingSpinner();
@@ -1694,7 +1731,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
             if(tableData.length <= 0){
                 alert("수신번호를 입력해 주세요.");
             }else{
-                $('#sendListPopupLayer').show()
+                $('#sendListPopupLayerList').show()
                 // 기본값 00 설정
                 if(!popupTable) {
                     tableData.forEach((item, index) => {
