@@ -123,7 +123,9 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                         <?php if ($_REQUEST['send_type'] != "gen") { ?>
                             <a href="javascript:;" class="sms080">무료거부 <?= $inc_sms_denie_num ?></a>
                         <?php } ?>
+
                     </div>
+
                     <div class="sms_btn">
                         <span href="#none" class="tksms">특수문자 입력
                             <span class="tkbox">
@@ -305,7 +307,6 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                         </tr>
                     </table>
                 </div>
-
             </div>
 
         </form>
@@ -619,18 +620,13 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                     </div>
 
                 </div>
-
-
                 <div id="tab-8" class="tab-content">
-
-
 
                     <div class="tlb center xcel">
                         <table id="excel_copy">
 
                         </table>
                     </div>
-
 
                     <div class="point_pop">
                         <h2>
@@ -641,15 +637,8 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                             <li>최대 100,000개까지 등록할 수 있습니다.</li>
                             <li>이름, 전화번호 순으로 등록해 주세요.</li>
                         </ul>
-
                     </div>
-
-
                 </div>
-
-
-
-
                 <div class="btn_are_pop">
                     <a href="#" class="btn-layerClose btn btn02" id="text_add_btn">
                         추가
@@ -670,16 +659,35 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
     <script>
-        /*$(document).ready(function() {
-        $('#sms').on('keyup', function() {
-            $('#test_cnt').html(""+$(this).val().length+"");
- 
-            if($(this).val().length > 100) {
-                $(this).val($(this).val().substring(0, 90));
-                $('#test_cnt').html("(90 / 90)");
+
+        var send_type ='<?=$_REQUEST['send_type']?>';
+        var inc_sms_denie_num ='<?= $inc_sms_denie_num ?>';
+        window.onload = function() {
+            var textarea = document.getElementById('sms');
+            textarea.value = "(선거운동정보)\n\n불법수집정보신고번호 118\n무료수신거부 "+inc_sms_denie_num;
+            var text_length = getStringLength($("#sms").val());
+            $('#test_cnt').html("<b>" + text_length + "</b>");
+        };
+
+        document.getElementById('sms').addEventListener('input', function (e) {
+            var textarea = e.target;
+            var value = textarea.value;
+
+            if(send_type==='elc') {
+                // 상단과 하단 문구 설정
+                var topText = "(선거운동정보)\n";
+                var bottomText = "\n불법수집정보신고번호 118\n무료수신거부 "+inc_sms_denie_num;
+
+                // 만약 사용자가 상단이나 하단 문구를 변경했을 경우 다시 복구
+                if (!value.startsWith(topText) || !value.endsWith(bottomText)) {
+                    // 사용자가 편집 가능한 부분만 남기고 상단/하단 문구 복구
+                    var userText = value.substring(topText.length, value.length - bottomText.length);
+                    textarea.value = topText + userText + bottomText;
+                    // 커서를 입력한 텍스트 끝으로 이동
+                    textarea.selectionStart = textarea.selectionEnd = topText.length + userText.length;
+                }
             }
         });
-    });*/
 
         $(function() {
             $(".datepicker").datepicker({
