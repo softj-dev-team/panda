@@ -247,6 +247,7 @@ def process_data():
                             response = requests.post(api_ft_url, headers=headers, data=json.dumps([payload]))
                             response.raise_for_status()
                             response_data = response.json()
+                            print("API 요청중...")
                         if response_data and isinstance(response_data, list) and len(response_data) > 0:
                             data = response_data[0]
 
@@ -299,7 +300,7 @@ def batch_worker():
     while True:
         process_data()
         print("유휴 상태 확인 및 5초 대기 중...")
-        time.sleep(5)  # 5초 대기
+        time.sleep(3)  # 5초 대기
 
 if __name__ == "__main__":
     batch_worker()
