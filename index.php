@@ -189,7 +189,7 @@
                 <div class="text">
                     <img src="images/main/5.png">
                     <h2>080수신거부 무료 제공</h2>
-                    <p>080 무료수신거부 번호를 무료 제공<br>
+                    <p>080 무료거부 번호를 무료 제공<br>
                         수신거부번호는 발송목록에서 자동제거</p>
                 </div>
                 <div class="img">

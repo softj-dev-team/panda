@@ -689,7 +689,6 @@ ul.tabs li.current{
 
 }
 .flex-c{
-    padding: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -699,20 +698,18 @@ ul.tabs li.current{
     display: flex;
     text-align: center;
     justify-content: flex-end;
-    margin-bottom: 10px;
+    gap:5px
 }
 .flex-just-start{
     display: flex;
     text-align: center;
     justify-content: flex-start;
-    margin-bottom: 10px;
-    gap:3px
+    gap:5px
 }
 .flex-column{
     display: flex;
     flex-direction: column;
-    margin-bottom: 10px;
-
+    gap:15px
 }
 .sendContentBox{
     border-radius: 10px;
@@ -930,53 +927,7 @@ ul.tabs li.current{
     transform: rotate(315deg);
     transform-origin: 142px 58px;
 }
-/********************* FORM *********************/
-.fm-box-row{
-    display: flex;
-    padding: 10px;
-    align-items: center;
-    gap: 8px;
-}
-.fm-sel:focus, .fm-ipt:focus, .fm-ta:focus { border-color:#111; }
-.fm-sel { width:100%; height:48px; padding:0 16px 0 16px; color:#000; line-height:3.15; border:1px solid #ddd; border-radius:3px; background:#fff url("../images/common/i-sel.png") right 19px center no-repeat; }
-.fm-sel-2 { width:100%; height:50px; padding:0 40px 0 19px; color:#000; line-height:3.57; border-radius:5px; border:1px solid #eee; background:#fff url("../images/common/i-sel-2.png") right 19px center no-repeat; }
-.fm-sel-4 { height:24px; padding:0 25px 0 0; color:#000; line-height:1.5; border:none; background:#fff url("../images/common/i-sel-3.png") right 10px top 10px no-repeat; font-weight:bold; }
-.fm-sel-5 { width:200px; height:48px; margin-left: 10px; padding:0 16px 0 16px; color:#000; line-height:3.15; border:1px solid #ddd; border-radius:3px; background:#fff url("../images/common/i-sel.png") right 19px center no-repeat; }
-.fm-sel-2 + .fm-sel-2 { margin-left:8px; }
-.fm-ipt { width:100%; height:48px; padding:0 20px 0 16px; color:#000; line-height:3.57; border:1px solid #ddd; border-radius:3px; }
-.fm-file { padding-right:116px; }
-.fm-ipt-2 { width:100%; height:50px; padding:0 18px 0 18px; color:#000; line-height:3.57; border:1px solid #eee; border-radius:5px; }
-.fm-wrap { margin-top:57px; }
-.fm-wrap.cmgt { margin-top:0; }
-.fm-wrap.cmgt-2 { margin-top:27px; }
-.fm-row { margin-top:16px; }
-.fm-wrap .fm-row:first-child { margin-top:0; }
-.fm-row-col, .fm-row-col-2 { display:-webkit-box; display:-ms-flexbox; display:flex; }
-.fm-row-col .fm-box, .fm-row-col-2 .fm-box { -ms-flex:1; flex:1; box-sizing:border-box; }
-.fm-row-col .fm-box + .fm-box { margin-left:20px; }
-.fm-row-col-2 .fm-box:first-child .fm-ipt { border-top-right-radius:0; border-bottom-right-radius:0; }
-.fm-row-col-2 .fm-box:last-child .fm-ipt { border-top-left-radius:0; border-bottom-left-radius:0; margin-left:-1px }
-.fm-box { position:relative; }
-.fm-label { display:block; font-weight:bold; color:#000; margin-bottom:8px; }
-.fm-label-small { font-weight:normal; color:#666; }
-.fm-error { border-color:#c10026 !important; }
-.fm-error-txt { display:none; }
-.fm-error-txt.active { display:block; font-size:12px; color:#c10026; margin:7px 0 0 16px; }
-.fm-txt { display:block; font-size:12px; color:#666; margin:7px 0 0 16px; }
-.fm-col-2, .fm-col-3 { display:-webkit-box; display:-ms-flexbox; display:flex; }
-.fm-col-2 .fm-box, .fm-col-3 .fm-box { -webkit-box-flex:1; -ms-flex:1; flex:1; }
-.fm-col-2 .fm-box.flex-w-2 { -webkit-box-flex:2; -ms-flex:2; flex:2; }
-.fm-col-2 .fm-sel, .fm-col-2 .fm-ipt, .fm-col-3 .fm-sel, .fm-col-3 .fm-ipt { border-radius:0; }
-.fm-col-2 .fm-sel:focus, .fm-col-2 .fm-ipt:focus,
-.fm-col-2 .fm-sel.fm-error, .fm-col-2 .fm-ipt.fm-error,
-.fm-col-3 .fm-sel:focus, .fm-col-3 .fm-ipt:focus,
-.fm-col-3 .fm-sel.fm-error, .fm-col-3 .fm-ipt.fm-error { position:relative; z-index:2; }
-.fm-col-2 .fm-box:first-child .fm-ipt, .fm-col-2 .fm-box:first-child .fm-sel, .fm-col-3 .fm-box:first-child .fm-ipt, .fm-col-3 .fm-box:first-child .fm-sel { border-radius:3px 0 0 3px; }
-.fm-col-2 .fm-box:last-child .fm-ipt, .fm-col-2 .fm-box:last-child .fm-sel, .fm-col-3 .fm-box:last-child .fm-ipt, .fm-col-3 .fm-box:last-child .fm-sel { border-radius:0 3px 3px 0; }
-.fm-col-2 .fm-box + .fm-box, .fm-col-3 .fm-box + .fm-box { margin-left:-1px; }
-.fm-ta { width:100%; height:160px; padding:14px 16px 14px 16px; line-height:1.71; border:1px solid #ddd; border-radius:3px; }
-.fm-ta-in { padding-left:11px; }
-.fm-h { height:296px; }
+
 
 .fm-file-btn {
     position: absolute;

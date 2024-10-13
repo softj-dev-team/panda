@@ -12,7 +12,7 @@
 <!--    <link rel="stylesheet" href="/kakao/public/css/common.css">-->
 <!--    <link rel="stylesheet" href="/kakao/public/css/sub.css">-->
 <!--    <link rel="stylesheet" href="/kakao/public/css/search.css">-->
-    <link rel="stylesheet" type="text/css"  href="/kakao/public/css/kakao.css">
+
     <? if ($_SERVER['SCRIPT_NAME'] != "/index.php") { ?>
         <link rel="stylesheet" type="text/css" href="/css/sub.css">
     <? } ?>
@@ -20,6 +20,7 @@
         <link rel="stylesheet" type="text/css" href="/css/board.css">
     <? } ?>
     <link rel="stylesheet" type="text/css" href="/css/slick.css">
+    <link rel="stylesheet" type="text/css"  href="/kakao/public/css/kakao.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -32,8 +33,8 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
-    <script src="/kakao/public/js/ui.vendor.js"></script>
-    <script src="/kakao/public/js/ui.js"></script>
+<!--    <script src="/kakao/public/js/ui.vendor.js"></script>-->
+<!--    <script src="/kakao/public/js/ui.js"></script>-->
     <link href="https://unpkg.com/tabulator-tables/dist/css/tabulator.min.css" rel="stylesheet">
     <script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
     <script src="/kakao/public/js/kakao.js"></script>

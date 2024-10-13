@@ -1,4 +1,6 @@
 let iconMap = {};
+let urlParams = new URLSearchParams(window.location.search);
+let routeValue = urlParams.get('route');
 const buttonLinkTypes = {
     'WL': '웹링크',
     'AL': '앱링크',
@@ -11,7 +13,11 @@ const buttonLinkTypes = {
     'P2': '개인정보이용 플러그인',
     'P3': '원클릭결제 플러그인',
 };
-
+const buttonLinkTypesFtalk = {
+    'WL': '웹링크',
+    'AL': '앱링크',
+    'MD': '메시지전달',
+};
 const quickReplyLinkTypes = {
     'WL': '웹링크',
     'AL': '앱링크',
@@ -64,6 +70,67 @@ var specialChars = [
 function closeAllPopup() {
     $('.popup-layer').hide();
 }
+function regexToMessageBind(content){
+    // template_title의 변수를 추출하여 동적으로 input 생성
+    var regex = /#\{(.*?)\}/g;
+    var matches;
+    var inputFields = '' ;
+    var index =0;
+    var asValueLength =$('input[name="variables[]"]').length;
+    console.log(asValueLength)
+    while ((matches = regex.exec(content)) !== null) {
+        var pushValue = $('input[name="variables[]"]').eq(index).val();
+        var value=''
+        if(asValueLength > 0){
+            if(pushValue){
+                value = $('input[name="variables[]"]').eq(index).val();
+            }
+        }
+        inputFields += '' +
+            '<div class="fm-box custom-input-container mgl-5">\n' +
+            '<label for="strong_title" class="custom-label">' + matches[1] + '*</label>' +
+            '<input class="fm-ipt" type="text" name="variables[]" placeholder="' + matches[1] + '" data-varname="' + matches[1] + '" value="'+value+'">' +
+            '</div>';
+        index++;
+
+    }
+    $('.regexToMessageBind').empty();
+    $('.regexToMessageBind').html(inputFields);
+    // 각 변수 필드에 이벤트 리스너 추가
+    $('input[name="variables[]"]').on('input', function() {
+        updateSendPreviewFtalk(contentReplace());
+    });
+    updateSendPreviewFtalk(contentReplace());
+}
+function updateSendPreviewFtalk(message) {
+    // message = $('#highlightTitle').val();
+    $('input[name="variables[]"]').each(function() {
+        var varName = $(this).data('varname');
+        var varValue = $(this).val();
+        var regex = new RegExp('\\#\\{' + varName + '\\}', 'g');
+        if(varValue){
+            message = message.replace(regex, varValue);
+        }
+    });
+    $('#previewHighlightTitle').html(message);
+    return message;
+}
+function updateSendPreview(templateTitle,templateContent) {
+    var filledTemplate = templateTitle;
+    $('input[name="variables[]"]').each(function() {
+        var varName = $(this).data('varname');
+        var varValue = $(this).val();
+        var regex = new RegExp('\\#\\{' + varName + '\\}', 'g');
+        filledTemplate = filledTemplate.replace(regex, varValue);
+        if(templateContent){
+            templateContent = templateContent.replace(regex, varValue);
+        }
+
+    });
+    $('#previewHighlightTitle').html(filledTemplate);
+    // $('#previewHighlightTitle').text(filledTemplate);
+    $('input[name="message"]').val(templateContent);
+}
 function contentReplace(){
     var currentContent = $('#highlightTitle').val();
     var content = currentContent.replace(/\n/g, '<br>');
@@ -79,15 +146,9 @@ function contentReplace(){
         });
     }
     $('#previewHighlightTitle').html(content);
+    return content;
 }
-function changeStrongTitle(){
-    if($('#strong_sub_title').val() || $('#strong_title').val()){
-        $('#previewHighlightTitle').css('border-top', '1px solid #bbb');
-        $('#previewHighlightTitle').css('font-weight', '300');
-    }else{
-        $('#previewHighlightTitle').css('border-top', 'none');
-    }
-}
+
 // 팝업을 열 때 resetPopupFields()로 필드 초기화
 function showPopup(type, index = null, update = false, linkType= null) {
     const popup = $('#buttonPopup');
@@ -122,8 +183,10 @@ function populateLinkTypeOptions(type,linkType=null) {
     const linkTypeSelect = $('#linkType');
     linkTypeSelect.empty();  // 기존 옵션 제거
 
-    const linkTypes = type === 'buttons' ? buttonLinkTypes : quickReplyLinkTypes;
-
+    let linkTypes = type === 'buttons' ? buttonLinkTypes : quickReplyLinkTypes;
+    if(routeValue=='sendFtalk'){
+        linkTypes = type === 'buttons' ? buttonLinkTypesFtalk : quickReplyLinkTypes;
+    }
     linkTypeSelect.append('<option value="">버튼종류선택 *</option>');  // 기본 선택 옵션 추가
     $.each(linkTypes, function (value, label) {
         linkTypeSelect.append(`<option value="${value}">${label}</option>`);
@@ -234,7 +297,7 @@ function updateButtonList(type) {
         const buttonItem = $(`
             <div class=" ${item.linkType === 'AC' ? 'button-item-ch' : 'button-item'}">
                 <div>
-                    <strong>[버튼]${item.name}</strong>
+                    <strong>[버튼]${item.linkType === 'AC' ? '체널추가' : item.name}</strong>
                     <span>${buttonLinkTypes[item.linkType]}</span>
                     ${inputFields}
                 </div>
@@ -362,6 +425,13 @@ function generateInputFields(item, index, isQuickReply) {
             case 'P2':
                 return `
                                     <input type="hidden" name="name[${index}]" value="${item.name}">
+                                    <input type="hidden" name="postLinkType[${index}]" value="${item.linkType}">
+                                    <input type="hidden" name="ordering[${index}]" value="${index}">
+                                   <input type="hidden" name="pluginId[${index}]" value="${item.bizFormId}">
+                                `;
+            case 'AC':
+                return `
+                                    <input type="hidden" name="name[${index}]" value="체널추가">
                                     <input type="hidden" name="postLinkType[${index}]" value="${item.linkType}">
                                     <input type="hidden" name="ordering[${index}]" value="${index}">
                                    <input type="hidden" name="pluginId[${index}]" value="${item.bizFormId}">
@@ -582,23 +652,33 @@ function requestProfileKey(){
     });
 }
 
-function loadTemplateDetails(templateId) {
+function loadTemplateDetails(templateId,pData) {
     const imgElement = $('#uploadedImage');
+    var urlParams = new URLSearchParams(window.location.search);
+    var routeValue = urlParams.get('route');
+    var templateTitle='';
+    console.log(routeValue)
     $.ajax({
         url: '/kakao/index.php?route=getTemplateDetails',
         type: 'GET',
         data: { id: templateId },
         dataType: 'json',
         success: function(response) {
+            console.log('Received data:', pData)
+            console.log(response.template);
             if (response.success) {
                 var template = response.template;
-                console.log(template)
                 var fcallback = template.cs_phone_number;
-                var templateTitle = template.apiRespone.convContent;
+                if(routeValue=='userAlimTalkSendList'){
+                    templateTitle = pData.fmessage;
+                }else{
+                    templateTitle= template.apiRespone.convContent;
+                }
+
                 var templateContent = template.apiRespone.templateContent;
                 var templateSubTitle = template.template_subtitle;
                 var strongTitle = template.strong_title;
-                var strongSubTitle = template.strong_sub_title;
+                var strongSubTitle = template.apiRespone.templateSubtitle;
                 var profile_key = template.profile_key;
                 var template_key = template.template_key;
                 var template_emphasize_type = template.template_emphasize_type;
@@ -610,12 +690,6 @@ function loadTemplateDetails(templateId) {
                 var kakao_ch_id = template.kakao_ch_id;
                 var kakao_ch_name = template.kakao_ch_name;
                 $('#previewChannelName').text(kakao_ch_name);
-                if (strongTitle) {
-                    $('#previewHighlightTitle').css('border-top', '1px solid #bbb');
-                } else {
-                    $('#previewHighlightTitle').css('border-top', 'none');
-                }
-
                 $('.generated-button').remove();
                 $('.item-list-box').empty();
                 if(tempalteItem){
@@ -997,21 +1071,20 @@ $(document).ready(function() {
             $(this).next('span').addClass("blind");
         }
     });
-    $('#f-attach').on('change', function(event) {
-        const file = event.target.files[0];
-        const inputForm = $('#templateImageUploadForm');
-        if (file) {
-            // 이미지 형식 확인
-            if (file.type !== 'image/png' && file.type !== 'image/jpeg') {
-                alert('이미지는 png 또는 jpg 형식이어야 합니다.');
-                // inputForm.addClass('fm-error');
-                // inputForm.nextAll('span').addClass('active');
-                inputForm.placeholder.text('이미지는 png 또는 jpg 형식이어야 합니다.')
-                $('#uploadedImage').hide();
-                $('#f-attach').val(''); // 파일 입력 필드 초기화
-                return; // 이미지 처리를 중단합니다.
-            }
 
+    $(document).on('change','#f-attach', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            var validExtensions = ['jpg', 'jpeg', 'png'];
+            var fileExtension = file.name.split('.').pop().toLowerCase();
+            if ($.inArray(fileExtension, validExtensions) === -1) {
+                alert('JPEG, JPG, PNG 형식의 파일만 가능합니다.');
+                return;
+            }
+            if (file.size > 500 * 1024) {
+                alert('파일 크기는 500KB 이하이어야 합니다.');
+                return;
+            }
             const reader = new FileReader();
             reader.onload = function(e) {
                 const imgElement = $('#uploadedImage');
@@ -1019,34 +1092,35 @@ $(document).ready(function() {
                 // 이미지 조건 확인
                 const img = new Image();
                 img.onload = function() {
-                    if (img.width <= 800 && img.height <= 400) {
+                    if (img.width >= 500 && img.height >= 250) {
                         imgElement.attr('src', e.target.result);
                         imgElement.show();
                     } else {
-                        alert('이미지 크기는 800x400px 이하여야 합니다.');
+                        alert('이미지 크기는 500 x 250px 이상이어야 합니다.');
                         imgElement.hide();
                         $('#f-attach').val(''); // 파일 입력 필드 초기화
-                        // inputForm.addClass('fm-error');
-                        // inputForm.nextAll('span').addClass('active');
-                        // inputForm.nextAll('span').text('이미지 크기는 800x400px 이하여야 합니다.')
                     }
                 };
                 img.src = e.target.result;
             };
             reader.readAsDataURL(file);
+            $(this).closest('.fm-box').find('input[data-fakefile="text"]').attr('placeholder', file.name);
+            $('#removeUploadImageX').removeClass('blind')
         }
     });
-    $('#f-attach-highlight').on('change', function(event) {
+
+    $(document).on('change','#f-attach-highlight', function(event) {
         const file = event.target.files[0];
-        const inputForm = $('#templateHighlightThumbnailUploadForm');
         if (file) {
-            // 이미지 형식 확인
-            if (file.type !== 'image/png' && file.type !== 'image/jpeg') {
-                alert('이미지는 png 또는 jpg 형식이어야 합니다.');
-                    inputForm.placeholder.text('이미지는 png 또는 jpg 형식이어야 합니다.')
-                $('#HighlightThumbnailImg').hide();
-                $('#f-attach-highlight').val(''); // 파일 입력 필드 초기화
-                return; // 이미지 처리를 중단합니다.
+            var validExtensions = ['jpg', 'jpeg', 'png'];
+            var fileExtension = file.name.split('.').pop().toLowerCase();
+            if ($.inArray(fileExtension, validExtensions) === -1) {
+                alert('JPEG, JPG, PNG 형식의 파일만 가능합니다.');
+                return;
+            }
+            if (file.size > 500 * 1024) {
+                alert('파일 크기는 500KB 이하이어야 합니다.');
+                return;
             }
 
             const reader = new FileReader();
@@ -1056,18 +1130,20 @@ $(document).ready(function() {
                 // 이미지 조건 확인
                 const img = new Image();
                 img.onload = function() {
-                    if (img.width >= 108) {
+                    if (img.width !== img.height) {
+                        alert('아이템 리스트 이미지는 가로:세로 비율이 1:1이어야 합니다.');
+                        return;
+                    }else if(img.width <= 108){
+                        alert('이미지 너비는 108px 이상이여야 합니다.');
+                        return;
+                    }else{
                         imgElement.attr('src', e.target.result);
                         imgElement.show();
-                    } else {
-                        alert('이미지 너비는 108px 이상이여야 합니다.');
-                        imgElement.hide();
-                        $('#f-attach-highlight').val(''); // 파일 입력 필드 초기화
-
                     }
                 };
                 img.src = e.target.result;
             };
+            $(this).closest('.fm-box').find('input[data-fakefile="text"]').attr('placeholder', file.name);
             reader.readAsDataURL(file);
         }
     });
@@ -1114,7 +1190,6 @@ $(document).ready(function() {
     $('#strong_sub_title,#strong_title').on('input',function (){
         $('#previewStrongSubTitle').text($('#strong_sub_title').val())
         $('#previewStrongTitle').text($('#strong_title').val())
-        changeStrongTitle()
     });
     // 버튼 추가 클릭 이벤트 (linkType, quickReplies 구분)
     $('.addButton').on('click', function () {
@@ -1283,9 +1358,16 @@ $(document).ready(function() {
                 return match;
             }
         });
-
+        console.log(updatedContent)
+        console.log(updateSendPreviewFtalk(updatedContent));
         // 최종 변환된 내용을 previewHighlightTitle에 적용
-        $('#previewHighlightTitle').html(updatedContent);
+
+
+        if(routeValue=='sendFtalk'){
+            $('#previewHighlightTitle').html(updateSendPreviewFtalk(updatedContent));
+        }else{
+            $('#previewHighlightTitle').html(updatedContent);
+        }
     });
     $('#highlightSubtitle').on('input', function() {
         var currentLength = $(this).val().length;
@@ -1604,6 +1686,7 @@ $(document).ready(function() {
 
     // 변수 추가
     $('#insertVariableBtn').on('click', function() {
+
         var variableName = $('#variableName').val().trim();
         var $textarea = $('#highlightTitle');
         var cursorPosition = $textarea.prop("selectionStart"); // 커서의 시작 위치
@@ -1617,7 +1700,10 @@ $(document).ready(function() {
         $textarea.prop("selectionStart", cursorPosition + textToInsert.length);
         $textarea.prop("selectionEnd", cursorPosition + textToInsert.length);
         $textarea.focus(); // 포커스를 다시 textarea로 이동
-        contentReplace();
+        var content = contentReplace();
+        if(routeValue=='sendFtalk'){
+            regexToMessageBind($textarea.val());
+        }
         modal.hide();
     });
     $('#goTemplateReg').on('click', function() {
@@ -1665,7 +1751,12 @@ $(document).ready(function() {
                 }
             });
         }
-        $('#previewHighlightTitle').html(content);
+        if(routeValue=='sendFtalk'){
+            $('#previewHighlightTitle').html(updateSendPreviewFtalk(content));
+        }else{
+            $('#previewHighlightTitle').html(content);
+        }
+
         // 6. 팝업 닫기
         $('#kkoIconPopup').hide();
     });
@@ -1727,6 +1818,7 @@ $(document).ready(function() {
 
     // 특수문자 클릭 시 입력 필드에 삽입
     $(document).on('click', '.special-char', function() {
+
         var selectedChar = $(this).text();
         var $textarea = $('#highlightTitle');
         var cursorPosition = $textarea.prop("selectionStart"); // 커서의 시작 위치
@@ -1741,6 +1833,9 @@ $(document).ready(function() {
         $textarea.prop("selectionEnd", cursorPosition + textToInsert.length);
         $textarea.focus(); // 포커스를 다시 textarea로 이동
         contentReplace();
+        if(routeValue=='sendFtalk'){
+            updateSendPreviewFtalk(contentReplace());
+        }
         $('#specialCharPopup').hide(); // 선택 후 팝업 닫기
     });
     // 새로운 input 필드 세트 추가
@@ -1887,9 +1982,9 @@ $(document).ready(function() {
         $('.image-preview').hide(); // 이미지 미리보기 영역 숨김
         $('#templateImageUploadForm').append(`        
            <div class="fm-box">
-                <input name="highlightFile" type="file" id="f-attach-highlight" data-fakefile="file">
-                <label for="f-attach-highlight" class="fm-file-btn ">파일첨부</label>
-                <input type="text" data-fakefile="text" readonly="readonly" placeholder="하이라이트 썸네일" class="fm-ipt fm-file">
+                <input name="f-attach" type="file" id="f-attach" data-fakefile="file">
+                <label for="f-attach" class="fm-file-btn ">파일첨부</label>
+                <input type="text" data-fakefile="text" readonly="readonly" placeholder="" class="fm-ipt fm-file">
             </div>
             <div class="flex-c-start">
                 <p>- 이미지 제한 사이즈 - 가로 500px 이상, 가로:세로 비율이 2:1아닌 경우 업로드 불가합니다</p>
@@ -1900,6 +1995,7 @@ $(document).ready(function() {
     $('#templateItemHighlightImageUrl').on('click', function() {
         // 미리보기 영역을 숨기고 파일 업로드 필드를 다시 활성화
         $('.templateItemHighlightImageUrl').hide(); // 이미지 미리보기 영역 숨김
+        $('#HighlightThumbnailImg').hide(); // 이미지 미리보기 영역 숨김
         $('#templateHighlightThumbnailUploadForm').append(`        
           <div class="fm-box">
             <input name="file" type="file" id="f-attach-highlight" data-fakefile="file" />
@@ -1907,108 +2003,13 @@ $(document).ready(function() {
             <input type="text" data-fakefile="text" readonly="readonly" placeholder="파일 사이즈 최대 500KB" class="fm-ipt fm-file" />
         </div>
         <div class="flex-c-start">
-            <p>- 이미지 제한 사이즈 - 가로 500px 이상, 가로:세로 비율이 2:1아닌 경우 업로드 불가합니다</p>
+            <p>- 이미지 제한 사이즈 - 가로 500px 이상, 가로:세로 비율이 1:1아닌 경우 업로드 불가합니다</p>
             <p>- 파일형식 및 크기 : jpg, png / 최대 500KB</p>
         </div>
         `);
     });
-    $('#f-attach-highlight').on('change', function() {
-        var fileInput = this.files[0];
-        var errorMessage = $('.error-message');
-        errorMessage.text(''); // 기존 에러 메시지 초기화
 
-        // 파일이 선택되지 않은 경우 처리
-        if (!fileInput) {
-            alert('파일을 선택해주세요.');
-            return;
-        }
 
-        // 파일 확장자 체크
-        var validExtensions = ['jpg', 'jpeg', 'png'];
-        var fileExtension = fileInput.name.split('.').pop().toLowerCase();
-        if ($.inArray(fileExtension, validExtensions) === -1) {
-            alert('JPEG, JPG, PNG 형식의 파일만 가능합니다.');
-            return;
-        }
-
-        // 파일 크기 체크 (500KB 이하)
-        if (fileInput.size > 500 * 1024) {
-            alert('파일 크기는 500KB 이하이어야 합니다.');
-            return;
-        }
-
-        var img = new Image();
-        img.src = URL.createObjectURL(fileInput);
-
-        img.onload = function() {
-            // 가로 너비 체크 (108px 이상)
-            if (img.width < 108) {
-                alert('아이템 리스트 이미지의 가로 너비는 최소 108px이어야 합니다.');
-                return;
-            }
-
-            // 가로:세로 비율 1:1 체크
-            if (img.width !== img.height) {
-                alert('아이템 리스트 이미지는 가로:세로 비율이 1:1이어야 합니다.');
-                return;
-            }
-
-            // 유효성 통과 시 에러 메시지를 지움
-            errorMessage.text('');
-            alert('이미지 유효성 검사를 통과했습니다.');
-        };
-
-        img.onerror = function() {
-            alert('유효하지 않은 이미지 파일입니다.');
-        };
-    });
-    $('#f-attach').on('change', function() {
-        var fileInput = this.files[0];
-
-        // 파일이 선택되지 않은 경우 처리
-        if (!fileInput) {
-            alert('파일을 선택해주세요.');
-            return;
-        }
-
-        // 파일 확장자 체크
-        var validExtensions = ['jpg', 'jpeg', 'png'];
-        var fileExtension = fileInput.name.split('.').pop().toLowerCase();
-        if ($.inArray(fileExtension, validExtensions) === -1) {
-            alert('JPEG, JPG, PNG 형식의 파일만 가능합니다.');
-            return;
-        }
-
-        // 파일 크기 체크 (500KB 이하)
-        if (fileInput.size > 500 * 1024) {
-            alert('파일 크기는 500KB 이하이어야 합니다.');
-            return;
-        }
-
-        var img = new Image();
-        img.src = URL.createObjectURL(fileInput);
-
-        img.onload = function() {
-            // 가로 너비 체크 (500px 이상)
-            if (img.width < 500) {
-                alert('이미지의 가로 너비는 최소 500px이어야 합니다.');
-                return;
-            }
-
-            // 가로:세로 비율 2:1 체크
-            if (img.width / img.height !== 2) {
-                alert('이미지는 가로:세로 비율이 2:1이어야 합니다.');
-                return;
-            }
-
-            // 유효성 통과 시
-            alert('이미지 유효성 검사를 통과했습니다.');
-        };
-
-        img.onerror = function() {
-            alert('유효하지 않은 이미지 파일입니다.');
-        };
-    });
     $(document).on('click','#downloadExcelSucc',function() {
         var idx =$(this).attr('data-id');
         window.location.href=`/kakao/index.php?route=excelDownloadKaKao&idx=${idx}&downloadSuccess=false`
@@ -2018,7 +2019,10 @@ $(document).ready(function() {
         window.location.href=`/kakao/index.php?route=excelDownloadKaKao&idx=${idx}&downloadSuccess=true`
     });
     $(document).on('click', '.sendResultDataRow', function() {
-
+        const imgElement = $('#uploadedImage');
+        $('.item-list-box').addClass('blind')
+        $('.template-header').addClass('blind')
+        $('.highlight-box').addClass('blind')
         try {
             var group_key = $(this).data('id');
 
@@ -2044,9 +2048,7 @@ $(document).ready(function() {
                 dataType: "json",
                 success: function(response) {
                     hideLoadingSpinner();
-
                     var list = response.data['list']
-                    console.log(response.data);
                     downloadExcelSucc.attr('data-id',response.data[0].fetc7)
                     downloadExcelFail.attr('data-id',response.data[0].fetc7)
                     rowDataSmsType.text('알림톡')
@@ -2055,7 +2057,36 @@ $(document).ready(function() {
                     rowDataSuccesSendCnt.text(Number(response.data[0].receive_cnt_suc).toLocaleString())
                     rowDataFaileTotSendCnt.text(Number(response.data[0].receive_cnt_fail).toLocaleString())
                     rowDataMoreTotSendCnt.text(Number(response.data[0].receive_cnt_tot - response.data[0].receive_cnt_suc-response.data[0].receive_cnt_fail).toLocaleString())
-                    loadTemplateDetails(response.data[0].template_id)
+
+                    if(response.data[0].template_id){
+                        loadTemplateDetails(response.data[0].template_id,response.data[0])
+                    }else{
+                        console.log(response.data[0])
+                        $('.elPreview').empty();
+                        $('#previewHighlightTitle').html(response.data[0].fmessage)
+                        var img_path = response.data[0].img_path;
+                        imgElement.hide();
+                        if(img_path){
+                            imgElement.attr('src', img_path);
+                            imgElement.show();
+                        }
+                        var jsonObject = JSON.parse(response.data[0].buttons);
+                        $.each(jsonObject, function(index, button) {
+                            // 각 버튼의 이름을 사용하여 버튼을 생성
+
+                            generatedButton='';
+                            if (button.linkType == 'AC') {
+                                generatedButton = $(`<span class="kko-sub-text">채널 추가하고 이 채널의 마케팅 <br>메시지 등을 카카오톡으로 받기</span><button class="generated-button ${button.linkType == 'AC' ? 'addCh' : 'jss2034'}">${button.name}</button>`);
+                                // AC 타입 버튼은 맨 위로 추가
+                                $('#previeButtonList').prepend(generatedButton);
+                            } else {
+                                generatedButton = $(`<button class="generated-button ${button.linkType == 'AC' ? 'addCh' : 'jss2034'}">${button.name}</button>`);
+                                // 다른 버튼들은 기존 방식대로 추가
+                                $('#previeButtonList').append(generatedButton);
+                            }
+                        });
+                    }
+
                     $('#sendListPopupLayer').show();
                     var popupTable = new Tabulator("#data-table", {
                         data: list, // table.getData()로 가져온 데이터를 사용
@@ -2126,5 +2157,100 @@ $(document).ready(function() {
                 console.dir(xhr);
             }
         });
+    })
+    $(document).on('click','#sendFtalkForm',function () {
+        var selectedValue = $('#f-sel').val();
+        var tableData = table.getData();
+        var isValid= true
+        var message = $('textarea[name=template_title]')
+        var cell_send = $('select[name=cell_send]')
+        var tableListCnt = table.getData().length;
+
+        const fuseridMapping = {
+            'AT': '알림톡',
+            'FT': '친구톡',
+        };
+        if (selectedValue === "") {
+            alert('1 발신 프로필 키를 선택하세요');
+            $('#f-sel').focus();
+            isValid=false;
+            return;
+        }
+        if (tableListCnt <= 0) {
+            alert('수신번호 를 입력 하세요.');
+            isValid=false;
+            return;
+        }
+        if(message.val()===""){
+            alert('메세지 를 입력하세요.');
+            message.focus();
+            isValid=false;
+            return;
+        }
+        if(cell_send.val()===""){
+            alert('발신번호 를 입력하세요.');
+            cell_send.focus();
+            isValid=false;
+            return;
+        }
+        var formData = new FormData($('#template-send-form')[0]);
+
+        tableData.forEach(function(item, index) {
+            formData.append('receive_cell_num_arr[]', item.number);
+        });
+        var dupDelCnt = deleteDuplicateTable()
+        formData.append('transmit_type', 'send');
+        formData.append('message',  updateSendPreviewFtalk(message.val()));
+        // var fileInput = $('#templateFile')[0];
+        //
+        // if (fileInput.files.length > 0) {
+        //     formData.append('templateFile', fileInput.files[0]);
+        // }
+        // var smssendyn =$('input[name="smssendyn"]:checked').val();
+        // if(smssendyn){
+        //     if(!$('textarea[name="smsmemo"]').val()){
+        //         alert('대체문자 사용시 대체문자 내용은 필수 입력 항목입니다.')
+        //         $('input[name="smsmemo"]').focus();
+        //     }
+        // }
+        console.log(isValid)
+        if(isValid){
+            $.ajax({
+                url: 'index.php?route=sendFtalkMessage',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                beforeSend: function() {
+                    // AJAX 요청이 시작되기 전에 로딩 스피너를 보여줌
+                    showLoadingSpinner();
+                },
+                success: function (response) {
+                    var data = JSON.parse(response);
+                    if (data.status === 'success') {
+                        $('#popupLayer').show();
+                        $('#resultSendOkCnt').text(tableListCnt - dupDelCnt);
+                        $('#resultSendCnt').text(tableListCnt);
+                        $('#resultMsgType').text(fuseridMapping[data.fuserid]);
+                        $('#resultSendDupCnt').text(dupDelCnt);
+                    } else {
+                        alert( data.message);
+                    }
+                    hideLoadingSpinner();
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error: ' + error);
+                    console.error('Status: ' + status);
+                    console.dir(xhr);
+                    hideLoadingSpinner();
+                }
+            });
+        }
+    });
+    $(document).on('click','#removeUploadImageX',function (){
+        $('input[name=file]').val('');
+        $('#uploadedImage').hide();
+        $(this).addClass('blind');
+        $('#f-attach').closest('.fm-box').find('input[data-fakefile="text"]').attr('placeholder', '');
     })
 });

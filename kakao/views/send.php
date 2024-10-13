@@ -1,8 +1,5 @@
 <?php require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php"; ?>
 
-<style>
-
-</style>
 <body>
 
 <!--header-->
@@ -212,7 +209,13 @@
             if (fileInput.files.length > 0) {
                 formData.append('templateFile', fileInput.files[0]);
             }
-
+            // var smssendyn =$('input[name="smssendyn"]:checked').val();
+            // if(smssendyn){
+            //     if(!$('textarea[name="smsmemo"]').val()){
+            //         alert('대체문자 사용시 대체문자 내용은 필수 입력 항목입니다.')
+            //         $('input[name="smsmemo"]').focus();
+            //     }
+            // }
             $.ajax({
                 url: 'index.php?route=sendMessage',
                 type: 'POST',
@@ -288,19 +291,7 @@
         });
     });
 
-    function updateSendPreview(templateTitle,templateContent) {
-        var filledTemplate = templateTitle;
-        $('input[name="variables[]"]').each(function() {
-            var varName = $(this).data('varname');
-            var varValue = $(this).val();
-            var regex = new RegExp('\\#\\{' + varName + '\\}', 'g');
-            filledTemplate = filledTemplate.replace(regex, varValue);
-            templateContent = templateContent.replace(regex, varValue);
-        });
-        $('#previewHighlightTitle').html(filledTemplate);
-        // $('#previewHighlightTitle').text(filledTemplate);
-        $('input[name="message"]').val(templateContent);
-    }
+
 
 
     function drawTable(data) {

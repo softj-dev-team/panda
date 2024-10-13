@@ -7,12 +7,19 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/kakao/controllers/TemplateCategoryContr
 require_once $_SERVER['DOCUMENT_ROOT'].'/kakao/controllers/UserAlimTalkController.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/kakao/controllers/KakaoBusinessController.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/kakao/controllers/MasterController.php';
-require_once 'controllers/Send.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/kakao/controllers/Send.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/kakao/controllers/SendFtalkController.php';
 // 라우팅 설정
 $route = isset($_GET['route']) ? $_GET['route'] : '';
 
 
 switch ($route) {
+    case 'getAddressSendNumber':
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $controller = new SendFtalkController();
+            $controller->getAddressSendNumber();
+        }
+        break;
     case 'excelDownloadKaKao':
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $controller = new UserAlimTalkController();
@@ -60,6 +67,12 @@ switch ($route) {
     case 'sendMessage':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $controller = new TemplateCategoryController();
+            $controller->sendMessage();
+        }
+        break;
+    case 'sendFtalkMessage'://친구톡
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $controller = new SendFtalkController();
             $controller->sendMessage();
         }
         break;
@@ -212,6 +225,10 @@ switch ($route) {
     case 'sendMessages':
         $controller = new TemplateCategoryController();
         $controller->sendMessages();
+        break;
+    case 'sendFtalk':
+        $controller= new SendFtalkController();
+        $controller->index();
         break;
     default:
 //        redirectToMainWithAlert();

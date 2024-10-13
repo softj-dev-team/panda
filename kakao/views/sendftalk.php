@@ -1,46 +1,22 @@
-<? include "./common/head.php"; ?>
-<? include $_SERVER["DOCUMENT_ROOT"] . "/pro_inc/check_login.php"; // 공통함수 인클루드 
-?>
-<?
-$send_type = trim(sqlfilter($_REQUEST['send_type']));
-$member_idx = $_SESSION['member_coinc_idx'];
-$my_member_row = get_member_data($_SESSION['member_coinc_idx']);
-
-
-$query_group = "select *,(select count(idx) from address_group_num where 1 and address_group_num.group_idx=address_group.idx) as group_cnt from address_group where 1 and is_del != 'Y' and member_idx='" . $member_idx . "' order by idx desc";
-$result_group = mysqli_query($gconnet, $query_group);
-
-if ($my_member_row['master_ok'] == "N") {
+<?php
+require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
+if ($data['my_member_row']['master_ok'] == "N") {
     echo "<script>alert('관리자의 승인 후에 이용이 가능합니다. 관리자 또는 고객센터에 연락 주세요.');history.back();</script>";
 }
-
-if ($my_member_row['member_gubun'] == "3") {
+if ($data['my_member_row']['member_gubun'] == "3") {
     echo "<script>alert('휴면회원은 이용이 불가능합니다. 관리자 또는 고객센터에 연락 주세요.');history.back();</script>";
 }
-
-if ($my_member_row['member_gubun'] == "2" && $_REQUEST['send_type'] != "adv") {
+if ($data['my_member_row']['member_gubun'] == "2" && $_REQUEST['send_type'] != "adv") {
     echo "<script>alert('광고문자 회원은 광고문자만 이용 가능합니다.');history.back();</script>";
 }
-
-$query_filter = "select filtering_text from filtering where key_name='filtering'";
-$result_filter = mysqli_query($gconnet, $query_filter);
-$filtering_list = mysqli_fetch_array($result_filter);
-$filteringArray = explode(",", $filtering_list['filtering_text']);
-
 ?>
-
 <body>
-
-    <!--header-->
-    <div><? include "./common/header.php"; ?></div>
-
-    <!--content-->
-
+<div><?php include $_SERVER["DOCUMENT_ROOT"] ."/common/header.php"; ?></div>
     <!-- 레이어 팝업 -->
     <div id="popupLayer" class="popup-layer" style="display:none;">
         <div class="popup-content popcontent">
             <div class="poptitle flex-just-end">
-                <button onclick="closePopup()"><img src="images/popup/close.svg"></button>
+                <button onclick="document.getElementById('popupLayer').style.display = 'none'"><img src="/images/popup/close.svg"></button>
             </div>
             <h2>메세지 전송 결과</h2>
             <div class="tlb center">
@@ -72,9 +48,9 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
     <div id="listResaultPopupLayer" class="popup-layer" style="display:none;">
         <div class="popup-content popcontent">
             <div class="poptitle flex-just-end">
-                <button onclick="document.getElementById('listResaultPopupLayer').style.display = 'none'"><img src="images/popup/close.svg"></button>
+                <button onclick="document.getElementById('listResaultPopupLayer').style.display = 'none'"><img src="/images/popup/close.svg"></button>
             </div>
-            <h2>전송 결과</h2>
+            <h2>메세지 전송 결과</h2>
             <div class="tlb center">
                 <table>
                     <thead>
@@ -104,7 +80,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
     <div id="sendListPopupLayerList" class="popup-layer" style="display:none;">
         <div class="popup-content">
             <div class="poptitle flex-just-end">
-                <button type="button" onclick="closeAllPopup()"><img src="images/popup/close.svg"></button>
+                <button type="button" onclick="closeAllPopup()"><img src="/images/popup/close.svg"></button>
             </div>
             <h2>20건씩 발송하기</h2>
             <h4>체크박스를 선택(Shift + 드래그) 하신 후 선택 발송하셔야 합니다.</h4>
@@ -120,122 +96,90 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
     </div>
     <section class="sub">
         <div class="sub_title">
-            <?php if ($_REQUEST['send_type'] == "adv") { ?>
-                <h2>광고문자 보내기</h2>
-            <?php } else { ?>
-                <!--
-                <h2>단·장문 보내기</h2>
-            -->
-                <h2>문자 보내기</h2>
-            <?php } ?>
+            <h2>친구톡 보내기</h2>
             <a href="#layer1" class="btn btn-example">
                 발송가능건수 확인
             </a>
         </div>
 
-        <form name="sms_frm" id="sms_frm" action="sms_action.php" method="post" target="_fra" enctype="multipart/form-data">
-            <input type="hidden" id="send_type" name="send_type" value="<?= $send_type ?>">
-            <input type="hidden" id="sms_type" name="sms_type" value="sms">
-            <input type="hidden" id="transmit_type" name="transmit_type">
+        <form name="sms_frm" id="template-send-form" method="post" target="_fra" enctype="multipart/form-data">
+            <input name="message" type="hidden">
             <div class="sms_flex">
-                <div class="sms">
-                    <h2>
-                        <p id="sms_title">단문</p>
-                        <div class="byte">
-                            <span id="test_cnt"><b><?= $_REQUEST['send_type'] == "adv" ? "27" : "0" ?></b></span><span>/90 byte</span>
+                <div class="preview-section">
+                    <div id="preview">
+
+                        <div id="previewChannelName">채널명</div>
+                        <div id="previewTemplate">
+                            <div class="highlight-container">
+                                <div class="highlight-header">
+                                    <span>알림톡 도착</span>
+                                    <div class="jss1382">kakako</div>
+                                </div>
+                                <div class="highlight-body">
+                                    <div class="image-wrapper">
+                                        <img id="uploadedImage" src="" alt="Uploaded Logo">
+                                        <div class="circle blind" id="removeUploadImageX">
+                                            <div class="file-list">
+                                                <span>1234444.png</span>
+                                                <span>500kb</span>
+                                            </div>
+                                            <i class="fa-regular fa-circle-xmark"></i>
+                                        </div>
+                                    </div>
+                                    <div class="template-header blind">템플릿 헤더</div>
+                                    <div class="highlight-box blind">
+                                        <div>
+                                            <div class="highlight-title-view blind" >하이라이트 타이틀</div>
+                                            <div class="highlight-description-view blind">하이라이트 설명</div>
+                                        </div>
+                                        <div class="highlight-thumbnail">
+                                            <img id="HighlightThumbnailImg" src="">
+                                        </div>
+                                    </div>
+                                    <div class="item-list-box blind">
+
+                                    </div>
+                                    <div id="previewStrongSubTitle" class="previewStrongSubTitle"></div>
+                                    <div id="previewStrongTitle" class="previewStrongTitle"></div>
+                                    <div id="previewHighlightTitle"></div>
+                                    <div id="previewHighlightSubtitle"></div>
+                                    <div id="previewChButtonList">
+
+                                    </div>
+                                    <div id="previeButtonList"></div>
+                                </div>
+                            </div>
+                            <div class="quickLinkList"></div>
                         </div>
-
-                    </h2>
-                    <div class="sms_form" id="area_sms_form">
-                        <p class="top_text">90byte(한글45자) 초과시 자동으로 장문 전환</p>
-                        <?php if ($_REQUEST['send_type'] == "adv") { ?>
-                            <p style="padding:10px" id="adv_title">(광고)</p>
-                        <?php } ?>
-                        <textarea id="sms" name="sms_content" required="yes" message="발송내용" onkeyup="sms_text_count();" style="<?= $_REQUEST['send_type'] == "adv" ? "height:407px;" : "" ?>"></textarea>
-                        <?php if ($_REQUEST['send_type'] != "gen") { ?>
-                            <a href="javascript:;" class="sms080">무료거부 <?= $inc_sms_denie_num ?></a>
-                        <?php } ?>
-
                     </div>
-
-                    <div class="sms_btn">
-                        <span href="#none" class="tksms">특수문자 입력
-                            <span class="tkbox">
-                                <a href="javascript:insertatcaret('sms','♥');sms_text_count();">♥</a>
-                                <a href="javascript:insertatcaret('sms','♡');sms_text_count();">♡</a>
-                                <a href="javascript:insertatcaret('sms','★');sms_text_count();">★</a>
-                                <a href="javascript:insertatcaret('sms','☆');sms_text_count();">☆</a>
-                                <a href="javascript:insertatcaret('sms','▶');sms_text_count();">▶</a>
-                                <a href="javascript:insertatcaret('sms','▷');sms_text_count();">▷</a>
-                                <a href="javascript:insertatcaret('sms','●');sms_text_count();">●</a>
-                                <a href="javascript:insertatcaret('sms','■');sms_text_count();">■</a>
-                                <a href="javascript:insertatcaret('sms','▲');sms_text_count();">▲</a>
-                                <a href="javascript:insertatcaret('sms','▒');sms_text_count();">▒</a>
-                                <a href="javascript:insertatcaret('sms','♨');sms_text_count();">♨</a>
-                                <a href="javascript:insertatcaret('sms','™');sms_text_count();">™</a>
-                                <a href="javascript:insertatcaret('sms','♪');sms_text_count();">♪</a>
-                                <a href="javascript:insertatcaret('sms','♬');sms_text_count();">♬</a>
-                                <a href="javascript:insertatcaret('sms','☜');sms_text_count();">☜</a>
-                                <a href="javascript:insertatcaret('sms','☞');sms_text_count();">☞</a>
-                                <a href="javascript:insertatcaret('sms','♂');sms_text_count();">♂</a>
-                                <a href="javascript:insertatcaret('sms','♀');sms_text_count();">♀</a>
-                                <a href="javascript:insertatcaret('sms','◆');sms_text_count();">◆</a>
-                                <a href="javascript:insertatcaret('sms','◇');sms_text_count();">◇</a>
-                                <a href="javascript:insertatcaret('sms','♣');sms_text_count();">♣</a>
-                                <a href="javascript:insertatcaret('sms','♧');sms_text_count();">♧</a>
-                                <a href="javascript:insertatcaret('sms','☎');sms_text_count();">☎</a>
-                                <a href="javascript:insertatcaret('sms','◀');sms_text_count();">◀</a>
-                                <a href="javascript:insertatcaret('sms','◁');sms_text_count();">◁</a>
-                                <a href="javascript:insertatcaret('sms','○');sms_text_count();">○</a>
-                                <a href="javascript:insertatcaret('sms','□');sms_text_count();">□</a>
-                                <a href="javascript:insertatcaret('sms','▼');sms_text_count();">▼</a>
-                                <a href="javascript:insertatcaret('sms','∑');sms_text_count();">∑</a>
-                                <a href="javascript:insertatcaret('sms','㉿');sms_text_count();">㉿</a>
-                                <a href="javascript:insertatcaret('sms','◈');sms_text_count();">◈</a>
-                                <a href="javascript:insertatcaret('sms','▣');sms_text_count();">▣</a>
-                                <a href="javascript:insertatcaret('sms','『');sms_text_count();">『</a>
-                                <a href="javascript:insertatcaret('sms','』');sms_text_count();">』</a>
-                                <a href="javascript:insertatcaret('sms','☜');sms_text_count();">☜</a>
-                                <a href="javascript:insertatcaret('sms','♬');sms_text_count();">♬</a>
-                                <a href="javascript:insertatcaret('sms','⌒');sms_text_count();">⌒</a>
-                                <a href="javascript:insertatcaret('sms','¸');sms_text_count();">¸</a>
-                                <a href="javascript:insertatcaret('sms','˛');sms_text_count();">˛</a>
-                                <a href="javascript:insertatcaret('sms','∽');sms_text_count();">∽</a>
-                                <a href="javascript:insertatcaret('sms','з');sms_text_count();">з</a>
-                                <a href="javascript:insertatcaret('sms','§');sms_text_count();">§</a>
-                                <a href="javascript:insertatcaret('sms','⊙');sms_text_count();">⊙</a>
-                                <a href="javascript:insertatcaret('sms','※');sms_text_count();">※</a>
-                                <a href="javascript:insertatcaret('sms','∴');sms_text_count();">∴</a>
-                                <a href="javascript:insertatcaret('sms','¤');sms_text_count();">¤</a>
-                                <a href="javascript:insertatcaret('sms','∂');sms_text_count();">∂</a>
-                                <a href="javascript:insertatcaret('sms','▩');sms_text_count();">▩</a>
-                            </span>
-
-                        </span>
-                        <a href="javascript:alert('무료 수신거부 서비스는 필수입니다.');">080수신거부</a>
-                        <a href="#layer2" class="btn-example" id="btnSaveMessageCallList">메세지 보관함</a>
-                        <a href="javascript:go_msg_save();">문자내용 저장</a>
-                    </div>
+                    <p class="preview-note">미리보기는 실제 단말기와 차이가 있을 수 있습니다.</p>
                 </div>
 
                 <div class="tlb">
-                    <table>
-                        <?php if ($_REQUEST['send_type'] == "adv") { ?>
-                            <tr>
-                                <th>업체명(상호)</th>
-                                <td><input type="text" id="adv_company" name="adv_company" required="no" message="(광고)옆에 삽입될 업체명 또는 상호 입력" onkeyup="sms_text_count();"></td>
-                            </tr>
-                        <?php } ?>
-                        <tr>
-                            <th>제목</th>
-                            <td><input type="text" id="sms_title" name="sms_title" required="no" message="제목"></td>
-                        </tr>
 
+                    <table>
+                        <tr>
+                            <th>발신프로필</th>
+                            <td>
+                                <div class="">
+                                    <div class="flex-c">
+                                        <div class="fm-box w-100">
+                                            <select id="f-sel" class="fm-sel" name="profile_id">
+                                                <option value="">발신프로필 선택 *</option>
+                                            </select>
+                                            <span class="fm-error-txt">* 항목을 선택 또는 작성 해 주세요.</span>
+                                        </div>
+                                        <button class="addChild" type="button"><i class="plusI"></i>발신프로필등록</button>
+                                    </div>
+                                </div>
+
+                            </td>
+                        </tr>
                         <tr>
                             <th>수신번호</th>
                             <td>
-                                <div class="tlb_flex">
-                                    <input type="text" id="cell_receive_dan"><button class="btn" type="button" onclick="add_receive_dan();">추가</button>
+                                <div class="flex-c">
+                                    <input type="text" id="cell_receive_dan" class="fm-ipt"><button class="btn" type="button" onclick="add_receive_dan();">추가</button>
                                 </div>
                                 <div class="sms_are">
                                     <div class="sms_btn_inupt">
@@ -276,45 +220,16 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                                             직접 붙여넣기 총 <span id="singleNumberDirectPaste">0</span>명 <i type="button" class="fa-solid fa-circle-minus countDelBtn" data-id="singleNumberDirectPaste"></i>
                                         </div>
                                     </div>
-                                    <div class="close_btn_sms">
-                                        <a href="javascript:abDelete();">삭제</a>
-                                    </div>
-
 
                                 </div>
 
                             </td>
                         </tr>
-                        <tr>
-                            <th>분할전송</th>
-                            <td>
-                                <div class="tlb_flex_sms">
-                                    <input type="radio" id="division_yn_1" name="division_yn" value="Y" required="no" message="분할전송"><span>사용</span>
-                                    <input type="radio" id="division_yn_2" name="division_yn" value="N" required="no" message="분할전송" checked><span>미사용</span>
-                                    <input type="text" class="half" id="division_cnt" name="division_cnt" value="" required="no" message="분할전송"><span>건씩</span>
-                                    <input type="text" class="half" id="division_min" name="division_min" value="" required="no" message="분할전송"><span>분간격</span>
-                                </div>
-                            </td>
-                        </tr>
 
-                        <tr>
-                            <th>전송시간</th>
-                            <td>
-                                <div class="tlb_flex_sms">
-                                    <input type="radio" style="width:25px;height:25px;" id="reserv_yn_1" name="reserv_yn" value="N" required="yes" message="전송시간" checked><span>즉시</span>
-                                    <input type="radio" style="width:25px;height:25px;" id="reserv_yn_2" name="reserv_yn" value="Y" required="yes" message="전송시간"><span>예약</span>
-                                </div>
 
-                                <div class="tlb_flex_sms">
-                                    <input type="text" class="half datepicker" id="reserv_date" name="reserv_date" value="" required="no" message="예약날자">
-                                    <input type="text" class="half" id="reserv_time" name="reserv_time" value="" required="no" message="예약시간"><span>시</span>
-                                    <input type="text" class="half" id="reserv_minute" name="reserv_minute" value="" required="no" message="예약분"><span>분</span>
-                                </div>
-                            </td>
-                        </tr>
                         <?
-                        $call_num_arr_before = json_decode($my_member_row['call_num'], true);
-                        $use_yn_arr = json_decode($my_member_row['use_yn'], true);
+                        $call_num_arr_before = json_decode($data['my_member_row']['call_num'], true);
+                        $use_yn_arr = json_decode($data['my_member_row']['use_yn'], true);
                         $call_num_arr = array();
                         for ($i_num = 0; $i_num < sizeof($use_yn_arr); $i_num++) {
                             if ($use_yn_arr[$i_num] == "Y") {
@@ -322,13 +237,14 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                             }
                         }
                         ?>
+
                         <tr>
                             <th>발신번호</th>
                             <td>
                                 <?php if (sizeof($call_num_arr) == 1) { ?>
                                     <input type="text" id="cell_send" name="cell_send" value="<?= $call_num_arr[0] ?>" required="yes" message="발신번호" readonly>
                                 <?php } else { ?>
-                                    <select id="cell_send" name="cell_send" required="yes" message="발신번호">
+                                    <select id="cell_send" name="cell_send" required="yes" message="발신번호" class="fm-sel">
                                         <option value="">선택</option>
                                         <? for ($i_num = 0; $i_num < sizeof($call_num_arr); $i_num++) { ?>
                                             <option value="<?= $call_num_arr[$i_num] ?>"><?= $call_num_arr[$i_num] ?></option>
@@ -337,21 +253,183 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                                 <?php } ?>
                             </td>
                         </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div class="flex-column">
+                                    <div class="flex-between">
+                                        <div class="flex-just-start">
+                                            <div class="flex-c">
+                                                <input type="radio" class="fm-radio" name="msgType" value="FT" id="msgTypeFT" checked>
+                                                <label class="fm-radio-label" for="msgTypeFT">첨부안함</label>
+                                            </div>
+                                            <div class="flex-c">
+                                                <input type="radio" class="fm-radio" name="msgType" value="FI" id="msgTypeFI">
+                                                <label class="fm-radio-label" for="msgTypeFI">기본 이미지</label>
+                                            </div>
+                                            <div class="flex-c">
+                                                <input type="radio" class="fm-radio" name="msgType" value="FW" id="msgTypeFW">
+                                                <label class="fm-radio-label" for="msgTypeFW">와이드 이미지</label>
+                                            </div>
+                                        </div>
+                                        <div class="flex-just-end">
+                                            <div class="flex-c">
+                                                <input type="checkbox" id="adFlag" class="fm-chk" name="adFlag"><label for="adFlag" class="fm-chk-i"><strong>광고성 정보가 포함되어 있습니다.</strong></label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="custom-input-container">
+                                        <label for="template_title" class="fm-label custom-label">메세지 내용 * (<span id="charCount">0/1000</span>)</label>
+                                        <textarea name="template_title" id="highlightTitle" class="fm-ta" placeholder="템플릿내용은 한/영 구분없이 1,000자까지 입력 가능합니다. 변수에 들어갈 내용의 최대 길이를 감안하여 작성해 주세요."></textarea>
+                                        <span id="errorMsg" class="fm-error-txt" >* 1000자를 초과할 수 없습니다.</span>
+                                    </div>
+                                    <div class="w-100" id="templateImageUploadForm" >
+                                        <div class="fm-box">
+                                            <input name="file" type="file" id="f-attach" data-fakefile="file" />
+                                            <label for="f-attach" class="fm-file-btn ">파일첨부</label>
+                                            <input type="text" data-fakefile="text" readonly="readonly" placeholder="" class="fm-ipt fm-file" />
+                                        </div>
+                                        <div class="image-valid">
+                                            <p>- 이미지 제한 사이즈 - 가로 500px 이상, 세로 높이 250px 이상</p>
+                                            <p>- 가로:세로 비율이 1:1.5 ~ 2:1 범위 내</p>
+                                            <p>- 파일형식 및 크기 : jpg, png / 최대 500KB</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex-just-start">
+                                        <button type="button" class="btn-t-3 btn-c-4" id="addVariableBtn">변수추가</button>
+                                        <button type="button" class="btn-t-3 btn-c-4" id="openSpecialCharPopup">특수문자</button>
+                                        <button type="button" class="btn-t-3 btn-c-4" id="openKkoIconPopup">이모티콘</button>
+                                        <button type="button" class="btn-t-3 btn-c-4 addButton" data-id="buttons">버튼추가 (0/5)</button>
+                                    </div>
+                                    <div class="fm-box flex-c regexToMessageBind">
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div class="fm-box">
+                                    <input type="checkbox" id="f-chk-all" class="fm-chk" name="smssendyn"><label for="f-chk-all" class="fm-chk-i"><strong>대체문자 사용</strong></label>
+                                    <p>알림톡 발송이 실패 된 경우, 해당 내용을 문자로 대체 발송하여 누락을 방하는 기능입니다.</p>
+                                </div>
+                                <div class="fm-row">
+                                    <div class="fm-box">
+                                        <textarea name="smsmemo" placeholder="내용을 입력해 주세요." id="f-des" class="fm-ta" data-chkarea="case1" class="guide-tab-cont" "></textarea>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
                     </table>
+                    <div id="buttonListContainer">
+                        <!-- 버튼 목록 -->
+                        <div id="buttonList" class="buttonList">
+                            <!-- 버튼이 추가될 영역 -->
+                        </div>
+                        <!-- 버튼 목록 -->
+                        <div id="quickList" class="buttonList">
+                            <!-- 버튼이 추가될 영역 -->
+                        </div>
+                    </div>
+                    <div class="flex-just-end">
+
+                        <button type="button" class="btn-t-2 btn-c-2" id="sendFtalkForm">발송하기</button>
+                    </div>
+
                 </div>
             </div>
 
         </form>
+        <!-- 모달 레이어 -->
+        <div id="variableModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <label for="variableName" class="fm-label">변수명:</label>
 
-
-        <div class="btn_pry">
-            <?=$send_type=="elc"?'<button class="btn02 btn" id="openSendListPopupButton">20 건씩 전송하기</button>':''?>   <a href="javascript:go_msg_send();" class="btn02 btn">전송하기</a>
+                <input type="text" id="variableName" class="fm-ipt">
+                <p>&nbsp;</p>
+                <div class="flex-c">
+                    <button type="button" id="insertVariableBtn" class="btn-t-2 btn-c-4">변수추가</button>
+                </div>
+            </div>
         </div>
+        <div id="specialCharPopup" class="templatePopup" style="display: none;">
+            <div class="popup-content">
+                <span class="close closePopup">&times;</span>
+                <div id="specialCharList"></div>
+            </div>
+        </div>
+        <div id="kkoIconPopup" class="templatePopup" style="display: none;">
+            <div class="popup-content">
+                <span class="close closePopup">&times;</span>
+                <div id="kko_icon_list"></div>
+            </div>
+        </div>
+        <!-- 버튼 추가 레이어 팝업 -->
+        <div id="buttonPopup" style="display: none;">
+            <div class="popup-content kakao-button-popup-box">
+                <h3>새 버튼 추가</h3>
+                <div class="custom-input-container">
+                    <select class="fm-sel" name="linkType" id="linkType" >
+                        <option value="">버튼종류선택 * </option>
+                        <option value="WL">웹링크</option>
+                        <option value="AL">앱링크</option>
+                        <option value="MD">메시지전달</option>
+<!--                        <option value="BK">봇키워드</option>-->
+<!--                        <option value="DS">배송조회</option>-->
+<!--                        <option value="BT">봇전환</option>-->
+<!--                        <option value="BC">상담톡전환</option>-->
+<!--                   -->
+<!--                        <option value="P1">이미지 보안 전송 플러그인</option>-->
+<!--                        <option value="P2">개인정보이용 플러그인</option>-->
+<!--                        <option value="P3" disabled="" style="display: none;">원클릭결제 플러그인</option>-->
+<!--                        <option value="BF" >비즈니스폼</option>-->
+                    </select>
+                </div>
+                <div class="fm-box custom-input-container">
+                    <label for="buttonName" class="custom-label">버튼명(<span>0/14</span>)</label>
+                    <input type="text" id="buttonName" placeholder="버튼명을 입력하세요" class="fm-ipt custom-input">
+                    <span class="fm-error-txt blind" >* 14자를 초과할 수 없습니다.</span>
+                </div>
+
+                <div class="fm-box custom-input-container blind" data-id="AL">
+                    <label for="linkAnd" class="custom-label">android 링크</label>
+                    <input type="text" id="linkAnd" placeholder="https://" class="fm-ipt custom-input">
+                </div>
+                <div class="fm-box custom-input-container blind" data-id="AL">
+                    <label for="linkIos" class="custom-label">ios 링크</label>
+                    <input type="text" id="linkIos" placeholder="https://" class="fm-ipt custom-input">
+                </div>
 
 
+                <div class="fm-box custom-input-container blind" data-id="WL">
+                    <label for="linkMo" class="custom-label">모바일링크</label>
+                    <input type="text" id="linkMo" placeholder="https://" class="fm-ipt custom-input">
+                </div>
+                <div class="fm-box custom-input-container blind" data-id="WL">
+                    <label for="linkPc" class="custom-label">PC링크 (선택 사항)</label>
+                    <input type="text" id="linkPc" placeholder="https://" class="fm-ipt custom-input">
+                </div>
+                <div class="fm-box custom-input-container blind" data-id="BF">
+                    <label for="bizFormId" class="custom-label">비지니스폼ID</label>
+                    <input type="text" id="bizFormId" placeholder="" class="fm-ipt custom-input">
+                </div>
+                <div class="fm-box custom-input-container blind" data-id="P1">
+                    <label for="pluginId" class="custom-label">플러그인ID</label>
+                    <input type="text" id="pluginId" placeholder="" class="fm-ipt custom-input">
+                </div>
+                <div class="flex-just-start" style="flex: 1">
+                    <button id="saveButton" type="button" class="btn-t-3 btn-c-3">버튼 만들기</button>
+                    <button id="cancelButton" type="button" class="btn-t-3 btn-c-3">취소</button>
+                </div>
+
+            </div>
+        </div>
         <div class="point_pop">
             <h2>
-                <span><img src="images/popup/point.svg"></span>
+                <span><img src="/images/popup/point.svg"></span>
                 불법스팸안내
             </h2>
             <ul class="list_ul">
@@ -363,7 +441,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
 
 
             <h2>
-                <span><img src="images/popup/point.svg"></span>
+                <span><img src="/images/popup/point.svg"></span>
                 불법스팸이란
             </h2>
             <ul class="list_ul">
@@ -376,7 +454,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
 
 
             <h2>
-                <span><img src="images/popup/point.svg"></span>
+                <span><img src="/images/popup/point.svg"></span>
                 알아두세요!
             </h2>
             <ul class="list_ul">
@@ -386,41 +464,6 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                 <li>발송되는 모든 번호는 중복 체크되며, 중복된 번호는 자동적으로 제거 됩니다.</li>
 
             </ul>
-
-        </div>
-
-
-
-        <div class="goods">
-
-            <ul class="tabs">
-                <li class="tab-link current" data-tab="tab-1" id="sample_btn_1" onclick="sms_type_change('sms');">단문문자 <!--일반형--></li>
-                <li class="tab-link" data-tab="tab-1" id="sample_btn_2" onclick="sms_type_change('lms');">장문문자 <!--일반형--></li>
-                <!--<li class="tab-link" data-tab="tab-3">단문문자 기업형</li>-->
-            </ul>
-
-            <div id="tab-1" class="tab-content current">
-                <div class="tab_sub">
-                    <a href="javascript:sms_sample_list();" id="sample_cate_all" class="sample_cate_btn atv">전체</a>
-                    <?
-                    $sub_sql = "select cate_code1,cate_name1 from common_code where 1 and type='smsmenu' and cate_level = '1' and is_del='N' and del_ok='N' order by cate_align desc";
-                    $sub_query = mysqli_query($gconnet, $sub_sql);
-
-                    $sub_k = 0;
-                    for ($sub_i = 0; $sub_i < mysqli_num_rows($sub_query); $sub_i++) {
-                        $sub_row = mysqli_fetch_array($sub_query);
-                        $sub_k = $sub_k + 1;
-                    ?>
-                        <a href="javascript:sms_sample_list_cate('<?= $sub_row['cate_code1'] ?>');" id="sample_cate_<?= $sub_row['cate_code1'] ?>" class="sample_cate_btn"><?= $sub_row['cate_name1'] ?></a>
-                    <? } ?>
-                </div>
-
-                <span id="sample_list_sms">
-                    <!-- inner_sample_sms.php 에서 불러옴 -->
-                </span>
-            </div>
-
-            <input type="hidden" id="sample_sms_type" value="sms" />
         </div>
 
     </section>
@@ -435,136 +478,33 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                         발송가능건수
                     </h2>
                     <a href="#" class="btn-layerClose close">
-                        <img src="images/popup/close.svg">
+                        <img src="/images/popup/close.svg">
                     </a>
                 </div>
 
                 <div class="pop_flex">
                     <ul>
                         <li>
-                            <p class="left"><b>단문문자</b><span>단가 <?= number_format($my_member_row['mb_short_fee']) ?>원</span></p>
-                            <p class="right"><b><?= floor($my_member_row['current_point'] / $my_member_row['mb_short_fee']) ?></b>건</p>
+                            <p class="left">단문문자<span>단가 <?= number_format($data['my_member_row']['mb_short_fee'],2) ?>원</span></p>
+                            <p class="right"><?= number_format($data['my_member_row']['current_point'] / $data['my_member_row']['mb_short_fee']) ?>건</p>
                         </li>
                         <li>
-                            <p class="left"><b>장문문자</b><span>단가 <?= number_format($my_member_row['mb_long_fee']) ?>원</span></p>
-                            <p class="right"><b><?= floor($my_member_row['current_point'] / $my_member_row['mb_long_fee']) ?></b>건</p>
+                            <p class="left">장문문자<span>단가 <?= number_format($data['my_member_row']['mb_long_fee'],2) ?>원</span></p>
+                            <p class="right"><?= number_format($data['my_member_row']['current_point'] / $data['my_member_row']['mb_long_fee']) ?>건</p>
                         </li>
                         <li>
-                            <p class="left"><b>이미지문자</b><span>단가 <?= number_format($my_member_row['mb_img_fee']) ?>원</span></p>
-                            <p class="right"><b><?= floor($my_member_row['current_point'] / $my_member_row['mb_img_fee']) ?></b>건</p>
+                            <p class="left">이미지문자<span>단가 <?= number_format($data['my_member_row']['mb_img_fee'],2) ?>원</span></p>
+                            <p class="right"><?= number_format($data['my_member_row']['current_point'] / $data['my_member_row']['mb_img_fee']) ?>건</p>
+                        </li>
+                        <li>
+                            <p class="left">알림톡</b><span>단가 <?= number_format($data['my_member_row']['mb_kko_fee'],2) ?>원</span></p>
+                            <p class="right"><?= number_format($data['my_member_row']['current_point'] / $data['my_member_row']['mb_kko_fee']) ?>건</p>
                         </li>
                     </ul>
                 </div>
-
-                <!--div class="btn_are_pop">
-                <a href="#" class="btn-layerClose btn">
-                    닫기
-                </a>
-            </div-->
-
             </div>
         </div>
     </div>
-
-
-    <!--메세지 보관함-->
-
-
-    <div id="layer2" class="pop-layer">
-        <div class="pop-container">
-            <div class="popcontent">
-                <div class="poptitle">
-                    <h2>
-                        메세지 보관함
-                    </h2>
-                    <a href="javascript:;" class="btn-layerClose close" id="btn_layerClose">
-                        <img src="images/popup/close.svg">
-                    </a>
-                </div>
-
-                <ul class="tabs">
-                    <li class="tab-link current" data-tab="tab-4">장문, 단문</li>
-                    <!--<li class="tab-link" data-tab="tab-5">이미지</li>-->
-                </ul>
-
-                <div id="tab-4" class="tab-content current">
-                    <!-- inner_sms_save_list.php 에서 불러옴 -->
-                </div>
-
-                <!--<div id="tab-5" class="tab-content">
-        
-              <div class="point_pop samll">
- 
-                <ul class="list_ul">
-                    <li>저장된 메세지를 클릭하면 입력창에 제목과 내용이 입려됩니다.</li>
-
-                </ul>
-
-        </div>
-        
-        <div class="tab_btn_are">
-            <div class="btn">
-                <a href="#">전체선택</a>
-                <a href="#">삭제</a>
-            </div>
-            <div class="input_tab">
-                <input type="text">
-                <a href="#none">
-                    <img src="images/search.png">
-                </a>
-            </div>
-        </div>
-        
-        <div class="sample">
-            <div class="sample_box">
-                <input type="checkbox">
-                <img src="images/sample.png">
-            </div>
-            <div class="sample_box">
-                <input type="checkbox">
-                <img src="images/sample.png">
-            </div>
-                   
-
-            
-
-        
-        </div>
-        
-        <div class="pagenation">
-            <a href="#none" class="start">
-            <img src="images/pagenation/ll.png">
-            </a>
-            <a href="#none" class="pre">
-            <img src="images/pagenation/l.png">
-            </a>
-            
-            <a href="#" class="atv">1</a>
-            <a href="#" class="">2</a>
-            <a href="#" class="">3</a>
-            <a href="#" class="">4</a>
-            <a href="#" class="">5</a>
-            
-            <a href="#none" class="next">
-            <img src="images/pagenation/r.png">
-            </a>
-            <a href="#none" class="end">
-            <img src="images/pagenation/rr.png">
-            </a>
-        </div>
-        
-        
-
-	</div>-->
-
-
-            </div>
-        </div>
-    </div>
-
-
-
-    <!--발송건수확인-->
 
 
     <div id="layer3" class="pop-layer">
@@ -575,7 +515,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                         받는사람 추가하기
                     </h2>
                     <a href="#" class="btn-layerClose close">
-                        <img src="images/popup/close.svg">
+                        <img src="/images/popup/close.svg">
                     </a>
                 </div>
 
@@ -604,7 +544,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                         <div class="input_tab">
                             <input type="text">
                             <a href="#none">
-                                <img src="images/search.png">
+                                <img src="/images/search.png">
                             </a>
                         </div>
                     </div>
@@ -620,8 +560,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php for ($i = 0; $i < mysqli_num_rows($result_group); $i++) { // 대분류 루프 시작
-                                    $row_group = mysqli_fetch_array($result_group); ?>
+                                <?php forEach ($data['result_group'] as $row_group) { // 대분류 루프 시작?>
                                     <tr>
                                         <td class="check"><input type="checkbox" name="check_group" value="<?= $row_group["idx"] ?>"></td>
                                         <td><?= $row_group["group_name"] ?></td>
@@ -641,7 +580,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
 
                     <div class="point_pop">
                         <h2>
-                            <span><img src="images/popup/point.svg"></span>
+                            <span><img src="/images/popup/point.svg"></span>
                             알림
                         </h2>
                         <ul class="list_ul">
@@ -662,7 +601,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
 
                     <div class="point_pop">
                         <h2>
-                            <span><img src="images/popup/point.svg"></span>
+                            <span><img src="/images/popup/point.svg"></span>
                             알림
                         </h2>
                         <ul class="list_ul">
@@ -687,92 +626,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
     <!--footer-->
     <div><? include "./common/footer.php"; ?></div>
 
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
     <script>
-
-        var send_type ='<?=$_REQUEST['send_type']?>';
-        var inc_sms_denie_num ='<?= $inc_sms_denie_num ?>';
-        window.onload = function() {
-            if(send_type==='elc') {
-                var textarea = document.getElementById('sms');
-                textarea.value = "(선거운동정보)\n\n불법수집정보신고번호 118\n무료거부 " + inc_sms_denie_num;
-                var text_length = getStringLength($("#sms").val());
-                $('#test_cnt').html("<b>" + text_length + "</b>");
-            }
-        };
-
-        document.getElementById('sms').addEventListener('input', function (e) {
-            var textarea = e.target;
-            var value = textarea.value;
-
-            if(send_type==='elc') {
-                // 상단과 하단 문구 설정
-                var topText = "(선거운동정보)\n";
-                var bottomText = "\n불법수집정보신고번호 118\n무료거부 "+inc_sms_denie_num;
-
-                // 만약 사용자가 상단이나 하단 문구를 변경했을 경우 다시 복구
-                if (!value.startsWith(topText) || !value.endsWith(bottomText)) {
-                    // 사용자가 편집 가능한 부분만 남기고 상단/하단 문구 복구
-                    var userText = value.substring(topText.length, value.length - bottomText.length);
-                    textarea.value = topText + userText + bottomText;
-                    // 커서를 입력한 텍스트 끝으로 이동
-                    textarea.selectionStart = textarea.selectionEnd = topText.length + userText.length;
-                }
-            }
-        });
-
-        $(function() {
-            $(".datepicker").datepicker({
-                changeYear: true,
-                changeMonth: true,
-                minDate: '-90y',
-                yearRange: 'c-90:c',
-                dateFormat: 'yy-mm-dd',
-                showMonthAfterYear: true,
-                constrainInput: true,
-                dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
-                monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
-            });
-        });
-
-        var add_text_count = <?= $_REQUEST['send_type'] == "adv" ? "27" : "0" ?>;
-
-        function sms_text_count() {
-            var company_count = getStringLength($("#adv_company").val());
-            if (company_count >= 0) {
-                var txt = "(광고)\n" + $("#adv_company").val();
-                $("#adv_title").text(txt);
-            }
-            var text_length = (getStringLength($("#sms").val()) + company_count + add_text_count);
-            $('#test_cnt').html("<b>" + text_length + "</b>");
-            if (text_length > 90) {
-                //$("#sms").val($("#sms").val().substring(0, 90));
-                //$('#test_cnt').html("(90 / 90)");
-                $("#sms_title").text("장문");
-            } else {
-                $("#sms_title").text("단문");
-            }
-        }
-
-        function getStringLength(str) {
-            var retCode = 0;
-            var strLength = 0;
-            if (str == null || str == undefined) return 0;
-            for (i = 0; i < str.length; i++) {
-                var code = str.charCodeAt(i);
-                var ch = str.substr(i, 1).toUpperCase();
-                code = parseInt(code);
-                if ((ch < "0" || ch > "9") && (ch < "A" || ch > "Z") && ((code > 255) || (code < 0))) {
-                    strLength = strLength + 2;
-                } else {
-                    strLength = strLength + 1;
-                }
-            }
-            return parseInt(strLength);
-        }
-
 
         $(document).ready(function() {
             $('ul.tabs li').click(function() {
@@ -785,11 +639,6 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                 $("#" + tab_id).addClass('current');
             });
 
-            sms_save_list();
-            sms_sample_list();
-            $('#btnSaveMessageCallList').on('click',function (){
-                sms_save_list();
-            })
         });
 
         var table = new Tabulator("#excel_copy", {
@@ -909,174 +758,9 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                 }
             }
         }
-        // 팝업을 표시하는 함수
-        function showPopup() {
-            document.getElementById('popupLayer').style.display = 'flex';
-        }
 
-        // 팝업을 닫는 함수
-        function closePopup() {
-            document.getElementById('popupLayer').style.display = 'none';
-            window.location.reload();
-        }
-        function go_msg_send() {
 
-            var ban_ = ban();
-            if (ban_) {
-                var form = document.getElementById('sms_frm');
-                var formData = new FormData(form);
-                var check = chkFrm('sms_frm');
-                var reserv_yn =$('input[name="reserv_yn"]:checked').val();
-                var confirmMessage ='';
-                var tableListCnt = table.getData().length;
-                var msgTypeName='';
-                if(reserv_yn==='N'){
-                    confirmMessage ='즉시';
-                }else{
-                    confirmMessage ='예약';
-                }
-                var content_lenght =getStringLength($("#sms").val());
-                if (content_lenght > 90) {
-                    msgTypeName = '장문'
-                } else {
-                    msgTypeName = '단문'
-                }
-                if (check && validate()) {
-                    var result = confirm("메세지를 ["+confirmMessage+"] 발송합니다.\n"+tableListCnt+" 건을 ["+confirmMessage+"] 발송 하겠습니까?" );
-                    if (result) {
-                        showLoadingSpinner();
-                        var dupDelCnt = deleteDuplicateTable()
-                        var list = table.getData();
-                        list.forEach(function(item, index) {
-                            formData.append('receive_cell_num_arr[]', item.number);
-                        });
 
-                        formData.append('transmit_type', 'send');
-                        var xhr = new XMLHttpRequest();
-                        xhr.open('POST', form.action, true);
-                        xhr.onload = function () {
-                            if (xhr.status === 200) {
-                                hideLoadingSpinner();
-                                var response = JSON.parse(xhr.responseText);
-                                if (response.status === 'error') {
-                                    // 예외 처리 메시지 표시
-
-                                    alert(response.message);
-                                } else if (response.status === 'success') {
-                                    // 예외가 없을 경우 팝업 표시
-                                    showPopup();
-                                    $('#resultSendOkCnt').text(tableListCnt - dupDelCnt);
-                                    $('#resultSendCnt').text(tableListCnt);
-                                    $('#resultMsgType').text(msgTypeName);
-                                    $('#resultSendDupCnt').text(dupDelCnt);
-                                }
-                            } else {
-                                hideLoadingSpinner();
-                                alert('서버와의 통신 중 오류가 발생했습니다.');
-                            }
-                        };
-                        xhr.send(formData);
-                    } else {
-                        // 사용자가 취소 버튼을 눌렀을 때의 동작
-                        return;
-                    }
-
-                } else {
-                    false;
-                }
-            }
-        }
-        function go_list_msg_send() {
-
-            var ban_ = ban();
-            if (ban_) {
-                var form = document.getElementById('sms_frm');
-                var formData = new FormData(form);
-                var check = chkFrm('sms_frm');
-                var reserv_yn =$('input[name="reserv_yn"]:checked').val();
-                var confirmMessage ='';
-                var list = popupTable.getSelectedData();
-                var tableListCnt = list.length;
-                var msgTypeName='';
-                if(reserv_yn==='N'){
-                    confirmMessage ='즉시';
-                }else{
-                    confirmMessage ='예약';
-                }
-                var content_lenght =getStringLength($("#sms").val());
-                if (content_lenght > 90) {
-                    msgTypeName = '장문'
-                } else {
-                    msgTypeName = '단문'
-                }
-
-                if(tableListCnt<=0){
-                    alert('수신 번호 를 선택 하세요.')
-                    check=false
-                }
-                if(tableListCnt < 20){
-                    alert('최소 선택 범위는 20 건 입니다.')
-                    check=false
-                }
-                if (check && validate()) {
-                    var result = confirm("메세지를 ["+confirmMessage+"] 발송합니다.\n"+tableListCnt+" 건을 ["+confirmMessage+"] 발송 하겠습니까?" );
-                    if (result) {
-                        showLoadingSpinner();
-                        var dupDelCnt = deleteDuplicateTable()
-                        list.forEach(function(item, index) {
-                            formData.append('receive_cell_num_arr[]', item.number);
-                        });
-
-                        formData.append('transmit_type', 'send');
-                        var xhr = new XMLHttpRequest();
-                        xhr.open('POST', form.action, true);
-                        xhr.onload = function () {
-                            if (xhr.status === 200) {
-                                hideLoadingSpinner();
-                                var response = JSON.parse(xhr.responseText);
-                                if (response.status === 'error') {
-                                    // 예외 처리 메시지 표시
-
-                                    alert(response.message);
-                                } else if (response.status === 'success') {
-                                    // 예외가 없을 경우 팝업 표시
-
-                                    // 선택된 행의 데이터를 업데이트
-                                    let selectedData = popupTable.getSelectedData();
-                                    let updatedData = selectedData.map(row => {
-                                        return { id: row.id, status: "01" };  // status만 업데이트
-                                    });
-                                    popupTable.updateData(updatedData);
-                                    // status가 "01"인 row들만 필터링
-                                    var filterRowData = popupTable.getData();
-                                    var filteredRows = filterRowData.filter(function(row) {
-                                        return row.status === "01";
-                                    });
-
-                                    $('#sendDoneCnt').text(Number(filteredRows.length).toLocaleString());
-                                    checkAllStatusAndMoveToNextPage();
-                                    document.getElementById('listResaultPopupLayer').style.display = 'flex'
-                                    $('#listResultSendOkCnt').text(tableListCnt - dupDelCnt);
-                                    $('#listResultSendCnt').text(tableListCnt);
-                                    $('#listResultMsgType').text(msgTypeName);
-                                    $('#listResultSendDupCnt').text(dupDelCnt);
-                                }
-                            } else {
-                                hideLoadingSpinner();
-                                alert('서버와의 통신 중 오류가 발생했습니다.');
-                            }
-                        };
-                        xhr.send(formData);
-                    } else {
-                        // 사용자가 취소 버튼을 눌렀을 때의 동작
-                        return;
-                    }
-
-                } else {
-                    false;
-                }
-            }
-        }
         function validate() {
             var list = table.getData();
 
@@ -1102,67 +786,6 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
             return true;
         }
 
-        function sms_save_list() {
-            get_data("inner_sms_save_list.php", "tab-4", "send_type=<?= $send_type ?>&sms_type=sms&sms_category=&keyword=&target_id=tab-4");
-        }
-
-        function sms_save_list_find() {
-            var keyword = $("#pop_sms_keyword").val();
-
-            if (keyword == "") {
-                alert("검색어를 입력해 주세요.");
-                return;
-            }
-
-            get_data("inner_sms_save_list.php", "tab-4", "send_type=<?= $send_type ?>&sms_type=sms&sms_category=&keyword=" + keyword + "&target_id=tab-4");
-        }
-
-        function set_sms_form(idx) {
-            //get_data("inner_sms_set_form.php", "area_sms_form", "sms_idx=" + idx + "");
-            $.ajax({
-                type: "GET",
-                url: "inner_sms_set_form.php",
-                data: {
-                    sms_idx: idx,
-                },
-                success: function(data) {
-                    console.log(data);
-                    $("#sms").val(data);
-                    sms_text_count();
-                    //$("#layer2").hide();
-                }
-            });
-            $("#btn_layerClose").trigger("click");
-        }
-
-        var check = 0;
-
-        function CheckAll() {
-            var boolchk;
-            var chk = document.getElementsByName("save_idx[]")
-            if (check) {
-                check = 0;
-                boolchk = false;
-            } else {
-                check = 1;
-                boolchk = true;
-            }
-            for (i = 0; i < chk.length; i++) {
-                chk[i].checked = boolchk;
-            }
-        }
-
-        function go_tot_del() {
-            var check = chkFrm('sms_save_frm');
-            if (check) {
-                if (confirm('선택하신 문자를 삭제 하시겠습니까?')) {
-                    sms_save_frm.action = "sms_action_list_del.php";
-                    sms_save_frm.submit();
-                }
-            } else {
-                false;
-            }
-        }
 
         function add_receive_dan() {
             var cell_receive_dan = $("#cell_receive_dan").val();
@@ -1226,42 +849,8 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
             }
         }
 
-        function sms_type_change(stype) {
-            if (stype == "sms") {
-                $('#sample_btn_1').addClass("current");
-                $('#sample_btn_2').removeClass("current");
-            } else if (stype == "lms") {
-                $('#sample_btn_2').addClass("current");
-                $('#sample_btn_1').removeClass("current");
-            }
-            $('#sample_sms_type').val(stype);
-            sms_sample_list();
-        }
 
-        function sms_sample_list() {
-            $('.sample_cate_btn').removeClass("atv");
-            $('#sample_cate_all').addClass("atv");
-            var sample_sms_type = $('#sample_sms_type').val();
 
-            get_data("inner_sample_sms.php", "sample_list_sms", "send_type=<?= $send_type ?>&sms_type=" + sample_sms_type + "&sms_category=&keyword=&target_id=sample_list_sms");
-        }
-
-        function sms_sample_list_cate(cate) {
-            $('.sample_cate_btn').removeClass("atv");
-            $('#sample_cate_' + cate + '').addClass("atv");
-            var sample_sms_type = $('#sample_sms_type').val();
-
-            get_data("inner_sample_sms.php", "sample_list_sms", "send_type=<?= $send_type ?>&sms_type=" + sample_sms_type + "&sms_category=" + cate + "&keyword=&target_id=sample_list_sms");
-        }
-
-        function go_sample_save(frm_name) {
-            if (confirm('선택하신 문자를 저장 하시겠습니까?')) {
-                document.forms[frm_name].submit();
-            }
-        }
-
-        /* 파일붙여넣기 & 엑셀붙여넣기 시작 */
-        // 파일붙여넣기
         function getTextFile() {
             $('#text_file').click();
         }
@@ -1365,7 +954,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                     var list_test = [];
 
                     $.ajax({
-                        url: "./address_get.php",
+                        url: "/kakao/index.php?route=getAddressSendNumber",
                         type: "GET",
                         data: {
                             group_idx: arr.join(","),
@@ -1376,7 +965,8 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                             // AJAX 요청이 시작되기 전에 로딩 스피너를 보여줌
                             showLoadingSpinner();
                         },
-                        success: function(data) {
+                        success: function(response) {
+                            var data = response.data
                             let listCount = 0;
                             let newDataList = [];  // 새로운 데이터를 담을 배열
                             let existingNumbers = new Set();  // 중복 체크를 위한 Set
@@ -1392,7 +982,6 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                             // 새로운 데이터를 처리
                             data.forEach(item => {
                                 let newNumber = item.receive_num;
-
                                 // 중복된 전화번호가 없을 때만 처리
                                 if (!existingNumbers.has(newNumber)) {
                                     let newData = {
@@ -1406,8 +995,8 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                                 }
                             });
 
-                            // 최종적으로 한 번에 데이터를 테이블에 추가
                             if (newDataList.length > 0) {
+
                                 var tableData =table.getData();
                                 if(tableData.length > 0){
                                     tableData.forEach(item=>{
@@ -1420,6 +1009,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                                     })
                                 }
                                 table.setData(newDataList);
+                                console.log(table.getData());
                             }
 
                             // 카운트 계산 및 업데이트
@@ -1433,10 +1023,13 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                             // 로딩 스피너 숨김
                             hideLoadingSpinner();
                         },
-                        error: function() {
-                            // 에러가 발생한 경우에도 로딩 스피너를 숨김
+
+                        error: function(xhr, status, error) {
                             hideLoadingSpinner();
-                            alert("데이터를 불러오는 중 문제가 발생했습니다.");
+                            alert('데이터를 가져오는 중 오류가 발생했습니다.');
+                            console.error('Error: ' + error);
+                            console.error('Status: ' + status);
+                            console.dir(xhr);
                         }
                     });
                 }
@@ -1555,7 +1148,9 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
 
                         // 완료 후 호출 함수
                         function onComplete() {
+
                             if (newDataList.length > 0) {
+
                                 var tableData =table.getData();
                                 if(tableData.length > 0){
                                     tableData.forEach(item=>{
@@ -1569,7 +1164,6 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                                 }
                                 table.setData(newDataList);
                             }
-
                             // 카운트 업데이트
                             let tableList = table.getData();
                             let count = tableList.filter(function(item) {
@@ -1728,9 +1322,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                 return true;
             }
         }
-        $('#sendSelected').on('click',function (){
-            go_list_msg_send();
-        })
+
         // 현재 페이지의 모든 행의 status가 01인지 확인하는 함수
         function checkAllStatusAndMoveToNextPage() {
             let currentData = popupTable.getSelectedData();  // 현재 페이지의 데이터만 가져옴

@@ -118,6 +118,275 @@ class Controller {
         }
         echo json_encode($data);
     }
+    protected function sendAlimtalkRequest($message, $fdestine, $fcallback, $profileKey, $templateKey, $param)
+    {
+
+        $template = $this->getTemplateForAPI($profileKey,$templateKey);
+
+        $url = 'https://wt-api.carrym.com:8443/v3/A/leahue1/messages';
+        $method = 'POST';
+        $data = [
+            [
+                "custMsgSn" => 'F46CBA8E658BAC08965FD887B767CBC1',
+                "senderKey" => $profileKey,
+                "templateCode" => $templateKey,
+                "message" => $message,
+                "phoneNum" => $fdestine
+
+                //            "receiveList" =>[
+                //                [
+                //                    "receiveNum" => $fdestine,
+                //                    "param" => $param
+                //                ]
+                //            ]
+            ]
+        ];
+        $headers = [
+            'Content-Type: application/json',
+            'Authorization: Bearer F46CBA8E658BAC08965FD887B767CBC1',
+        ];
+        if($template['data']['templateEmphasizeType']=="IMAGE"){
+            $data[0]['msgType']= 'AI';
+        }
+        if(isset($template['data']['templateTitle'])){
+            $data[0]['title']= $template['data']['templateTitle'];
+        }
+        if(isset($template['data']['templateHeader'])){
+            $data[0]['header']= $template['data']['templateHeader'];
+        }
+        if(isset($template['data']) && $template['data']['templateEmphasizeType']=='ITEM_LIST'){
+
+            if(isset($template['data']['templateItemHighlight'])){
+                if (isset($template['data']['templateItemHighlight']['title'])) {
+                    $data[0]['itemHighlight']['title'] = $template['data']['templateItemHighlight']['title'];
+                }
+                if (isset($template['data']['templateItemHighlight']['title'])) {
+                    $data[0]['itemHighlight']['description'] = $template['data']['templateItemHighlight']['description'];
+                }
+            }
+            if(isset($template['data']['templateItem']["list"])){
+                $ltemList = [];
+                foreach ($template["data"]["templateItem"]["list"] as $templateItemList) {
+
+                    if (isset($templateItemList['title'])) {
+                        $ltemList['title'] = $templateItemList['title'];
+                    }
+                    if (isset($templateItemList['description'])) {
+                        $ltemList['description'] = $templateItemList['description'];
+                    }
+                    $data[0]['item']['list'][] = $ltemList;
+                }
+            }
+            if(isset($template['data']['templateItem']["summary"])){
+                $summaryList = [];
+                foreach ($template["data"]["templateItem"]["summary"] as $templateItemSummary) {
+
+                    if (isset($templateItemSummary['title'])) {
+                        $summaryList['title'] = $templateItemSummary['title'];
+                    }
+                    if (isset($templateItemSummary['description'])) {
+                        $summaryList['description'] = $templateItemSummary['description'];
+                    }
+                    $data[0]['item']['summary'][] = $summaryList;
+                }
+            }
+        }
+        if(isset($param['smssendyn']) && $param['smsmemo']){
+            $smslength=strlen($param['smsmemo']);
+            $data[0]["smsSndNum" ]= $fcallback;
+            if($smslength <= 90){
+                $data[0]["smsKind" ]= "S";
+                $data[0]["smsMessage" ]= $param['smsmemo'];
+            }else{
+                $data[0]["smsKind" ]= "L";
+                $data[0]["lmsMessage" ]= $param['smsmemo'];
+            }
+        }
+        // 버튼 데이터 추가
+        if(isset($template["data"]["buttons"])){
+            foreach ($template["data"]["buttons"] as $index => $button) {
+                // 각 버튼에 대해 처리할 버튼 데이터 배열 생성
+                $buttonData = [];
+
+                // 버튼 이름 주입
+                if (isset($button['name'])) {
+                    $buttonData['name'] = $button['name'];
+                }
+
+                // linkType에 따른 type 주입
+                if (isset($button['linkType'])) {
+                    $buttonData['type'] = $button['linkType'];
+                }
+
+                // 모바일 URL 주입
+                if (isset($button['linkMo'])) {
+                    $buttonData['url_mobile'] = $button['linkMo'];
+                }
+                // 모바일 URL 주입
+                if (isset($button['linkPc'])) {
+                    $buttonData['url_pc'] = $button['linkPc'];
+                }
+                // iOS 스킴 주입
+                if (isset($button['linkIos'])) {
+                    $buttonData['scheme_ios'] = $button['linkIos'];
+                }
+
+                // Android 스킴 주입
+                if (isset($button['linkAnd'])) {
+                    $buttonData['scheme_android'] = $button['linkAnd'];
+                }
+
+                // 버튼 데이터를 $data 배열의 첫 번째 요소의 'button' 항목에 추가
+                $data[0]['button'][] = $buttonData;
+            }
+        }
+        if(isset($template["data"]["quickReplies"])){
+            foreach ($template["data"]["quickReplies"] as $index => $puickRepliesData) {
+                // 각 버튼에 대해 처리할 버튼 데이터 배열 생성
+                $puickRepliesData = [];
+
+                // 버튼 이름 주입
+                if (isset($puickRepliesData['name'])) {
+                    $puickRepliesData['name'] = $puickRepliesData['name'];
+                }
+
+                // linkType에 따른 type 주입
+                if (isset($puickRepliesData['linkType'])) {
+                    $puickRepliesData['type'] = $puickRepliesData['linkType'];
+                }
+
+                // 모바일 URL 주입
+                if (isset($puickRepliesData['linkMo'])) {
+                    $puickRepliesData['url_mobile'] = $puickRepliesData['linkMo'];
+                }
+                // 모바일 URL 주입
+                if (isset($puickRepliesData['linkPc'])) {
+                    $puickRepliesData['url_pc'] = $puickRepliesData['linkPc'];
+                }
+                // iOS 스킴 주입
+                if (isset($puickRepliesData['linkIos'])) {
+                    $puickRepliesData['scheme_ios'] = $puickRepliesData['linkIos'];
+                }
+
+                // Android 스킴 주입
+                if (isset($puickRepliesData['linkAnd'])) {
+                    $puickRepliesData['scheme_android'] = $puickRepliesData['linkAnd'];
+                }
+
+                // 버튼 데이터를 $data 배열의 첫 번째 요소의 'button' 항목에 추가
+                $data[0]['quickReply'][] = $puickRepliesData;
+            }
+        }
+
+        $apiResponse = $this->sendCurlRequest($url, $method, json_encode($data), $headers);
+        $responseData = json_decode($apiResponse, true);
+
+
+        return $responseData;
+
+    }
+    protected function sendFriendTalkRequest($message, $fdestine, $fcallback, $profileKey, $custMsgSn, $param)
+    {
+        $adFlag = isset($param['adFlag'])??'';
+        $adFlag?$adFlag='Y':$adFlag='N';
+        $param['msgType']=='FW'?$wide='Y':$wide='N';
+
+        $url = 'https://wt-api.carrym.com:8443/v3/C/leahue1/messages';
+        $method = 'POST';
+        $data = [
+            [
+                "custMsgSn" => 'F46CBA8E658BAC08965FD887B767CBC1',
+                "senderKey" => $profileKey,
+                "message" => $message,
+                "phoneNum" => $fdestine,
+                "msgType" => $param['msgType'],
+                "adFlag" => $adFlag,
+                "wide" => $wide,
+            ]
+        ];
+        $headers = [
+            'Content-Type: application/json',
+            'Authorization: Bearer F46CBA8E658BAC08965FD887B767CBC1',
+        ];
+        $_POST['image_path']? $data[0]["image"]["img_url"]=$_POST['image_path']:'';
+
+        if(isset($param['smssendyn'])){
+            $smslength=strlen($param['smsmemo']);
+            if($smslength <=0){
+                $data[0]["smsMessage" ] = $message;
+            }else{
+                $data[0]["smsMessage" ]= $param['smsmemo'];
+            }
+            $data[0]["smsSndNum" ]= $fcallback;
+            if($smslength <= 90){
+                $data[0]["smsKind" ]= "S";
+            }else{
+                $data[0]["smsKind" ]= "L";
+            }
+        }
+        if (!empty($_POST['buttons'])) {
+            foreach ($_POST['buttons'] as $button) {
+                // 각 버튼에 대해 처리할 버튼 데이터 배열 생성
+                $buttonData = [];
+
+                // 버튼 이름 주입
+                if (isset($button['name'])) {
+                    $buttonData['name'] = $button['name'];
+                }
+
+                // linkType에 따른 type 주입
+                if (isset($button['linkType'])) {
+                    $buttonData['type'] = $button['linkType'];
+                }
+
+                // 모바일 URL 주입
+                if (isset($button['linkMo'])) {
+                    $buttonData['url_mobile'] = $button['linkMo'];
+                }
+                // 모바일 URL 주입
+                if (isset($button['linkPc'])) {
+                    $buttonData['url_pc'] = $button['linkPc'];
+                }
+                // iOS 스킴 주입
+                if (isset($button['linkIos'])) {
+                    $buttonData['scheme_ios'] = $button['linkIos'];
+                }
+
+                // Android 스킴 주입
+                if (isset($button['linkAnd'])) {
+                    $buttonData['scheme_android'] = $button['linkAnd'];
+                }
+
+                // 버튼 데이터를 $data 배열의 첫 번째 요소의 'button' 항목에 추가
+                $data[0]['button'][] = $buttonData;
+            }
+        }
+
+
+        $apiResponse = $this->sendCurlRequest($url, $method, json_encode($data), $headers);
+        $responseData = json_decode($apiResponse, true);
+        $responseData['requestData']=$data;
+
+        return $responseData;
+
+    }
+    public function getTemplateForAPI($profile_key=null,$template_key=null)
+    {
+        $url = 'https://wt-api.carrym.com:8445/api/v1/leahue/template';
+
+        $data = [
+            'senderKey' => $profile_key,
+            'templateCode' => $template_key
+        ];
+        $headers = [
+            'Content-Type: application/json'
+        ];
+        // 파일 전송 요청
+        $response = $this->sendCurlRequest($url, 'GET', $data, $headers);
+        $responseDecoded = json_decode($response, true);
+        return $responseDecoded;
+
+    }
     public function sendCurlRequest($url, $method = 'GET', $data = null, $headers = []) {
         $curl = curl_init();
 
@@ -192,6 +461,26 @@ class Controller {
         curl_close($curl);
 
         return $response;
+    }
+    function replaceIconsWithImages($content, $iconData) {
+        // 먼저, 정규식을 사용하여 (아이콘명) 패턴을 찾아 치환
+        $contentWithIcons = preg_replace_callback('/\(([^)]+)\)/', function($matches) use ($iconData) {
+            $iconName = $matches[1]; // (아이콘명)에서 아이콘명을 추출
+
+            // 아이콘 데이터에서 해당 아이콘명을 찾아서 이미지 태그로 변환
+            foreach ($iconData as $icon) {
+                if ($icon['name'] === $iconName) {
+                    // 이미지 태그로 변환하여 반환
+                    return '<img class="view-icon" src="' . $icon['image'] . '" alt="' . $iconName . '">';
+                }
+            }
+
+            // 해당 아이콘이 없는 경우, 원래 텍스트 반환
+            return $matches[0];
+        }, $content);
+
+        // 줄바꿈 (\n)을 <br> 태그로 변환하여 반환
+        return nl2br($contentWithIcons);
     }
 }
 ?>

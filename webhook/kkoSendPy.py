@@ -22,6 +22,7 @@ api_base_url = os.getenv('API_BASE_URL')
 api_template_url = os.getenv('API_TEMPLATE_URL')
 api_endpoint = '/v3/A/leahue1/messages'
 api_url = f"{api_base_url}{api_endpoint}"  # 베이스 URL과 엔드포인트 결합
+api_ft_url = f"{api_base_url}/v3/C/leahue1/messages"
 headers = {
     'Content-Type': 'application/json',
     'Authorization': os.getenv('API_AUTHORIZATION')
@@ -86,6 +87,8 @@ def process_data():
 
                 for result in results:
                     member_info_idx = result['fetc8']
+                    sms_send_yn = result['sms_send_yn']
+                    sms_kind = result['sms_kind']
                     mb_kko_fee = get_mb_kko_fee(cursor, member_info_idx)
 
                     if mb_kko_fee is None:
@@ -100,110 +103,150 @@ def process_data():
                         "templateCode": result['ftemplatekey'],
                         "message": result['fmessage']
                     }
-
+                    # 조건에 따라 배열 항목 추가
+                    if sms_send_yn == 1:  # 특정 조건을 만족할 경우
+                        payload['smsSndNum'] = result['fcallback']
+                        payload['smsKind'] = result['sms_kind']
+                        payload['kisaOrigCode'] = result['kisa_orig_code']
+                        if sms_kind == 'S':
+                            payload['smsMessage'] = result['smsmessage']
+                        if sms_kind == 'L':
+                            payload['lmsMessage'] = result['smsmessage']
                     templateLoad ={
                         "senderKey": result['fyellowid'],
                         "templateCode": result['ftemplatekey'],
-
                     }
 
                     data = [{}]
                     try:
-                        #
-                        template = requests.get(f"{api_template_url}{'/api/v1/leahue/template'}", headers=headers, params=templateLoad)
-                        template.raise_for_status()
-                        response_template = template.json()
+                        if result['fuserid'] in 'AT':
+                            template = requests.get(f"{api_template_url}{'/api/v1/leahue/template'}", headers=headers, params=templateLoad)
+                            template.raise_for_status()
+                            response_template = template.json()
 
-                        # msgType 처리
-                        if response_template['data'].get('templateEmphasizeType') == "IMAGE":
-                            data[0]['msgType'] = 'AI'
+                            # msgType 처리
+                            if response_template['data'].get('templateEmphasizeType') == "IMAGE":
+                                data[0]['msgType'] = 'AI'
 
-                        # 제목과 헤더 추가
-                        if 'templateTitle' in response_template['data']:
-                            data[0]['title'] = response_template['data']['templateTitle']
+                            # 제목과 헤더 추가
+                            if 'templateTitle' in response_template['data']:
+                                data[0]['title'] = response_template['data']['templateTitle']
 
-                        if 'templateHeader' in response_template['data']:
-                            data[0]['header'] = response_template['data']['templateHeader']
+                            if 'templateHeader' in response_template['data']:
+                                data[0]['header'] = response_template['data']['templateHeader']
 
-                        # ITEM_LIST 처리
-                        if response_template['data'].get('templateEmphasizeType') == 'ITEM_LIST':
-                            if 'templateItemHighlight' in response_template['data']:
-                                if 'title' in response_template['data']['templateItemHighlight']:
-                                    data[0]['itemHighlight'] = {'title': response_template['data']['templateItemHighlight']['title']}
-                                if 'description' in response_template['data']['templateItemHighlight']:
-                                    data[0]['itemHighlight']['description'] = response_template['data']['templateItemHighlight']['description']
+                            # ITEM_LIST 처리
+                            if response_template['data'].get('templateEmphasizeType') == 'ITEM_LIST':
+                                if 'templateItemHighlight' in response_template['data']:
+                                    if 'title' in response_template['data']['templateItemHighlight']:
+                                        data[0]['itemHighlight'] = {'title': response_template['data']['templateItemHighlight']['title']}
+                                    if 'description' in response_template['data']['templateItemHighlight']:
+                                        data[0]['itemHighlight']['description'] = response_template['data']['templateItemHighlight']['description']
 
-                            # 리스트 처리
-                            if 'list' in response_template['data']['templateItem']:
-                                item_list = []
-                                for template_item_list in response_template['data']['templateItem']['list']:
-                                    item = {}
-                                    if 'title' in template_item_list:
-                                        item['title'] = template_item_list['title']
-                                    if 'description' in template_item_list:
-                                        item['description'] = template_item_list['description']
-                                    item_list.append(item)
-                                data[0]['item'] = {'list': item_list}
+                                # 리스트 처리
+                                if 'list' in response_template['data']['templateItem']:
+                                    item_list = []
+                                    for template_item_list in response_template['data']['templateItem']['list']:
+                                        item = {}
+                                        if 'title' in template_item_list:
+                                            item['title'] = template_item_list['title']
+                                        if 'description' in template_item_list:
+                                            item['description'] = template_item_list['description']
+                                        item_list.append(item)
+                                    data[0]['item'] = {'list': item_list}
 
-                            # 요약 처리
-                            if 'summary' in response_template['data']['templateItem']:
-                                summary_list = []
-                                for template_item_summary in response_template['data']['templateItem']['summary']:
-                                    summary = {}
-                                    if 'title' in template_item_summary:
-                                        summary['title'] = template_item_summary['title']
-                                    if 'description' in template_item_summary:
-                                        summary['description'] = template_item_summary['description']
-                                    summary_list.append(summary)
-                                data[0]['item']['summary'] = summary_list
+                                # 요약 처리
+                                if 'summary' in response_template['data']['templateItem']:
+                                    summary_list = []
+                                    for template_item_summary in response_template['data']['templateItem']['summary']:
+                                        summary = {}
+                                        if 'title' in template_item_summary:
+                                            summary['title'] = template_item_summary['title']
+                                        if 'description' in template_item_summary:
+                                            summary['description'] = template_item_summary['description']
+                                        summary_list.append(summary)
+                                    data[0]['item']['summary'] = summary_list
 
-                        # 버튼 데이터 추가
-                        if 'buttons' in response_template['data']:
-                            button_list = []
-                            for button in response_template['data']['buttons']:
-                                button_data = {}
-                                if 'name' in button:
-                                    button_data['name'] = button['name']
-                                if 'linkType' in button:
-                                    button_data['type'] = button['linkType']
-                                if 'linkMo' in button:
-                                    button_data['url_mobile'] = button['linkMo']
-                                if 'linkPc' in button:
-                                    button_data['url_pc'] = button['linkPc']
-                                if 'linkIos' in button:
-                                    button_data['scheme_ios'] = button['linkIos']
-                                if 'linkAnd' in button:
-                                    button_data['scheme_android'] = button['linkAnd']
-                                button_list.append(button_data)
-                            data[0]['button'] = button_list
+                            # 버튼 데이터 추가
+                            if 'buttons' in response_template['data']:
+                                button_list = []
+                                for button in response_template['data']['buttons']:
+                                    button_data = {}
+                                    if 'name' in button:
+                                        button_data['name'] = button['name']
+                                    if 'linkType' in button:
+                                        button_data['type'] = button['linkType']
+                                    if 'linkMo' in button:
+                                        button_data['url_mobile'] = button['linkMo']
+                                    if 'linkPc' in button:
+                                        button_data['url_pc'] = button['linkPc']
+                                    if 'linkIos' in button:
+                                        button_data['scheme_ios'] = button['linkIos']
+                                    if 'linkAnd' in button:
+                                        button_data['scheme_android'] = button['linkAnd']
+                                    button_list.append(button_data)
+                                data[0]['button'] = button_list
 
-                        # Quick Replies 데이터 추가
-                        if 'quickReplies' in response_template['data']:
-                            quick_reply_list = []
-                            for quick_reply in response_template['data']['quickReplies']:
-                                quick_reply_data = {}
-                                if 'name' in quick_reply:
-                                    quick_reply_data['name'] = quick_reply['name']
-                                if 'linkType' in quick_reply:
-                                    quick_reply_data['type'] = quick_reply['linkType']
-                                if 'linkMo' in quick_reply:
-                                    quick_reply_data['url_mobile'] = quick_reply['linkMo']
-                                if 'linkPc' in quick_reply:
-                                    quick_reply_data['url_pc'] = quick_reply['linkPc']
-                                if 'linkIos' in quick_reply:
-                                    quick_reply_data['scheme_ios'] = quick_reply['linkIos']
-                                if 'linkAnd' in quick_reply:
-                                    quick_reply_data['scheme_android'] = quick_reply['linkAnd']
-                                quick_reply_list.append(quick_reply_data)
-                            data[0]['quickReply'] = quick_reply_list
+                            # Quick Replies 데이터 추가
+                            if 'quickReplies' in response_template['data']:
+                                quick_reply_list = []
+                                for quick_reply in response_template['data']['quickReplies']:
+                                    quick_reply_data = {}
+                                    if 'name' in quick_reply:
+                                        quick_reply_data['name'] = quick_reply['name']
+                                    if 'linkType' in quick_reply:
+                                        quick_reply_data['type'] = quick_reply['linkType']
+                                    if 'linkMo' in quick_reply:
+                                        quick_reply_data['url_mobile'] = quick_reply['linkMo']
+                                    if 'linkPc' in quick_reply:
+                                        quick_reply_data['url_pc'] = quick_reply['linkPc']
+                                    if 'linkIos' in quick_reply:
+                                        quick_reply_data['scheme_ios'] = quick_reply['linkIos']
+                                    if 'linkAnd' in quick_reply:
+                                        quick_reply_data['scheme_android'] = quick_reply['linkAnd']
+                                    quick_reply_list.append(quick_reply_data)
+                                data[0]['quickReply'] = quick_reply_list
 
-                        # 데이터 처리 후 병합
-                        if isinstance(data[0], dict):
-                            payload.update(data[0])
+                            # 데이터 처리 후 병합
+                            if isinstance(data[0], dict):
+                                payload.update(data[0])
 
-                        response = requests.post(api_url, headers=headers, data=json.dumps([payload]))
-                        response.raise_for_status()
-                        response_data = response.json()
+                            response = requests.post(api_url, headers=headers, data=json.dumps([payload]))
+                            response.raise_for_status()
+                            response_data = response.json()
+                        if result['fuserid'] in 'FT':
+                            if result['msg_type']:
+                                data[0]['msgType'] = result['msg_type']
+                            if 'image' not in data[0]:
+                                data[0]['image'] = {}  # 'image' 키를 초기화
+                            if result['img_path']:
+                                data[0]['image']['img_url'] = result['img_path']
+                            # 버튼 데이터 추가
+                            if 'buttons' in result:
+                                buttons_obj = json.loads(result['buttons'])
+                                button_list = []
+                                for button in buttons_obj:
+                                    button_data = {}
+                                    if 'name' in button:
+                                        button_data['name'] = button['name']
+                                    if 'linkType' in button:
+                                        button_data['type'] = button['linkType']
+                                    if 'linkMo' in button:
+                                        button_data['url_mobile'] = button['linkMo']
+                                    if 'linkPc' in button:
+                                        button_data['url_pc'] = button['linkPc']
+                                    if 'linkIos' in button:
+                                        button_data['scheme_ios'] = button['linkIos']
+                                    if 'linkAnd' in button:
+                                        button_data['scheme_android'] = button['linkAnd']
+                                    button_list.append(button_data)
+                                data[0]['button'] = button_list
+                                # 데이터 처리 후 병합
+                            if isinstance(data[0], dict):
+                                payload.update(data[0])
+                            response = requests.post(api_ft_url, headers=headers, data=json.dumps([payload]))
+                            response.raise_for_status()
+                            response_data = response.json()
                         if response_data and isinstance(response_data, list) and len(response_data) > 0:
                             data = response_data[0]
 

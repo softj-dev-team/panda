@@ -56,8 +56,8 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
 
         <div class="form-section">
             <form id="requestTemplate" enctype="multipart/form-data" >
-                <div class="fm-wrap w-100">
-                    <div class="fm-row flex">
+                <div class="fm-wrap flex-column w-100">
+                    <div class="fm-row flex-c">
                         <div class="fm-box w-100">
 
                             <select id="f-sel" class="fm-sel" name="profile_id">
@@ -134,7 +134,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
                         </div>
 
                     </div>
-                    <div id="itemListSetting" class="blind">
+                    <div id="itemListSetting"  class="blind flex-column">
                         <div class="fm-row">
                             <h3 >아이템 리스트 설정</h3>
                         </div>
@@ -221,7 +221,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/kakao/public/head.php";
 
                     <!-- 버튼 추가 레이어 팝업 -->
                     <div id="buttonPopup" style="display: none;">
-                        <div class="popup-content">
+                        <div class="popup-content kakao-button-popup-box">
                             <h3>새 버튼 추가</h3>
                             <div class="custom-input-container">
                                 <select class="fm-sel" name="linkType" id="linkType" >

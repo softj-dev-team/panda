@@ -25,30 +25,30 @@
                                 <div class="image-wrapper">
                                     <img id="uploadedImage" src="" alt="Uploaded Logo">
                                 </div>
-                                <div class="template-header blind">템플릿 헤더</div>
-                                <div class="highlight-box blind">
+                                <div class="template-header blind elPreview">템플릿 헤더</div>
+                                <div class="highlight-box blind elPreview">
                                     <div>
-                                        <div class="highlight-title-view blind" >하이라이트 타이틀</div>
-                                        <div class="highlight-description-view blind">하이라이트 설명</div>
+                                        <div class="highlight-title-view blind elPreview" >하이라이트 타이틀</div>
+                                        <div class="highlight-description-view blind elPreview">하이라이트 설명</div>
                                     </div>
-                                    <div class="highlight-thumbnail">
+                                    <div class="highlight-thumbnail elPreview">
                                         <img id="HighlightThumbnailImg" src="">
                                     </div>
                                 </div>
-                                <div class="item-list-box blind">
+                                <div class="item-list-box blind elPreview">
 
                                 </div>
-                                <div id="previewStrongSubTitle" class="previewStrongSubTitle"></div>
-                                <div id="previewStrongTitle" class="previewStrongTitle"></div>
-                                <div id="previewHighlightTitle"></div>
-                                <div id="previewHighlightSubtitle"></div>
-                                <div id="previewChButtonList">
+                                <div id="previewStrongSubTitle" class="previewStrongSubTitle elPreview"></div>
+                                <div id="previewStrongTitle" class="previewStrongTitle elPreview"></div>
+                                <div id="previewHighlightTitle" class="elPreview"></div>
+                                <div id="previewHighlightSubtitle" class="elPreview"></div>
+                                <div id="previewChButtonList" class="elPreview">
 
                                 </div>
-                                <div id="previeButtonList"></div>
+                                <div id="previeButtonList" class="elPreview"></div>
                             </div>
                         </div>
-                        <div class="quickLinkList"></div>
+                        <div class="quickLinkList elPreview" ></div>
                     </div>
                 </div>
                 <p class="preview-note">미리보기는 실제 단말기와 차이가 있을 수 있습니다.</p>
@@ -155,7 +155,10 @@
         'EE': '시스템 오류',
         'EO': '시스템 타임아웃'
     };
-
+    const sendTypeMapping = {
+        'AT': '알림톡',
+        'FT': '친구톡',
+    };
     function loadDataList(page = 1) {
         var keyword = $('#keyword').val().trim(); // #keyword 요소의 값을 가져오고 공백 제거
         var s_date = $('input[name=s_date]').val();
@@ -184,7 +187,7 @@
                         var truncatedMessage = data.fmessage.length > 25 ? data.fmessage.substring(0, 25) + '...' : data.fmessage;
                         var row = `<tr class="sendResultDataRow" data-id="${data.fetc7}">
                         <td>${formattedDate}</td>
-                        <td>알림톡</td>
+                        <td>${sendTypeMapping[data.fuserid]}</td>
                         <td>
                            ${data.fdestine}
                         </td>

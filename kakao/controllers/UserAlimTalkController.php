@@ -47,8 +47,16 @@ class UserAlimTalkController extends Controller
             }else{
                 throw new Exception('서버에서 data 를 불러오는 중 오류 발생');
             }
-
-
+            // JSON 파일 경로 지정
+            $filePath = $_SERVER["DOCUMENT_ROOT"] .'/kakao/public/kko_icon.json';
+            if (file_exists($filePath)) {
+                $jsonData = file_get_contents($filePath);
+                // JSON 데이터를 PHP 배열로 디코딩
+                $iconData = json_decode($jsonData, true);
+            }
+            $templateContent = $data[0]["fmessage"];
+            $updatedContent = $this->replaceIconsWithImages($templateContent, $iconData);
+            $data[0]["fmessage"] = $updatedContent;
             $this->sendJsonResponse(['success' => true, 'data' => $data]);
         } catch (Exception $e) {
             error_log($e->getMessage());

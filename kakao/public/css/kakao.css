@@ -110,7 +110,7 @@ kakao-notification-button-container {
 
 .preview-section {
     width: 35%;
-    padding: 20px;
+    /*padding: 20px;*/
 
 }
 
@@ -185,7 +185,6 @@ kakao-notification-button-container {
 #previewHighlightTitle {
     text-align: left;
     font-size: 18px;
-    font-weight: bold;
     color: #000;
     width: 100%;
     white-space: normal;
@@ -234,7 +233,7 @@ select {
     padding: 0px 19px;
     margin-left: 8px;
     font-size: 14px;
-    margin-bottom: 14px;
+    /*margin-bottom: 14px;*/
 }
 .plusI{
     display: inline-block;
@@ -288,7 +287,7 @@ select {
 .fm-wrap { margin-top:57px; }
 .fm-wrap.cmgt { margin-top:0; }
 .fm-wrap.cmgt-2 { margin-top:27px; }
-.fm-row { margin-top:16px; }
+/*.fm-row { margin-top:16px; }*/
 .fm-wrap .fm-row:first-child { margin-top:0; }
 .fm-row-col, .fm-row-col-2 { display:-webkit-box; display:-ms-flexbox; display:flex; }
 .fm-row-col .fm-box, .fm-row-col-2 .fm-box { -ms-flex:1; flex:1; box-sizing:border-box; }
@@ -326,7 +325,7 @@ select {
     text-align: center;
     color: #fff;
     background-color: #6e747b;
-    line-height: 3.42;
+    line-height: 47px;
     cursor: pointer;
     border-radius: 0 3px 3px 0;
 }
@@ -526,7 +525,7 @@ input:checked[type='checkbox'] {
 }
 
 .image-wrapper {
-    /*position: absolute;*/
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -584,18 +583,17 @@ button { cursor:pointer; width:auto; overflow:visible; color:inherit; font-size:
     display: flex;
     text-align: center;
     justify-content: flex-end;
-    margin-bottom: 10px;
+
 }
 .flex-just-start{
     display: flex;
     text-align: center;
     justify-content: flex-start;
-    margin-bottom: 10px;
+
 }
 .flex-column{
     display: flex;
     flex-direction: column;
-    margin-bottom: 10px;
 }
 
 /* 모달 스타일 정의 */
@@ -893,7 +891,7 @@ input[data-fakefile="file"] { position:absolute; width:1px; height:16px; padding
     width: 80%;      /* 화면 크기에 비례하여 유연한 크기 설정 */
     max-width: 800px; /* 최대 폭을 설정 */
     max-height: 90vh; /* 화면 높이에 비례하여 유연한 높이 설정 */
-    padding: 20px;
+
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     background-color: white;
     z-index: 1000;
@@ -961,6 +959,12 @@ input[data-fakefile="file"] { position:absolute; width:1px; height:16px; padding
     align-items: inherit;
     justify-content: inherit;
 }
+.kakao-button-popup-box{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
 #buttonPopup {
     position: fixed; /* 화면에 고정 */
     top: 50%;
@@ -968,7 +972,6 @@ input[data-fakefile="file"] { position:absolute; width:1px; height:16px; padding
     transform: translate(-50%, -50%); /* 상하좌우 중앙 정렬 */
     background-color: white;
     border-radius: 8px;
-    padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     width: auto; /* 필요시 조정 */
@@ -1079,7 +1082,6 @@ input[data-fakefile="file"] { position:absolute; width:1px; height:16px; padding
 }
 .template-header{
     text-align: left;
-    border-bottom: 1px solid #bbb;
     margin-bottom: 8px;
     padding-bottom: 8px;
     font-weight: 800;
@@ -1087,7 +1089,6 @@ input[data-fakefile="file"] { position:absolute; width:1px; height:16px; padding
 .highlight-box{
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid #bbb;
     margin-bottom: 8px;
     padding-bottom: 8px;
 }
@@ -1112,7 +1113,6 @@ input[data-fakefile="file"] { position:absolute; width:1px; height:16px; padding
 
 }
 .item-list-box{
-    border-bottom: 1px solid #bbb;
     margin-bottom: 8px;
     padding-bottom: 8px;
 }
@@ -1124,4 +1124,56 @@ input[data-fakefile="file"] { position:absolute; width:1px; height:16px; padding
     font-weight: 600;
     white-space: normal;
     word-wrap: break-word;
+}
+.image-valid{
+    padding:5px;
+    background: #eee;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+.circle {
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    cursor: pointer;
+}
+.circle span{
+    color:#fff;
+    font-size: 12px;
+}
+.fa-circle-xmark{
+    color:#fff;
+    font-size: 25px;
+    padding: 8px;
+}
+.file-list{
+    isplay: flex;
+    text-align: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+}
+.fm-radio{
+    height: auto;
+    width: 30px;
+}
+.fm-radio-label{
+    margin-bottom: 0;
+}
+#previewStrongSubTitle{
+    display: flex;
+}
+#previewStrongTitle{
+    display: flex;
 }
