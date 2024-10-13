@@ -77,7 +77,7 @@ def process_data():
                 return
 
             # fetc2 컬럼에 'AR' 값이 있는 행을 여러 개 선택 (예: 100개씩 배치 처리)
-            batch_size = 100
+            batch_size = 1000
             sql = "SELECT * FROM TBL_SEND_TRAN_KKO WHERE fetc2 = 'AR' LIMIT %s"
             cursor.execute(sql, (batch_size,))
             results = cursor.fetchall()
