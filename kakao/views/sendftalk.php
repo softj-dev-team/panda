@@ -283,7 +283,7 @@ if ($data['my_member_row']['member_gubun'] == "2" && $_REQUEST['send_type'] != "
                                     <div class="custom-input-container">
                                         <label for="template_title" class="fm-label custom-label">메세지 내용 * (<span id="charCount">0/1000</span>)</label>
                                         <textarea name="template_title" id="highlightTitle" class="fm-ta" placeholder="템플릿내용은 한/영 구분없이 1,000자까지 입력 가능합니다. 변수에 들어갈 내용의 최대 길이를 감안하여 작성해 주세요."></textarea>
-                                        <span id="errorMsg" class="fm-error-txt" >* 1000자를 초과할 수 없습니다.</span>
+                                        <span id="errorMsg" class="fm-error-txt" >* <span class="currentLength">1000</span>자를 초과할 수 없습니다.</span>
                                     </div>
                                     <div class="w-100" id="templateImageUploadForm" >
                                         <div class="fm-box">
@@ -292,9 +292,9 @@ if ($data['my_member_row']['member_gubun'] == "2" && $_REQUEST['send_type'] != "
                                             <input type="text" data-fakefile="text" readonly="readonly" placeholder="" class="fm-ipt fm-file" />
                                         </div>
                                         <div class="image-valid">
-                                            <p>- 이미지 제한 사이즈 - 가로 500px 이상, 세로 높이 250px 이상</p>
-                                            <p>- 가로:세로 비율이 1:1.5 ~ 2:1 범위 내</p>
                                             <p>- 파일형식 및 크기 : jpg, png / 최대 500KB</p>
+                                            <p></p>
+                                            <p></p>
                                         </div>
                                     </div>
                                     <div class="flex-just-start">
@@ -311,13 +311,24 @@ if ($data['my_member_row']['member_gubun'] == "2" && $_REQUEST['send_type'] != "
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <div class="fm-box">
-                                    <input type="checkbox" id="f-chk-all" class="fm-chk" name="smssendyn"><label for="f-chk-all" class="fm-chk-i"><strong>대체문자 사용</strong></label>
-                                    <p>알림톡 발송이 실패 된 경우, 해당 내용을 문자로 대체 발송하여 누락을 방하는 기능입니다.</p>
-                                </div>
-                                <div class="fm-row">
-                                    <div class="fm-box">
-                                        <textarea name="smsmemo" placeholder="내용을 입력해 주세요." id="f-des" class="fm-ta" data-chkarea="case1" class="guide-tab-cont" "></textarea>
+                                <div class="flex-column">
+                                    <div class="flex-just-start">
+                                        <span><input type="checkbox" id="f-chk-all" class="fm-chk" name="smssendyn"><label for="f-chk-all" class="fm-chk-i"><strong>대체문자 사용</strong></label></span>
+                                        <p>알림톡 발송이 실패 된 경우, 해당 내용을 문자로 대체 발송하여 누락을 방하는 기능입니다.</p>
+                                    </div>
+                                    <div class="custom-input-container">
+                                        <div class="fm-box blind">
+                                            <label for="template_title" class="fm-label custom-label">메세지 제목 * (<span class="charCount">0/40</span>)</label>
+                                            <input class="fm-ipt" name="subject" >
+                                            <span class="fm-error-txt errorMsg" >* 40자를 초과할 수 없습니다.</span>
+                                        </div>
+                                    </div>
+                                    <div class="custom-input-container">
+                                        <div class="fm-box">
+                                            <label for="template_title" class="fm-label custom-label ">메세지 내용 * (<span class="charCount">0/2000</span>)</label>
+                                            <textarea name="smsmemo" placeholder="내용을 입력해 주세요." id="f-des" class="fm-ta messageInput guide-tab-cont" data-chkarea="case1" "></textarea>
+                                            <span class="fm-error-txt errorMsg" >* 2000자를 초과할 수 없습니다.</span>
+                                        </div>
                                     </div>
                                 </div>
                             </td>

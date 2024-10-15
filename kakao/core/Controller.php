@@ -200,6 +200,7 @@ class Controller {
             }else{
                 $data[0]["smsKind" ]= "L";
                 $data[0]["lmsMessage" ]= $param['smsmemo'];
+                $data[0]["subject" ]= $param['subject'];
             }
         }
         // 버튼 데이터 추가
@@ -322,6 +323,7 @@ class Controller {
                 $data[0]["smsKind" ]= "S";
             }else{
                 $data[0]["smsKind" ]= "L";
+                $data[0]["subject" ]= $param['subject'];
             }
         }
         if (!empty($_POST['buttons'])) {

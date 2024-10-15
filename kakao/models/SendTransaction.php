@@ -12,9 +12,10 @@ class SendTransaction
     }
 
     public function saveMessage(
-        $fdestine=null,$fcallback=null,$message=null,$profile_key=null,$template_key=null,$sn=null,$code=null,$altCode=null,$altMsg=null,
-        $altSndDtm=null,$altRcptDtm=null,$group_key=null, $member_idx=null,$client_ip=null,$fuserid=null,$buttons=null,
-        $img_path=null,$msg_type=null
+        $fdestine=null,$fcallback=null,$message=null,$profile_key=null,
+        $template_key=null,$sn=null,$code=null,$altCode=null,$altMsg=null,
+        $altSndDtm=null,$altRcptDtm=null,$group_key=null, $member_idx=null,$client_ip=null,$fuserid=null,
+        $buttons=null,$img_path=null,$msg_type=null,$smsSubject=null
     )
     {
         try {
@@ -22,11 +23,11 @@ class SendTransaction
                 (
                  fyellowid, ftemplatekey,fkkoresendtype,fmsgtype,fmessage, fsenddate, fdestine,fcallback,
                  fetc1,fetc2,fetc3,fetc4,fetc5,fetc6,fetc7,fetc8,
-                 fuserid,buttons,img_path,msg_type
+                 fuserid,buttons,img_path,msg_type,fsubject
                  )
                 VALUES
                 (:profile_key, :template_key, 'N', 4, :message, now(), :fdestine, :fcallback,
-                 :fetc1, :fetc2, :fetc3, :fetc4, :fetc5, :fetc6,:fetc7, :fetc8,:fuserid,:buttons,:img_path,:msg_type)");
+                 :fetc1, :fetc2, :fetc3, :fetc4, :fetc5, :fetc6,:fetc7, :fetc8,:fuserid,:buttons,:img_path,:msg_type,:fsubject)");
             $stmt->bindParam(':profile_key', $profile_key);
             $stmt->bindParam(':template_key', $template_key);
             $stmt->bindParam(':message', $message);
@@ -44,6 +45,7 @@ class SendTransaction
             $stmt->bindParam(':buttons', $buttons);
             $stmt->bindParam(':img_path', $img_path);
             $stmt->bindParam(':msg_type', $msg_type);
+            $stmt->bindParam(':fsubject', $smsSubject);
             $stmt->execute();
         } catch (Exception $e) {
             error_log($e->getMessage());
@@ -52,16 +54,16 @@ class SendTransaction
     }
     public function saveMessageByList($fdestine, $fcallback, $message, $profile_key, $template_key,
                                       $member_idx, $group_key, $client_ip,$smssendyn,$smsmessage,
-                                      $smsKind,$kisaOrigCode,$fuserid,$buttons=null,$msg_type=null,$img_path=null)
+                                      $smsKind,$kisaOrigCode,$fuserid,$buttons=null,$msg_type=null,$img_path=null,$smsSubject=null)
     {
         try {
 
             $stmt = $this->conn->prepare("INSERT INTO TBL_SEND_TRAN_KKO
                 (fyellowid, ftemplatekey, fkkoresendtype, fmsgtype, fmessage, fsenddate, fdestine, fcallback,
-                 fetc8,fetc7,fetc1,smsmessage,sms_send_yn,sms_kind,kisa_orig_code,fuserid,buttons,msg_type,img_path,)
+                 fetc8,fetc7,fetc1,smsmessage,sms_send_yn,sms_kind,kisa_orig_code,fuserid,buttons,msg_type,img_path,fsubject)
                 VALUES
                 (:profile_key, :template_key, 'N', 4, :message, now(), :fdestine, :fcallback,:fetc8,:fetc7,:fetc1,:smsmessage,
-                 :sms_send_yn,:sms_kind,:kisa_orig_code, :fuserid,:buttons, :msg_type, :img_path)");
+                 :sms_send_yn,:sms_kind,:kisa_orig_code, :fuserid,:buttons, :msg_type, :img_path,:fsubject)");
 
                 $stmt->bindParam(':profile_key', $profile_key);
                 $stmt->bindParam(':template_key', $template_key);
@@ -79,6 +81,7 @@ class SendTransaction
                 $stmt->bindParam(':buttons', $buttons);
                 $stmt->bindParam(':msg_type', $msg_type);
                 $stmt->bindParam(':img_path', $img_path);
+                $stmt->bindParam(':fsubject', $smsSubject);
                 $stmt->execute();
 
         } catch (Exception $e) {
@@ -88,18 +91,18 @@ class SendTransaction
     }
     public function saveMessageByFtalkList($fdestine, $fcallback, $message, $profile_key, $template_key,
                                       $member_idx, $group_key, $client_ip,$smssendyn,$smsmessage,
-                                      $smsKind,$kisaOrigCode,$fuserid,$buttons=null,$msg_type=null,$img_path=null)
+                                      $smsKind,$kisaOrigCode,$fuserid,$buttons=null,$msg_type=null,$img_path=null,$smsSubject=null)
     {
         try {
 
             $stmt = $this->conn->prepare("
                 INSERT INTO TBL_SEND_TRAN_KKO
                     (fyellowid, ftemplatekey, fkkoresendtype, fmsgtype, fmessage, fsenddate, fdestine, fcallback,
-                    fetc8,fetc7,fetc1,smsmessage,sms_send_yn,sms_kind,kisa_orig_code,fuserid,buttons,msg_type,img_path)
+                    fetc8,fetc7,fetc1,smsmessage,sms_send_yn,sms_kind,kisa_orig_code,fuserid,buttons,msg_type,img_path,fsubject)
                 VALUES
                     (
                         :profile_key, :template_key, 'N', 4, :message, now(), :fdestine, :fcallback,:fetc8,:fetc7,:fetc1,:smsmessage,
-                        :sms_send_yn,:sms_kind,:kisa_orig_code, :fuserid,:buttons, :msg_type, :img_path
+                        :sms_send_yn,:sms_kind,:kisa_orig_code, :fuserid,:buttons, :msg_type, :img_path,:fsubject
                     )
             ");
 
@@ -119,6 +122,7 @@ class SendTransaction
             $stmt->bindParam(':buttons', $buttons);
             $stmt->bindParam(':msg_type', $msg_type);
             $stmt->bindParam(':img_path', $img_path);
+            $stmt->bindParam(':fsubject', $smsSubject);
             $stmt->execute();
 
         } catch (Exception $e) {

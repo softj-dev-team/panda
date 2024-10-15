@@ -912,6 +912,7 @@ class TemplateCategoryController extends Controller
         $kisaOrigCode = '301230126';
         $message = $_REQUEST['message']??'';
         $fuserid = 'AT';
+        $smsSubject = $_REQUEST['subject']??'';
         try {
             if (isset($_FILES['templateFile']) && $_FILES['templateFile']['error'] == 0) {
                 $filePath = $_FILES['templateFile']['tmp_name'];
@@ -980,7 +981,8 @@ class TemplateCategoryController extends Controller
                         $smsmessage,
                         $smsKind,
                         $kisaOrigCode,
-                        $fuserid
+                        $fuserid,
+                        $smsSubject
                     );
                 }
                 // 성공한 경우
@@ -1034,16 +1036,31 @@ class TemplateCategoryController extends Controller
                 // 예를 들어, 템플릿이 성공적으로 저장되었을 경우
                 $this->sendTransaction->saveMessage(
                     $fdestine, $fcallback, $message, $profileKey,
-                    $templateKey,$responseData[0]['sn'],$responseData[0]['code'],
-                    $responseData[0]['altCode'],$responseData[0]['altMsg'],$responseData[0]['altSndDtm'],
-                    $responseData[0]['altRcptDtm'],$group_key,$member_idx,$client_ip,$fuserid);
+                    $templateKey,$responseData[0]['sn'],$responseData[0]['code'],$responseData[0]['altCode'],$responseData[0]['altMsg'],
+                    $responseData[0]['altSndDtm'],$responseData[0]['altRcptDtm'],$group_key,$member_idx,$client_ip,$fuserid,
+                    null,null,null,$smsSubject
+                );
 
 
                 $point_sect = "smspay"; //
                 $mile_title = "알림톡 발송"; // 포인트 차감 내역
                 $mile_sect = "M"; // 포인트  종류 = A : 적립, P : 대기, M : 차감
-
-                $mb_kko_fee=$this->data['inc_member_row']['mb_kko_fee'];
+                if($responseData[0]['code']=='EW'){
+                    $smsType = $responseData[0]['smsKind'];
+                    switch ($smsType) {
+                        case 'S':
+                            $mb_kko_fee=$this->data['inc_member_row']['mb_short_fee'];
+                            break;
+                        case 'L':
+                            $mb_kko_fee=$this->data['inc_member_row']['mb_long_fee'];
+                            break;
+                        case 'M':
+                            $mb_kko_fee=$this->data['inc_member_row']['mb_img_fee'];
+                            break;
+                    }
+                }else{
+                    $mb_kko_fee=$this->data['inc_member_row']['mb_kko_fee'];
+                }
                 $this->pointModel->coin_plus_minus($point_sect,$member_idx,$mile_sect,$mb_kko_fee,$mile_title,"","","");
                 // 성공한 경우
                 $response = [

@@ -18,9 +18,12 @@ class UserAlimTalkModel
         $sql = "SELECT 
                         a.*,count(a.fetc7) as tot_cnt,
                         mi.mb_kko_fee,
-                        SUM(CASE WHEN fetc2 = 'AS' THEN 1 ELSE 0 END) AS receive_cnt_suc,
-                        SUM(CASE WHEN fetc2 != 'AS' THEN 1 ELSE 0 END) AS receive_cnt_fail,
+                        SUM(CASE WHEN fetc2 IN ('AS', 'EW') THEN 1 ELSE 0 END) AS receive_cnt_suc,
+                        SUM(CASE WHEN fetc2 not IN ('AS', 'EW') THEN 1 ELSE 0 END) AS receive_cnt_fail,
                         tp.id as template_id,
+                        FORMAT(SUM(CASE WHEN fetc2 = 'EW' THEN 1 ELSE 0 END) * mi.mb_short_fee, 2) as use_short_point,
+                        FORMAT(SUM(CASE WHEN fetc2 = 'EW' THEN 1 ELSE 0 END) * mi.mb_long_fee, 2) as use_long_point,
+                        FORMAT(SUM(CASE WHEN fetc2 = 'EW' THEN 1 ELSE 0 END) * mi.mb_img_fee, 2) as use_img_point,
                         FORMAT(SUM(CASE WHEN fetc2 = 'AS' THEN 1 ELSE 0 END) * mi.mb_kko_fee, 2) as use_point
                     FROM TBL_SEND_TRAN_KKO a 
                         LEFT JOIN member_info_sendinfo mi ON mi.member_idx = a.fetc8

@@ -43,13 +43,18 @@ def get_current_point(cursor, member_idx):
     result = cursor.fetchone()
     return float(result['cur_mile']) if result and result['cur_mile'] is not None else 0.0
 
-def get_mb_kko_fee(cursor, member_info_idx):
-    cursor.execute("""
-        SELECT mb_kko_fee FROM member_info_sendinfo
-        WHERE member_idx = %s
-    """, (member_info_idx,))
+def get_mb_kko_fee(cursor, member_info_idx, feeType):
+    # feeType이 유효한 컬럼명인지 확인하는 로직 (보안상 중요)
+    valid_fee_types = ['mb_short_fee', 'mb_long_fee', 'mb_img_fee','mb_kko_fee']  # 예시 컬럼명 목록
+    if feeType not in valid_fee_types:
+        raise ValueError(f"Invalid feeType: {feeType}")
+    query = f"""
+           SELECT {feeType} FROM member_info_sendinfo
+           WHERE member_idx = %s
+       """
+    cursor.execute(query, (member_info_idx,))
     result = cursor.fetchone()
-    return float(result['mb_kko_fee']) if result and result['mb_kko_fee'] is not None else 0.0
+    return float(result[feeType]) if result and result[feeType] is not None else 0.0
 
 def update_point(cursor, member_idx, chg_mile, mile_title):
     mile_pre = get_current_point(cursor, member_idx)
@@ -89,11 +94,7 @@ def process_data():
                     member_info_idx = result['fetc8']
                     sms_send_yn = result['sms_send_yn']
                     sms_kind = result['sms_kind']
-                    mb_kko_fee = get_mb_kko_fee(cursor, member_info_idx)
 
-                    if mb_kko_fee is None:
-                        logging.warning(f"Member info not found or mb_kko_fee is missing for member_idx: {member_info_idx}")
-                        continue
 
                     # API 전송을 위한 데이터 구성
                     payload ={
@@ -252,7 +253,7 @@ def process_data():
                             data = response_data[0]
 
                             # 발송 성공 여부 확인 ("code"가 "AS"인 경우)
-                            if data.get("code") == "AS":
+                            if data.get("code") == "AS" or data.get("code") == "EW":
                                 total_sent += 1
 
                             # 데이터베이스 업데이트
@@ -283,6 +284,19 @@ def process_data():
 
                 # 발송 건수가 2건 이상이고, 발송 성공 건수가 있는 경우 포인트 차감
                 if total_sent >= 2:
+                    if data.get("code", None)=="EW":
+                        def fee_switch(fee_type):
+                            match fee_type:
+                                case 'S':
+                                    return 'mb_short_fee'
+                                case 'L':
+                                    return 'mb_long_fee'
+                                case 'M':
+                                    return 'mb_img_fee'
+                        fee_type_str = fee_switch(data.get('smsKind', None))
+                    if data.get("code", None) == "AS":
+                        fee_type_str = 'mb_kko_fee'
+                    mb_kko_fee = get_mb_kko_fee(cursor, member_info_idx, fee_type_str)
                     total_fee = total_sent * mb_kko_fee
                     update_point(cursor, member_info_idx, total_fee, f"알림톡 발송({total_sent}건)")
                     logging.info(f"{total_sent}건의 발송 성공에 대해 포인트 {total_fee} 차감 완료")

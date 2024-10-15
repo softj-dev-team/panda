@@ -34,6 +34,10 @@ const statusMapping = {
     '01': '승인',
     '02': '승인대기'
 };
+const statusTalkResultMapping = {
+    'AS': '성공(알림톡/친구톡)',
+    'EW': '성공(대체문자)',
+};
 let buttons = [];
 let quickReplies = [];
 const maxButtons = 5;
@@ -1330,19 +1334,47 @@ $(document).ready(function() {
         event.preventDefault();
         // 폼 제출 처리 로직
     });
-
+    $(document).on('change','input[name=msgType]',function (){
+        var msgType = $('input[name=msgType]:checked').val()
+        var messageEl= $('#highlightTitle')
+        var currentLength = messageEl.val().length;
+        var targetLength = 1000;
+        if(msgType==='FT'){
+            targetLength=1000;
+            var html1 ='';
+            var html2 ='';
+        }
+        if(msgType==='FI'){
+            var html1 ='- 가로 500px 이상, 세로 높이 250px 이상';
+            var html2 ='- 가로:세로 비율이 2:1 이상 3:4 이하';
+            targetLength=400;
+        }
+        if(msgType==='FW'){
+            var html1 ='- 가로 800px, 세로 600px 이상';
+            var html2 ='';
+            targetLength=76;
+        }
+        $('#charCount').text(currentLength + "/" + targetLength);
+        $('.image-valid p').eq(1).html(html1)
+        $('.image-valid p').eq(2).html(html2)
+    })
     // 텍스트 입력된 값을 iconMap을 참고하여 이미지로 변환
     $('#highlightTitle').on('input', function() {
         var currentLength = $(this).val().length;
-
+        var msgType = $('input[name=msgType]:checked').val()
+        var targetLength = 1000;
+        if(msgType==='FT') targetLength=1000;
+        if(msgType==='FI') targetLength=400;
+        if(msgType==='FW') targetLength=76;
         if(currentLength <= 1000){
-            $('#charCount').text(currentLength + "/1000");
+            $('#charCount').text(currentLength + "/" + targetLength);
         }
-        if (currentLength > 1000) {
+        if (currentLength > targetLength) {
             $('#errorMsg').removeClass("blind");
             $('#errorMsg').addClass("active");
             $(this).addClass('fm-error');
-            $(this).val($(this).val().substring(0, 1000));  // 글자수 제한
+            $(this).val($(this).val().substring(0, targetLength));  // 글자수 제한
+            $('.currentLength').text(targetLength);
         } else {
             $('#errorMsg').addClass("blind");
         }
@@ -1370,6 +1402,52 @@ $(document).ready(function() {
             $('#previewHighlightTitle').html(updatedContent);
         }
     });
+    $(document).on('input', '.messageInput', function() {
+        var currentLength = $(this).val().length;
+        console.log($(this).prev('label').find('span'))
+        var charCountSpan = $(this).prev('label').find('span');
+        var nextSpan =$(this).next('span');
+        var subjectParentsEl = $('input[name=subject]').parents('.fm-box');
+        subjectParentsEl.addClass('blind')
+        nextSpan.removeClass("blind");
+        nextSpan.removeClass("active");
+        $(this).removeClass('fm-error');
+        if(currentLength <= 2000){
+            charCountSpan.text(currentLength + "/2000");
+        }
+        if(currentLength > 90){
+            subjectParentsEl.removeClass('blind')
+        }
+        if (currentLength > 2000) {
+            nextSpan.removeClass("blind");
+            nextSpan.addClass("active");
+            $(this).addClass('fm-error');
+            $(this).val($(this).val().substring(0, 2000));  // 글자수 제한
+        } else {
+            $('#errorMsg').addClass("blind");
+        }
+
+    });
+    $(document).on('input', 'input[name=subject]', function() {
+        var currentLength = $(this).val().length;
+        var charCountSpan = $(this).prev('label').find('span');
+        var nextSpan =$(this).next('span');
+        nextSpan.removeClass("blind");
+        nextSpan.removeClass("active");
+        $(this).removeClass('fm-error');
+        if(currentLength <= 40){
+            charCountSpan.text(currentLength + "/40");
+        }
+        if (currentLength > 40) {
+            nextSpan.removeClass("blind");
+            nextSpan.addClass("active");
+            $(this).addClass('fm-error');
+            $(this).val($(this).val().substring(0, 40));  // 글자수 제한
+        } else {
+            $('#errorMsg').addClass("blind");
+        }
+    });
+
     $('#highlightSubtitle').on('input', function() {
         var currentLength = $(this).val().length;
         if(currentLength <= 1000){
@@ -2053,7 +2131,23 @@ $(document).ready(function() {
                     downloadExcelSucc.attr('data-id',response.data[0].fetc7)
                     downloadExcelFail.attr('data-id',response.data[0].fetc7)
                     rowDataSmsType.text('알림톡')
-                    rowDataUseSumPoint.text(response.data[0].use_point);
+                    if(response.data[0].fetc2==='EW'){
+                        switch (response.data[0].sms_kind) {
+                            case 'S':
+                                rowDataUseSumPoint.text(response.data[0].use_short_point);
+                                break;
+                            case 'L':
+                                rowDataUseSumPoint.text(response.data[0].use_long_point);
+                                break;
+                            case 'M':
+                                rowDataUseSumPoint.text(response.data[0].use_img_point);
+                                break;
+                            default:
+                                return;
+                        }
+                    }else{
+                        rowDataUseSumPoint.text(response.data[0].use_point);
+                    }
                     rowDataTotSendCnt.text(Number(response.data[0].tot_cnt).toLocaleString())
                     rowDataSuccesSendCnt.text(Number(response.data[0].receive_cnt_suc).toLocaleString())
                     rowDataFaileTotSendCnt.text(Number(response.data[0].receive_cnt_fail).toLocaleString())
@@ -2062,7 +2156,7 @@ $(document).ready(function() {
                     if(response.data[0].template_id){
                         loadTemplateDetails(response.data[0].template_id,response.data[0])
                     }else{
-                        console.log(response.data[0])
+                        console.log('alt result '+response.data[0])
                         $('.elPreview').empty();
                         $('#previewHighlightTitle').html(response.data[0].fmessage)
                         var img_path = response.data[0].img_path;
@@ -2106,8 +2200,11 @@ $(document).ready(function() {
                             { title: "전송일시", field: "finsertdate", sorter: "string" },
                             { title: "발신번호", field: "fcallback", sorter: "string" },
                             { title: "수신번호", field: "fdestine", sorter: "string" },
-                            { title: "결과코드", field: "fetc3", sorter: "string" },
-                            { title: "결과메세지", field: "fetc4", sorter: "string" },
+                            { title: "결과", field: "fetc2", formatter: function(cell, formatterParams) {
+                                    // 발송여부 값을 텍스트로 변환하여 표시
+                                    let value = cell.getValue();
+                                    return value === "AS" || "EW" ? statusTalkResultMapping[value] : '발송실패';
+                                }}
 
                         ],
                     });

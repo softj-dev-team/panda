@@ -1177,3 +1177,11 @@ input[data-fakefile="file"] { position:absolute; width:1px; height:16px; padding
 #previewStrongTitle{
     display: flex;
 }
+.flex-column-info-list{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: flex-start;
+    align-items: flex-start;
+    gap: 0;
+}

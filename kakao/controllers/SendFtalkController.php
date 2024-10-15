@@ -51,7 +51,7 @@ class SendFtalkController extends Controller {
         $response = ['status' => 'error', 'message' => 'An unknown error occurred'];
         $client_ip = $this->getClientIP();
         try {
-
+            $smsSubject = $_REQUEST['subject']??'';
             $smssendyn =isset($_REQUEST['smssendyn'])??'';
             $smsmessage = $_REQUEST['smsmemo']??'';
             $kisaOrigCode = '301230126';
@@ -173,8 +173,8 @@ class SendFtalkController extends Controller {
                         $fuserid,
                         $save_buttons,
                         $_REQUEST['msgType'],
-                        $image_path
-
+                        $image_path,
+                        $smsSubject
                     );
                 }
                 // 성공한 경우
@@ -183,6 +183,7 @@ class SendFtalkController extends Controller {
                     'fuserid' => 'FT'
                 ];
             }else{
+
                 $responseData = $this->sendFriendTalkRequest($message,$fdestine, $fcallback, $profile_key, $custMsgSn,$_POST);
 
                 if (isset($responseData[0]['code'])) {
@@ -246,7 +247,22 @@ class SendFtalkController extends Controller {
                 $mile_title = "알림톡 발송"; // 포인트 차감 내역
                 $mile_sect = "M"; // 포인트  종류 = A : 적립, P : 대기, M : 차감
 
-                $mb_kko_fee=$this->data['inc_member_row']['mb_kko_fee'];
+                if($responseData[0]['code']=='EW'){
+                    $smsType = $responseData[0]['smsKind'];
+                    switch ($smsType) {
+                        case 'S':
+                            $mb_kko_fee=$this->data['inc_member_row']['mb_short_fee'];
+                            break;
+                        case 'L':
+                            $mb_kko_fee=$this->data['inc_member_row']['mb_long_fee'];
+                            break;
+                        case 'M':
+                            $mb_kko_fee=$this->data['inc_member_row']['mb_img_fee'];
+                            break;
+                    }
+                }else{
+                    $mb_kko_fee=$this->data['inc_member_row']['mb_kko_fee'];
+                }
                 $this->pointModel->coin_plus_minus($point_sect,$member_idx,$mile_sect,$mb_kko_fee,$mile_title,"","","");
                 // 성공한 경우
                 $response = [
