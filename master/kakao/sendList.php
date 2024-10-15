@@ -54,7 +54,7 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
                     <a href="../kakao/templatelist.php?bmenu=<?= $bmenu ?>&smenu=2">알림톡템플릿</a>
                 </li>
                 <li <? if ($smenu == 2) { ?>class="on" <? } ?>>
-                    <a href="../kakao/sendList.php?bmenu=<?= $bmenu ?>&smenu=3">알림톡 발송내역</a>
+                    <a href="../kakao/sendList.php?bmenu=<?= $bmenu ?>&smenu=3">kakao 전송결과</a>
                 </li>
             </ul>
         </aside>
