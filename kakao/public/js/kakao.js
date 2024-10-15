@@ -36,7 +36,15 @@ const statusMapping = {
 };
 const statusTalkResultMapping = {
     'AS': '성공(알림톡/친구톡)',
+    'AR': '발송대기',
+    'SS': '성공(문자)',
+    'SF': '실패(문자)',
     'EW': '성공(대체문자)',
+    'AF': '실패',
+    'EL': '실패',
+    'EF': '실패',
+    'EE': '실패',
+    'EO': '실패',
 };
 let buttons = [];
 let quickReplies = [];
@@ -2131,6 +2139,7 @@ $(document).ready(function() {
                 success: function(response) {
                     hideLoadingSpinner();
                     var list = response.data['list']
+                    console.log('sendDetail')
                     downloadExcelSucc.attr('data-id',response.data[0].fetc7)
                     downloadExcelFail.attr('data-id',response.data[0].fetc7)
                     rowDataSmsType.text('알림톡')
@@ -2151,7 +2160,7 @@ $(document).ready(function() {
                     }else{
                         rowDataUseSumPoint.text(response.data[0].use_point);
                     }
-                    rowDataTotSendCnt.text(Number(response.data[0].tot_cnt).toLocaleString())
+                    rowDataTotSendCnt.text(list.length)
                     rowDataSuccesSendCnt.text(Number(response.data[0].receive_cnt_suc).toLocaleString())
                     rowDataFaileTotSendCnt.text(Number(response.data[0].receive_cnt_fail).toLocaleString())
                     rowDataMoreTotSendCnt.text(Number(response.data[0].receive_cnt_tot - response.data[0].receive_cnt_suc-response.data[0].receive_cnt_fail).toLocaleString())
@@ -2201,13 +2210,33 @@ $(document).ready(function() {
                         },
                         columns: [
                             { title: "전송일시", field: "finsertdate", sorter: "string" },
-                            { title: "발신번호", field: "fcallback", sorter: "string" },
+                            {
+                                title: "발신체널/발신번호",
+                                field: "chananel_name", // 기본 필드는 chananel_name
+                                formatter: function(cell, formatterParams, onRendered){
+                                    // 데이터를 확인
+                                    var data = cell.getData();
+                                    console.log('cell.getData',data)
+                                    // field 값이 AC이면 chananel_name, EW이면 fcallback을 반환
+                                    if (data.fetc2 === "AC") {
+                                        return data.chananel_name; // 발신체널/발신번호로 chananel_name 사용
+                                    } else if (data.fetc2 === "EW") {
+                                        return data.fcallback; // 발신체널/발신번호로 fcallback 사용
+                                    } else {
+                                        return data.chananel_name; // 다른 경우는 빈 값 반환
+                                    }
+                                }
+                            },
                             { title: "수신번호", field: "fdestine", sorter: "string" },
                             { title: "결과", field: "fetc2", formatter: function(cell, formatterParams) {
                                     // 발송여부 값을 텍스트로 변환하여 표시
                                     let value = cell.getValue();
-                                    return value === "AS" || "EW" ? statusTalkResultMapping[value] : '발송실패';
-                                }}
+                                    var statusStr ='실패';
+                                    if(value === "AS" || "EW"){
+                                        statusStr = statusTalkResultMapping[value]
+                                    }
+                                    return statusStr
+                            }}
 
                         ],
                     });

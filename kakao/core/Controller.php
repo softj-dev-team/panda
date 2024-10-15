@@ -191,15 +191,19 @@ class Controller {
                 }
             }
         }
-        if(isset($param['smssendyn']) && $param['smsmemo']){
+
+        if(isset($param['smssendyn'])){
             $smslength=strlen($param['smsmemo']);
+            if($smslength <=0){
+                $data[0]["smsMessage" ] = $message;
+            }else{
+                $data[0]["smsMessage" ]= $param['smsmemo'];
+            }
             $data[0]["smsSndNum" ]= $fcallback;
             if($smslength <= 90){
                 $data[0]["smsKind" ]= "S";
-                $data[0]["smsMessage" ]= $param['smsmemo'];
             }else{
                 $data[0]["smsKind" ]= "L";
-                $data[0]["lmsMessage" ]= $param['smsmemo'];
                 $data[0]["subject" ]= $param['subject'];
             }
         }

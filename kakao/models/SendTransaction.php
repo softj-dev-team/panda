@@ -15,7 +15,7 @@ class SendTransaction
         $fdestine=null,$fcallback=null,$message=null,$profile_key=null,
         $template_key=null,$sn=null,$code=null,$altCode=null,$altMsg=null,
         $altSndDtm=null,$altRcptDtm=null,$group_key=null, $member_idx=null,$client_ip=null,$fuserid=null,
-        $buttons=null,$img_path=null,$msg_type=null,$smsSubject=null
+        $buttons=null,$img_path=null,$msg_type=null,$smsSubject=null,$smsmessage=null,$smsKind=null
     )
     {
         try {
@@ -23,11 +23,11 @@ class SendTransaction
                 (
                  fyellowid, ftemplatekey,fkkoresendtype,fmsgtype,fmessage, fsenddate, fdestine,fcallback,
                  fetc1,fetc2,fetc3,fetc4,fetc5,fetc6,fetc7,fetc8,
-                 fuserid,buttons,img_path,msg_type,fsubject
+                 fuserid,buttons,img_path,msg_type,fsubject,smsmessage,sms_kind
                  )
                 VALUES
                 (:profile_key, :template_key, 'N', 4, :message, now(), :fdestine, :fcallback,
-                 :fetc1, :fetc2, :fetc3, :fetc4, :fetc5, :fetc6,:fetc7, :fetc8,:fuserid,:buttons,:img_path,:msg_type,:fsubject)");
+                 :fetc1, :fetc2, :fetc3, :fetc4, :fetc5, :fetc6,:fetc7, :fetc8,:fuserid,:buttons,:img_path,:msg_type,:fsubject,:smsmessage,:sms_kind)");
             $stmt->bindParam(':profile_key', $profile_key);
             $stmt->bindParam(':template_key', $template_key);
             $stmt->bindParam(':message', $message);
@@ -46,6 +46,8 @@ class SendTransaction
             $stmt->bindParam(':img_path', $img_path);
             $stmt->bindParam(':msg_type', $msg_type);
             $stmt->bindParam(':fsubject', $smsSubject);
+            $stmt->bindParam(':smsmessage', $smsmessage);
+            $stmt->bindParam(':sms_kind', $smsKind);
             $stmt->execute();
         } catch (Exception $e) {
             error_log($e->getMessage());

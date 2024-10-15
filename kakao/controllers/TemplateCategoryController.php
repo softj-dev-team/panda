@@ -993,7 +993,8 @@ class TemplateCategoryController extends Controller
             } else {
                 $fdestine = $_POST['fdestine'];
                 $fcallback = $_POST['fcallback'];
-                $message = $_POST['message'];
+                $message = $_POST['message']??'';
+                $smsmessage = $_POST['smsmessage']??$message;
                 $profileKey = $_POST['profile_key'];
                 $templateKey = $_POST['template_key'];
                 $responseData = $this->sendAlimtalkRequest($message,$fdestine, $fcallback, $profileKey, $templateKey,$_POST);
@@ -1038,7 +1039,7 @@ class TemplateCategoryController extends Controller
                     $fdestine, $fcallback, $message, $profileKey,
                     $templateKey,$responseData[0]['sn'],$responseData[0]['code'],$responseData[0]['altCode'],$responseData[0]['altMsg'],
                     $responseData[0]['altSndDtm'],$responseData[0]['altRcptDtm'],$group_key,$member_idx,$client_ip,$fuserid,
-                    null,null,null,$smsSubject
+                    null,null,null,$smsSubject,$smsmessage,$responseData[0]['smsKind']
                 );
 
 

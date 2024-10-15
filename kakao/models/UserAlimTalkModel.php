@@ -16,7 +16,7 @@ class UserAlimTalkModel
     {
         // 기본 SQL 쿼리
         $sql = "SELECT 
-                        a.*,count(a.fetc7) as tot_cnt,
+                        a.*,count(1) as tot_cnt,
                         mi.mb_kko_fee,
                         SUM(CASE WHEN fetc2 IN ('AS', 'EW') THEN 1 ELSE 0 END) AS receive_cnt_suc,
                         SUM(CASE WHEN fetc2 not IN ('AS', 'EW') THEN 1 ELSE 0 END) AS receive_cnt_fail,
@@ -38,10 +38,10 @@ class UserAlimTalkModel
     public function sendKkoListDetail($group_key)
     {
         // 기본 SQL 쿼리
-        $sql = "SELECT a.*                       
+        $sql = "SELECT a.*,(select chananel_name from kakao_business where profile_key=a.fyellowid limit 1) as chananel_name
                     FROM TBL_SEND_TRAN_KKO a 
                         LEFT JOIN member_info_sendinfo mi ON mi.member_idx = a.fetc8
-                        left join template tp on tp.template_key = a.ftemplatekey
+                        left join template tp on tp.template_key = a.ftemplatekey                        
                     WHERE a.fetc7 =:fetc7 ";
         $stmt = $this->conn->prepare($sql);
         // 기본 바인딩
@@ -52,9 +52,9 @@ class UserAlimTalkModel
     public function getKakaoSendList($member_idx,$offset, $limit,$keyword = null,$startDate=null,$endDate=null)
     {
         // 기본 SQL 쿼리
-        $sql = "SELECT *,count(fetc7) as tot_cnt 
-            FROM TBL_SEND_TRAN_KKO 
-            WHERE fetc8 = :member_idx ";
+        $sql = "SELECT a.*,count(1) as tot_cnt,(select chananel_name from kakao_business where profile_key=a.fyellowid limit 1) as chananel_name
+            FROM TBL_SEND_TRAN_KKO a
+            WHERE a.fetc8 = :member_idx ";
 
         // 키워드가 있을 경우 추가 조건
         if ($keyword !== null) {

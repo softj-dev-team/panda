@@ -126,7 +126,8 @@
 
                     <th>등록일시</th>
                     <th>구분</th>
-                    <th>발신 번호</th>
+                    <th>발신채널명</th>
+<!--                    <th>발신 번호</th>-->
                     <th>총건수</th>
                 </tr>
                 </thead>
@@ -189,7 +190,7 @@
                         <td>${formattedDate}</td>
                         <td>${sendTypeMapping[data.fuserid]}</td>
                         <td>
-                           ${data.fdestine}
+                           ${data.chananel_name}
                         </td>
                         <td>${data.tot_cnt}</td>
                     </tr>`;
