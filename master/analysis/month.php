@@ -16,7 +16,7 @@ $startDate = isset($_REQUEST['s_date']) ? new DateTime($_REQUEST['s_date'])  : (
 $endDate = isset($_REQUEST['e_date']) ? new DateTime($_REQUEST['e_date'])  : $currentDate;
 if ($startDate && $endDate) {
     $startDateFormatted = $startDate->format('Y-m-d H:i:s');
-    $endDateFormatted = $endDate->format('Y-m-d 11:59:59');
+    $endDateFormatted = $endDate->format('Y-m-d 23:59:59');
 
     $where .= "and sms_save.wdate BETWEEN '$startDateFormatted' AND '$endDateFormatted'";
 }

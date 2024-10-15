@@ -1102,7 +1102,6 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                 }
 
                 let newData = {
-
                     number: cell_receive_dan,
                     key: "directAdd"
                 };
@@ -1245,31 +1244,62 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                         },
                         async: true,
                         dataType: "json",
+                        beforeSend: function() {
+                            // AJAX 요청이 시작되기 전에 로딩 스피너를 보여줌
+                            showLoadingSpinner();
+                        },
                         success: function(data) {
                             let listCount = 0
-                            let newData = {};
-                            data.forEach(item => {
-                                newData = {
-                                    name:item.receive_name,
-                                    number: item.receive_num,
-                                    key: "callAddress"
-                                };
-                                let isDuplicate = data.some(function (item) {
-                                    return item.number === newData.number;
-                                });
-                                if(!isDuplicate){
-                                    listCount = listCount + 1;
-                                    table.addData([newData], true);
+                            let newDataList = [];
+                            let existingNumbers = new Set();  // 중복 체크를 위한 Set
+                            let tableList = table.getData();
+                            tableList.forEach(item => {
+                                if (item.key === 'callAddress') {
+                                    existingNumbers.add(item.number);
                                 }
                             });
-                            let tableList = table.getData();
-                            let count = tableList.filter(function(item) {
+                            data.forEach(item => {
+                                let newNumber = item.receive_num;
+
+                                // 중복된 전화번호가 없을 때만 처리
+                                if (!existingNumbers.has(newNumber)) {
+                                    let newData = {
+                                        name: item.receive_name,
+                                        number: newNumber,
+                                        key: "callAddress"
+                                    };
+                                    newDataList.push(newData);
+                                    listCount++;
+                                    existingNumbers.add(newNumber);  // 중복 방지를 위해 Set에 추가
+                                }
+                            });
+                            if (newDataList.length > 0) {
+                                var tableData =table.getData();
+                                if(tableData.length > 0){
+                                    tableData.forEach(item=>{
+                                        let newData = {
+                                            name: item.name,
+                                            number: item.number,
+                                            key:item.key
+                                        };
+                                        newDataList.push(newData);
+                                    })
+                                }
+                                table.setData(newDataList);
+                            }
+                            let count = table.getData().filter(function(item) {
                                 return item.key === 'callAddress';
                             }).length;
                             $('#callAddress').text(count);
                             $('#callAddress').parent().show();
                             $('#cell_receive_cnt').text(tableList.length);
+                            hideLoadingSpinner();
                         },
+                        error: function() {
+                            // 에러가 발생한 경우에도 로딩 스피너를 숨김
+                            hideLoadingSpinner();
+                            alert("데이터를 불러오는 중 문제가 발생했습니다.");
+                        }
                     });
                 }
 
@@ -1332,39 +1362,87 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                 return false;
             } else {
                 readExcel(async function(result) {
+                    let listCount = 0;
+                    let newDataList = [];
+                    let existingNumbers = new Set();
+
                     // 타이틀 체크
-                    console.log(result);
-                    let listCount = 0
-                    let newData = {};
                     if (Object.keys(result[0]).includes('HP')) {
                         if (result.length > 300000) {
                             alert('최대 300,000개까지 등록할 수 있습니다.');
-                        } else {
-                            //result = await rejectHpCheck(result, 1);
-                            // result = await checkDuplicateExcel(result);
-                            result.forEach(item => {
-                                newData = {
-                                    name:item.NAME,
+                            hideLoadingSpinner();
+                            return;
+                        }
+
+                        // 데이터 청크 처리 함수
+                        function processDataInChunks(data, processChunk, onComplete) {
+                            let index = 0;
+                            let chunkSize = 1000; // 청크 크기 조절
+
+                            function nextChunk() {
+                                if (index < data.length) {
+                                    let end = Math.min(index + chunkSize, data.length);
+                                    let chunk = data.slice(index, end);
+                                    processChunk(chunk);
+                                    index = end;
+                                    setTimeout(nextChunk, 0); // 다음 청크 스케줄링
+                                } else {
+                                    onComplete();
+                                }
+                            }
+                            nextChunk();
+                        }
+
+                        // 청크 처리 함수
+                        function processChunk(chunk) {
+                            chunk.forEach(item => {
+                                let newData = {
+                                    name: item.NAME,
                                     number: item.HP,
                                     key: "excelFileAdd"
                                 };
-                                let isDuplicate = result.some(function (item) {
-                                    return item.number === newData.number;
-                                });
-                                if(!isDuplicate){
-                                    listCount = listCount + 1;
-                                    table.addData([newData], true);
+
+                                // 중복 체크
+                                if (!existingNumbers.has(newData.number)) {
+                                    newDataList.push(newData);
+                                    existingNumbers.add(newData.number);
+                                    listCount++;
                                 }
                             });
+                        }
+
+                        // 완료 후 호출 함수
+                        function onComplete() {
+                            if (newDataList.length > 0) {
+                                var tableData =table.getData();
+                                if(tableData.length > 0){
+                                    tableData.forEach(item=>{
+                                        let newData = {
+                                            name: item.name,
+                                            number: item.number,
+                                            key:item.key
+                                        };
+                                        newDataList.push(newData);
+                                    })
+                                }
+                                table.setData(newDataList);
+                            }
+
+                            // 카운트 업데이트
                             let tableList = table.getData();
                             let count = tableList.filter(function(item) {
                                 return item.key === 'excelFileAdd';
                             }).length;
+
                             $('#excelFileAdd').text(count);
                             $('#excelFileAdd').parent().show();
                             $('#cell_receive_cnt').text(tableList.length);
+
                             hideLoadingSpinner();
                         }
+
+                        // 청크 단위로 데이터 처리 시작
+                        processDataInChunks(result, processChunk, onComplete);
 
                     } else {
                         alert('엑셀 양식을 참고해주세요.\n헤더는 [이름 = NAME, 번호 = HP]이 되어야합니다.');
