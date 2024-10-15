@@ -703,7 +703,12 @@ function loadTemplateDetails(templateId,pData) {
                 var templateItemHighlight = template.apiRespone.templateItemHighlight;
                 var kakao_ch_id = template.kakao_ch_id;
                 var kakao_ch_name = template.kakao_ch_name;
-                $('#previewChannelName').text(kakao_ch_name);
+                if($('#adFlag').is(':checked')){
+                    $('#previewChannelName').text('(광고)'+kakao_ch_name);
+                }else{
+                    $('#previewChannelName').text(kakao_ch_name);
+                }
+
                 $('.generated-button').remove();
                 $('.item-list-box').empty();
                 if(tempalteItem){
@@ -2393,4 +2398,29 @@ $(document).on('click','#checkNum',function (){
         $('input[name=check_group]').prop('checked', false);
     }
 
+})
+$(document).on('change','#adFlag',function (){
+    var targetEl = $('#previewChannelName');
+    var selElVal = '채널명';
+    var profileEl =$("select[name=profile_id] option:selected");
+    if(profileEl.val()){
+        selElVal = profileEl.attr("data-id")
+    }
+   if($(this).is(':checked')){
+       targetEl.text('(광고)'+selElVal);
+   }else{
+       targetEl.text(selElVal);
+   }
+})
+$(document).on('change','select[name=profile_id]',function (){
+    var adChecked = $('#adFlag').is(':checked');
+    var targetEl = $('#previewChannelName');
+    var selElVal = '채널명';
+    var selOptionVal = $("select[name=profile_id] option:selected").attr('data-id');
+    if(selOptionVal){
+        selElVal = selOptionVal;
+        adChecked?targetEl.text('(광고)'+selElVal):targetEl.text(selElVal);
+    }else{
+        adChecked?targetEl.text('(광고)'+selElVal):targetEl.text(selElVal);
+    }
 })
