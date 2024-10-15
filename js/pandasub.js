@@ -1,3 +1,27 @@
+let statusStrMapping={
+    '05':'실패(비가입자)',
+    '06':'성공',
+    '07':'실패(결번 비가입자 서비스정지)',
+    '08':'실패(Power-off Busy 착신거절 등)',
+    '09':'실패(음영',
+    '10':'실패(단말기 메시지 FULL)',
+    '11':'실패(기타에러 및 REPORT TIMEOUT)',
+    '12':'실패((잔여콜 부족)',
+    '13':'실패(번호이동)',
+    '14':'실패(무선망)',
+    '15':'실패(망 결과응답시간 초과)',
+    '17':'실패(5초내에 동일한수신번호 4개이상거부)',
+    '20':'실패(UNKNOWN)',
+    '21':'실패(착신번호 에러(자리수)',
+    '22':'실패(착신번호 에러(국번)',
+    '25':'실패(운영자에의한 삭제)',
+    '26':'실패(미지원단말기)',
+    '28':'실패(사전 미등록 발신번호사용)',
+    '29':'실패(전화번호 세칙 미준수 발신번호사용)',
+    '30':'실패(발신번호 변작으로 등록된 발신번호 사용)',
+    '31':'실패(번호도용문자차단서버스에 가입된 발신번호사용)',
+    '40':'실패(스팸필터링)',
+}
 
 function hideLoadingSpinner() {
     $('.spinner-background').hide();
@@ -121,7 +145,10 @@ $(document).ready(function() {
                             { title: "발신번호", field: "cell_send", sorter: "string" },
                             { title: "수신번호", field: "cell", sorter: "string" },
                             { title: "통신사", field: "isp", sorter: "string" },
-                            { title: "결과코드", field: "status", sorter: "string" },
+                            { title: "결과", field: "status", formatter: function(cell, formatterParams) {
+                                    let value = cell.getValue();
+                                    return statusStrMapping[value];
+                                }}
 
                         ],
                     });
