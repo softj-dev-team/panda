@@ -554,7 +554,7 @@ if ($data['my_member_row']['member_gubun'] == "2" && $_REQUEST['send_type'] != "
                         <table>
                             <thead>
                                 <tr>
-                                    <th class="check"><input type="checkbox"></th>
+                                    <th class="check"><input type="checkbox" name="checkNum" id="checkNum"></th>
                                     <th>그룹명</th>
                                     <th>그룹 인원수</th>
                                 </tr>

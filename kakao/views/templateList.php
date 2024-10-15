@@ -75,7 +75,6 @@
                             <label for="f-search-sel-2" class="blind">검색 카테고리</label>
                             <select id="f-search-sel-2" class="fm-sel-2" name="template_type">
                                 <option value="">메세지 유형</option>
-
                                 <option value="BA">기본형</option>
                                 <option value="EX">부가정보형</option>
                                 <option value="AD">채널추가형</option>

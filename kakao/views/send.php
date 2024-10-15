@@ -77,6 +77,9 @@
                             <select id="f-search-sel-2" class="fm-sel-2" name="template_type">
                                 <option value="">메세지 유형</option>
                                 <option value="BA">기본형</option>
+                                <option value="EX">부가정보형</option>
+                                <option value="AD">채널추가형</option>
+                                <option value="MI">복합형</option>
                                 <!--                            <option value="">NEWS</option>-->
                             </select>
                         </div>
@@ -85,7 +88,9 @@
                             <select id="f-search-sel-3" class="fm-sel-2" name="template_emphasize_type">
                                 <option value="">강조 유형</option>
                                 <option value="NONE">선택안함</option>
+                                <option value="IMAGE">이미지형</option>
                                 <option value="TEXT">강조표기형</option>
+                                <option value="ITEM_LIST">아이템리스트형</option>
                             </select>
                         </div>
                         <div class="sch-sel">

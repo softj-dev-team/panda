@@ -623,3 +623,13 @@ function insertCharText(text) {
 	    
 	}
 }
+$(document).on('click','#checkNum',function (){
+	var checked = $(this).prop('checked');
+	console.log(checked)
+	if(checked){
+		$('input[name=check_group]').prop('checked', true);
+	}else{
+		$('input[name=check_group]').prop('checked', false);
+	}
+
+})

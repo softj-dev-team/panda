@@ -258,6 +258,7 @@ function saveQuickReply(index = null) {
     updateButtonList('quickReplies');
     hidePopup();
 }
+
 // 폼 데이터를 가져오는 함수
 function getFormData() {
     return {
@@ -2254,3 +2255,13 @@ $(document).ready(function() {
         $('#f-attach').closest('.fm-box').find('input[data-fakefile="text"]').attr('placeholder', '');
     })
 });
+$(document).on('click','#checkNum',function (){
+    var checked = $(this).prop('checked');
+    console.log(checked)
+    if(checked){
+        $('input[name=check_group]').prop('checked', true);
+    }else{
+        $('input[name=check_group]').prop('checked', false);
+    }
+
+})

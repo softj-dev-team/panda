@@ -37,7 +37,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
 <script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
 
 <body>
-
+    <div id="example-table" style="display: none"></div>
     <!--header-->
     <div><? include "./common/header.php"; ?></div>
 
@@ -222,9 +222,9 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                                             직접 붙여넣기 총 <span id="singleNumberDirectPaste">0</span>명 <i type="button" class="fa-solid fa-circle-minus countDelBtn" data-id="singleNumberDirectPaste"></i>
                                         </div>
                                     </div>
-                                    <div class="close_btn_sms">
-                                        <a href="javascript:abDelete();">삭제</a>
-                                    </div>
+<!--                                    <div class="close_btn_sms">-->
+<!--                                        <a href="javascript:abDelete();">삭제</a>-->
+<!--                                    </div>-->
 
                                 </div>
 
@@ -612,7 +612,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                         <table>
                             <thead>
                                 <tr>
-                                    <th class="check"><input type="checkbox"></th>
+                                    <th class="check"><input type="checkbox"  id="checkNum"></th>
                                     <th>그룹명</th>
                                     <th>그룹 인원수</th>
                                 </tr>
@@ -751,10 +751,17 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                 sms_save_list();
             })
         });
+        var table = new Tabulator("#example-table", {
+            columns: [
+                {title: "이름", field: "name"},
+                {title: "전화번호", field: "number"},
+                {title: "key", field: "key", hozAlign: "center"},
+            ],
+        });
 
-        var table = new Tabulator("#excel_copy", {
+        var pastTable = new Tabulator("#excel_copy", {
             height: "311px",
-            data: [],
+            data:[],
             placeholder: "복사(Ctrl+C)한 내용을 여기에 붙여넣기(Ctrl+V) 해주세요.",
             clipboard: true,
             clipboardPasteAction: "update",
@@ -779,7 +786,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
             clipboardPasteParser: function(pasteData) {
                 // 붙여넣기 데이터를 가공하는 부분
                 // pasteData는 텍스트로 붙여넣어진 데이터를 가공하는 과정입니다.
-
+                // console.log(pasteData)
                 let parsedData = pasteData.split("\n").map(function(row) {
                     let values = row.split("\t");  // 붙여넣기에서 각 열의 값을 탭으로 구분
 
@@ -798,39 +805,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
             }
         });
         let isReplacingData = false;  // 중복 실행 방지를 위한 플래그
-        table.on("dataLoading", function(data) {
-            if (isReplacingData) return;  // 이미 데이터가 로드 중이면 중단
 
-            if (data.length) {
-                // 데이터 배열을 필터링하여 number가 있는 요소만 남기고, 숫자로 정제함
-                let cleanedData = data.filter(function(elem, index) {
-                    if (elem.number) {
-                        // number가 문자열인지 확인하고, 문자열이 아닌 경우 문자열로 변환
-                        if (typeof elem.number !== 'string') {
-                            elem.number = String(elem.number);  // 문자열로 변환
-                        }
-
-                        // 숫자 이외의 문자를 모두 제거
-                        elem.number = elem.number.replace(/\D/g, '');
-                        return true;  // number가 있으면 유지
-                    } else {
-                        return false;  // number가 없으면 필터링하여 제외
-                    }
-                });
-
-                // 중복 실행 방지 플래그 설정
-                isReplacingData = true;
-                // 정제된 데이터를 다시 테이블에 반영
-                table.replaceData(cleanedData).then(function() {
-                    // 데이터가 성공적으로 대체된 후, 플래그를 해제
-                    isReplacingData = false;
-                }).catch(function(err) {
-                    // 오류 발생 시 플래그 해제
-                    isReplacingData = false;
-                    console.error("Error replacing data:", err);
-                });
-            }
-        });
 
         function go_sendinfo_view() {
             $("#layer1").show();
@@ -1193,7 +1168,7 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
 
         $("#text_add_btn").click(async function() {
             if ($("#tab-7").hasClass('current')) {
-
+                $('#text_add_val').val('');
                 let list = $("#text_add_val").val().replaceAll('-', '').split(/\,|\s+|\n/);
                 let listCount = 0
                 let newData = {};
@@ -1291,8 +1266,8 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                                 return item.key === 'callAddress';
                             }).length;
                             $('#callAddress').text(count);
+                            $('#cell_receive_cnt').text(newDataList.length);
                             $('#callAddress').parent().show();
-                            $('#cell_receive_cnt').text(tableList.length);
                             hideLoadingSpinner();
                         },
                         error: function() {
@@ -1304,21 +1279,48 @@ $filteringArray = explode(",", $filtering_list['filtering_text']);
                 }
 
             } else if ($("#tab-8").hasClass('current')) {
-                let list = table.getData();
-
-                if (list.length > 300000) {
+                let listCount = 0;
+                let pastlist = pastTable.getData();
+                let newDataList = [];
+                let existingNumbers = new Set();
+                if (pastlist.length > 300000) {
                     alert('최대 300,000개까지 등록할 수 있습니다.');
                 } else {
 
-                    let tableList = table.getData();
-                    let count = tableList.filter(function(item) {
+                    if (pastlist.length > 0) {
+                        pastlist.forEach(item=>{
+                            let newNumber = item.receive_num;
+                            if (!existingNumbers.has(newNumber)) {
+                                let newData = {
+                                    name: item.receive_name,
+                                    number: newNumber,
+                                    key: item.key
+                                };
+                                newDataList.push(newData);
+                                listCount++;
+                                existingNumbers.add(newNumber);  // 중복 방지를 위해 Set에 추가
+                            }
+                        })
+                        var tableData =table.getData();
+                        if(tableData.length > 0){
+                            tableData.forEach(item=>{
+                                let newData = {
+                                    name: item.name,
+                                    number: item.number,
+                                    key:item.key
+                                };
+                                newDataList.push(newData);
+                            })
+                        }
+                        table.setData(newDataList);
+                    }
+                    let count = newDataList.filter(function(item) {
                         return item.key === 'excelDirectPaste';  // key가 'textFileAdd'인 항목만 필터링
                     }).length;
                     $('#excelDirectPaste').text(count );
+                    $('#cell_receive_cnt').text(newDataList.length);
                     $('#excelDirectPaste').parent().show();
-
-
-                    $('#cell_receive_cnt').text(tableList.length);
+                    pastTable.setData();
                 }
             }
 
