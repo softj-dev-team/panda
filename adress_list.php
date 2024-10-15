@@ -530,7 +530,7 @@ $row_group = mysqli_fetch_array($result_group);
             } else {
                 readExcel(async function(result) {
                     // 타이틀 체크
-                    if (Object.keys(result[0]).includes('NAME') && Object.keys(result[0]).includes('HP')) {
+                    if (Object.keys(result[0]).includes('HP')) {
                         if (result.length > 300000) {
                             alert('최대 300,000개까지 등록할 수 있습니다.');
                         } else {
