@@ -150,7 +150,17 @@ kakao-notification-button-container {
     position: relative;
 
 }
+.highlight-header-f-talk {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 5px 10px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    position: relative;
 
+}
 .highlight-header span {
     font-weight: bold;
     color: #000;

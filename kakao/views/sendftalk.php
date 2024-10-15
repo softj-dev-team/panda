@@ -111,9 +111,9 @@ if ($data['my_member_row']['member_gubun'] == "2" && $_REQUEST['send_type'] != "
                         <div id="previewChannelName">채널명</div>
                         <div id="previewTemplate">
                             <div class="highlight-container">
-                                <div class="highlight-header">
-                                    <span>알림톡 도착</span>
-                                    <div class="jss1382">kakako</div>
+                                <div class="highlight-header-f-talk">
+
+
                                 </div>
                                 <div class="highlight-body">
                                     <div class="image-wrapper">
