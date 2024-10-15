@@ -286,7 +286,7 @@ if ($data['my_member_row']['member_gubun'] == "2" && $_REQUEST['send_type'] != "
                                         <textarea name="template_title" id="highlightTitle" class="fm-ta" placeholder="템플릿내용은 한/영 구분없이 1,000자까지 입력 가능합니다. 변수에 들어갈 내용의 최대 길이를 감안하여 작성해 주세요."></textarea>
                                         <span id="errorMsg" class="fm-error-txt" >* <span class="currentLength">1000</span>자를 초과할 수 없습니다.</span>
                                     </div>
-                                    <div class="w-100" id="templateImageUploadForm" >
+                                    <div class="w-100 blind" id="templateImageUploadForm" >
                                         <div class="fm-box">
                                             <input name="file" type="file" id="f-attach" data-fakefile="file" />
                                             <label for="f-attach" class="fm-file-btn ">파일첨부</label>

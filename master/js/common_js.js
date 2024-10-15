@@ -11,7 +11,23 @@
           return false; 
      } 
 }*/
+const statusTalkResultMapping = {
+	'AS': '성공(알림톡/친구톡)',
+	'AR': '발송대기',
+	'SS': '성공(문자)',
+	'SF': '실패(문자)',
+	'EW': '성공(대체문자)',
+	'AF': '실패',
+	'EL': '실패',
+	'EF': '실패',
+	'EE': '실패',
+	'EO': '실패',
+};
+const sendTypeMapping = {
+	'AT': '알림톡',
+	'FT': '친구톡',
 
+};
 function checkNumber()
 {  
      var objEv = event.srcElement; 

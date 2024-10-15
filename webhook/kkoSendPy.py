@@ -45,7 +45,7 @@ def get_current_point(cursor, member_idx):
 
 def get_mb_kko_fee(cursor, member_info_idx, feeType):
     # feeType이 유효한 컬럼명인지 확인하는 로직 (보안상 중요)
-    valid_fee_types = ['mb_short_fee', 'mb_long_fee', 'mb_img_fee','mb_kko_fee']  # 예시 컬럼명 목록
+    valid_fee_types = ['mb_short_fee', 'mb_long_fee', 'mb_img_fee','mb_kko_fee','mb_ft_fee','mb_fi_fee','mb_fw_fee']  # 예시 컬럼명 목록
     if feeType not in valid_fee_types:
         raise ValueError(f"Invalid feeType: {feeType}")
     query = f"""
@@ -295,7 +295,17 @@ def process_data():
                                     return 'mb_img_fee'
                         fee_type_str = fee_switch(data.get('smsKind', None))
                     if data.get("code", None) == "AS":
-                        fee_type_str = 'mb_kko_fee'
+                        def fee_talk_switch(type):
+                            match type:
+                                case 'FT':
+                                    return 'mb_ft_fee'
+                                case 'FI':
+                                    return 'mb_fi_fee'
+                                case 'FW':
+                                    return 'mb_fw_fee'
+                                case _:
+                                    return 'mb_kko_fee'
+                        fee_type_str = fee_talk_switch(data.get('msgType', None))
                     mb_kko_fee = get_mb_kko_fee(cursor, member_info_idx, fee_type_str)
                     total_fee = total_sent * mb_kko_fee
                     update_point(cursor, member_info_idx, total_fee, f"알림톡 발송({total_sent}건)")

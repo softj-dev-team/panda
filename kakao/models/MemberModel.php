@@ -24,6 +24,11 @@ class MemberModel {
                     (SELECT mb_long_fee FROM member_info_sendinfo WHERE is_del = 'N' AND member_idx = a.idx ORDER BY idx DESC LIMIT 1) AS mb_long_fee,
                     (SELECT mb_img_fee FROM member_info_sendinfo WHERE is_del = 'N' AND member_idx = a.idx ORDER BY idx DESC LIMIT 1) AS mb_img_fee,
                     (SELECT mb_kko_fee FROM member_info_sendinfo WHERE is_del = 'N' AND member_idx = a.idx ORDER BY idx DESC LIMIT 1) AS mb_kko_fee,
+                    
+                    (SELECT mb_ft_fee FROM member_info_sendinfo WHERE is_del = 'N' AND member_idx = a.idx ORDER BY idx DESC LIMIT 1) AS mb_ft_fee,
+                    (SELECT mb_fi_fee FROM member_info_sendinfo WHERE is_del = 'N' AND member_idx = a.idx ORDER BY idx DESC LIMIT 1) AS mb_fi_fee,
+                    (SELECT mb_fw_fee FROM member_info_sendinfo WHERE is_del = 'N' AND member_idx = a.idx ORDER BY idx DESC LIMIT 1) AS mb_fw_fee,
+                    
                     (SELECT mb_short_cnt FROM member_info_sendinfo WHERE is_del = 'N' AND member_idx = a.idx ORDER BY idx DESC LIMIT 1) AS mb_short_cnt,
                     (SELECT mb_long_cnt FROM member_info_sendinfo WHERE is_del = 'N' AND member_idx = a.idx ORDER BY idx DESC LIMIT 1) AS mb_long_cnt,
                     (SELECT mb_img_cnt FROM member_info_sendinfo WHERE is_del = 'N' AND member_idx = a.idx ORDER BY idx DESC LIMIT 1) AS mb_img_cnt,

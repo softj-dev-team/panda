@@ -23,22 +23,30 @@ class MasterModel
     public function getKakaoSendList($offset, $limit,$keyword=null,$startDate=null,$endDate=null)
     {
        $sql=
-            "SELECT a.*,mb.user_id,mb.user_name,count(a.fetc7) as tot_cnt
+            "SELECT a.*,mb.user_id,mb.user_name,count(1) as tot_cnt,kb.chananel_name
                      FROM TBL_SEND_TRAN_KKO a
-                         left join member_info mb on mb.idx=a.fetc8 where 1";
+                         left join member_info mb on mb.idx=a.fetc8 
+                            left join kakao_business kb on kb.profile_key=a.fyellowid  
+                where 1";
         // 키워드가 있을 경우 추가 조건
         if ($keyword !== null) {
-            $sql .= " AND REPLACE(REGEXP_REPLACE(a.fdestine, '[^0-9]', ''), ' ', '') LIKE :keyword";
-            $sql .= " AND mb.user_id LIKE :keyword";
-            $sql .= " AND mb.user_name LIKE :keyword";
+            $sql .= " " .
+                "AND (REPLACE(REGEXP_REPLACE(a.fdestine, '[^0-9]', ''), ' ', '') LIKE :keyword 
+                            or mb.user_id LIKE :keyword 
+                            or mb.user_id LIKE :keyword 
+                            or mb.user_name LIKE :keyword 
+                            or a.fcallback like :keyword 
+                            or kb.chananel_name LIKE :keyword 
+                            or a.fmessage like :keyword" .
+                ")";
         }
 
         // 날짜 범위가 있을 경우 추가 조건
         if ($startDate !== null) {
-            $sql .= " AND DATE(a.finsertdate) >= :startDate";
+            $sql .= " AND DATE(a.fsenddate) >= :startDate";
         }
         if ($endDate !== null) {
-            $sql .= " AND DATE(a.finsertdate) <= :endDate";
+            $sql .= " AND DATE(a.fsenddate) <= :endDate";
         }
         $sql .= " group by a.fetc7 ORDER BY a.fseq DESC 
                      LIMIT :limit OFFSET :offset";
@@ -62,21 +70,31 @@ class MasterModel
     public function getTotalKakaoSendList($keyword=null,$startDate=null,$endDate=null)
     {
         try {
-            $sql="SELECT COUNT(*) as total FROM TBL_SEND_TRAN_KKO a left join member_info mb on mb.idx=a.fetc8 where 1";
+            $sql="SELECT COUNT(DISTINCT a.fetc7) as total FROM TBL_SEND_TRAN_KKO a 
+                        left join member_info mb on mb.idx=a.fetc8
+                        left join kakao_business kb on kb.profile_key=a.fyellowid                                        
+                    where 1";
             // 키워드가 있을 경우 추가 조건
             if ($keyword !== null) {
-                $sql .= " AND REPLACE(REGEXP_REPLACE(a.fdestine, '[^0-9]', ''), ' ', '') LIKE :keyword";
-                $sql .= " AND mb.user_id LIKE :keyword";
-                $sql .= " AND mb.user_name LIKE :keyword";
+                $sql .= " " .
+                    "AND (REPLACE(REGEXP_REPLACE(a.fdestine, '[^0-9]', ''), ' ', '') LIKE :keyword 
+                            or mb.user_id LIKE :keyword 
+                            or mb.user_id LIKE :keyword 
+                            or mb.user_name LIKE :keyword 
+                            or a.fcallback like :keyword 
+                            or kb.chananel_name LIKE :keyword 
+                            or a.fmessage like :keyword" .
+                    ")";
+
             }
             // 날짜 범위가 있을 경우 추가 조건
             if ($startDate !== null) {
-                $sql .= " AND DATE(a.finsertdate) >= :startDate";
+                $sql .= " AND DATE(a.fsenddate) >= :startDate";
             }
             if ($endDate !== null) {
-                $sql .= " AND DATE(a.finsertdate) <= :endDate";
+                $sql .= " AND DATE(a.fsenddate) <= :endDate";
             }
-            $sql .= " group by a.fetc7";
+//            $sql .= " group by a.fetc7";
             $stmt = $this->conn->prepare($sql);
             if ($keyword !== null) {
                 $keywordParam = '%' . $keyword . '%';
@@ -100,7 +118,7 @@ class MasterModel
     public function getKakaoSendListDetail($offset, $limit,$keyword=null,$startDate=null,$endDate=null,$group_key=null)
     {
         $sql=
-            "SELECT a.*,mb.user_id,mb.user_name
+            "SELECT a.*,mb.user_id,mb.user_name,(select chananel_name from kakao_business where profile_key=a.fyellowid limit 1) as chananel_name
                      FROM TBL_SEND_TRAN_KKO a
                          left join member_info mb on mb.idx=a.fetc8 where 1";
         // 키워드가 있을 경우 추가 조건

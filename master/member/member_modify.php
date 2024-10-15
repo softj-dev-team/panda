@@ -584,7 +584,10 @@ $bbs_code = "member";
 										SMS : <input type="text" id="mb_short_fee" name="mb_short_fee" required="yes" message="sms 단가" is_num="no" size="5" value="<?= $row['mb_short_fee'] ?>">&nbsp;
 										<br>LMS : <input type="text" id="mb_long_fee" name="mb_long_fee" required="yes" message="lms 단가" is_num="no" size="5" value="<?= $row['mb_long_fee'] ?>">&nbsp;
 										<br>MMS : <input type="text" id="mb_img_fee" name="mb_img_fee" required="yes" message="mms 단가" is_num="no" size="5" value="<?= $row['mb_img_fee'] ?>">&nbsp;
-                                        <br>알림톡 : <input type="text" id="mb_kko_fee" name="mb_kko_fee" required="yes" message="알림톡 단가" is_num="no" size="5" value="<?= $row['mb_kko_fee'] ?>">&nbsp;
+                                        <br>알림톡 : <input type="text" id="mb_kko_fee" name="mb_kko_fee" required="yes"  is_num="no" size="5" value="<?= $row['mb_kko_fee'] ?>">&nbsp;
+                                        <br>친구톡(텍스트) : <input type="text" id="mb_ft_fee" name="mb_ft_fee" required="yes" message="친구톡(텍스트)"  is_num="no" size="5" value="<?= $row['mb_ft_fee'] ?>">&nbsp;
+                                        <br>친구톡(이미지) : <input type="text" id="mb_fi_fee" name="mb_fi_fee" required="yes" message="친구톡(이미지) "  is_num="no" size="5" value="<?= $row['mb_fi_fee'] ?>">&nbsp;
+                                        <br>친구톡(와이드) : <input type="text" id="mb_fw_fee" name="mb_fw_fee" required="yes" message="친구톡(와이드)"  is_num="no" size="5" value="<?= $row['mb_fw_fee'] ?>">&nbsp;
 									</td>
 									<th scope="row">통신가입 증명원</th>
 									<td>

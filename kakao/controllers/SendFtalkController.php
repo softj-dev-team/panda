@@ -69,6 +69,7 @@ class SendFtalkController extends Controller {
             $postLinkType =$_POST['postLinkType']??'';
             $member_idx=$this->data['inc_member_row']['idx'];
             $group_key = $this->generateUniqueNumericKey();
+            $msgType =$_REQUEST['msgType']??'';
             $buttons=[];
             // 파일 업로드 처리
             if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
@@ -172,7 +173,7 @@ class SendFtalkController extends Controller {
                         $kisaOrigCode,
                         $fuserid,
                         $save_buttons,
-                        $_REQUEST['msgType'],
+                        $msgType,
                         $image_path,
                         $smsSubject
                     );
@@ -196,8 +197,10 @@ class SendFtalkController extends Controller {
                             break;
                         case 'SO':
                             throw new Exception('메시지 발송 가능한 시간이 아닙니다.(친구톡/마케팅 메시지는 08 시부터 20 시 50 분까지 발송 가능) ' . $responseMessage);
+                            break;
                         case 'AF':
                             throw new Exception('알림톡/친구톡 발송 실패: ' . $responseMessage);
+                            break;
                         case 'SS':
                             // 문자 발송 성공
                             break;
@@ -240,7 +243,7 @@ class SendFtalkController extends Controller {
                     $fuserid,
                     $save_buttons,
                     $img_path,
-                    $_REQUEST['msgType']
+                    $msgType
                 );
 
                 $point_sect = "smspay"; //
@@ -261,7 +264,21 @@ class SendFtalkController extends Controller {
                             break;
                     }
                 }else{
-                    $mb_kko_fee=$this->data['inc_member_row']['mb_kko_fee'];
+                    switch ($msgType) {
+                        case 'FT':
+                            $mb_kko_fee=$this->data['inc_member_row']['mb_ft_fee'];
+                            break;
+                        case 'FI':
+                            $mb_kko_fee=$this->data['inc_member_row']['mb_fi_fee'];
+                            break;
+                        case 'FW':
+                            $mb_kko_fee=$this->data['inc_member_row']['mb_fw_fee'];
+                            break;
+                        default:
+                            $mb_kko_fee=$this->data['inc_member_row']['mb_kko_fee'];
+                            break;
+                    }
+
                 }
                 $this->pointModel->coin_plus_minus($point_sect,$member_idx,$mile_sect,$mb_kko_fee,$mile_title,"","","");
                 // 성공한 경우

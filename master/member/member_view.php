@@ -54,6 +54,21 @@ $sql = "
                 where 1 and is_del = 'N' and member_idx = a.idx
                 order by idx desc
                 limit 0,1) as mb_kko_fee,
+                  (select mb_ft_fee
+                from member_info_sendinfo
+                where 1 and is_del = 'N' and member_idx = a.idx
+                order by idx desc
+                limit 0,1) as mb_ft_fee,
+                 (select mb_fi_fee
+                from member_info_sendinfo
+                where 1 and is_del = 'N' and member_idx = a.idx
+                order by idx desc
+                limit 0,1) as mb_fi_fee,
+                                 (select mb_fw_fee
+                from member_info_sendinfo
+                where 1 and is_del = 'N' and member_idx = a.idx
+                order by idx desc
+                limit 0,1) as mb_fw_fee,
                (select mb_short_cnt
                 from member_info_sendinfo
                 where 1 and is_del = 'N' and member_idx = a.idx
@@ -251,6 +266,9 @@ if ($row['gender'] == "M") {
 									<br>LMS : <?= $row['mb_long_fee'] ?> 원
 									<br>MMS : <?= $row['mb_img_fee'] ?> 원
                                     <br>알림톡 : <?= $row['mb_kko_fee'] ?> 원
+                                    <br>친구톡(텍스트) : <?= $row['mb_ft_fee'] ?> 원
+                                    <br>친구톡(이미지) : <?= $row['mb_fi_fee'] ?> 원
+                                    <br>친구톡(와이드) : <?= $row['mb_fw_fee'] ?> 원
 								</td>
 								<th scope="row">통신가입 증명원</th>
 								<td>

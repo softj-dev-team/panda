@@ -1353,17 +1353,22 @@ $(document).ready(function() {
         var messageEl= $('#highlightTitle')
         var currentLength = messageEl.val().length;
         var targetLength = 1000;
+        var fileEl = $('#templateImageUploadForm')
+        fileEl.addClass('blind');
         if(msgType==='FT'){
             targetLength=1000;
             var html1 ='';
             var html2 ='';
         }
         if(msgType==='FI'){
+            fileEl.removeClass('blind');
             var html1 ='- 가로 500px 이상, 세로 높이 250px 이상';
             var html2 ='- 가로:세로 비율이 2:1 이상 3:4 이하';
             targetLength=400;
+
         }
         if(msgType==='FW'){
+            fileEl.removeClass('blind');
             var html1 ='- 가로 800px, 세로 600px 이상';
             var html2 ='';
             targetLength=76;

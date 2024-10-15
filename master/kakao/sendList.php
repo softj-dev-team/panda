@@ -173,7 +173,7 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
             success: function(response) {
                 if (response.success) {
                     var table = $('#kakaoSendListTable tbody');
-                    console.log(response.data)
+                    console.log(response)
                     table.empty();
                     response.data.forEach(function(data) {
 
@@ -181,7 +181,8 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
                         var row = `<tr>
                         <td>${data.frsltdate}</td>
                         <td>${data.user_name}<br>(${data.user_id})</td>
-                        <td>${data.fdestine}</td>
+                        <td>${sendTypeMapping[data.fuserid]}</td>
+                        <td>${data.chananel_name}</td>
                         <td class="truncated-message" title="${data.fmessage}">
                             ${truncatedMessage}
                         </td>
@@ -337,15 +338,32 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
                         //         // cellClick 이벤트는 필요 없을 수 있습니다.
                         //     }},
                         { title: "전송일시", field: "finsertdate", sorter: "string" },
-                        { title: "발신번호", field: "fcallback", sorter: "string" },
+                        {
+                            title: "발신체널/발신번호",
+                            field: "chananel_name", // 기본 필드는 chananel_name
+                            formatter: function(cell, formatterParams, onRendered){
+                                // 데이터를 확인
+                                var data = cell.getData();
+                                console.log('cell.getData',data)
+                                // field 값이 AC이면 chananel_name, EW이면 fcallback을 반환
+                                if (data.fetc2 === "AC") {
+                                    return data.chananel_name; // 발신체널/발신번호로 chananel_name 사용
+                                } else if (data.fetc2 === "EW") {
+                                    return data.fcallback; // 발신체널/발신번호로 fcallback 사용
+                                } else {
+                                    return data.chananel_name; // 다른 경우는 빈 값 반환
+                                }
+                            }
+                        },
                         { title: "수신번호", field: "fdestine", sorter: "string" },
                         { title: "결과코드", field: "fetc3", sorter: "string" },
+                        { title: "결과", field: "fetc2", formatter: function(cell, formatterParams) {
+                                // 발송여부 값을 텍스트로 변환하여 표시
+                                let value = cell.getValue();
+                                return statusTalkResultMapping[value];
+                        }},
                         { title: "결과메세지", field: "fetc4", sorter: "string" },
-                        // { title: "결과코드", field: "fetc2", formatter: function(cell, formatterParams) {
-                        //         // 발송여부 값을 텍스트로 변환하여 표시
-                        //         let value = cell.getValue();
-                        //         return value === "AS" ? "발송" : (value === "AS" ? "발송완료" : value);
-                        //     }}
+
                     ],
                     // dataChanged: function(data) {
                     //     checkAllStatusAndMoveToNextPage();  // 데이터 변경 시 자동 페이지 이동 체크
