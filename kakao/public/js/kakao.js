@@ -40,7 +40,8 @@ const statusTalkResultMapping = {
 };
 let buttons = [];
 let quickReplies = [];
-const maxButtons = 5;
+let maxButtons = 5;
+
 const maxQuickReplies = 5;
 <!-- 버튼이 추가될 영역 -->
 let  newButton={};
@@ -1201,7 +1202,7 @@ $(document).ready(function() {
         const targetType = $(this).data('id'); // linkType 또는 quickReplies 구분
         if (targetType === 'buttons') {
             if (buttons.length >= maxButtons) {
-                alert('최대 5개의 버튼만 추가할 수 있습니다.');
+                alert('최대 '+maxButtons+' 개의 버튼만 추가할 수 있습니다.');
                 return;
             }
             showPopup(targetType); // 버튼 추가 팝업
@@ -1353,6 +1354,8 @@ $(document).ready(function() {
             var html1 ='- 가로 800px, 세로 600px 이상';
             var html2 ='';
             targetLength=76;
+            maxButtons = 2;
+            $('.addButton').text('버튼추가 (0/2)')
         }
         $('#charCount').text(currentLength + "/" + targetLength);
         $('.image-valid p').eq(1).html(html1)
