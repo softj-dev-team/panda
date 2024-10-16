@@ -556,7 +556,7 @@ class Controller {
 //            $this->Mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
 
             //Content
-//            $this->Mail->isHTML(true);                                  //Set email format to HTML
+            $this->Mail->isHTML(true);                                  //Set email format to HTML
             $this->Mail->Subject = '판다문자 임시 비밀번호 /';
             $this->Mail->Body    = '임시비밀번호 : '.$passStr;
             $this->Mail->AltBody = '변경 된 임시비밀번호 를 사용하여 로그인 해주세요.';
