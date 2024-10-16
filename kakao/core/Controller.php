@@ -530,7 +530,7 @@ class Controller {
             }
             error_log('test');
             //Server settings
-//            $this->Mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+            $this->Mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
 //            $this->Mail->SCharSet = PHPMailer::CHARSET_UTF8; //안쓰면 한글깨짐
             $this->Mail->isSMTP();                                            //Send using SMTP
             $this->Mail->SMTPSecure  = 'ssl';
