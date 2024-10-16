@@ -294,8 +294,10 @@ class UserAlimTalkModel
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function getSendListDetailSaveCallExcelKaKao($group_key=null,$downloadSuccess,$statusValue="0000")
+    public function getSendListDetailSaveCallExcelKaKao($group_key=null,$downloadSuccess)
     {
+        $statusValue="AS";
+        $statusValueEW="EW";
         $sql=
             "SELECT a.fsenddate,a.fcallback,a.fdestine,a.fetc2,
                    (CASE WHEN a.fetc2 = 'EW' THEN a.fcallback ELSE kb.chananel_name END) send_user_str,
@@ -309,9 +311,9 @@ class UserAlimTalkModel
             $sql .= " AND a.fetc7 = :group_key";
         }
         if ($downloadSuccess) {
-            $sql .= " AND a.fetc3 != :status_value";
+            $sql .= " AND (a.fetc2 != :status_value or a.fetc2 != :status_value_ew)";
         }else{
-            $sql .= " AND a.fetc3 = :status_value";
+            $sql .= " AND (a.fetc2 = :status_value or a.fetc2 = :status_value_ew)";
         }
         $sql .= " ORDER BY a.fseq DESC";
         $stmt = $this->conn->prepare($sql);
@@ -320,6 +322,7 @@ class UserAlimTalkModel
             $stmt->bindParam(':group_key', $group_key, PDO::PARAM_STR);
         }
         $stmt->bindParam(':status_value', $statusValue, PDO::PARAM_STR);
+        $stmt->bindParam(':status_value_ew', $statusValueEW, PDO::PARAM_STR);
 
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
