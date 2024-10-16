@@ -528,25 +528,18 @@ class Controller {
             if (empty($email)) {
                 throw new Exception('Email is required');
             }
-            error_log('test');
+
             //Server settings
-            $this->Mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
-//            $this->Mail->SCharSet = PHPMailer::CHARSET_UTF8; //안쓰면 한글깨짐
+//            $this->Mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+            $this->Mail->SCharSet = PHPMailer::CHARSET_UTF8; //안쓰면 한글깨짐
             $this->Mail->isSMTP();                                            //Send using SMTP
-            $this->Mail->SMTPOptions = array(
-                'ssl' => array(
-                    'verify_peer' => false,
-                    'verify_peer_name' => false,
-                    'allow_self_signed' => true
-                )
-            );
-            $this->Mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // SSL 사용
+            $this->Mail->SMTPSecure  = 'ssl';
             $this->Mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
             $this->Mail->SMTPAuth   = true;                                   //Enable SMTP authentication
             $this->Mail->Username   = 'ewha.softj@gmail.com';                     //SMTP username
             $this->Mail->Password   = 'secret';                               //SMTP password
             $this->Mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-            $this->Mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+            $this->Mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
             $this->Mail->Mailer     = 'smtp';
             $this->Mail->Password   = 'lktyadlcpbeclmtb';
             //Recipients
@@ -563,11 +556,11 @@ class Controller {
 //            $this->Mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
 
             //Content
-            $this->Mail->isHTML(true);                                  //Set email format to HTML
+//            $this->Mail->isHTML(true);                                  //Set email format to HTML
             $this->Mail->Subject = '판다문자 임시 비밀번호 /';
             $this->Mail->Body    = '임시비밀번호 : '.$passStr;
             $this->Mail->AltBody = '변경 된 임시비밀번호 를 사용하여 로그인 해주세요.';
-            error_log('test2');
+
             // Send email and handle response
             return $this->Mail->send();
         } catch (Exception $e) {
@@ -594,7 +587,6 @@ class Controller {
                 $this->memberModel->updateUserPasswd($email,$passMd5);
                 // 유효한 데이터를 반환하는 경우
                 if($this->sendMail($passStr)){
-                    error_log('test3');
                     $this->sendJsonResponse(['success' => true, 'message' => '입력한 이메일 로 임시비밀번호를 전송했습니다.']);
                 }else{
                     $this->sendJsonResponse(['success' => false, 'message' => '이메일 전송 실패']);
