@@ -117,11 +117,13 @@ include $_SERVER["DOCUMENT_ROOT"]."/master/include/check_login.php"; // 샘플�
                         <tr>
                             <th>발송일시</th>
                             <th>발송회원</th>
-                            <th>발신번호</th>
+                            <th>구분</th>
+                            <th>체널</th>
                             <th>메세지</th>
-                            <th>발신IP</th>
+                            <th>IP</th>
                             <th>발송건수</th>
-                            <th>발송내역보기</th>
+                            <th>발송내역</th>
+
                         </tr>
                         </thead>
                         <tbody>

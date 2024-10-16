@@ -26,7 +26,7 @@ class MasterModel
             "SELECT a.*,mb.user_id,mb.user_name,count(1) as tot_cnt,kb.chananel_name
                      FROM TBL_SEND_TRAN_KKO a
                          left join member_info mb on mb.idx=a.fetc8 
-                            left join kakao_business kb on kb.profile_key=a.fyellowid  
+                            left join kakao_business kb on kb.profile_key=a.fyellowid and kb.user_idx=a.fetc8 
                 where 1";
         // 키워드가 있을 경우 추가 조건
         if ($keyword !== null) {
