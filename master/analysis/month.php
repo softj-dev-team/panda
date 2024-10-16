@@ -36,7 +36,10 @@ $logQueries = [];
 foreach ($tables as $table) {
     $logQueries[] = "
             SELECT fetc1, frsltstat, fsenddate
-            FROM $table WHERE finsertdate <= '" . $endDate->format('Y-m-d') . "'         
+            FROM TBL_SEND_TRAN
+            UNION ALL
+            SELECT fetc1, frsltstat, fsenddate
+            FROM $table
         ";
 }
 // 쿼리들을 UNION으로 결합
@@ -59,13 +62,20 @@ $query = "
             ) AS success_send_cnt,
             SUM(
                     CASE
-                        WHEN sms_save.module_type = 'LG' AND log_table.frsltstat != '06' THEN 1
+                        WHEN sms_save.module_type = 'LG' AND log_table.frsltstat != '06' AND log_table.frsltstat != '00' THEN 1
                         WHEN sms_save.module_type = 'JUD1' AND jud1_table.RSTATE != 0 THEN 1
                         WHEN sms_save.module_type = 'JUD2' AND jud2_table.RSTATE != 0 THEN 1
                         ELSE 0
                         END
-            ) AS fail_send_cnt
-    
+            ) AS fail_send_cnt,
+            SUM(
+                CASE
+                    WHEN sms_save.module_type = 'LG' AND log_table.frsltstat = '00' THEN 1
+                    WHEN sms_save.module_type = 'JUD1' AND jud1_table.RSTATE = 0 THEN 1
+                    WHEN sms_save.module_type = 'JUD2' AND jud2_table.RSTATE = 0 THEN 1
+                    ELSE 0
+                    END
+            ) AS wait_send_cnt
             FROM
                 sms_save
                     JOIN
@@ -110,7 +120,7 @@ $query = "
                     <ul class="clearfix">
                         <li>HOME</li>
                         <li>통계</li>
-                        <li>일 별 통계</li>
+                        <li>월 별 통계</li>
                     </ul>
                 </div>
                 <div class="list_tit">
@@ -169,7 +179,7 @@ $query = "
                                 <th>발송 총 건</th>
                                 <th>발송 성공 건</th>
                                 <th>발송 실패 건</th>
-
+                                <th>발송 대기 건</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -181,6 +191,7 @@ $query = "
                                         <td><?= $stat['total_send_cnt'] ?></td>
                                         <td><?= $stat['success_send_cnt'] ?></td>
                                         <td><?= $stat['fail_send_cnt'] ?></td>
+                                        <td><?= $stat['wait_send_cnt'] ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else : ?>
