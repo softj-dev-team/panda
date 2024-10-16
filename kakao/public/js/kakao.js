@@ -2412,13 +2412,17 @@ $(document).on('change','#adFlag',function (){
     var targetEl = $('#previewChannelName');
     var selElVal = '채널명';
     var profileEl =$("select[name=profile_id] option:selected");
+    var ftAdButtomEl = $('.ftAdButtom');
+    ftAdButtomEl.addClass('blind');
     if(profileEl.val()){
         selElVal = profileEl.attr("data-id")
     }
    if($(this).is(':checked')){
        targetEl.text('(광고)'+selElVal);
+       ftAdButtomEl.removeClass('blind');
    }else{
        targetEl.text(selElVal);
+
    }
 })
 $(document).on('change','select[name=profile_id]',function (){

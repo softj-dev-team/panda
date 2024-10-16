@@ -52,8 +52,9 @@ class UserAlimTalkModel
     public function getKakaoSendList($member_idx,$offset, $limit,$keyword = null,$startDate=null,$endDate=null)
     {
         // 기본 SQL 쿼리
-        $sql = "SELECT a.*,count(1) as tot_cnt,(select chananel_name from kakao_business where profile_key=a.fyellowid limit 1) as chananel_name
+        $sql = "SELECT a.*,count(1) as tot_cnt,kb.chananel_name
             FROM TBL_SEND_TRAN_KKO a
+                left join kakao_business kb on kb.profile_key = a.fyellowid and kb.user_idx=a.fetc8
             WHERE a.fetc8 = :member_idx ";
 
         // 키워드가 있을 경우 추가 조건
@@ -267,7 +268,7 @@ class UserAlimTalkModel
     public function getSendListDetailSaveCallExcel($group_key=null,$tablename=null,$filed=null,$downloadSuccess=false,$statusFiled=null,$statusValue=null,$telecomFiled=null,$module_type)
     {
         $sql=
-            "SELECT log.fsenddate as work_date,b.cell_send,a.cell,log.$telecomFiled as isp,log.$statusFiled as status,code.code_description
+            "SELECT log.fsenddate as work_date,b.cell_send,a.cell,log.$telecomFiled as isp,log.$statusFiled as status,code.code_description,code.code_name
                      FROM sms_save_cell a 
                          join $tablename log on log.$filed=a.idx 
                          join report_code code on code.code=log.$statusFiled and code.code_type = :code_type
@@ -296,9 +297,13 @@ class UserAlimTalkModel
     public function getSendListDetailSaveCallExcelKaKao($group_key=null,$downloadSuccess,$statusValue="0000")
     {
         $sql=
-            "SELECT a.fsenddate,a.fsendstat,a.fcallback,a.fdestine,a.fetc3,a.fetc4
-                     FROM TBL_SEND_TRAN_KKO a                          
-                          where 1";
+            "SELECT a.fsenddate,a.fcallback,a.fdestine,a.fetc2,
+                   (CASE WHEN a.fetc2 = 'EW' THEN a.fcallback ELSE kb.chananel_name END) send_user_str,
+                   code.code_name,code_description,kb.chananel_name
+                FROM TBL_SEND_TRAN_KKO a
+                    left join kakao_business kb on kb.profile_key = a.fyellowid and kb.user_idx=a.fetc8
+                    left join report_code code on code.code = a.fetc2                      
+                where 1";
 
         if ($group_key !== null) {
             $sql .= " AND a.fetc7 = :group_key";

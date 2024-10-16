@@ -151,7 +151,7 @@ if ($data['my_member_row']['member_gubun'] == "2" && $_REQUEST['send_type'] != "
                             </div>
                             <div class="quickLinkList"></div>
                         </div>
-                        <div class="flex-just-end"><span>수신거부 : 홈 > 채널 차단</span></div>
+                        <div class="flex-just-end"><span class="ftAdButtom blind">수신거부 : 홈 > 채널 차단</span></div>
                     </div>
                     <p class="preview-note">미리보기는 실제 단말기와 차이가 있을 수 있습니다.</p>
                 </div>

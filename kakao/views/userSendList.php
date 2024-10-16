@@ -5,7 +5,7 @@
 <!--header-->
 <div><?php require_once $_SERVER["DOCUMENT_ROOT"] ."/common/header.php"; ?></div>
 <div id="sendListPopupLayer" class="popup-layer" style="display:none;">
-    <div class="popup-content p75">
+    <div class="popup-content p75 flex-column">
         <div class="poptitle flex-just-end">
             <button type="button" onclick="closeAllPopup()" style="border: none; background: none"><img src="/images/popup/close.svg"></button>
         </div>

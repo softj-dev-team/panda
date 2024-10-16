@@ -127,8 +127,8 @@ class UserAlimTalkController extends Controller
                 preg_replace('/[\"]/', '""', $row['cell_send']),
                 preg_replace('/[\"]/', '""', $row['cell']),
                 preg_replace('/[\"]/', '""', $row['isp']),
-                preg_replace('/[\"]/', '""', $row['status']),
-                preg_replace('/[\"]/', '""', $row['code_description'])
+//                preg_replace('/[\"]/', '""', $row['status']),
+                preg_replace('/[\"]/', '""', $row['code_name'])
             );
             array_push($row_data, $filedValues);
         }
@@ -153,10 +153,10 @@ class UserAlimTalkController extends Controller
         $downloadSuccess = filter_var($_GET['downloadSuccess'], FILTER_VALIDATE_BOOLEAN);
         $header = array(
             "전송일시" => "string",
-            "발신번호" => "string",
+            "발신체널/발신번호" => "string",
             "수신번호" => "string",
-            "결과코드" => "string",
-            "결과메세지" => "string",
+            "결과" => "string",
+            "결과메세지" => "string"
         );
 
         $data['saveCall'] = $this->UserAlimTalkModel->getSendListDetailSaveCallExcelKaKao($idx,$downloadSuccess);
@@ -165,10 +165,10 @@ class UserAlimTalkController extends Controller
         foreach ($data['saveCall'] as $row) {
             $filedValues = array(
                 preg_replace('/[\"]/', '""', $row['fsenddate']),
-                preg_replace('/[\"]/', '""', $row['fcallback']),
+                preg_replace('/[\"]/', '""', $row['send_user_str']),
                 preg_replace('/[\"]/', '""', $row['fdestine']),
-                preg_replace('/[\"]/', '""', $row['fetc3']),
-                preg_replace('/[\"]/', '""', $row['fetc4'])
+                preg_replace('/[\"]/', '""', $row['code_name']),
+                preg_replace('/[\"]/', '""', $row['code_description'])
             );
             array_push($row_data, $filedValues);
         }
