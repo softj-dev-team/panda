@@ -243,7 +243,7 @@ class SendFtalkController extends Controller {
                     $fuserid,
                     $save_buttons,
                     $img_path,
-                    $msgType
+                    $msgType,null,null,$smsKind
                 );
 
                 $point_sect = "smspay"; //
