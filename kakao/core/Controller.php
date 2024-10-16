@@ -528,7 +528,7 @@ class Controller {
             if (empty($email)) {
                 throw new Exception('Email is required');
             }
-
+            error_log('test');
             //Server settings
 //            $this->Mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
 //            $this->Mail->SCharSet = PHPMailer::CHARSET_UTF8; //안쓰면 한글깨짐
