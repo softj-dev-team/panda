@@ -536,12 +536,12 @@ class Controller {
             $this->Mail->SMTPSecure  = PHPMailer::ENCRYPTION_SMTPS;
             $this->Mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
             $this->Mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $this->Mail->Username   = 'ewha.softj@gmail.com';                     //SMTP username
+            $this->Mail->Username   = 'reahuesms@gmail.com';                     //SMTP username
             $this->Mail->Password   = 'secret';                               //SMTP password
             $this->Mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
             $this->Mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
             $this->Mail->Mailer     = 'smtp';
-            $this->Mail->Password   = 'lktyadlcpbeclmtb';
+            $this->Mail->Password   = 'fralsowyeswiclfx';
             //Recipients
             $this->Mail->setFrom($email, 'Mailer');
             $this->Mail->addAddress('dev.softj@gmail.com', 'Joe User');     //Add a recipient
@@ -557,7 +557,7 @@ class Controller {
 
             //Content
 //            $this->Mail->isHTML(true);                                  //Set email format to HTML
-            $this->Mail->Subject = '판다문자 임시 비밀번호 /';
+            $this->Mail->Subject = '=?UTF-8?B?'.base64_encode( "판다문자 임시비밀번호." ).'?=';
             $this->Mail->Body    = '임시비밀번호 : '.$passStr;
             $this->Mail->AltBody = '변경 된 임시비밀번호 를 사용하여 로그인 해주세요.';
 
