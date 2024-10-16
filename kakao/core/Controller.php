@@ -560,11 +560,11 @@ class Controller {
             $this->Mail->Subject = '판다문자 임시 비밀번호 /';
             $this->Mail->Body    = '임시비밀번호 : '.$passStr;
             $this->Mail->AltBody = '변경 된 임시비밀번호 를 사용하여 로그인 해주세요.';
-
+            error_log('test2');
             // Send email and handle response
             return $this->Mail->send();
         } catch (Exception $e) {
-            error_log($response['message']); // 로그에 오류 기록
+            error_log($e->getMessage());
         }
     }
     public function findIdpass() {
@@ -587,6 +587,7 @@ class Controller {
                 $this->memberModel->updateUserPasswd($email,$passMd5);
                 // 유효한 데이터를 반환하는 경우
                 if($this->sendMail($passStr)){
+                    error_log('test3');
                     $this->sendJsonResponse(['success' => true, 'message' => '입력한 이메일 로 임시비밀번호를 전송했습니다.']);
                 }else{
                     $this->sendJsonResponse(['success' => false, 'message' => '이메일 전송 실패']);
