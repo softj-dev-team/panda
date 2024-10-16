@@ -533,7 +533,13 @@ class Controller {
             $this->Mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
 //            $this->Mail->SCharSet = PHPMailer::CHARSET_UTF8; //안쓰면 한글깨짐
             $this->Mail->isSMTP();                                            //Send using SMTP
-            $this->Mail->SMTPSecure  = 'ssl';
+            $this->Mail->SMTPOptions = array(
+                'ssl' => array(
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true
+                )
+            );
             $this->Mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
             $this->Mail->SMTPAuth   = true;                                   //Enable SMTP authentication
             $this->Mail->Username   = 'ewha.softj@gmail.com';                     //SMTP username
