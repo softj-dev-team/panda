@@ -540,6 +540,7 @@ class Controller {
                     'allow_self_signed' => true
                 )
             );
+            $this->Mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // SSL 사용
             $this->Mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
             $this->Mail->SMTPAuth   = true;                                   //Enable SMTP authentication
             $this->Mail->Username   = 'ewha.softj@gmail.com';                     //SMTP username
