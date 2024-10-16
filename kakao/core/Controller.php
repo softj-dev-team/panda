@@ -546,7 +546,7 @@ class Controller {
             $this->Mail->Username   = 'ewha.softj@gmail.com';                     //SMTP username
             $this->Mail->Password   = 'secret';                               //SMTP password
             $this->Mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-            $this->Mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+            $this->Mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
             $this->Mail->Mailer     = 'smtp';
             $this->Mail->Password   = 'lktyadlcpbeclmtb';
             //Recipients
