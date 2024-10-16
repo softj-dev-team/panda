@@ -571,7 +571,7 @@ class Controller {
             // Send email and handle response
             return $this->Mail->send();
         } catch (Exception $e) {
-            error_log($e->getMessage());
+            error_log($this->Mail->ErrorInfo);
         }
     }
     public function findIdpass() {
