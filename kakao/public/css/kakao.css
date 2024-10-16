@@ -1195,3 +1195,11 @@ input[data-fakefile="file"] { position:absolute; width:1px; height:16px; padding
     align-items: flex-start;
     gap: 0;
 }
+.myPage-find{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.myPage-find .fm-box{
+    width: 540px;
+}

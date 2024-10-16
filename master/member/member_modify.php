@@ -33,6 +33,11 @@ $sql = "SELECT *,
 (select mb_long_fee from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as mb_long_fee,
 (select mb_img_fee from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as mb_img_fee,
 (select mb_kko_fee from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as mb_kko_fee,
+
+(SELECT mb_ft_fee FROM member_info_sendinfo WHERE is_del = 'N' AND member_idx = a.idx ORDER BY idx DESC LIMIT 1) AS mb_ft_fee,
+(SELECT mb_fi_fee FROM member_info_sendinfo WHERE is_del = 'N' AND member_idx = a.idx ORDER BY idx DESC LIMIT 1) AS mb_fi_fee,
+(SELECT mb_fw_fee FROM member_info_sendinfo WHERE is_del = 'N' AND member_idx = a.idx ORDER BY idx DESC LIMIT 1) AS mb_fw_fee,
+                    
 (select call_num from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as call_num,
 (select call_memo from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as call_memo,
 (select use_yn from member_info_sendinfo where 1 and is_del='N' and member_idx=a.idx order by idx desc limit 0,1) as use_yn,

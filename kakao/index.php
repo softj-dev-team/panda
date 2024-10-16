@@ -230,6 +230,22 @@ switch ($route) {
         $controller= new SendFtalkController();
         $controller->index();
         break;
+//    case 'sendMail':
+//        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+//            $controller = new Controller();
+//            $controller->sendMail();
+//        }
+//        break;
+    case 'getUserMail':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $controller = new Controller();
+            $controller->getUserMail();
+        }
+        break;
+    case 'findIdpass':
+        $controller = new Controller();
+        $controller->findIdpass();
+        break;
     default:
 //        redirectToMainWithAlert();
         $controller= new Send();

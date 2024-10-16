@@ -149,7 +149,7 @@ $totalpage	= ($iTotalSubCnt - 1) / $pageScale  + 1;
 					<div class="list">
 						<!-- 검색창 시작 -->
 						<table class="search">
-							<form name="s_mem" id="s_mem" method="post" action="sms_080_list.php">
+							<form name="s_mem" id="s_mem" method="post" action="sms_spam_list.php">
 								<input type="hidden" name="bmenu" value="<?= $bmenu ?>" />
 								<input type="hidden" name="smenu" value="<?= $smenu ?>" />
 								<input type="hidden" name="s_cnt" id="s_cnt" value="<?= $s_cnt ?>" />
@@ -272,7 +272,9 @@ $totalpage	= ($iTotalSubCnt - 1) / $pageScale  + 1;
 			<!-- content 종료 -->
 		</div>
 	</div>
-	<? include $_SERVER["DOCUMENT_ROOT"] . "/pro_inc/include_bottom_admin_tail.php"; ?>
+	<?php
+        include $_SERVER["DOCUMENT_ROOT"] . "/pro_inc/include_bottom_admin_tail.php";
+    ?>
 </body>
 
 </html>

@@ -13,7 +13,20 @@ class MemberModel {
             exit;
         }
     }
-
+    public function getUserMail($mail)
+    {
+        $stmt = $this->conn->prepare('select email from member_info where email=:email');
+        $stmt->bindParam(':email', $mail, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+    public function updateUserPasswd($mail,$passwd)
+    {
+        $stmt = $this->conn->prepare('update member_info set user_pwd=:user_pwd where email=:email');
+        $stmt->bindParam(':email', $mail, PDO::PARAM_STR);
+        $stmt->bindParam(':user_pwd', $passwd, PDO::PARAM_STR);
+        return  $stmt->execute();
+    }
     public function getMemberData($member_idx) {
         try {
             $sql = "SELECT *,

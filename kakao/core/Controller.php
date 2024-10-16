@@ -1,23 +1,30 @@
 <?php
 // core/Controller.php
-
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+require_once $_SERVER["DOCUMENT_ROOT"] . "/vendor/autoload.php";
 class Controller {
     private $memberModel;
+    private $Mail;
     protected $data = [];
 
     public function __construct() {
         $this->memberModel = new MemberModel();
-
+        $this->Mail = new PHPMailer(true);
+        $route = isset($_GET['route']) ? $_GET['route'] : '';
         require_once $_SERVER["DOCUMENT_ROOT"] . "/pro_inc/include_default.php";
         // 로그인 여부 확인
-        if (empty($_SESSION['member_coinc_idx'])) {
-            if(empty($_SESSION['admin_coinc_id'])){
-                // 로그인되지 않은 경우 알림창과 함께 리다이렉트
-                echo '<script type="text/javascript">';
-                echo 'alert(" * 먼저 로그인 해주세요.");';
-                echo 'window.location.href = "/";'; // 로그인 페이지로 리다이렉트
-                echo '</script>';
-                exit(); // 이후 코드 실행 방지
+        if ($route !== 'findIdpass' && $route !== 'getUserMail' ) {
+            if (empty($_SESSION['member_coinc_idx'])) {
+                if(empty($_SESSION['admin_coinc_id'])){
+                    // 로그인되지 않은 경우 알림창과 함께 리다이렉트
+                    echo '<script type="text/javascript">';
+                    echo 'alert(" * 먼저 로그인 해주세요.");';
+                    echo 'window.location.href = "/";'; // 로그인 페이지로 리다이렉트
+                    echo '</script>';
+                    exit(); // 이후 코드 실행 방지
+                }
             }
         }
         // $data 배열에 초기 값을 설정
@@ -487,6 +494,108 @@ class Controller {
 
         // 줄바꿈 (\n)을 <br> 태그로 변환하여 반환
         return nl2br($contentWithIcons);
+    }
+    public function generateRandomString($length = 12) {
+        $upperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; // 대문자
+        $lowerCase = 'abcdefghijklmnopqrstuvwxyz'; // 소문자
+        $numbers = '0123456789'; // 숫자
+        $specialChars = '!@#$%^&*()_+{}[]|:;<>?,./'; // 특수문자
+
+        // 모든 문자들을 하나로 합치기
+        $allCharacters = $upperCase . $lowerCase . $numbers;
+
+        // 각 카테고리에서 최소 하나씩 문자를 뽑아 추가 (대문자, 소문자, 숫자, 특수문자)
+        $randomString = '';
+        $randomString .= $upperCase[array_rand(str_split($upperCase))];
+        $randomString .= $lowerCase[array_rand(str_split($lowerCase))];
+        $randomString .= $numbers[array_rand(str_split($numbers))];
+//        $randomString .= $specialChars[array_rand(str_split($specialChars))];
+
+        // 나머지 자리는 모든 문자 집합에서 무작위로 선택
+        for ($i = 4; $i < $length; $i++) {
+            $randomString .= $allCharacters[array_rand(str_split($allCharacters))];
+        }
+
+        // 문자열을 섞어서 랜덤성을 더욱 높임
+        return str_shuffle($randomString);
+    }
+    function sendMail($passStr)
+    {
+        try {
+
+            $email = $_REQUEST['email'] ?? '';
+
+            if (empty($email)) {
+                throw new Exception('Email is required');
+            }
+
+            //Server settings
+//            $this->Mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+//            $this->Mail->SCharSet = PHPMailer::CHARSET_UTF8; //안쓰면 한글깨짐
+            $this->Mail->isSMTP();                                            //Send using SMTP
+            $this->Mail->SMTPSecure  = 'ssl';
+            $this->Mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+            $this->Mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+            $this->Mail->Username   = 'ewha.softj@gmail.com';                     //SMTP username
+            $this->Mail->Password   = 'secret';                               //SMTP password
+            $this->Mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+            $this->Mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+            $this->Mail->Mailer     = 'smtp';
+            $this->Mail->Password   = 'lktyadlcpbeclmtb';
+            //Recipients
+            $this->Mail->setFrom($email, 'Mailer');
+            $this->Mail->addAddress('dev.softj@gmail.com', 'Joe User');     //Add a recipient
+
+//            $this->Mail->addAddress('ellen@example.com');               //Name is optional
+//            $this->Mail->addReplyTo('info@example.com', 'Information');
+//            $this->Mail->addCC('cc@example.com');
+//            $this->Mail->addBCC('bcc@example.com');
+
+            //Attachments
+//            $this->Mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
+//            $this->Mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
+
+            //Content
+//            $this->Mail->isHTML(true);                                  //Set email format to HTML
+            $this->Mail->Subject = '판다문자 임시 비밀번호 /';
+            $this->Mail->Body    = '임시비밀번호 : '.$passStr;
+            $this->Mail->AltBody = '변경 된 임시비밀번호 를 사용하여 로그인 해주세요.';
+
+            // Send email and handle response
+            return $this->Mail->send();
+        } catch (Exception $e) {
+            error_log($response['message']); // 로그에 오류 기록
+        }
+    }
+    public function findIdpass() {
+//        $SendTranKKOModel = new SendTranKKO();
+        $data[] =null;
+        $this->view('findid', $data);
+    }
+    public function getUserMail() {
+        header('Content-Type: application/json; charset=utf-8');
+        try {
+            $email = $_REQUEST['email']??'';
+            $data = $this->memberModel->getUserMail($email);
+            // 데이터 유효성 검증
+            if ($data === null || empty($data)) {
+                // 데이터가 없거나 유효하지 않은 경우
+                $this->sendJsonResponse(['success' => false, 'message' => '입력한 이메일 은 회원가입 정보를 찾을 수 없습니다.']);
+            } else {
+                $passStr = $this->generateRandomString();
+                $passMd5 = md5($passStr);
+                $this->memberModel->updateUserPasswd($email,$passMd5);
+                // 유효한 데이터를 반환하는 경우
+                if($this->sendMail($passStr)){
+                    $this->sendJsonResponse(['success' => true, 'message' => '입력한 이메일 로 임시비밀번호를 전송했습니다.']);
+                }else{
+                    $this->sendJsonResponse(['success' => false, 'message' => '이메일 전송 실패']);
+                }
+            }
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+            $this->sendJsonResponse(['error' => 'An error occurred'.getMessage()]);
+        }
     }
 }
 ?>

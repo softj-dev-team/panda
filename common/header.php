@@ -52,7 +52,7 @@ if ($_SESSION['member_coinc_idx']) {
                             <input type="text" placeholder="아이디" name="lms_id" id="lms_id" required="yes" message="아이디">
                             <input type="password" placeholder="비밀번호" name="lms_pass" id="lms_pass" required="yes" message="비밀번호" onKeypress="if(event.keyCode ==13){go_member_login();return;}">
                             <div class="summit">
-                                <a href="#" class="nomember">
+                                <a href="/kakao/index.php?route=findIdpass" class="nomember">
                                     아이디 / 비밀번호 찾기
                                 </a>
                                 <button class="btn" type="button" onclick="go_member_login();">
@@ -63,7 +63,7 @@ if ($_SESSION['member_coinc_idx']) {
                     </form>
                 </div>
 
-                <a href="join.php" class="login">
+                <a href="/join.php" class="login">
                     회원가입
                 </a>
 

@@ -1315,35 +1315,39 @@ $(document).ready(function() {
 
     var initialOption = $('#f-sel option:selected').val();
     // 서버에서 사용자 프로필 가져오기
-    $.ajax({
-        url: 'index.php?route=getUserProfiles',
-        type: 'GET',
-        dataType: 'json',
-        success: function(response) {
-            var select = $('#f-sel');
+    if(routeValue !="findIdpass"){
+        $.ajax({
+            url: 'index.php?route=getUserProfiles',
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                var select = $('#f-sel');
 
-            if (response.success && response.data.length > 0) {
-                $.each(response.data, function(index, profile) {
-                    // 기존에 선택된 옵션과 일치하는 경우 selected 속성 추가
-                    var selected = profile.id == initialOption ? 'selected' : '';
-                    select.append('<option value="' + profile.id + '" ' + selected + ' data-id="'+profile.kakao_ch_name+'">' + profile.chananel_name + '</option>');
-                });
-                select.on('change',function (){
-                    $('#previewChannelName').text($(this).find('option:selected').data('id'));
-                })
-            } else {
-                alert('발신프로필이 없습니다.');
+                if (response.success && response.data.length > 0) {
+                    $.each(response.data, function(index, profile) {
+                        // 기존에 선택된 옵션과 일치하는 경우 selected 속성 추가
+                        var selected = profile.id == initialOption ? 'selected' : '';
+                        select.append('<option value="' + profile.id + '" ' + selected + ' data-id="'+profile.kakao_ch_name+'">' + profile.chananel_name + '</option>');
+                    });
+                    select.on('change',function (){
+                        $('#previewChannelName').text($(this).find('option:selected').data('id'));
+                    })
+                } else {
+                    alert('발신프로필이 없습니다.');
+                }
+            },
+            error: function(xhr, status, error) {
+                alert('프로필 목록을 불러오는 데 실패했습니다.');
+                console.error('Error: ' + error);
+                console.error('Status: ' + status);
+                console.dir(xhr);
             }
-        },
-        error: function(xhr, status, error) {
-            alert('프로필 목록을 불러오는 데 실패했습니다.');
-            console.error('Error: ' + error);
-            console.error('Status: ' + status);
-            console.dir(xhr);
-        }
-    });
+        });
+        loadCategories();
+    }
 
-    loadCategories();
+
+
     $('#template-form').submit(function(event) {
         event.preventDefault();
         // 폼 제출 처리 로직
@@ -2428,4 +2432,52 @@ $(document).on('change','select[name=profile_id]',function (){
     }else{
         adChecked?targetEl.text('(광고)'+selElVal):targetEl.text(selElVal);
     }
+})
+$(document).on('click','#findMail',function (){
+    var validEl = $('input[name=email]');
+    $('.fm-error-txt').addClass("blind");
+    validEl.removeClass("fm-error");
+    $('.fm-error-txt').removeClass("blind");
+    $('.fm-error-txt').removeClass("active");
+    if(!validEl.val()){
+        validEl.addClass("fm-error");
+        $('.fm-error-txt').addClass("active");
+        $('.fm-error-txt').html('* 이메일 은(는) 필수 입력 항목 입니다.')
+    }else{
+        $.ajax({
+            url: '/kakao/index.php?route=getUserMail',
+            type: 'POST',
+            data: {
+                email:validEl.val()
+            },
+            // processData: false,
+            // contentType: false,
+            dataType: 'json',
+            beforeSend: function() {
+                // AJAX 요청이 시작되기 전에 로딩 스피너를 보여줌
+                showLoadingSpinner();
+            },
+            success: function(response) {
+                // console.log(response)
+                if (response.success) {
+                    alert(response.message);
+                } else {
+
+                    validEl.addClass("fm-error");
+                    $('.fm-error-txt').addClass("active");
+                    $('.fm-error-txt').html(response.message)
+                }
+                hideLoadingSpinner()
+            },
+            error: function(xhr, status, error) {
+                hideLoadingSpinner()
+                alert("실패했습니다. 다시 시도해 주세요.");
+                console.error('Error: ' + error);
+                console.error('Status: ' + status);
+                console.dir(xhr);
+            }
+        });
+    }
+
+
 })
