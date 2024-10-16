@@ -315,7 +315,7 @@ if ($data['my_member_row']['member_gubun'] == "2" && $_REQUEST['send_type'] != "
                                 <div class="flex-column">
                                     <div class="flex-just-start">
                                         <span><input type="checkbox" id="f-chk-all" class="fm-chk" name="smssendyn"><label for="f-chk-all" class="fm-chk-i"><strong>대체문자 사용</strong></label></span>
-                                        <p>알림톡 발송이 실패 된 경우, 해당 내용을 문자로 대체 발송하여 누락을 방하는 기능입니다.</p>
+                                        <p>친구톡 발송이 실패 된 경우, 해당 내용을 문자로 대체 발송하여 누락을 방지하는 기능입니다.</p>
                                     </div>
                                     <div class="custom-input-container">
                                         <div class="fm-box blind">
