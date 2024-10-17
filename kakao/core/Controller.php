@@ -544,7 +544,7 @@ class Controller {
             $this->Mail->Password   = 'fralsowyeswiclfx';
             //Recipients
             $this->Mail->setFrom($email, 'Mailer');
-            $this->Mail->addAddress('dev.softj@gmail.com', 'Joe User');     //Add a recipient
+            $this->Mail->addAddress($email, 'Joe User');     //Add a recipient
 
 //            $this->Mail->addAddress('ellen@example.com');               //Name is optional
 //            $this->Mail->addReplyTo('info@example.com', 'Information');
