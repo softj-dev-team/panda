@@ -101,9 +101,9 @@ class SendFtalkController extends Controller {
                     $templateImageName=$fileName;
                     $_POST['image_path']=$image_path;
                 }
-                // 200
-                if (isset($responseImagePost['code']) && $responseImagePost['code'] == '200' && $responseImagePost['message']) {
-                    throw new Exception($responseImagePost['message']);
+
+                if (isset($responseImagePostDecoded['code']) && $responseImagePostDecoded['code'] != '0000' ) {
+                    throw new Exception($responseImagePostDecoded['message']);
                 }
             }
 
