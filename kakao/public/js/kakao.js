@@ -1093,6 +1093,8 @@ $(document).ready(function() {
 
     $(document).on('change','#f-attach', function(event) {
         const file = event.target.files[0];
+        var fileName = $('#removeUploadImageX .file-list span:nth-child(1)');
+        var fileSize = $('#removeUploadImageX .file-list span:nth-child(2)');
         if (file) {
             var validExtensions = ['jpg', 'jpeg', 'png'];
             var fileExtension = file.name.split('.').pop().toLowerCase();
@@ -1111,11 +1113,15 @@ $(document).ready(function() {
                 // 이미지 조건 확인
                 const img = new Image();
                 img.onload = function() {
-                    if (img.width >= 500 && img.height >= 250) {
+                    const width = img.width;
+                    const height = img.height;
+                    const aspectRatio = width / height;
+                    if (img.width >= 500 && img.height >= 250 && aspectRatio >= 2) {
                         imgElement.attr('src', e.target.result);
                         imgElement.show();
+
                     } else {
-                        alert('이미지 크기는 500 x 250px 이상이어야 합니다.');
+                        alert('이미지 크기는 500 x 250px 이상이고,가로세로 비율이 2:1 이상이어야 합니다.');
                         imgElement.hide();
                         $('#f-attach').val(''); // 파일 입력 필드 초기화
                     }
@@ -1123,6 +1129,9 @@ $(document).ready(function() {
                 img.src = e.target.result;
             };
             reader.readAsDataURL(file);
+            fileName.text(file.name)
+            var fileSizeInKB = (file.size / 1024).toFixed(2); // 소수점 2자리까지 표시
+            fileSize.text(fileSizeInKB+'kb')
             $(this).closest('.fm-box').find('input[data-fakefile="text"]').attr('placeholder', file.name);
             $('#removeUploadImageX').removeClass('blind')
         }
