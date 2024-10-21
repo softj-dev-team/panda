@@ -919,7 +919,8 @@ class TemplateCategoryController extends Controller
                 $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($filePath);
                 $sheet = $spreadsheet->getActiveSheet();
                 $data = $sheet->toArray();
-
+                // 시트의 row 수 확인
+                $rowCount = $sheet->getHighestRow()-1;
                 // Retrieve the necessary details for message composition
                 $templateId = (Int)$_POST['template_id'];
 
@@ -949,6 +950,7 @@ class TemplateCategoryController extends Controller
                         $smsmessage=$message;
                     }
                 }
+                $senSucCnt=0;
                 foreach ($data as $index => $row) {
                     if ($index == 0) continue; // Skip the header row
 
@@ -984,11 +986,14 @@ class TemplateCategoryController extends Controller
                         $fuserid,
                         $smsSubject
                     );
+                    $senSucCnt++;
                 }
                 // 성공한 경우
                 $response = [
                     'status' => 'success',
-                    'message' => '발송 목록이 정상 등록 되었습니다. : '
+                    'message' => '발송 목록이 정상 등록 되었습니다. : ',
+                    'sendSucCnt' => $senSucCnt,
+                    'rowCnt' => $rowCount,
                 ];
             } else {
                 $fdestine = $_POST['fdestine'];
@@ -1067,7 +1072,9 @@ class TemplateCategoryController extends Controller
                 $response = [
                     'status' => 'success',
                     'message' => '알림톡 전송 결과 : '
-                        .$responseData[0]['altMsg']
+                        .$responseData[0]['altMsg'],
+                    'sendSucCnt' => 1,
+                    'rowCnt' => 1,
                 ];
             }
 

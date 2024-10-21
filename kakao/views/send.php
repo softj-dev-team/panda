@@ -4,7 +4,38 @@
 
 <!--header-->
 <div><? require_once $_SERVER["DOCUMENT_ROOT"] ."/common/header.php"; ?></div>
+<!-- 레이어 팝업 -->
+<div id="popupLayer" class="popup-layer" style="display:none;">
+    <div class="popup-content popcontent">
+        <div class="poptitle flex-just-end">
+            <button onclick="document.getElementById('popupLayer').style.display = 'none'"><img src="/images/popup/close.svg"></button>
+        </div>
+        <h2>메세지 전송 결과</h2>
+        <div class="tlb center">
+            <table>
+                <thead>
+                <tr>
+                    <th>메세지 형식</th>
+                    <th>전송요청 수</th>
+                    <th>전체발송 수</th>
+                    <th>중복번호 수</th>
+                    <!--                        <th>수신거부 수</th>-->
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><span id="resultMsgType">단문</span></td>
+                    <td><span id="resultSendCnt">0</span> 건</td>
+                    <td><span id="resultSendOkCnt">0</span> 건</td>
+                    <td><span id="resultSendDupCnt">0</span> 건</td>
+                    <!--                        <td>6명</td>-->
+                </tr>
+                </tbody>
+            </table>
+        </div>
 
+    </div>
+</div>
 <div class="wrap">
     <div class="containerW wrap_pc">
 
@@ -246,7 +277,11 @@
                 success: function (response) {
                     var data = JSON.parse(response);
                     if (data.status === 'success') {
-                        alert(data.message);
+                        $('#popupLayer').show();
+                        $('#resultSendOkCnt').text(data.sendSucCnt);
+                        $('#resultSendCnt').text(data.rowCnt);
+                        $('#resultMsgType').text('알림톡');
+                        $('#resultSendDupCnt').text(0);
                     } else {
                         alert( data.message);
                     }
