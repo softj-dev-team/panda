@@ -148,6 +148,60 @@ class UserAlimTalkController extends Controller
         }
         $writer->writeToStdOut();
     }
+    public function excelDownloadMaster(){
+        $idx = !empty(trim($_GET['idx'] ?? '')) ? $_GET['idx'] : null;
+        $downloadSuccess = filter_var($_GET['downloadSuccess'], FILTER_VALIDATE_BOOLEAN);
+        $header = array(
+            "전송일시" => "string",
+            "발신번호" => "string",
+            "수신번호" => "string",
+            "통신사" => "string",
+            "발송결과" => "string",
+        );
+        $data['smsSave'] = $this->UserAlimTalkModel->getSendListDetailSmsSave($idx);
+
+        $module_type = $data['smsSave'][0]['module_type'];
+        $yearMonth = date('Ym', strtotime($data['smsSave'][0]['wdate']));
+        $tableName = "TBL_SEND_LOG_" . $yearMonth;
+
+        if($module_type=="LG"){
+            $data['saveCall'] = $this->UserAlimTalkModel->getMasterSendListDetailSaveCallExcel($idx,$tableName,'fetc1','frsltstat','06','fmobilecomp','LG');
+        }
+        if($module_type=="JUD1"){
+            $data['saveCall'] = $this->UserAlimTalkModel->getMasterSendListDetailSaveCallExcel($idx,'SMS_BACKUP_AGENT_JUD1','S_ETC1','RSTATE','0','TELECOM');
+        }
+        if($module_type=="JUD2"){
+            $data['saveCall'] = $this->UserAlimTalkModel->getMasterSendListDetailSaveCallExcel($idx,'SMS_BACKUP_AGENT_JUD2','S_ETC1','RSTATE','0','TELECOM');
+        }
+
+        $row_data = array();
+        foreach ($data['saveCall'] as $row) {
+            $filedValues = array(
+                preg_replace('/[\"]/', '""', $row['work_date']),
+                preg_replace('/[\"]/', '""', $row['cell_send']),
+                preg_replace('/[\"]/', '""', $row['cell']),
+                preg_replace('/[\"]/', '""', $row['isp']),
+//                preg_replace('/[\"]/', '""', $row['status']),
+                preg_replace('/[\"]/', '""', $row['code_name'])
+            );
+            array_push($row_data, $filedValues);
+        }
+
+        $file_date = date("YmdHis");
+        $filename = "전체_발송내역_" . $file_date . ".xlsx";
+        header('Content-disposition: attachment; filename="' . XLSXWriter::sanitize_filename($filename) . '"');
+        header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        header('Content-Transfer-Encoding: binary');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+
+        $writer = new XLSXWriter();
+        $writer->writeSheetHeader('Sheet1', $header);
+        foreach ($row_data as $rows) {
+            $writer->writeSheetRow('Sheet1', $rows);
+        }
+        $writer->writeToStdOut();
+    }
     public function excelDownloadKaKao(){
         $idx = !empty(trim($_GET['idx'] ?? '')) ? $_GET['idx'] : null;
         $downloadSuccess = filter_var($_GET['downloadSuccess'], FILTER_VALIDATE_BOOLEAN);

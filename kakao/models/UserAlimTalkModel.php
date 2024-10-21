@@ -294,6 +294,31 @@ class UserAlimTalkModel
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function getMasterSendListDetailSaveCallExcel($group_key=null,$tablename=null,$filed=null,$statusFiled=null,$statusValue=null,$telecomFiled=null,$module_type)
+    {
+        $sql=
+            "SELECT log.fsenddate as work_date,b.cell_send,a.cell,log.$telecomFiled as isp,log.$statusFiled as status,code.code_description,code.code_name
+                     FROM sms_save_cell a 
+                         join $tablename log on log.$filed=a.idx 
+                         join report_code code on code.code=log.$statusFiled and code.code_type = :code_type
+                         join sms_save b on b.idx=a.save_idx
+                          where 1";
+
+        if ($group_key !== null) {
+            $sql .= " AND a.save_idx = :save_idx";
+        }
+
+        $sql .= " ORDER BY a.idx DESC";
+        $stmt = $this->conn->prepare($sql);
+
+        if ($group_key !== null) {
+            $stmt->bindParam(':save_idx', $group_key, PDO::PARAM_STR);
+        }
+
+        $stmt->bindParam(':code_type', $module_type, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
     public function getSendListDetailSaveCallExcelKaKao($group_key=null,$downloadSuccess)
     {
         $statusValue="AS";

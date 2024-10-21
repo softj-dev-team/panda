@@ -102,15 +102,16 @@ $EndRowNum = $pageScale;
 
 $order_by = " order by sms_save_cell.idx desc ";
 
-$query = "select sms_save_cell.*, a.cell_send from sms_save_cell INNER JOIN sms_save a ON sms_save_cell.save_idx = a.idx where 1 " . $where . $order_by;
-
-//echo "<br><br>쿼리 = " . $query . "<br><Br>";
-
+// 쿼리 최적화: 필요한 필드만 선택하여 조회
+$query = "SELECT sms_save_cell.idx, sms_save_cell.wdate, sms_save_cell.cell, sms_save_cell.module_type, a.cell_send 
+          FROM sms_save_cell 
+          INNER JOIN sms_save a ON sms_save_cell.save_idx = a.idx 
+          WHERE sms_save_cell.is_del = 'N' " . $where . $order_by;
 $result = mysqli_query($gconnet, $query);
 
-$query_cnt = "select sms_save_cell.*, a.cell_send from sms_save_cell INNER JOIN sms_save a ON sms_save_cell.save_idx = a.idx where 1 " . $where;
+$query_cnt = "SELECT COUNT(*) as cnt FROM sms_save_cell INNER JOIN sms_save a ON sms_save_cell.save_idx = a.idx WHERE 1 " . $where;
 $result_cnt = mysqli_query($gconnet, $query_cnt);
-$num = mysqli_num_rows($result_cnt);
+$num = mysqli_fetch_assoc($result_cnt)['cnt'];
 
 $header = array(
     "전송일시" => "string",
@@ -121,61 +122,55 @@ $header = array(
 );
 
 $data = array();
-
-for ($i = 0; $i < mysqli_num_rows($result); $i++) { // 대분류 루프 시작
-    $row = mysqli_fetch_array($result);
-
-    $comp = "";
+// 통신사 정보를 조회하는 함수
+function getTelecomCompany($gconnet, $row) {
     if ($row['module_type'] == "LG") {
         $str = strtotime($row['wdate']);
         $date = date("Ym", $str);
-        $sql_module = "select * from TBL_SEND_LOG_$date where fetc1='" . $row['idx'] . "'";
-
+        $sql_module = "SELECT fmobilecomp FROM TBL_SEND_LOG_$date WHERE fetc1='" . $row['idx'] . "'";
         $query_module = mysqli_query($gconnet, $sql_module);
-        $module_row = mysqli_fetch_array($query_module);
-        $comp = $module_row['fmobilecomp'];
-    } else if ($row['module_type'] == "JUD1" || $row['module_type'] == "JUD2") {
-        $sql_module = "select * from SMS_BACKUP_AGENT_" . $row['module_type'] . " where S_ETC1='" . $row['idx'] . "'";
+        $module_row = mysqli_fetch_assoc($query_module);
+        return $module_row['fmobilecomp'];
+    } elseif ($row['module_type'] == "JUD1" || $row['module_type'] == "JUD2") {
+        $sql_module = "SELECT TELECOM FROM SMS_BACKUP_AGENT_" . $row['module_type'] . " WHERE S_ETC1='" . $row['idx'] . "'";
         $query_module = mysqli_query($gconnet, $sql_module);
-        $module_row = mysqli_fetch_array($query_module);
-        $comp = $module_row['TELECOM'];
+        $module_row = mysqli_fetch_assoc($query_module);
+        return $module_row['TELECOM'];
     }
-
-    $is_send = "";
-
+    return "";
+}
+// 발송 상태를 조회하는 함수
+function getSendStatus($gconnet, $row) {
     if ($row['module_type'] == "LG") {
-        $sql_sub_2 = "select idx from sms_save_cell where 1 and is_del='N' and idx='" . $row['idx'] . "' and idx in (select fetc1 from TBL_SEND_LOG_" . str_replace("-", "", substr($row['wdate'], 0, 7)) . " where 1 and frsltstat='06')";
+        $sql_sub_2 = "SELECT idx FROM sms_save_cell WHERE is_del='N' AND idx='" . $row['idx'] . "' AND idx IN (SELECT fetc1 FROM TBL_SEND_LOG_" . str_replace("-", "", substr($row['wdate'], 0, 7)) . " WHERE frsltstat='06')";
         $query_sub_2 = mysqli_query($gconnet, $sql_sub_2);
-        $row['receive_cnt_suc'] = mysqli_num_rows($query_sub_2);
+        $receive_cnt_suc = mysqli_num_rows($query_sub_2);
 
-        $sql_sub_3 = "select idx from sms_save_cell where 1 and is_del='N' and idx='" . $row['idx'] . "' and idx in (select fetc1 from TBL_SEND_LOG_" . str_replace("-", "", substr($row['wdate'], 0, 7)) . " where 1 and frsltstat='07')";
+        $sql_sub_3 = "SELECT idx FROM sms_save_cell WHERE is_del='N' AND idx='" . $row['idx'] . "' AND idx IN (SELECT fetc1 FROM TBL_SEND_LOG_" . str_replace("-", "", substr($row['wdate'], 0, 7)) . " WHERE frsltstat='07')";
         $query_sub_3 = mysqli_query($gconnet, $sql_sub_3);
-        $row['receive_cnt_fail'] = mysqli_num_rows($query_sub_3);
-    } else if ($row['module_type'] == "JUD1") {
-        $sql_sub_2 = "select idx from sms_save_cell where 1 and is_del='N' and idx='" . $row['idx'] . "' and idx in (select S_ETC1 from SMS_BACKUP_AGENT_JUD1 where 1 and RSTATE=0)";
+        $receive_cnt_fail = mysqli_num_rows($query_sub_3);
+    } elseif ($row['module_type'] == "JUD1" || $row['module_type'] == "JUD2") {
+        $sql_sub_2 = "SELECT idx FROM sms_save_cell WHERE is_del='N' AND idx='" . $row['idx'] . "' AND idx IN (SELECT S_ETC1 FROM SMS_BACKUP_AGENT_" . $row['module_type'] . " WHERE RSTATE=0)";
         $query_sub_2 = mysqli_query($gconnet, $sql_sub_2);
-        $row['receive_cnt_suc'] = mysqli_num_rows($query_sub_2);
+        $receive_cnt_suc = mysqli_num_rows($query_sub_2);
 
-        $sql_sub_3 = "select idx from sms_save_cell where 1 and is_del='N' and idx='" . $row['idx'] . "' and idx in (select S_ETC1 from SMS_BACKUP_AGENT_JUD1 where 1 and RSTATE!=0)";
+        $sql_sub_3 = "SELECT idx FROM sms_save_cell WHERE is_del='N' AND idx='" . $row['idx'] . "' AND idx IN (SELECT S_ETC1 FROM SMS_BACKUP_AGENT_" . $row['module_type'] . " WHERE RSTATE!=0)";
         $query_sub_3 = mysqli_query($gconnet, $sql_sub_3);
-        $row['receive_cnt_fail'] = mysqli_num_rows($query_sub_3);
-    } else if ($row['module_type'] == "JUD2") {
-        $sql_sub_2 = "select idx from sms_save_cell where 1 and is_del='N' and idx='" . $row['idx'] . "' and idx in (select S_ETC1 from SMS_BACKUP_AGENT_JUD2 where 1 and RSTATE=0)";
-        $query_sub_2 = mysqli_query($gconnet, $sql_sub_2);
-        $row['receive_cnt_suc'] = mysqli_num_rows($query_sub_2);
-
-        $sql_sub_3 = "select idx from sms_save_cell where 1 and is_del='N' and idx='" . $row['idx'] . "' and idx in (select S_ETC1 from SMS_BACKUP_AGENT_JUD1 where 1 and RSTATE=!0)";
-        $query_sub_3 = mysqli_query($gconnet, $sql_sub_3);
-        $row['receive_cnt_fail'] = mysqli_num_rows($query_sub_3);
+        $receive_cnt_fail = mysqli_num_rows($query_sub_3);
     }
 
-    if ($row['receive_cnt_suc'] > 0) {
-        $is_send = "성공";
-    } else if ($row['receive_cnt_fail'] > 0) {
-        $is_send = "실패";
+    if ($receive_cnt_suc > 0) {
+        return "성공";
+    } elseif ($receive_cnt_fail > 0) {
+        return "실패";
     } else {
-        $is_send = "잔여";
+        return "잔여";
     }
+}
+// 데이터 수집
+while ($row = mysqli_fetch_assoc($result)) {
+    $comp = getTelecomCompany($gconnet, $row);
+    $is_send = getSendStatus($gconnet, $row);
 
     $filedValues = array(
         preg_replace('/[\"]/', '""', $row['wdate']),

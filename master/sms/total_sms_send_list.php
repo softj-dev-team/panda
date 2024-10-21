@@ -149,7 +149,8 @@ $totalpage	= ($iTotalSubCnt - 1) / $pageScale  + 1;
 	}
 
 	function go_down() {
-		location.href = "total_sms_send_down.php?<?= $total_param ?>";
+
+        window.location.href=`/kakao/index.php?route=excelDownloadMaster&idx=<?=$save_idx?>&downloadSuccess=false`
 	}
 
 

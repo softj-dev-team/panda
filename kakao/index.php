@@ -32,6 +32,12 @@ switch ($route) {
             $controller->excelDownload();
         }
         break;
+    case 'excelDownloadMaster':
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $controller = new UserAlimTalkController();
+            $controller->excelDownloadMaster();
+        }
+        break;
     case 'sendDetail':
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $controller = new UserAlimTalkController();
