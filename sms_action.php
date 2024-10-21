@@ -123,16 +123,19 @@ try {
         if (!isset($_REQUEST['receive_cell_num_arr']) || empty($_REQUEST['receive_cell_num_arr'])) {
             throw new Exception('수신자 목록이 비어 있습니다.');
         }
-
+        $spam_numbers = load_spam_numbers($gconnet);
         $receive_cell_num_arr = $_REQUEST['receive_cell_num_arr'];
+        $valid_receive_cell_num_arr = array_filter($receive_cell_num_arr, function ($cell) use ($spam_numbers) {
+            return !is_spam_number($cell, $spam_numbers); // 스팸 차단 번호가 아닌 것만 남김
+        });
         if ($sms_type == "sms") {
-            $total_send_mny = $my_member_row['mb_short_fee'] * count($receive_cell_num_arr);
+            $total_send_mny = $my_member_row['mb_short_fee'] * count($valid_receive_cell_num_arr);
             $sms_type_txt = "SMS";
         } elseif ($sms_type == "lms") {
-            $total_send_mny = $my_member_row['mb_long_fee'] * count($receive_cell_num_arr);
+            $total_send_mny = $my_member_row['mb_long_fee'] * count($valid_receive_cell_num_arr);
             $sms_type_txt = "LMS";
         } elseif ($sms_type == "mms") {
-            $total_send_mny = $my_member_row['mb_img_fee'] * count($receive_cell_num_arr);
+            $total_send_mny = $my_member_row['mb_img_fee'] * count($valid_receive_cell_num_arr);
             $sms_type_txt = "MMS";
         } else {
             throw new Exception('유효하지 않은 SMS 유형입니다.');
